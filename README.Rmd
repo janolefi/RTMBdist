@@ -25,8 +25,8 @@ knitr::opts_chunk$set(
 
 The [`RTMB`](https://kaskr.r-universe.dev/RTMB) package enables powerful and flexible statistical modelling with rich random effect structures using automatic differentiation (AD). However, its built-in support for probability distributions is limited to standard cases. `RTMBdist` fills this gap by providing a collection of non-standard, AD-compatible distributions, extending the range of models that can be implemented and estimated with `RTMB`. Most of the distributions implemented in `RTMBdist` allow for automatic simulation and residual calculation by `RTMB`.
 
-The full list of distributions currently available is given in the [List of distributions](https://janoleko.github.io/RTMBdist/articles/distlist.html) vignette.
-There are also a couple of [Worked examples](https://janoleko.github.io/RTMBdist/articles/Examples.html) demonstrating how to use `RTMBdist` in practice.
+The full list of distributions currently available is given in the [List of distributions](https://janolefi.github.io/RTMBdist/articles/distlist.html) vignette.
+There are also a couple of [Worked examples](https://janolefi.github.io/RTMBdist/articles/Examples.html) demonstrating how to use `RTMBdist` in practice.
 
 Feel free to contribute or open an issue if you are missing a distribution!
 
@@ -38,10 +38,10 @@ You can install the released version from [CRAN](https://CRAN.R-project.org/pack
 install.packages("RTMBdist")
 ```
 
-or the development version from [GitHub](https://github.com/janoleko/RTMBdist) with:
+or the development version from [GitHub](https://github.com/janolefi/RTMBdist) with:
 
 ```{r install_dev, eval = FALSE}
-remotes::install_github("janoleko/RTMBdist")
+remotes::install_github("janolefi/RTMBdist")
 ```
 
 ## Introductory example

@@ -28,9 +28,9 @@ estimated with `RTMB`. Most of the distributions implemented in
 
 The full list of distributions currently available is given in the [List
 of
-distributions](https://janoleko.github.io/RTMBdist/articles/distlist.html)
+distributions](https://janolefi.github.io/RTMBdist/articles/distlist.html)
 vignette. There are also a couple of [Worked
-examples](https://janoleko.github.io/RTMBdist/articles/Examples.html)
+examples](https://janolefi.github.io/RTMBdist/articles/Examples.html)
 demonstrating how to use `RTMBdist` in practice.
 
 Feel free to contribute or open an issue if you are missing a
@@ -46,10 +46,10 @@ install.packages("RTMBdist")
 ```
 
 or the development version from
-[GitHub](https://github.com/janoleko/RTMBdist) with:
+[GitHub](https://github.com/janolefi/RTMBdist) with:
 
 ``` r
-remotes::install_github("janoleko/RTMBdist")
+remotes::install_github("janolefi/RTMBdist")
 ```
 
 ## Introductory example
