@@ -203,7 +203,7 @@ dbbmi <- dbbmi[ind, ]
 ```
 
 We use the function
-[`make_matrices()`](https://janoleko.github.io/reference/make_matrices.html)
+[`make_matrices()`](https://rdrr.io/pkg/LaMa/man/make_matrices.html)
 from package `LaMa` to conveniently create design and penalty matrices
 for the smooth functions. Internally, this just interfaces `mgcv`. The
 penalty matrix is converted to a sparse matrix using the `Matrix`
@@ -653,7 +653,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  13.959   0.031  13.991
+#>  13.845   0.029  13.876
 rep <- sdreport(obj_svt)
 rep
 #> sdreport(.) result

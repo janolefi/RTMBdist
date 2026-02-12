@@ -236,7 +236,7 @@ kept constant.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dbbmi</span><span class="op">)</span>, <span class="fl">2000</span><span class="op">)</span></span>
 <span><span class="va">dbbmi</span> <span class="op">&lt;-</span> <span class="va">dbbmi</span><span class="op">[</span><span class="va">ind</span>, <span class="op">]</span></span></code></pre></div>
-<p>We use the function <code><a href="https://janoleko.github.io/reference/make_matrices.html" class="external-link">make_matrices()</a></code> from package
+<p>We use the function <code><a href="https://rdrr.io/pkg/LaMa/man/make_matrices.html" class="external-link">make_matrices()</a></code> from package
 <code>LaMa</code> to conveniently create design and penalty matrices for
 the smooth functions. Internally, this just interfaces
 <code>mgcv</code>. The penalty matrix is converted to a sparse matrix
@@ -244,7 +244,7 @@ using the <code>Matrix</code> package, to work with <code>RTMB</code>’s
 <code><a href="https://rdrr.io/pkg/RTMB/man/MVgauss.html" class="external-link">dgmrf()</a></code> function.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">10</span> <span class="co"># Basis dimension</span></span>
-<span><span class="va">modmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://janoleko.github.io/reference/make_matrices.html" class="external-link">make_matrices</a></span><span class="op">(</span><span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">age</span>, bs<span class="op">=</span><span class="st">"cs"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dbbmi</span><span class="op">)</span></span>
+<span><span class="va">modmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/LaMa/man/make_matrices.html" class="external-link">make_matrices</a></span><span class="op">(</span><span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">age</span>, bs<span class="op">=</span><span class="st">"cs"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dbbmi</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">modmat</span><span class="op">$</span><span class="va">Z</span>                              <span class="co"># Design matrix</span></span>
 <span><span class="va">S</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html" class="external-link">Matrix</a></span><span class="op">(</span><span class="va">modmat</span><span class="op">$</span><span class="va">S</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># Sparse penalty matrix</span></span></code></pre></div>
 <p>The joint negative log-likelihood function computes covariate
@@ -638,7 +638,7 @@ the covariance matrix anymore, but only proportional to it.</p>
 <span>  <span class="va">opt_svt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/nlminb.html" class="external-link">nlminb</a></span><span class="op">(</span><span class="va">obj_svt</span><span class="op">$</span><span class="va">par</span>, <span class="va">obj_svt</span><span class="op">$</span><span class="va">fn</span>, <span class="va">obj_svt</span><span class="op">$</span><span class="va">gr</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  13.959   0.031  13.991</span></span>
+<span><span class="co">#&gt;  13.845   0.029  13.876</span></span>
 <span><span class="va">rep</span> <span class="op">&lt;-</span> <span class="fu">sdreport</span><span class="op">(</span><span class="va">obj_svt</span><span class="op">)</span></span>
 <span><span class="va">rep</span></span>
 <span><span class="co">#&gt; sdreport(.) result</span></span>
