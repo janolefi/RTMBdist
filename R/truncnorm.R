@@ -56,7 +56,7 @@ dtruncnorm <- function(x, mean = 0, sd = 1, min = -Inf, max = Inf, log = FALSE) 
   # inside <- (x >= min) & (x <= max)
   inside <- 0.5 * (1 + sign(x - min) * sign(max - x))
 
-  logdens <- log(inside) + RTMB::dnorm(x, mean, sd, log = TRUE) - log(denom)
+  logdens <- log(inside) + RTMB::dnorm(x, mean, sd, log = TRUE) - log(1e-300 + denom)
 
   # compute density only for values inside the bounds
   # logdens[inside] <- RTMB::dnorm(x[inside], mean, sd, log = TRUE) - log(denom)

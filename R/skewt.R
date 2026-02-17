@@ -62,7 +62,7 @@ dskewt <- function(x, mu = 0, sigma = 1, skew = 0, df = 1e2, log = FALSE) {
   omega <- skew * sqrt(lambda) * z
 
   pdf <- RTMB::dt(z, df, log = TRUE)
-  cdf <- log(pt(omega, df + 1))
+  cdf <- log(1e-300 + pt(omega, df + 1))
 
   logdens <- log(2) - log(sigma) + pdf + cdf
 

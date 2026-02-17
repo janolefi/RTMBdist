@@ -60,7 +60,7 @@ dskewnorm <- function(x, xi = 0, omega = 1, alpha = 0, log = FALSE) {
   z = (x - xi) / omega # standardised observation
 
   log_normal_density <- RTMB::dnorm(z, log = TRUE)
-  log_skew_component <- log(2) - log(omega) + log(RTMB::pnorm(alpha * z))
+  log_skew_component <- log(2) - log(omega) + log(1e-300 + RTMB::pnorm(alpha * z))
 
   log_density = log_normal_density + log_skew_component
 

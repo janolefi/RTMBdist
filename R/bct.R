@@ -78,10 +78,10 @@ dbct <- function(x, mu = 5, sigma = 0.1, nu = 1, tau = 2, log = FALSE) {
     iz * (log(x / mu) / sigma)
 
   logdens <- (nu-1) * log(x) - nu * log(mu) - log(sigma)
-  fTz <-  lgamma((tau+1) / 2) - lgamma(tau/2) - 0.5 * log(tau) - lgamma(0.5)
+  fTz <- lgamma((tau+1) / 2) - lgamma(tau/2) - 0.5 * log(tau) - lgamma(0.5)
   fTz <- fTz - ((tau+1)/2) * log1p((z*z) / tau)
 
-  logdens <- logdens + fTz - log(pt(1 / (sigma * abs(nu)), df = tau))
+  logdens <- logdens + fTz - log(1e-300 + pt(1 / (sigma * abs(nu)), df = tau))
 
   large_tau <- greater(tau, 1e6)
   logdens <- large_tau * dbccg(x, mu, sigma, nu, log = TRUE) +

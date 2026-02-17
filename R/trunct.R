@@ -53,7 +53,7 @@ dtrunct <- function(x, df, min = -Inf, max = Inf, log = FALSE) {
   inside <- 0.5 * (1 + sign(x - min) * sign(max - x))
 
   # log-density
-  logdens <- log(inside) + RTMB::dt(x, df = df, log = TRUE) - log(denom)
+  logdens <- log(inside) + RTMB::dt(x, df = df, log = TRUE) - log(1e-300 + denom)
 
   if (log) return(logdens)
   exp(logdens)

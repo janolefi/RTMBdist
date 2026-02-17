@@ -43,8 +43,8 @@ dwrpcauchy <- function(x, mu = 0, rho, log = FALSE) {
   rho_sq <- rho * rho
 
   logdens <- - log(2 * pi) +
-    log(1 - rho_sq) -
-    log(1 + rho_sq - 2 * rho * cos(x - mu))
+    log1p(-rho_sq) -
+    log1p(rho_sq - 2 * rho * cos(x - mu))
 
   if(log){
     return(logdens)

@@ -54,7 +54,7 @@ dtrunct2 <- function(x, df, mu = 0, sigma = 1, min = -Inf, max = Inf, log = FALS
 
   inside <- 0.5 * (1 + sign(x - min) * sign(max - x))
 
-  logdens <- log(inside) + RTMB::dt((x - mu) / sigma, df = df, log = TRUE) - log(sigma) - log(denom)
+  logdens <- log(inside) + RTMB::dt((x - mu) / sigma, df = df, log = TRUE) - log(sigma) - log(1e-300 + denom)
 
   if (log) return(logdens)
   exp(logdens)
