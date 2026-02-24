@@ -3,8 +3,8 @@ Type: Package
 Title: Distributions Compatible with Automatic Differentiation by 'RTMB'
 Version: 1.0.1
 Authors@R: c(
-    person(given = "Jan-Ole", family = "Koslik", 
-          email = "jan-ole.koslik@uni-bielefeld.de",
+    person(given = "Jan-Ole", family = "Fischer", 
+          email = "jan-ole.fischer@mailbox.org",
           role = c("aut", "cre"),
           comment = c(ORCID = "0009-0004-1556-9053")))
 Description: 
@@ -33,5 +33,5 @@ Suggests:
     gamlss.data,
     mvtnorm
 Config/testthat/edition: 3
-URL: https://janoleko.github.io/RTMBdist/
+URL: https://janolefi.github.io/RTMBdist/
 VignetteBuilder: knitr
