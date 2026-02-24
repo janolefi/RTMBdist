@@ -653,7 +653,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  14.207   0.020  14.228
+#>  14.622   0.022  14.646
 rep <- sdreport(obj_svt)
 rep
 #> sdreport(.) result
