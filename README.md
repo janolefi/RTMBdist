@@ -13,7 +13,7 @@ status](https://www.r-pkg.org/badges/version/RTMBdist)](https://CRAN.R-project.o
 downloads](https://cranlogs.r-pkg.org/badges/last-month/RTMBdist)](https://cran.r-project.org/package=RTMBdist)
 [![total
 downloads](https://cranlogs.r-pkg.org:443/badges/grand-total/RTMBdist)](https://cranlogs.r-pkg.org:443/badges/grand-total/RTMBdist)
-[![R-CMD-check](https://github.com/janoleko/RTMBdist/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/janoleko/RTMBdist/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/janolefi/RTMBdist/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/janolefi/RTMBdist/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The [`RTMB`](https://kaskr.r-universe.dev/RTMB) package enables powerful
