@@ -52,12 +52,12 @@ dgenpois <- function(x, lambda = 1, phi = 1, log = FALSE) {
     return(dGenericOSA("dgenpois", x = x, lambda = lambda, phi = phi, log=log))
   }
 
-  phi_lambda_p1 <- 1 + phi * lambda
-  phi_x_p1 <- 1 + phi * x
+  phi_lambda <- phi * lambda
+  phi_x <- phi * x
 
-  logdens <- x * (log(lambda) - log(phi_lambda_p1)) +
-    (x-1) * log(phi_x_p1) - lgamma(x + 1) -
-    (lambda * (phi_x_p1)) / (phi_lambda_p1)
+  logdens <- x * (log(lambda) - log1p(phi_lambda)) +
+    (x-1) * log1p(phi_x) - lgamma(x + 1) -
+    (lambda * (phi_x + 1)) / (phi_lambda + 1)
 
   if(log) return(logdens)
   return(exp(logdens))
