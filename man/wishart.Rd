@@ -11,7 +11,7 @@ dwishart(x, nu, Sigma, log = FALSE)
 rwishart(n, nu, Sigma)
 }
 \arguments{
-\item{x}{positive definite p x p matrix of evaluation points}
+\item{x}{positive definite \eqn{p \times p} matrix or array of such matrices of dimension \eqn{p \times p \times n} (for \eqn{n} density evaluations)}
 
 \item{nu}{degrees of freedom, needs to be greater than \code{p - 1}}
 
@@ -23,12 +23,24 @@ rwishart(n, nu, Sigma)
 }
 \value{
 \code{dwishart} gives the density,
-\code{rwishart} generates random deviates (matrix for \code{n = 1}, array for \code{n > 1})
+\code{rwishart} generates random deviates (matrix for \code{n = 1}, array with \code{n} slices for \code{n > 1})
 }
 \description{
 Density and random generation for the wishart distribution
 }
 \examples{
+# single input: matrix-valued
 x <- rwishart(1, nu = 5, Sigma = diag(3))
 d <- dwishart(x, nu = 5, Sigma = diag(3))
+
+# multiple inputs: array of matrices
+x <- rwishart(4, nu = 5, Sigma = diag(3))
+d <- dwishart(x, nu = 5, Sigma = diag(3))
+
+# multiple inputs for x, nu and Sigma
+nu <- c(7,5,8,9)
+Sigma <- array(dim = c(3,3,4))
+for(i in 1:4) Sigma[,,i] <- (i + 3) * diag(3)
+x <- rwishart(4, nu, Sigma)
+d <- dwishart(x, nu, Sigma)
 }
