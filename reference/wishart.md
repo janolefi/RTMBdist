@@ -14,7 +14,8 @@ rwishart(n, nu, Sigma)
 
 - x:
 
-  positive definite p x p matrix of evaluation points
+  positive definite \\p \times p\\ matrix or array of such matrices of
+  dimension \\p \times p \times n\\ (for \\n\\ density evaluations)
 
 - nu:
 
@@ -36,11 +37,23 @@ rwishart(n, nu, Sigma)
 ## Value
 
 `dwishart` gives the density, `rwishart` generates random deviates
-(matrix for `n = 1`, array for `n > 1`)
+(matrix for `n = 1`, array with `n` slices for `n > 1`)
 
 ## Examples
 
 ``` r
+# single input: matrix-valued
 x <- rwishart(1, nu = 5, Sigma = diag(3))
 d <- dwishart(x, nu = 5, Sigma = diag(3))
+
+# multiple inputs: array of matrices
+x <- rwishart(4, nu = 5, Sigma = diag(3))
+d <- dwishart(x, nu = 5, Sigma = diag(3))
+
+# multiple inputs for x, nu and Sigma
+nu <- c(7,5,8,9)
+Sigma <- array(dim = c(3,3,4))
+for(i in 1:4) Sigma[,,i] <- (i + 3) * diag(3)
+x <- rwishart(4, nu, Sigma)
+d <- dwishart(x, nu, Sigma)
 ```
