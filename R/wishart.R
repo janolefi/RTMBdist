@@ -23,6 +23,17 @@ NULL
 #' @import RTMB
 dwishart <- function(x, nu, Sigma, log = FALSE) {
 
+  # potentially escape to RNG or produce error for CDF
+    if(inherits(x, "simref")) {
+      # n <- if (is.matrix(x)) nrow(x) else 1
+      # x[] <- rwishart(n, nu=nu, Sigma=Sigma)
+      # return(0)
+      stop("Currently, Wishart does not support automatic simulation.")
+    }
+    if(inherits(x, "osa")) {
+      stop("Wishart does not support OSA residuals.")
+    }
+
   p <- nrow(x)
 
   # Input dimension check
@@ -45,14 +56,6 @@ dwishart <- function(x, nu, Sigma, log = FALSE) {
     # if (any(eigen(x, only.values = TRUE)$values <= 0)) stop("x must be positive definite")
   }
 
-  # potentially escape to RNG or produce error for CDF
-  if(inherits(x, "simref")) {
-    return(dGenericSim("dwishart", x=x, nu=nu, Sigma=Sigma, log=log))
-  }
-  if(inherits(x, "osa")) {
-    stop("Wishart does not support OSA residuals.")
-  }
-
   # Cholesky decomposition for log-determinant
   logdet_Sigma <- as.numeric(determinant(Sigma, logarithm = TRUE)$modulus)
   logdet_x <- as.numeric(determinant(x, logarithm = TRUE)$modulus)
@@ -66,6 +69,33 @@ dwishart <- function(x, nu, Sigma, log = FALSE) {
   if(log) return(logdens)
   return(exp(logdens))
 }
+# dwishart <- function(x, nu, Sigma, log = FALSE) {
+#   # potentially escape to RNG or produce error for CDF
+#   if(inherits(x, "simref")) {
+#     return(dGenericSim("dwishart", x=x, nu=nu, Sigma=Sigma, log=log))
+#   }
+#   if(inherits(x, "osa")) {
+#     stop("Wishart does not support OSA residuals.")
+#   }
+#
+#   if(is.matrix(x)) {
+#     # single evaluation matrix
+#     if(length(nu) > 1) stop("For a single matrix x, nu can only have length 1.")
+#     if(length(dim(Sigma)) != 2) stop("For a single matrix x, Sigma must be a matrix.")
+#     return(dwishart1(x, nu, Sigma, log = log))
+#   } else if(is.array(x)) {
+#     # evaluation on array
+#     n <- dim(x)[3]
+#     if(length(nu) == 1) nu <- rep(nu, n)
+#     if(length(nu) != n) stop("nu must be of length 1 or match the number of samples in x.")
+#     if(is.matrix(Sigma)) Sigma <- array(Sigma, dim = c(dim(Sigma), n))
+#     if(is.array(Sigma)) {
+#       if(dim(Sigma)[3] != n) stop("If Sigma is an array, its number of slices must be 1 or match x.")
+#     }
+#     res <- sapply(seq_len(n),
+#                   function(i) dwishart1(x[,,i], nu[i], Sigma[,,i], log = log))
+#   }
+# }
 
 #' @rdname wishart
 #' @export
