@@ -44,7 +44,9 @@ dvmf <- function(x, mu, kappa, log = FALSE) {
 
   # potentially escape to RNG or CDF
   if(inherits(x, "simref")){
-    return(dGenericSim("dvmf", x = x, mu = mu, kappa = kappa, log=log))
+    n <- if (is.matrix(x)) nrow(x) else 1
+    x[] <- rvmf(n, mu=mu, kappa=kappa)
+    return(0)
   }
   if(inherits(x, "osa")) {
     # return(dGenericOSA("dvm", x = x, mu = mu, kappa = kappa, log=log))

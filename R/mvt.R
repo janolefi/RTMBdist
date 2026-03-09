@@ -52,7 +52,9 @@ dmvt <- function(x, mu, Sigma, df, log = FALSE) {
 
   # potentially escape to RNG or produce error for CDF
   if(inherits(x, "simref")) {
-    return(dGenericSim("dmvt", x=x, mu=mu, Sigma=Sigma, df=df, log=log))
+    n <- if (is.matrix(x)) nrow(x) else 1
+    x[] <- rmvt(n, mu=mu, Sigma=Sigma, df=df)
+    return(0)
   }
   if(inherits(x, "osa")) {
     stop("Multivariate t does not support OSA residuals.")

@@ -40,7 +40,9 @@ ddirmult <- function(x, size, alpha, log = FALSE) {
 
   # potentially escape to RNG or produce error for CDF
   if(inherits(x, "simref")) {
-    return(dGenericSim("ddirmult", x=x, size=size, alpha=alpha, log=log))
+    n <- if (is.matrix(x)) nrow(x) else 1
+    x[] <- rdirmult(n, size=size, alpha=alpha)
+    return(0)
   }
   if(inherits(x, "osa")) {
     stop("Dirichlet-multinomial does not support OSA residuals.")
@@ -108,7 +110,7 @@ ddirmult <- function(x, size, alpha, log = FALSE) {
 rdirmult <- function(n, size, alpha) {
 
   # Check if alpha is vector by checking if it has dimensions
-  if (is.null(dim(alpha))) alpha <- matrix(alpha, nrow = 1)
+  if (is.vector(alpha)) alpha <- matrix(alpha, nrow = 1)
 
   if (n > 1) {
     if (nrow(alpha) == 1) {
@@ -136,8 +138,8 @@ rdirmult <- function(n, size, alpha) {
 
   # Draw multinomial counts
   counts <- t(vapply(seq_len(n), function(i)
-    stats::rmultinom(1, size[i], theta[i, ]), numeric(ncol(alpha))))
+    as.vector(stats::rmultinom(1, size[i], theta[i, ])), numeric(ncol(alpha))))
 
-  colnames(counts) <- paste0("cat", 1:ncol(counts))
+  # colnames(counts) <- paste0("cat", 1:ncol(counts))
   counts
 }

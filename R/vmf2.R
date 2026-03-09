@@ -42,7 +42,9 @@ dvmf2 <- function(x, theta, log = FALSE) {
 
   # potentially escape to RNG or CDF
   if(inherits(x, "simref")){
-    return(dGenericSim("dvmf", x = x, theta=theta, log=log))
+    n <- if (is.matrix(x)) nrow(x) else 1
+    x[] <- rvmf2(n, theta=theta)
+    return(0)
   }
 
   # if x or theta are vectors, turn into 1 x p matrices
