@@ -155,6 +155,9 @@
   Negative binomial distribution reparameterised by mean `mu` and size
   `size`
 
+- [`skellam(mu1, mu2)`](https://janoleko.github.io/RTMBdist/reference/skellam.md):
+  Skellam distribution parameterised by Poisson means `mu1` and `mu2`
+
 - [`zibinom(size, prob, zeroprob)`](https://janoleko.github.io/RTMBdist/reference/zibinom.md):
   Zero-inflated binomial distribution parameterised by size `size`,
   success probability `prob` and zero-probability `zeroprob`

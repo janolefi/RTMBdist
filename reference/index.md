@@ -141,6 +141,9 @@
   [`qpowerexp2()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
   [`rpowerexp2()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
   : Power Exponential distribution (PE and PE2)
+- [`dskellam()`](https://janoleko.github.io/RTMBdist/reference/skellam.md)
+  [`rskellam()`](https://janoleko.github.io/RTMBdist/reference/skellam.md)
+  : Skellam distribution
 - [`dskewnorm()`](https://janoleko.github.io/RTMBdist/reference/skewnorm.md)
   [`pskewnorm()`](https://janoleko.github.io/RTMBdist/reference/skewnorm.md)
   [`qskewnorm()`](https://janoleko.github.io/RTMBdist/reference/skewnorm.md)
