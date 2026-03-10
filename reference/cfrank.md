@@ -2,7 +2,7 @@
 
 Returns a function computing the log density of the bivariate Frank
 copula, intended to be used with
-[`dcopula`](https://janoleko.github.io/RTMBdist/reference/dcopula.md).
+[`dcopula`](https://janolefi.github.io/RTMBdist/reference/dcopula.md).
 
 ## Usage
 
@@ -31,9 +31,9 @@ v}-1) + (1 - e^{-\theta}) \right\]^2}, \quad \theta \ne 0. \$\$
 
 ## See also
 
-[`cgaussian()`](https://janoleko.github.io/RTMBdist/reference/cgaussian.md),
-[`cclayton()`](https://janoleko.github.io/RTMBdist/reference/cclayton.md),
-[`cgumbel()`](https://janoleko.github.io/RTMBdist/reference/cgumbel.md)
+[`cgaussian()`](https://janolefi.github.io/RTMBdist/reference/cgaussian.md),
+[`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md),
+[`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
 
 ## Examples
 

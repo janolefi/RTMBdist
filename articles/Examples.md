@@ -474,9 +474,9 @@ data(faithful)
 ```
 
 Specifying the mixture likelihood using
-[`dcopula()`](https://janoleko.github.io/RTMBdist/reference/dcopula.md)
+[`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md)
 and
-[`cclayton()`](https://janoleko.github.io/RTMBdist/reference/cclayton.md)
+[`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
 for the components is straightforward, it’s just imporant to not confuse
 mixture components and dimensions.
 
@@ -594,7 +594,7 @@ source("https://raw.githubusercontent.com/kaskr/RTMB/master/tmb_examples/sdv_mul
 
 The code below is basically the same as in the original example, but
 uses a multivariate t distribution
-([`dmvt()`](https://janoleko.github.io/RTMBdist/reference/mvt.md)) in
+([`dmvt()`](https://janolefi.github.io/RTMBdist/reference/mvt.md)) in
 the data likelihood. Note that the `Cov` matrix is now not actually the
 covariance matrix anymore, but only proportional to it.
 
@@ -653,7 +653,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  14.343   0.026  14.369
+#>  13.900   0.019  13.920
 rep <- sdreport(obj_svt)
 rep
 #> sdreport(.) result

@@ -2,7 +2,7 @@
 
 Construct functions that compute either the log density or the CDF of
 the bivariate Gumbel copula, intended for use with
-[`dcopula`](https://janoleko.github.io/RTMBdist/reference/dcopula.md).
+[`dcopula`](https://janolefi.github.io/RTMBdist/reference/dcopula.md).
 
 ## Usage
 
@@ -34,9 +34,9 @@ a density.
 
 ## See also
 
-[`cgaussian()`](https://janoleko.github.io/RTMBdist/reference/cgaussian.md),
-[`cclayton()`](https://janoleko.github.io/RTMBdist/reference/cclayton.md),
-[`cfrank()`](https://janoleko.github.io/RTMBdist/reference/cfrank.md)
+[`cgaussian()`](https://janolefi.github.io/RTMBdist/reference/cgaussian.md),
+[`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md),
+[`cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
 
 ## Examples
 

@@ -88,271 +88,271 @@ qqnorm(osa$res); abline(0, 1)
 
 ## All functions
 
-- [`abs_smooth()`](https://janoleko.github.io/RTMBdist/reference/abs_smooth.md)
+- [`abs_smooth()`](https://janolefi.github.io/RTMBdist/reference/abs_smooth.md)
   : Smooth approximation to the absolute value function
-- [`dbccg()`](https://janoleko.github.io/RTMBdist/reference/bccg.md)
-  [`pbccg()`](https://janoleko.github.io/RTMBdist/reference/bccg.md)
-  [`qbccg()`](https://janoleko.github.io/RTMBdist/reference/bccg.md)
-  [`rbccg()`](https://janoleko.github.io/RTMBdist/reference/bccg.md) :
+- [`dbccg()`](https://janolefi.github.io/RTMBdist/reference/bccg.md)
+  [`pbccg()`](https://janolefi.github.io/RTMBdist/reference/bccg.md)
+  [`qbccg()`](https://janolefi.github.io/RTMBdist/reference/bccg.md)
+  [`rbccg()`](https://janolefi.github.io/RTMBdist/reference/bccg.md) :
   Box–Cox Cole and Green distribution (BCCG)
-- [`dbcpe()`](https://janoleko.github.io/RTMBdist/reference/bcpe.md)
-  [`pbcpe()`](https://janoleko.github.io/RTMBdist/reference/bcpe.md)
-  [`qbcpe()`](https://janoleko.github.io/RTMBdist/reference/bcpe.md)
-  [`rbcpe()`](https://janoleko.github.io/RTMBdist/reference/bcpe.md) :
+- [`dbcpe()`](https://janolefi.github.io/RTMBdist/reference/bcpe.md)
+  [`pbcpe()`](https://janolefi.github.io/RTMBdist/reference/bcpe.md)
+  [`qbcpe()`](https://janolefi.github.io/RTMBdist/reference/bcpe.md)
+  [`rbcpe()`](https://janolefi.github.io/RTMBdist/reference/bcpe.md) :
   Box-Cox Power Exponential distribution (BCPE)
-- [`dbct()`](https://janoleko.github.io/RTMBdist/reference/bct.md)
-  [`pbct()`](https://janoleko.github.io/RTMBdist/reference/bct.md)
-  [`qbct()`](https://janoleko.github.io/RTMBdist/reference/bct.md)
-  [`rbct()`](https://janoleko.github.io/RTMBdist/reference/bct.md) :
+- [`dbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md)
+  [`pbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md)
+  [`qbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md)
+  [`rbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md) :
   Box–Cox t distribution (BCT)
-- [`dbeta()`](https://janoleko.github.io/RTMBdist/reference/beta2.md)
-  [`dbeta2()`](https://janoleko.github.io/RTMBdist/reference/beta2.md)
-  [`pbeta2()`](https://janoleko.github.io/RTMBdist/reference/beta2.md)
-  [`qbeta2()`](https://janoleko.github.io/RTMBdist/reference/beta2.md)
-  [`rbeta2()`](https://janoleko.github.io/RTMBdist/reference/beta2.md) :
+- [`dbeta()`](https://janolefi.github.io/RTMBdist/reference/beta2.md)
+  [`dbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md)
+  [`pbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md)
+  [`qbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md)
+  [`rbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md) :
   Reparameterised beta distribution
-- [`dbetabinom()`](https://janoleko.github.io/RTMBdist/reference/betabinom.md)
-  [`rbetabinom()`](https://janoleko.github.io/RTMBdist/reference/betabinom.md)
+- [`dbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
+  [`rbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
   : Beta-binomial distribution
-- [`cclayton()`](https://janoleko.github.io/RTMBdist/reference/cclayton.md)
-  [`Cclayton()`](https://janoleko.github.io/RTMBdist/reference/cclayton.md)
+- [`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
+  [`Cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   : Clayton copula constructors
-- [`cfrank()`](https://janoleko.github.io/RTMBdist/reference/cfrank.md)
-  [`Cfrank()`](https://janoleko.github.io/RTMBdist/reference/cfrank.md)
+- [`cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
+  [`Cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
   : Frank copula constructor
-- [`cgaussian()`](https://janoleko.github.io/RTMBdist/reference/cgaussian.md)
+- [`cgaussian()`](https://janolefi.github.io/RTMBdist/reference/cgaussian.md)
   : Gaussian copula constructor
-- [`cgmrf()`](https://janoleko.github.io/RTMBdist/reference/cgmrf.md) :
+- [`cgmrf()`](https://janolefi.github.io/RTMBdist/reference/cgmrf.md) :
   Multivariate Gaussian copula constructor parameterised by inverse
   correlation matrix
-- [`cgumbel()`](https://janoleko.github.io/RTMBdist/reference/cgumbel.md)
-  [`Cgumbel()`](https://janoleko.github.io/RTMBdist/reference/cgumbel.md)
+- [`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
+  [`Cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
   : Gumbel copula constructors
-- [`cmvgauss()`](https://janoleko.github.io/RTMBdist/reference/cmvgauss.md)
+- [`cmvgauss()`](https://janolefi.github.io/RTMBdist/reference/cmvgauss.md)
   : Multivariate Gaussian copula constructor
-- [`dcopula()`](https://janoleko.github.io/RTMBdist/reference/dcopula.md)
+- [`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md)
   : Joint density under a bivariate copula
-- [`ddcopula()`](https://janoleko.github.io/RTMBdist/reference/ddcopula.md)
+- [`ddcopula()`](https://janolefi.github.io/RTMBdist/reference/ddcopula.md)
   : Joint probability under a discrete bivariate copula
-- [`ddirichlet()`](https://janoleko.github.io/RTMBdist/reference/dirichlet.md)
-  [`rdirichlet()`](https://janoleko.github.io/RTMBdist/reference/dirichlet.md)
+- [`ddirichlet()`](https://janolefi.github.io/RTMBdist/reference/dirichlet.md)
+  [`rdirichlet()`](https://janolefi.github.io/RTMBdist/reference/dirichlet.md)
   : Dirichlet distribution
-- [`ddirmult()`](https://janoleko.github.io/RTMBdist/reference/dirmult.md)
-  [`rdirmult()`](https://janoleko.github.io/RTMBdist/reference/dirmult.md)
+- [`ddirmult()`](https://janolefi.github.io/RTMBdist/reference/dirmult.md)
+  [`rdirmult()`](https://janolefi.github.io/RTMBdist/reference/dirmult.md)
   : Dirichlet-multinomial distribution
-- [`dmvcopula()`](https://janoleko.github.io/RTMBdist/reference/dmvcopula.md)
+- [`dmvcopula()`](https://janolefi.github.io/RTMBdist/reference/dmvcopula.md)
   : Joint density under a multivariate copula
-- [`erf()`](https://janoleko.github.io/RTMBdist/reference/erf.md)
-  [`erfc()`](https://janoleko.github.io/RTMBdist/reference/erf.md) :
+- [`erf()`](https://janolefi.github.io/RTMBdist/reference/erf.md)
+  [`erfc()`](https://janolefi.github.io/RTMBdist/reference/erf.md) :
   AD-compatible error function and complementary error function
-- [`dexgauss()`](https://janoleko.github.io/RTMBdist/reference/exgauss.md)
-  [`pexgauss()`](https://janoleko.github.io/RTMBdist/reference/exgauss.md)
-  [`qexgauss()`](https://janoleko.github.io/RTMBdist/reference/exgauss.md)
-  [`rexgauss()`](https://janoleko.github.io/RTMBdist/reference/exgauss.md)
+- [`dexgauss()`](https://janolefi.github.io/RTMBdist/reference/exgauss.md)
+  [`pexgauss()`](https://janolefi.github.io/RTMBdist/reference/exgauss.md)
+  [`qexgauss()`](https://janolefi.github.io/RTMBdist/reference/exgauss.md)
+  [`rexgauss()`](https://janolefi.github.io/RTMBdist/reference/exgauss.md)
   : Exponentially modified Gaussian distribution
-- [`dfoldnorm()`](https://janoleko.github.io/RTMBdist/reference/foldnorm.md)
-  [`pfoldnorm()`](https://janoleko.github.io/RTMBdist/reference/foldnorm.md)
-  [`rfoldnorm()`](https://janoleko.github.io/RTMBdist/reference/foldnorm.md)
+- [`dfoldnorm()`](https://janolefi.github.io/RTMBdist/reference/foldnorm.md)
+  [`pfoldnorm()`](https://janolefi.github.io/RTMBdist/reference/foldnorm.md)
+  [`rfoldnorm()`](https://janolefi.github.io/RTMBdist/reference/foldnorm.md)
   : Folded normal distribution
-- [`dgamma2()`](https://janoleko.github.io/RTMBdist/reference/gamma2.md)
-  [`pgamma2()`](https://janoleko.github.io/RTMBdist/reference/gamma2.md)
-  [`qgamma2()`](https://janoleko.github.io/RTMBdist/reference/gamma2.md)
-  [`rgamma2()`](https://janoleko.github.io/RTMBdist/reference/gamma2.md)
+- [`dgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
+  [`pgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
+  [`qgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
+  [`rgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
   : Reparameterised gamma distribution
-- [`dgengamma()`](https://janoleko.github.io/RTMBdist/reference/gengamma.md)
-  [`pgengamma()`](https://janoleko.github.io/RTMBdist/reference/gengamma.md)
-  [`qgengamma()`](https://janoleko.github.io/RTMBdist/reference/gengamma.md)
-  [`rgengamma()`](https://janoleko.github.io/RTMBdist/reference/gengamma.md)
+- [`dgengamma()`](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
+  [`pgengamma()`](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
+  [`qgengamma()`](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
+  [`rgengamma()`](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
   : Generalised Gamma distribution (GG)
-- [`dgenpois()`](https://janoleko.github.io/RTMBdist/reference/genpois.md)
-  [`pgenpois()`](https://janoleko.github.io/RTMBdist/reference/genpois.md)
-  [`qgenpois()`](https://janoleko.github.io/RTMBdist/reference/genpois.md)
-  [`rgenpois()`](https://janoleko.github.io/RTMBdist/reference/genpois.md)
+- [`dgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
+  [`pgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
+  [`qgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
+  [`rgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
   : Generalised Poisson distribution
-- [`dgumbel()`](https://janoleko.github.io/RTMBdist/reference/gumbel.md)
-  [`pgumbel()`](https://janoleko.github.io/RTMBdist/reference/gumbel.md)
-  [`qgumbel()`](https://janoleko.github.io/RTMBdist/reference/gumbel.md)
-  [`rgumbel()`](https://janoleko.github.io/RTMBdist/reference/gumbel.md)
+- [`dgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
+  [`pgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
+  [`qgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
+  [`rgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   : Gumbel distribution
-- [`dinvgauss()`](https://janoleko.github.io/RTMBdist/reference/invgauss.md)
-  [`pinvgauss()`](https://janoleko.github.io/RTMBdist/reference/invgauss.md)
-  [`qinvgauss()`](https://janoleko.github.io/RTMBdist/reference/invgauss.md)
-  [`rinvgauss()`](https://janoleko.github.io/RTMBdist/reference/invgauss.md)
+- [`dinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
+  [`pinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
+  [`qinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
+  [`rinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
   : Inverse Gaussian distribution
-- [`dkumar()`](https://janoleko.github.io/RTMBdist/reference/kumar.md)
-  [`pkumar()`](https://janoleko.github.io/RTMBdist/reference/kumar.md)
-  [`qkumar()`](https://janoleko.github.io/RTMBdist/reference/kumar.md)
-  [`rkumar()`](https://janoleko.github.io/RTMBdist/reference/kumar.md) :
+- [`dkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md)
+  [`pkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md)
+  [`qkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md)
+  [`rkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md) :
   Kumaraswamy distribution
-- [`dlaplace()`](https://janoleko.github.io/RTMBdist/reference/laplace.md)
-  [`plaplace()`](https://janoleko.github.io/RTMBdist/reference/laplace.md)
-  [`qlaplace()`](https://janoleko.github.io/RTMBdist/reference/laplace.md)
-  [`rlaplace()`](https://janoleko.github.io/RTMBdist/reference/laplace.md)
+- [`dlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
+  [`plaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
+  [`qlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
+  [`rlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   : Laplace distribution
-- [`dmvt()`](https://janoleko.github.io/RTMBdist/reference/mvt.md)
-  [`rmvt()`](https://janoleko.github.io/RTMBdist/reference/mvt.md) :
+- [`dmvt()`](https://janolefi.github.io/RTMBdist/reference/mvt.md)
+  [`rmvt()`](https://janolefi.github.io/RTMBdist/reference/mvt.md) :
   Multivariate t distribution
-- [`dnbinom2()`](https://janoleko.github.io/RTMBdist/reference/nbinom2.md)
-  [`pnbinom2()`](https://janoleko.github.io/RTMBdist/reference/nbinom2.md)
-  [`qnbinom2()`](https://janoleko.github.io/RTMBdist/reference/nbinom2.md)
-  [`rnbinom2()`](https://janoleko.github.io/RTMBdist/reference/nbinom2.md)
-  [`pnbinom()`](https://janoleko.github.io/RTMBdist/reference/nbinom2.md)
+- [`dnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
+  [`pnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
+  [`qnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
+  [`rnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
+  [`pnbinom()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
   : Reparameterised negative binomial distribution
-- [`doibeta()`](https://janoleko.github.io/RTMBdist/reference/oibeta.md)
-  [`poibeta()`](https://janoleko.github.io/RTMBdist/reference/oibeta.md)
-  [`roibeta()`](https://janoleko.github.io/RTMBdist/reference/oibeta.md)
+- [`doibeta()`](https://janolefi.github.io/RTMBdist/reference/oibeta.md)
+  [`poibeta()`](https://janolefi.github.io/RTMBdist/reference/oibeta.md)
+  [`roibeta()`](https://janolefi.github.io/RTMBdist/reference/oibeta.md)
   : One-inflated beta distribution
-- [`doibeta2()`](https://janoleko.github.io/RTMBdist/reference/oibeta2.md)
-  [`poibeta2()`](https://janoleko.github.io/RTMBdist/reference/oibeta2.md)
-  [`roibeta2()`](https://janoleko.github.io/RTMBdist/reference/oibeta2.md)
+- [`doibeta2()`](https://janolefi.github.io/RTMBdist/reference/oibeta2.md)
+  [`poibeta2()`](https://janolefi.github.io/RTMBdist/reference/oibeta2.md)
+  [`roibeta2()`](https://janolefi.github.io/RTMBdist/reference/oibeta2.md)
   : Reparameterised one-inflated beta distribution
-- [`dpareto()`](https://janoleko.github.io/RTMBdist/reference/pareto.md)
-  [`ppareto()`](https://janoleko.github.io/RTMBdist/reference/pareto.md)
-  [`qpareto()`](https://janoleko.github.io/RTMBdist/reference/pareto.md)
-  [`rpareto()`](https://janoleko.github.io/RTMBdist/reference/pareto.md)
+- [`dpareto()`](https://janolefi.github.io/RTMBdist/reference/pareto.md)
+  [`ppareto()`](https://janolefi.github.io/RTMBdist/reference/pareto.md)
+  [`qpareto()`](https://janolefi.github.io/RTMBdist/reference/pareto.md)
+  [`rpareto()`](https://janolefi.github.io/RTMBdist/reference/pareto.md)
   : Pareto distribution
-- [`spgweibull()`](https://janoleko.github.io/RTMBdist/reference/pgweibull.md)
-  [`hpgweibull()`](https://janoleko.github.io/RTMBdist/reference/pgweibull.md)
-  [`ppgweibull()`](https://janoleko.github.io/RTMBdist/reference/pgweibull.md)
-  [`dpgweibull()`](https://janoleko.github.io/RTMBdist/reference/pgweibull.md)
-  [`qpgweibull()`](https://janoleko.github.io/RTMBdist/reference/pgweibull.md)
-  [`rpgweibull()`](https://janoleko.github.io/RTMBdist/reference/pgweibull.md)
+- [`spgweibull()`](https://janolefi.github.io/RTMBdist/reference/pgweibull.md)
+  [`hpgweibull()`](https://janolefi.github.io/RTMBdist/reference/pgweibull.md)
+  [`ppgweibull()`](https://janolefi.github.io/RTMBdist/reference/pgweibull.md)
+  [`dpgweibull()`](https://janolefi.github.io/RTMBdist/reference/pgweibull.md)
+  [`qpgweibull()`](https://janolefi.github.io/RTMBdist/reference/pgweibull.md)
+  [`rpgweibull()`](https://janolefi.github.io/RTMBdist/reference/pgweibull.md)
   : Power generalized Weibull distribution
-- [`dpowerexp()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
-  [`ppowerexp()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
-  [`qpowerexp()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
-  [`rpowerexp()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
-  [`dpowerexp2()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
-  [`ppowerexp2()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
-  [`qpowerexp2()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
-  [`rpowerexp2()`](https://janoleko.github.io/RTMBdist/reference/powerexp.md)
+- [`dpowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
+  [`ppowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
+  [`qpowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
+  [`rpowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
+  [`dpowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
+  [`ppowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
+  [`qpowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
+  [`rpowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
   : Power Exponential distribution (PE and PE2)
-- [`dskellam()`](https://janoleko.github.io/RTMBdist/reference/skellam.md)
-  [`rskellam()`](https://janoleko.github.io/RTMBdist/reference/skellam.md)
+- [`dskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
+  [`rskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
   : Skellam distribution
-- [`dskewnorm()`](https://janoleko.github.io/RTMBdist/reference/skewnorm.md)
-  [`pskewnorm()`](https://janoleko.github.io/RTMBdist/reference/skewnorm.md)
-  [`qskewnorm()`](https://janoleko.github.io/RTMBdist/reference/skewnorm.md)
-  [`rskewnorm()`](https://janoleko.github.io/RTMBdist/reference/skewnorm.md)
+- [`dskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md)
+  [`pskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md)
+  [`qskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md)
+  [`rskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md)
   : Skew normal distribution
-- [`dskewnorm2()`](https://janoleko.github.io/RTMBdist/reference/skewnorm2.md)
-  [`pskewnorm2()`](https://janoleko.github.io/RTMBdist/reference/skewnorm2.md)
-  [`qskewnorm2()`](https://janoleko.github.io/RTMBdist/reference/skewnorm2.md)
-  [`rskewnorm2()`](https://janoleko.github.io/RTMBdist/reference/skewnorm2.md)
+- [`dskewnorm2()`](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md)
+  [`pskewnorm2()`](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md)
+  [`qskewnorm2()`](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md)
+  [`rskewnorm2()`](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md)
   : Reparameterised skew normal distribution
-- [`dskewt()`](https://janoleko.github.io/RTMBdist/reference/skewt.md)
-  [`pskewt()`](https://janoleko.github.io/RTMBdist/reference/skewt.md)
-  [`qskewt()`](https://janoleko.github.io/RTMBdist/reference/skewt.md)
-  [`rskewt()`](https://janoleko.github.io/RTMBdist/reference/skewt.md) :
+- [`dskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md)
+  [`pskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md)
+  [`qskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md)
+  [`rskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md) :
   Skewed students t distribution
-- [`dskewt2()`](https://janoleko.github.io/RTMBdist/reference/skewt2.md)
-  [`pskewt2()`](https://janoleko.github.io/RTMBdist/reference/skewt2.md)
-  [`qskewt2()`](https://janoleko.github.io/RTMBdist/reference/skewt2.md)
-  [`rskewt2()`](https://janoleko.github.io/RTMBdist/reference/skewt2.md)
+- [`dskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
+  [`pskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
+  [`qskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
+  [`rskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
   : Moment-parameterised skew t distribution
-- [`dt2()`](https://janoleko.github.io/RTMBdist/reference/t2.md)
-  [`pt2()`](https://janoleko.github.io/RTMBdist/reference/t2.md)
-  [`rt2()`](https://janoleko.github.io/RTMBdist/reference/t2.md)
-  [`qt2()`](https://janoleko.github.io/RTMBdist/reference/t2.md)
-  [`pt()`](https://janoleko.github.io/RTMBdist/reference/t2.md) :
+- [`dt2()`](https://janolefi.github.io/RTMBdist/reference/t2.md)
+  [`pt2()`](https://janolefi.github.io/RTMBdist/reference/t2.md)
+  [`rt2()`](https://janolefi.github.io/RTMBdist/reference/t2.md)
+  [`qt2()`](https://janolefi.github.io/RTMBdist/reference/t2.md)
+  [`pt()`](https://janolefi.github.io/RTMBdist/reference/t2.md) :
   Student t distribution with location and scale
-- [`dtruncnorm()`](https://janoleko.github.io/RTMBdist/reference/truncnorm.md)
-  [`ptruncnorm()`](https://janoleko.github.io/RTMBdist/reference/truncnorm.md)
-  [`qtruncnorm()`](https://janoleko.github.io/RTMBdist/reference/truncnorm.md)
-  [`rtruncnorm()`](https://janoleko.github.io/RTMBdist/reference/truncnorm.md)
+- [`dtruncnorm()`](https://janolefi.github.io/RTMBdist/reference/truncnorm.md)
+  [`ptruncnorm()`](https://janolefi.github.io/RTMBdist/reference/truncnorm.md)
+  [`qtruncnorm()`](https://janolefi.github.io/RTMBdist/reference/truncnorm.md)
+  [`rtruncnorm()`](https://janolefi.github.io/RTMBdist/reference/truncnorm.md)
   : Truncated normal distribution
-- [`dtrunct()`](https://janoleko.github.io/RTMBdist/reference/trunct.md)
-  [`ptrunct()`](https://janoleko.github.io/RTMBdist/reference/trunct.md)
-  [`qtrunct()`](https://janoleko.github.io/RTMBdist/reference/trunct.md)
-  [`rtrunct()`](https://janoleko.github.io/RTMBdist/reference/trunct.md)
+- [`dtrunct()`](https://janolefi.github.io/RTMBdist/reference/trunct.md)
+  [`ptrunct()`](https://janolefi.github.io/RTMBdist/reference/trunct.md)
+  [`qtrunct()`](https://janolefi.github.io/RTMBdist/reference/trunct.md)
+  [`rtrunct()`](https://janolefi.github.io/RTMBdist/reference/trunct.md)
   : Truncated t distribution
-- [`dtrunct2()`](https://janoleko.github.io/RTMBdist/reference/trunct2.md)
-  [`ptrunct2()`](https://janoleko.github.io/RTMBdist/reference/trunct2.md)
-  [`qtrunct2()`](https://janoleko.github.io/RTMBdist/reference/trunct2.md)
-  [`rtrunct2()`](https://janoleko.github.io/RTMBdist/reference/trunct2.md)
+- [`dtrunct2()`](https://janolefi.github.io/RTMBdist/reference/trunct2.md)
+  [`ptrunct2()`](https://janolefi.github.io/RTMBdist/reference/trunct2.md)
+  [`qtrunct2()`](https://janolefi.github.io/RTMBdist/reference/trunct2.md)
+  [`rtrunct2()`](https://janolefi.github.io/RTMBdist/reference/trunct2.md)
   : Truncated t distribution with location and scale
-- [`dvm()`](https://janoleko.github.io/RTMBdist/reference/vm.md)
-  [`pvm()`](https://janoleko.github.io/RTMBdist/reference/vm.md)
-  [`rvm()`](https://janoleko.github.io/RTMBdist/reference/vm.md) : von
+- [`dvm()`](https://janolefi.github.io/RTMBdist/reference/vm.md)
+  [`pvm()`](https://janolefi.github.io/RTMBdist/reference/vm.md)
+  [`rvm()`](https://janolefi.github.io/RTMBdist/reference/vm.md) : von
   Mises distribution
-- [`dvmf()`](https://janoleko.github.io/RTMBdist/reference/vmf.md)
-  [`rvmf()`](https://janoleko.github.io/RTMBdist/reference/vmf.md) : von
+- [`dvmf()`](https://janolefi.github.io/RTMBdist/reference/vmf.md)
+  [`rvmf()`](https://janolefi.github.io/RTMBdist/reference/vmf.md) : von
   Mises-Fisher distribution
-- [`dvmf2()`](https://janoleko.github.io/RTMBdist/reference/vmf2.md)
-  [`rvmf2()`](https://janoleko.github.io/RTMBdist/reference/vmf2.md) :
+- [`dvmf2()`](https://janolefi.github.io/RTMBdist/reference/vmf2.md)
+  [`rvmf2()`](https://janolefi.github.io/RTMBdist/reference/vmf2.md) :
   Reparameterised von Mises-Fisher distribution
-- [`dwishart()`](https://janoleko.github.io/RTMBdist/reference/wishart.md)
-  [`rwishart()`](https://janoleko.github.io/RTMBdist/reference/wishart.md)
+- [`dwishart()`](https://janolefi.github.io/RTMBdist/reference/wishart.md)
+  [`rwishart()`](https://janolefi.github.io/RTMBdist/reference/wishart.md)
   : Wishart distribution
-- [`dwrpcauchy()`](https://janoleko.github.io/RTMBdist/reference/wrpcauchy.md)
-  [`rwrpcauchy()`](https://janoleko.github.io/RTMBdist/reference/wrpcauchy.md)
+- [`dwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+  [`rwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
   : wrapped Cauchy distribution
-- [`zero_inflate()`](https://janoleko.github.io/RTMBdist/reference/zero_inflate.md)
+- [`zero_inflate()`](https://janolefi.github.io/RTMBdist/reference/zero_inflate.md)
   : Zero-inflated density constructer
-- [`dzibeta()`](https://janoleko.github.io/RTMBdist/reference/zibeta.md)
-  [`pzibeta()`](https://janoleko.github.io/RTMBdist/reference/zibeta.md)
-  [`rzibeta()`](https://janoleko.github.io/RTMBdist/reference/zibeta.md)
+- [`dzibeta()`](https://janolefi.github.io/RTMBdist/reference/zibeta.md)
+  [`pzibeta()`](https://janolefi.github.io/RTMBdist/reference/zibeta.md)
+  [`rzibeta()`](https://janolefi.github.io/RTMBdist/reference/zibeta.md)
   : Zero-inflated beta distribution
-- [`dzibeta2()`](https://janoleko.github.io/RTMBdist/reference/zibeta2.md)
-  [`pzibeta2()`](https://janoleko.github.io/RTMBdist/reference/zibeta2.md)
-  [`rzibeta2()`](https://janoleko.github.io/RTMBdist/reference/zibeta2.md)
+- [`dzibeta2()`](https://janolefi.github.io/RTMBdist/reference/zibeta2.md)
+  [`pzibeta2()`](https://janolefi.github.io/RTMBdist/reference/zibeta2.md)
+  [`rzibeta2()`](https://janolefi.github.io/RTMBdist/reference/zibeta2.md)
   : Reparameterised zero-inflated beta distribution
-- [`dzibinom()`](https://janoleko.github.io/RTMBdist/reference/zibinom.md)
-  [`pzibinom()`](https://janoleko.github.io/RTMBdist/reference/zibinom.md)
-  [`rzibinom()`](https://janoleko.github.io/RTMBdist/reference/zibinom.md)
+- [`dzibinom()`](https://janolefi.github.io/RTMBdist/reference/zibinom.md)
+  [`pzibinom()`](https://janolefi.github.io/RTMBdist/reference/zibinom.md)
+  [`rzibinom()`](https://janolefi.github.io/RTMBdist/reference/zibinom.md)
   : Zero-inflated binomial distribution
-- [`dzigamma()`](https://janoleko.github.io/RTMBdist/reference/zigamma.md)
-  [`pzigamma()`](https://janoleko.github.io/RTMBdist/reference/zigamma.md)
-  [`rzigamma()`](https://janoleko.github.io/RTMBdist/reference/zigamma.md)
+- [`dzigamma()`](https://janolefi.github.io/RTMBdist/reference/zigamma.md)
+  [`pzigamma()`](https://janolefi.github.io/RTMBdist/reference/zigamma.md)
+  [`rzigamma()`](https://janolefi.github.io/RTMBdist/reference/zigamma.md)
   : Zero-inflated gamma distribution
-- [`dzigamma2()`](https://janoleko.github.io/RTMBdist/reference/zigamma2.md)
-  [`pzigamma2()`](https://janoleko.github.io/RTMBdist/reference/zigamma2.md)
-  [`rzigamma2()`](https://janoleko.github.io/RTMBdist/reference/zigamma2.md)
+- [`dzigamma2()`](https://janolefi.github.io/RTMBdist/reference/zigamma2.md)
+  [`pzigamma2()`](https://janolefi.github.io/RTMBdist/reference/zigamma2.md)
+  [`rzigamma2()`](https://janolefi.github.io/RTMBdist/reference/zigamma2.md)
   : Zero-inflated and reparameterised gamma distribution
-- [`dziinvgauss()`](https://janoleko.github.io/RTMBdist/reference/ziinvgauss.md)
-  [`pziinvgauss()`](https://janoleko.github.io/RTMBdist/reference/ziinvgauss.md)
-  [`rziinvgauss()`](https://janoleko.github.io/RTMBdist/reference/ziinvgauss.md)
+- [`dziinvgauss()`](https://janolefi.github.io/RTMBdist/reference/ziinvgauss.md)
+  [`pziinvgauss()`](https://janolefi.github.io/RTMBdist/reference/ziinvgauss.md)
+  [`rziinvgauss()`](https://janolefi.github.io/RTMBdist/reference/ziinvgauss.md)
   : Zero-inflated inverse Gaussian distribution
-- [`dzilnorm()`](https://janoleko.github.io/RTMBdist/reference/zilnorm.md)
-  [`pzilnorm()`](https://janoleko.github.io/RTMBdist/reference/zilnorm.md)
-  [`rzilnorm()`](https://janoleko.github.io/RTMBdist/reference/zilnorm.md)
-  [`plnorm()`](https://janoleko.github.io/RTMBdist/reference/zilnorm.md)
+- [`dzilnorm()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
+  [`pzilnorm()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
+  [`rzilnorm()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
+  [`plnorm()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
   : Zero-inflated log normal distribution
-- [`dzinbinom()`](https://janoleko.github.io/RTMBdist/reference/zinbinom.md)
-  [`pzinbinom()`](https://janoleko.github.io/RTMBdist/reference/zinbinom.md)
-  [`rzinbinom()`](https://janoleko.github.io/RTMBdist/reference/zinbinom.md)
+- [`dzinbinom()`](https://janolefi.github.io/RTMBdist/reference/zinbinom.md)
+  [`pzinbinom()`](https://janolefi.github.io/RTMBdist/reference/zinbinom.md)
+  [`rzinbinom()`](https://janolefi.github.io/RTMBdist/reference/zinbinom.md)
   : Zero-inflated negative binomial distribution
-- [`dzinbinom2()`](https://janoleko.github.io/RTMBdist/reference/zinbinom2.md)
-  [`pzinbinom2()`](https://janoleko.github.io/RTMBdist/reference/zinbinom2.md)
-  [`rzinbinom2()`](https://janoleko.github.io/RTMBdist/reference/zinbinom2.md)
+- [`dzinbinom2()`](https://janolefi.github.io/RTMBdist/reference/zinbinom2.md)
+  [`pzinbinom2()`](https://janolefi.github.io/RTMBdist/reference/zinbinom2.md)
+  [`rzinbinom2()`](https://janolefi.github.io/RTMBdist/reference/zinbinom2.md)
   : Zero-inflated and reparameterised negative binomial distribution
-- [`dzipois()`](https://janoleko.github.io/RTMBdist/reference/zipois.md)
-  [`pzipois()`](https://janoleko.github.io/RTMBdist/reference/zipois.md)
-  [`rzipois()`](https://janoleko.github.io/RTMBdist/reference/zipois.md)
+- [`dzipois()`](https://janolefi.github.io/RTMBdist/reference/zipois.md)
+  [`pzipois()`](https://janolefi.github.io/RTMBdist/reference/zipois.md)
+  [`rzipois()`](https://janolefi.github.io/RTMBdist/reference/zipois.md)
   : Zero-inflated Poisson distribution
-- [`dzoibeta()`](https://janoleko.github.io/RTMBdist/reference/zoibeta.md)
-  [`pzoibeta()`](https://janoleko.github.io/RTMBdist/reference/zoibeta.md)
-  [`rzoibeta()`](https://janoleko.github.io/RTMBdist/reference/zoibeta.md)
+- [`dzoibeta()`](https://janolefi.github.io/RTMBdist/reference/zoibeta.md)
+  [`pzoibeta()`](https://janolefi.github.io/RTMBdist/reference/zoibeta.md)
+  [`rzoibeta()`](https://janolefi.github.io/RTMBdist/reference/zoibeta.md)
   : Zero- and one-inflated beta distribution
-- [`dzoibeta2()`](https://janoleko.github.io/RTMBdist/reference/zoibeta2.md)
-  [`pzoibeta2()`](https://janoleko.github.io/RTMBdist/reference/zoibeta2.md)
-  [`rzoibeta2()`](https://janoleko.github.io/RTMBdist/reference/zoibeta2.md)
+- [`dzoibeta2()`](https://janolefi.github.io/RTMBdist/reference/zoibeta2.md)
+  [`pzoibeta2()`](https://janolefi.github.io/RTMBdist/reference/zoibeta2.md)
+  [`rzoibeta2()`](https://janolefi.github.io/RTMBdist/reference/zoibeta2.md)
   : Reparameterised zero- and one-inflated beta distribution
-- [`dztbinom()`](https://janoleko.github.io/RTMBdist/reference/ztbinom.md)
-  [`pztbinom()`](https://janoleko.github.io/RTMBdist/reference/ztbinom.md)
-  [`rztbinom()`](https://janoleko.github.io/RTMBdist/reference/ztbinom.md)
+- [`dztbinom()`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md)
+  [`pztbinom()`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md)
+  [`rztbinom()`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md)
   : Zero-truncated Binomial distribution
-- [`dztnbinom()`](https://janoleko.github.io/RTMBdist/reference/ztnbinom.md)
-  [`pztnbinom()`](https://janoleko.github.io/RTMBdist/reference/ztnbinom.md)
-  [`rztnbinom()`](https://janoleko.github.io/RTMBdist/reference/ztnbinom.md)
+- [`dztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md)
+  [`pztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md)
+  [`rztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md)
   : Zero-truncated Negative Binomial distribution
-- [`dztnbinom2()`](https://janoleko.github.io/RTMBdist/reference/ztnbinom2.md)
-  [`pztnbinom2()`](https://janoleko.github.io/RTMBdist/reference/ztnbinom2.md)
-  [`rztnbinom2()`](https://janoleko.github.io/RTMBdist/reference/ztnbinom2.md)
+- [`dztnbinom2()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom2.md)
+  [`pztnbinom2()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom2.md)
+  [`rztnbinom2()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom2.md)
   : Reparameterised zero-truncated negative binomial distribution
-- [`dztpois()`](https://janoleko.github.io/RTMBdist/reference/ztpois.md)
-  [`pztpois()`](https://janoleko.github.io/RTMBdist/reference/ztpois.md)
-  [`rztpois()`](https://janoleko.github.io/RTMBdist/reference/ztpois.md)
+- [`dztpois()`](https://janolefi.github.io/RTMBdist/reference/ztpois.md)
+  [`pztpois()`](https://janolefi.github.io/RTMBdist/reference/ztpois.md)
+  [`rztpois()`](https://janolefi.github.io/RTMBdist/reference/ztpois.md)
   : Zero-truncated Poisson distribution
 
 # Articles
@@ -360,6 +360,6 @@ qqnorm(osa$res); abline(0, 1)
 ### All vignettes
 
 - [List of
-  distributions](https://janoleko.github.io/RTMBdist/articles/distlist.md):
+  distributions](https://janolefi.github.io/RTMBdist/articles/distlist.md):
 - [Worked
-  Examples](https://janoleko.github.io/RTMBdist/articles/Examples.md):
+  Examples](https://janolefi.github.io/RTMBdist/articles/Examples.md):

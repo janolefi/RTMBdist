@@ -33,7 +33,7 @@ rlaplace(n, mu = 0, b = 1)
 
   optional smoothing parameter for `dlaplace` to smooth the absolute
   value function. See
-  [`abs_smooth`](https://janoleko.github.io/RTMBdist/reference/abs_smooth.md)
+  [`abs_smooth`](https://janolefi.github.io/RTMBdist/reference/abs_smooth.md)
   for details. It is recommended to set this to a small constant like
   `1e-6` for numerical optimisation.
 

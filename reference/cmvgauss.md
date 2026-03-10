@@ -2,7 +2,7 @@
 
 Returns a function computing the log density of the multivariate
 Gaussian copula, intended to be used with
-[`dmvcopula`](https://janoleko.github.io/RTMBdist/reference/dmvcopula.md).
+[`dmvcopula`](https://janolefi.github.io/RTMBdist/reference/dmvcopula.md).
 
 ## Usage
 
@@ -22,7 +22,7 @@ Function with matrix argument `U` returning log copula density.
 
 ## See also
 
-[`cgmrf()`](https://janoleko.github.io/RTMBdist/reference/cgmrf.md)
+[`cgmrf()`](https://janolefi.github.io/RTMBdist/reference/cgmrf.md)
 
 ## Examples
 

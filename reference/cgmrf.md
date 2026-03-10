@@ -31,7 +31,7 @@ in your likelihood function.
 
 ## See also
 
-[`cmvgauss()`](https://janoleko.github.io/RTMBdist/reference/cmvgauss.md)
+[`cmvgauss()`](https://janolefi.github.io/RTMBdist/reference/cmvgauss.md)
 
 ## Examples
 

@@ -46,22 +46,22 @@ differentiable for automatic differentiation (AD) to work.
 
 Available copula constructors are:
 
-- [`cgaussian`](https://janoleko.github.io/RTMBdist/reference/cgaussian.md)
+- [`cgaussian`](https://janolefi.github.io/RTMBdist/reference/cgaussian.md)
   (Gaussian copula)
 
-- [`cclayton`](https://janoleko.github.io/RTMBdist/reference/cclayton.md)
+- [`cclayton`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   (Clayton copula)
 
-- [`cgumbel`](https://janoleko.github.io/RTMBdist/reference/cgumbel.md)
+- [`cgumbel`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
   (Gumbel copula)
 
-- [`cfrank`](https://janoleko.github.io/RTMBdist/reference/cfrank.md)
+- [`cfrank`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
   (Frank copula)
 
 ## See also
 
-[`ddcopula()`](https://janoleko.github.io/RTMBdist/reference/ddcopula.md),
-[`dmvcopula()`](https://janoleko.github.io/RTMBdist/reference/dmvcopula.md)
+[`ddcopula()`](https://janolefi.github.io/RTMBdist/reference/ddcopula.md),
+[`dmvcopula()`](https://janolefi.github.io/RTMBdist/reference/dmvcopula.md)
 
 ## Examples
 

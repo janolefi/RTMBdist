@@ -41,19 +41,19 @@ where \\F_i\\ are the marginal CDFs, and \\C\\ is the copula CDF.
 
 Available copula CDF constructors are:
 
-- [`Cclayton`](https://janoleko.github.io/RTMBdist/reference/cclayton.md)
+- [`Cclayton`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   (Clayton copula)
 
-- [`Cgumbel`](https://janoleko.github.io/RTMBdist/reference/cgumbel.md)
+- [`Cgumbel`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
   (Gumbel copula)
 
-- [`Cfrank`](https://janoleko.github.io/RTMBdist/reference/cfrank.md)
+- [`Cfrank`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
   (Frank copula)
 
 ## See also
 
-[`dcopula()`](https://janoleko.github.io/RTMBdist/reference/dcopula.md),
-[`dmvcopula()`](https://janoleko.github.io/RTMBdist/reference/dmvcopula.md)
+[`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md),
+[`dmvcopula()`](https://janolefi.github.io/RTMBdist/reference/dmvcopula.md)
 
 ## Examples
 

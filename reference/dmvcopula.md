@@ -51,17 +51,17 @@ differentiable for automatic differentiation (AD) to work.
 
 Available multivariate copula constructors are:
 
-- [`cmvgauss`](https://janoleko.github.io/RTMBdist/reference/cmvgauss.md)
+- [`cmvgauss`](https://janolefi.github.io/RTMBdist/reference/cmvgauss.md)
   (Multivariate Gaussian copula)
 
-- [`cgmrf`](https://janoleko.github.io/RTMBdist/reference/cgmrf.md)
+- [`cgmrf`](https://janolefi.github.io/RTMBdist/reference/cgmrf.md)
   (Multivariate Gaussian copula parameterised by precision (inverse
   correlation) matrix)
 
 ## See also
 
-[`dcopula()`](https://janoleko.github.io/RTMBdist/reference/dcopula.md),
-[`ddcopula()`](https://janoleko.github.io/RTMBdist/reference/ddcopula.md)
+[`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md),
+[`ddcopula()`](https://janolefi.github.io/RTMBdist/reference/ddcopula.md)
 
 ## Examples
 

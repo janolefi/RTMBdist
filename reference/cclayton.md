@@ -2,7 +2,7 @@
 
 Construct a function that computes the log density or CDF of the
 bivariate Clayton copula, intended to be used with
-[`dcopula`](https://janoleko.github.io/RTMBdist/reference/dcopula.md).
+[`dcopula`](https://janolefi.github.io/RTMBdist/reference/dcopula.md).
 
 ## Usage
 
@@ -31,9 +31,9 @@ The Clayton copula density is \$\$ c(u,v;\theta) = (1+\theta)
 
 ## See also
 
-[`cgaussian()`](https://janoleko.github.io/RTMBdist/reference/cgaussian.md),
-[`cgumbel()`](https://janoleko.github.io/RTMBdist/reference/cgumbel.md),
-[`cfrank()`](https://janoleko.github.io/RTMBdist/reference/cfrank.md)
+[`cgaussian()`](https://janolefi.github.io/RTMBdist/reference/cgaussian.md),
+[`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md),
+[`cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
 
 ## Examples
 

@@ -93,9 +93,9 @@ will remain at its initial value.
 
 ## See also
 
-[skewt2](https://janoleko.github.io/RTMBdist/reference/skewt2.md),
-[skewnorm](https://janoleko.github.io/RTMBdist/reference/skewnorm.md),
-[skewnorm2](https://janoleko.github.io/RTMBdist/reference/skewnorm2.md)
+[skewt2](https://janolefi.github.io/RTMBdist/reference/skewt2.md),
+[skewnorm](https://janolefi.github.io/RTMBdist/reference/skewnorm.md),
+[skewnorm2](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md)
 
 ## Examples
 

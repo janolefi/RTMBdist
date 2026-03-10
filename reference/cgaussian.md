@@ -2,7 +2,7 @@
 
 Returns a function computing the log density of the bivariate Gaussian
 copula, intended to be used with
-[`dcopula`](https://janoleko.github.io/RTMBdist/reference/dcopula.md).
+[`dcopula`](https://janolefi.github.io/RTMBdist/reference/dcopula.md).
 
 ## Usage
 
@@ -27,9 +27,9 @@ The Gaussian copula density is \$\$ c(u,v;\rho) =
 
 ## See also
 
-[`cclayton()`](https://janoleko.github.io/RTMBdist/reference/cclayton.md),
-[`cgumbel()`](https://janoleko.github.io/RTMBdist/reference/cgumbel.md),
-[`cfrank()`](https://janoleko.github.io/RTMBdist/reference/cfrank.md)
+[`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md),
+[`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md),
+[`cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
 
 ## Examples
 

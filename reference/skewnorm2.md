@@ -66,9 +66,9 @@ package.
 
 ## See also
 
-[skewnorm](https://janoleko.github.io/RTMBdist/reference/skewnorm.md),
-[skewt](https://janoleko.github.io/RTMBdist/reference/skewt.md),
-[skewt2](https://janoleko.github.io/RTMBdist/reference/skewt2.md)
+[skewnorm](https://janolefi.github.io/RTMBdist/reference/skewnorm.md),
+[skewt](https://janolefi.github.io/RTMBdist/reference/skewt.md),
+[skewt2](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
 
 ## Examples
 

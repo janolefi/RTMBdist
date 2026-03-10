@@ -101,9 +101,9 @@ For given `skew` \\= \alpha\\ and `df` = \\\nu\\, define \$\$ \delta =
 
 ## See also
 
-[skewt](https://janoleko.github.io/RTMBdist/reference/skewt.md),
-[skewnorm](https://janoleko.github.io/RTMBdist/reference/skewnorm.md),
-[skewnorm2](https://janoleko.github.io/RTMBdist/reference/skewnorm2.md)
+[skewt](https://janolefi.github.io/RTMBdist/reference/skewt.md),
+[skewnorm](https://janolefi.github.io/RTMBdist/reference/skewnorm.md),
+[skewnorm2](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md)
 
 ## Examples
 
