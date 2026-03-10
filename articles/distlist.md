@@ -19,7 +19,7 @@
 
 - [`exgauss(mu, sigma, lambda)`](https://janoleko.github.io/RTMBdist/reference/exgauss.md):
   Exponentially modified Gaussian distribution parameterised by location
-  `mu`, scale `sigma` and rate `lambda`
+  `mu`, scale `sigma`, and rate `lambda`
 
 - [`foldnorm(mu, sigma)`](https://janoleko.github.io/RTMBdist/reference/foldnorm.md):
   Folded normal distribution parameterised by location `mu` and scale
@@ -27,6 +27,10 @@
 
 - [`gamma2(mean, sd)`](https://janoleko.github.io/RTMBdist/reference/gamma2.md):
   Gamma distribution reparameterised by mean and standard deviation
+
+- [`gengamma(mu, sigma, nu)`](https://janoleko.github.io/RTMBdist/reference/gengamma.md):
+  Generalised gamma distribution parameterised by location `mu`, scale
+  `sigma`, and skewness `nu`
 
 - [`gumbel(location, scale)`](https://janoleko.github.io/RTMBdist/reference/gumbel.md):
   Gumbel distribution parameterised by location and scale
