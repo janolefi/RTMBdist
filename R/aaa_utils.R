@@ -128,7 +128,8 @@ log_zi_discrete <- function(x, logdens, zeroprob) {
 }
 # log Beta function
 lbeta.ad <- function(a, b) {
-  lgamma(a) + lgamma(b) - lgamma(a + b)
+  # lgamma(a) + lgamma(b) - lgamma(a + b)
+  lbeta(a,b)
 }
 
 # Log multivariate gamma, AD-friendly
@@ -140,13 +141,12 @@ lmultigamma <- function(a, p) {
   sum(lgamma(a + (1 - 1:p)/2))
 }
 
-# Error messages
-make_sim_error_msg <- function(){
-  "Automatic simulation requires the likelihood to follow the model hierarchy: random effects first, then data given those random effects."
-}
+# Generate helpful error message if user wrote likeliood in wrong order to simulate
 simulation_check <- function(args, exclude = c("x", "log")) {
   args <- args[setdiff(names(args), exclude)]
   if (any(vapply(args, function(a) inherits(a, "simref"), logical(1)))) {
-    stop(make_sim_error_msg())
+    stop(
+      "Automatic simulation requires the likelihood to follow the model hierarchy: random effects first, then data given those random effects."
+    )
   }
 }
