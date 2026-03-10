@@ -97,6 +97,8 @@ knitr::opts_chunk$set(
 
 * [`nbinom2(mu, size)`](../reference/nbinom2.html): Negative binomial distribution reparameterised by mean `mu` and size `size`
 
+* [`skellam(mu1, mu2)`](../reference/skellam.html): Skellam distribution parameterised by Poisson means `mu1` and `mu2`
+
 * [`zibinom(size, prob, zeroprob)`](../reference/zibinom.html): Zero-inflated binomial distribution parameterised by size `size`, success probability `prob` and zero-probability `zeroprob`
 
 * [`zinbinom(size, prob, zeroprob)`](../reference/zinbinom.html): Zero-inflated negative binomial distribution parameterised by size `size`, success probability `prob` and zero-probability `zeroprob`
