@@ -155,7 +155,6 @@ qgengamma <- function(p, mu = 1, sigma = 0.5, nu = 1, lower.tail = TRUE, log.p =
 
 #' @rdname gengamma
 #' @export
-#' @import RTMB
 #' @importFrom stats runif
 rgengamma <- function(n, mu = 1, sigma = 0.5, nu = 1) {
 
