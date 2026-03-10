@@ -24,11 +24,13 @@ knitr::opts_chunk$set(
 
 * [`beta2(mu, phi)`](../reference/beta2.html): Beta distribution reparameterised by mean `mu` and precision `phi`
 
-* [`exgauss(mu, sigma, lambda)`](../reference/exgauss.html): Exponentially modified Gaussian distribution parameterised by location `mu`, scale `sigma` and rate `lambda`
+* [`exgauss(mu, sigma, lambda)`](../reference/exgauss.html): Exponentially modified Gaussian distribution parameterised by location `mu`, scale `sigma`, and rate `lambda`
 
 * [`foldnorm(mu, sigma)`](../reference/foldnorm.html): Folded normal distribution parameterised by location `mu` and scale `sigma`
 
 * [`gamma2(mean, sd)`](../reference/gamma2.html): Gamma distribution reparameterised by mean and standard deviation
+
+* [`gengamma(mu, sigma, nu)`](../reference/gengamma.html): Generalised gamma distribution parameterised by location `mu`, scale `sigma`, and skewness `nu`
 
 * [`gumbel(location, scale)`](../reference/gumbel.html): Gumbel distribution parameterised by location and scale
 
