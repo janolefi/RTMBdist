@@ -45,6 +45,14 @@ dgengamma <- function(x, mu = 1, sigma = 0.5, nu = 1, log = FALSE) {
     if (any(sigma <= 0))  stop("sigma must be positive")
   }
 
+  # potentially escape to RNG or CDF
+  if(inherits(x, "simref")) {
+    return(dGenericSim("dgengamma", x=x, mu=mu, sigma=sigma, nu=nu, log=log))
+  }
+  if(inherits(x, "osa")) {
+    return(dGenericOSA("dgengamma", x=x, mu=mu, sigma=sigma, nu=nu, log=log))
+  }
+
   # preventing problems with x = 0
   x0 <- x
   x <- x + .Machine$double.xmin
