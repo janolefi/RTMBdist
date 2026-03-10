@@ -38,6 +38,9 @@
 - [`invgauss(mean, shape)`](https://janoleko.github.io/RTMBdist/reference/invgauss.md):
   Inverse Gaussian distribution parameterised by mean and shape
 
+- [`kumar(a, b)`](https://janoleko.github.io/RTMBdist/reference/kumar.md):
+  Kumaraswamy distribution parameterised by shape parameters `a` and `b`
+
 - [`laplace(mu, b)`](https://janoleko.github.io/RTMBdist/reference/laplace.md):
   Laplace distribution parameterised by location `mu` and scale `b`
 

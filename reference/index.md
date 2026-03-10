@@ -93,6 +93,11 @@
   [`qinvgauss()`](https://janoleko.github.io/RTMBdist/reference/invgauss.md)
   [`rinvgauss()`](https://janoleko.github.io/RTMBdist/reference/invgauss.md)
   : Inverse Gaussian distribution
+- [`dkumar()`](https://janoleko.github.io/RTMBdist/reference/kumar.md)
+  [`pkumar()`](https://janoleko.github.io/RTMBdist/reference/kumar.md)
+  [`qkumar()`](https://janoleko.github.io/RTMBdist/reference/kumar.md)
+  [`rkumar()`](https://janoleko.github.io/RTMBdist/reference/kumar.md) :
+  Kumaraswamy distribution
 - [`dlaplace()`](https://janoleko.github.io/RTMBdist/reference/laplace.md)
   [`plaplace()`](https://janoleko.github.io/RTMBdist/reference/laplace.md)
   [`qlaplace()`](https://janoleko.github.io/RTMBdist/reference/laplace.md)
