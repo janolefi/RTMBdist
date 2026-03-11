@@ -14,6 +14,10 @@
   Box-Cox t-distribution parameterised by location `mu`, scale `sigma`,
   skewness `nu`, and degrees of freedom `tau`
 
+- [`betaprime(shape1, shape2)`](https://janolefi.github.io/RTMBdist/reference/betaprime.md):
+  Beta prime distribution parameterised in terms of `shape1` and
+  `shape2` of the corresponding Beta distribution
+
 - [`beta2(mu, phi)`](https://janolefi.github.io/RTMBdist/reference/beta2.md):
   Beta distribution reparameterised by mean `mu` and precision `phi`
 

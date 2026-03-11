@@ -28,6 +28,11 @@
 - [`dbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
   [`rbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
   : Beta-binomial distribution
+- [`dbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
+  [`pbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
+  [`qbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
+  [`rbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
+  : Beta prime distribution
 - [`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   [`Cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   : Clayton copula constructors
