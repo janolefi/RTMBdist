@@ -141,6 +141,10 @@ lmultigamma <- function(a, p) {
   sum(lgamma(a + (1 - 1:p)/2))
 }
 
+reggamma <- function(s, x) {
+  pgamma(x, shape = s, scale = 1, lower.tail = FALSE)
+}
+
 # Generate helpful error message if user wrote likeliood in wrong order to simulate
 simulation_check <- function(args, exclude = c("x", "log")) {
   args <- args[setdiff(names(args), exclude)]
