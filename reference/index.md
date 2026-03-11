@@ -88,6 +88,16 @@
   [`qgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`rgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   : Gumbel distribution
+- [`dinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md)
+  [`pinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md)
+  [`qinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md)
+  [`rinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md)
+  : Inverse Chi-squared distribution
+- [`dinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md)
+  [`pinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md)
+  [`qinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md)
+  [`rinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md)
+  : Inverse Gamma distribution
 - [`dinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
   [`pinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
   [`qinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)

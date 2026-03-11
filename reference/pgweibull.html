@@ -49,11 +49,11 @@ Weibull (PgW) distribution with parameters <code>scale</code>, <code>shape</code
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spgweibull</span><span class="op">(</span><span class="va">x</span>, scale <span class="op">=</span> <span class="fl">1</span>, shape <span class="op">=</span> <span class="fl">1</span>, powershape <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spgweibull</span><span class="op">(</span><span class="va">q</span>, scale <span class="op">=</span> <span class="fl">1</span>, shape <span class="op">=</span> <span class="fl">1</span>, powershape <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">hpgweibull</span><span class="op">(</span><span class="va">x</span>, scale <span class="op">=</span> <span class="fl">1</span>, shape <span class="op">=</span> <span class="fl">1</span>, powershape <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ppgweibull</span><span class="op">(</span><span class="va">x</span>, scale <span class="op">=</span> <span class="fl">1</span>, shape <span class="op">=</span> <span class="fl">1</span>, powershape <span class="op">=</span> <span class="fl">1</span>,</span>
+<span><span class="fu">ppgweibull</span><span class="op">(</span><span class="va">q</span>, scale <span class="op">=</span> <span class="fl">1</span>, shape <span class="op">=</span> <span class="fl">1</span>, powershape <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>           lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dpgweibull</span><span class="op">(</span><span class="va">x</span>, scale <span class="op">=</span> <span class="fl">1</span>, shape <span class="op">=</span> <span class="fl">1</span>, powershape <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -67,11 +67,7 @@ Weibull (PgW) distribution with parameters <code>scale</code>, <code>shape</code
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>vector of quantiles</p></dd>
-
-
-<dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
+<dl><dt id="arg-scale">scale<a class="anchor" aria-label="anchor" href="#arg-scale"></a></dt>
 <dd><p>positive scale parameter</p></dd>
 
 
@@ -85,6 +81,10 @@ Weibull (PgW) distribution with parameters <code>scale</code>, <code>shape</code
 
 <dt id="arg-log-log-p">log, log.p<a class="anchor" aria-label="anchor" href="#arg-log-log-p"></a></dt>
 <dd><p>logical; if <code>TRUE</code>, probabilities/ densities \(p\) are returned as \(\log(p)\).</p></dd>
+
+
+<dt id="arg-x-q">x, q<a class="anchor" aria-label="anchor" href="#arg-x-q"></a></dt>
+<dd><p>vector of quantiles</p></dd>
 
 
 <dt id="arg-lower-tail">lower.tail<a class="anchor" aria-label="anchor" href="#arg-lower-tail"></a></dt>

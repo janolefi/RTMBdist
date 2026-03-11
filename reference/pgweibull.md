@@ -7,11 +7,11 @@ with parameters `scale`, `shape` and `powershape`.
 ## Usage
 
 ``` r
-spgweibull(x, scale = 1, shape = 1, powershape = 1, log = FALSE)
+spgweibull(q, scale = 1, shape = 1, powershape = 1, log = FALSE)
 
 hpgweibull(x, scale = 1, shape = 1, powershape = 1, log = FALSE)
 
-ppgweibull(x, scale = 1, shape = 1, powershape = 1,
+ppgweibull(q, scale = 1, shape = 1, powershape = 1,
            lower.tail = TRUE, log.p = FALSE)
 
 dpgweibull(x, scale = 1, shape = 1, powershape = 1, log = FALSE)
@@ -22,10 +22,6 @@ rpgweibull(n, scale = 1, shape = 1, powershape = 1)
 ```
 
 ## Arguments
-
-- x:
-
-  vector of quantiles
 
 - scale:
 
@@ -43,6 +39,10 @@ rpgweibull(n, scale = 1, shape = 1, powershape = 1)
 
   logical; if `TRUE`, probabilities/ densities \\p\\ are returned as
   \\\log(p)\\.
+
+- x, q:
+
+  vector of quantiles
 
 - lower.tail:
 

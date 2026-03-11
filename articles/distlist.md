@@ -33,7 +33,15 @@
   `sigma`, and skewness `nu`
 
 - [`gumbel(location, scale)`](https://janolefi.github.io/RTMBdist/reference/gumbel.md):
-  Gumbel distribution parameterised by location and scale
+  Gumbel distribution parameterised by `location` and `scale`
+
+- [`invchisq(df, scale)`](https://janolefi.github.io/RTMBdist/reference/invchisq.md):
+  Inverse Chi-squared distribution parameterised by degrees of freedom
+  `df` and optional `scale`
+
+- [`invgamma(shape, rate, scale)`](https://janolefi.github.io/RTMBdist/reference/invgamma.md):
+  Inverse gamma distribution parameterised by `shape`, `rate`, and
+  `scale` of the corresponding gamma distribution
 
 - [`invgauss(mean, shape)`](https://janolefi.github.io/RTMBdist/reference/invgauss.md):
   Inverse Gaussian distribution parameterised by mean and shape
