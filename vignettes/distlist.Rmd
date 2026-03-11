@@ -22,6 +22,8 @@ knitr::opts_chunk$set(
 
 * [`bct(mu, sigma, nu, tau)`](../reference/bct.html): Box-Cox t-distribution parameterised by location `mu`, scale `sigma`, skewness `nu`, and degrees of freedom `tau`
 
+* [`betaprime(shape1, shape2)`](../reference/betaprime.html): Beta prime distribution parameterised in terms of `shape1` and `shape2` of the corresponding Beta distribution
+
 * [`beta2(mu, phi)`](../reference/beta2.html): Beta distribution reparameterised by mean `mu` and precision `phi`
 
 * [`exgauss(mu, sigma, lambda)`](../reference/exgauss.html): Exponentially modified Gaussian distribution parameterised by location `mu`, scale `sigma`, and rate `lambda`

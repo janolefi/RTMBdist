@@ -29,6 +29,7 @@
 #' q <- qbeta2(p, 0.5, 1)
 #' @name beta2
 NULL
+
 #' @rdname beta2
 #' @export
 #' @import RTMB
