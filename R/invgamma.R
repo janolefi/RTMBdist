@@ -42,10 +42,10 @@ dinvgamma <- function(x, shape, rate, scale = 1/rate, log = FALSE) {
 
   # potentially escape to RNG or CDF
   if(inherits(x, "simref")) {
-    return(dGenericSim("dinvgamma", x=x, shape=shape, scale=scale, log=log))
+    return(dGenericSim("dinvgamma", x=x, shape=shape, rate=rate, log=log))
   }
   if(inherits(x, "osa")) {
-    return(dGenericOSA("dinvgamma", x=x, shape=shape, scale=scale, log=log))
+    return(dGenericOSA("dinvgamma", x=x, shape=shape, rate=rate, log=log))
   }
 
   logC <- shape * log(scale) - lgamma(shape)
