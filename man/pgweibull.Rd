@@ -10,11 +10,11 @@
 \alias{rpgweibull}
 \title{Power generalized Weibull distribution}
 \usage{
-spgweibull(x, scale = 1, shape = 1, powershape = 1, log = FALSE)
+spgweibull(q, scale = 1, shape = 1, powershape = 1, log = FALSE)
 
 hpgweibull(x, scale = 1, shape = 1, powershape = 1, log = FALSE)
 
-ppgweibull(x, scale = 1, shape = 1, powershape = 1,
+ppgweibull(q, scale = 1, shape = 1, powershape = 1,
            lower.tail = TRUE, log.p = FALSE)
 
 dpgweibull(x, scale = 1, shape = 1, powershape = 1, log = FALSE)
@@ -24,8 +24,6 @@ qpgweibull(p, scale = 1, shape = 1, powershape = 1)
 rpgweibull(n, scale = 1, shape = 1, powershape = 1)
 }
 \arguments{
-\item{x}{vector of quantiles}
-
 \item{scale}{positive scale parameter}
 
 \item{shape}{positive shape parameter}
@@ -33,6 +31,8 @@ rpgweibull(n, scale = 1, shape = 1, powershape = 1)
 \item{powershape}{positive power shape parameter}
 
 \item{log, log.p}{logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.}
+
+\item{x, q}{vector of quantiles}
 
 \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
 

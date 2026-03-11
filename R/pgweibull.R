@@ -8,7 +8,7 @@
 #' density, quantile and sampling function for the power generalized
 #' Weibull (PgW) distribution with parameters \code{scale}, \code{shape} and \code{powershape}.
 #'
-#' @param x vector of quantiles
+#' @param x,q vector of quantiles
 #' @param p vector of probabilities
 #' @param n number of observations
 #' @param scale positive scale parameter
@@ -49,7 +49,7 @@ NULL
 
 #' @rdname pgweibull
 #' @export
-spgweibull <- function(x, scale = 1, shape = 1, powershape = 1, log = FALSE) {
+spgweibull <- function(q, scale = 1, shape = 1, powershape = 1, log = FALSE) {
 
   if(!ad_context()) {
     # ensure scale, shape, powershape > 0
@@ -63,15 +63,12 @@ spgweibull <- function(x, scale = 1, shape = 1, powershape = 1, log = FALSE) {
   nu <- shape
   gamma <- powershape
 
-  log_survival_values <- 1 - (1 + (x/theta)^nu)^(1/gamma)
-  if(log == TRUE){
-    return(log_survival_values)
-  }
-  else{
-    survival_values = exp(log_survival_values)
-    return(survival_values)
-  }
+  log1pxtn <- log1p((q / theta)^nu)
+  log_inner <- log1pxtn / gamma     # stabilised exponent
+  Slog <- -expm1(log_inner)         # log survival
 
+  if(log) return(Slog)
+  return(exp(Slog))
 }
 
 #' @rdname pgweibull
@@ -104,25 +101,12 @@ hpgweibull <- function(x, scale = 1, shape = 1, powershape = 1, log = FALSE) {
 #' @rdname pgweibull
 #' @export
 #' @usage
-#' ppgweibull(x, scale = 1, shape = 1, powershape = 1,
+#' ppgweibull(q, scale = 1, shape = 1, powershape = 1,
 #'            lower.tail = TRUE, log.p = FALSE)
-ppgweibull <- function(x, scale = 1, shape = 1, powershape = 1,
+ppgweibull <- function(q, scale = 1, shape = 1, powershape = 1,
                        lower.tail = TRUE, log.p = FALSE) {
 
-  if(!ad_context()) {
-    # ensure scale, shape, powershape > 0
-    if (any(scale <= 0)) stop("scale must be strictly positive.")
-    if (any(shape <= 0)) stop("shape must be strictly positive.")
-    if (any(powershape <= 0)) stop("powershape must be strictly positive.")
-  }
-
-  # renaming to match the formula
-  theta <- scale
-  nu <- shape
-  gamma <- powershape
-
-  log_surv_values <- 1 - (1 + (x/theta)^nu)^(1/gamma)
-  p <- 1 - exp(log_surv_values)
+  p <- 1 - spgweibull(q, scale=scale, shape=shape, powershape=powershape)
 
   if(!lower.tail) p <- 1 - p
   if(log.p) p <- log(p)
@@ -157,8 +141,8 @@ dpgweibull <- function(x, scale = 1, shape = 1, powershape = 1, log = FALSE) {
   gamma <- powershape
 
   log1pxtn <- log1p((x/theta)^nu)
-  log_inner <- log1pxtn / gamma # hopefull stabilises double power
-  log_S <- 1 - exp(log_inner)
+  log_inner <- log1pxtn / gamma # stabilising double power
+  log_S <- -expm1(log_inner)
   log_h <- log(nu) - log(gamma) - nu * log(theta) +
     (nu-1) * log(x) + (1/gamma - 1) * log1pxtn
 
@@ -185,7 +169,7 @@ qpgweibull <- function(p, scale = 1, shape = 1, powershape = 1) {
   gamma <- powershape
 
   # inverse cumulative distribution fct.
-  theta*( ( 1 - log1p(-p) )^gamma - 1 )^(1/nu)
+  theta * ( ( 1 - log1p(-p) )^gamma - 1 )^(1/nu)
 }
 
 #' @rdname pgweibull
