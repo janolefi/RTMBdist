@@ -8,13 +8,13 @@
 ## Citation
 
 Fischer J (2026). *RTMBdist: Distributions Compatible with Automatic
-Differentiation by 'RTMB'*. R package version 1.0.1,
+Differentiation by 'RTMB'*. R package version 1.0.2,
 <https://janolefi.github.io/RTMBdist/>.
 
     @Manual{,
       title = {RTMBdist: Distributions Compatible with Automatic Differentiation by 'RTMB'},
       author = {Jan-Ole Fischer},
       year = {2026},
-      note = {R package version 1.0.1},
+      note = {R package version 1.0.2},
       url = {https://janolefi.github.io/RTMBdist/},
     }
