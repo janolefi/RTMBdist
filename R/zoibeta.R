@@ -121,9 +121,13 @@ rzoibeta <- function(n, shape1, shape2, zeroprob = 0, oneprob = 0) {
   if (any(zeroprob + oneprob > 1)) stop("zeroprob + oneprob must be <= 1")
 
   u <- runif(n)
-  res <- rep(1, n)
+
+  res <- rep(0, n)
   is_zero <- u < zeroprob
-  res[!is_zero] <- rbeta(sum(!is_zero), shape1, shape2)
+  is_one  <- u >= zeroprob & u < zeroprob + oneprob
+  is_cont <- !is_zero & !is_one
+  res[is_one]  <- 1
+  res[is_cont] <- rbeta(sum(is_cont), shape1, shape2)
 
   return(res)
 }
