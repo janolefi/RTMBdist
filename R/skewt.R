@@ -44,8 +44,8 @@ dskewt <- function(x, mu = 0, sigma = 1, skew = 0, df = 1e2, log = FALSE) {
     args <- as.list(environment())
     simulation_check(args) # informative error message if likelihood in wrong order
     # ensure sigma, df > 0
-    if (sigma <= 0) stop("sigma must be strictly positive.")
-    if (df <= 0) stop("df must be strictly positive.")
+    if (any(sigma <= 0)) stop("sigma must be strictly positive.")
+    if (any(df <= 0)) stop("df must be strictly positive.")
   }
 
   # potentially escape to RNG or CDF
@@ -92,8 +92,8 @@ pskewt <- function(q, mu = 0, sigma = 1, skew = 0, df = 1e2, method = 0, lower.t
 #' @importFrom sn qst
 qskewt <- function(p, mu = 0, sigma = 1, skew = 0, df = 1e2, tol = 1e-8, method = 0) {
   # ensure sigma, df > 0
-  if (sigma <= 0) stop("sigma must be strictly positive.")
-  if (df <= 0) stop("df must be strictly positive.")
+  if (any(sigma <= 0)) stop("sigma must be strictly positive.")
+  if (any(df <= 0)) stop("df must be strictly positive.")
   qst(p, xi=mu, omega=sigma, alpha=skew, nu=df, tol=tol, method=method)
 }
 
@@ -102,8 +102,8 @@ qskewt <- function(p, mu = 0, sigma = 1, skew = 0, df = 1e2, tol = 1e-8, method 
 #' @importFrom sn rst
 rskewt <- function(n, mu = 0, sigma = 1, skew = 0, df = 1e2) {
   # ensure sigma, df > 0
-  if (sigma <= 0) stop("sigma must be strictly positive.")
-  if (df <= 0) stop("df must be strictly positive.")
+  if (any(sigma <= 0)) stop("sigma must be strictly positive.")
+  if (any(df <= 0)) stop("df must be strictly positive.")
 
   as.numeric(rst(n, xi=mu, omega=sigma, alpha=skew, nu=df))
 }

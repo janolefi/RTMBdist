@@ -57,8 +57,8 @@ NULL
     args <- as.list(environment())
     simulation_check(args) # informative error message if likelihood in wrong order
     # ensure sigma, df > 2
-    if (sd <= 0) stop("sd must be strictly positive.")
-    if (df <= 2) stop("df must be larger than 2 for finite variance.")
+    if (any(sd <= 0)) stop("sd must be strictly positive.")
+    if (any(df <= 2)) stop("df must be larger than 2 for finite variance.")
   }
 
   delta <- skew / sqrt(1 + skew * skew)
