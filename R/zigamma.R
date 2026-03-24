@@ -47,7 +47,6 @@ dzigamma = function(x, shape, scale, zeroprob = 0, log = FALSE) {
   }
 
   eps <- .Machine$double.xmin # so that gradient is not NaN bc -Inf * 0
-
   logdens <- RTMB::dgamma(x + eps, shape = shape, scale = scale, log = TRUE)
   logdens <- log_zi(x, logdens, zeroprob)
 

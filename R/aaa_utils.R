@@ -98,9 +98,11 @@ greater <- function(x, val) {
   s <- sign(val - x)
   0.5 * (abs(s) - s)
 }
-# turns +Inf into largest finite value
+# turns +/-Inf into largest finite value
 as.finite <- function(x) {
-  pmin.ad(x, .Machine$double.xmax)
+  x <- pmin.ad(x, .Machine$double.xmax)
+  x <- pmax.ad(x, -.Machine$double.xmax)
+  return(x)
 }
 as.finite.neg <- function(x) {
   pmax.ad(x, -.Machine$double.xmax)
@@ -111,7 +113,7 @@ as.finite.neg <- function(x) {
 # x == 0: p0
 # x > 0: (1-p0) * pdf(x)
 log_zi <- function(x, logdens, zeroprob) {
-  logdens <- as.finite(logdens) # turn + Inf into finite
+  logdens <- as.finite(logdens) # turn +/- Inf into finite
   logdens <- RTMB::logspace_add(
     log(iszero(x)) + log(zeroprob),
     # log(ispos_strict(x)) + log1p(-zeroprob) + logdens
