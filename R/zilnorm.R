@@ -83,7 +83,7 @@ rzilnorm <- function(n, meanlog = 0, sdlog = 1, zeroprob = 0) {
   if (any(zeroprob < 0 | zeroprob > 1)) stop("zeroprob must be in [0,1]")
 
   u <- runif(n)
-  res <- rep(1, n)
+  res <- rep(0, n)
   is_zero <- u < zeroprob
   res[!is_zero] <- rlnorm(sum(!is_zero), meanlog = meanlog, sdlog = sdlog)
 
