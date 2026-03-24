@@ -653,7 +653,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  13.756   0.025  13.782
+#>  16.638  10.734  14.431
 rep <- sdreport(obj_svt)
 rep
 #> sdreport(.) result
@@ -671,5 +671,5 @@ rep
 #> off_diag_x -1.1315426 0.06265752
 #> off_diag_x  0.7446955 0.04688460
 #> log_df      1.9632807 0.13715707
-#> Maximum gradient component: 0.0009298736
+#> Maximum gradient component: 0.0009298735
 ```

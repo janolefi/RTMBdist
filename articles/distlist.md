@@ -128,20 +128,24 @@
   precision `phi`, and zero-probability `zeroprob`
 
 - [`zigamma(shape, scale, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/zigamma.md):
-  Zero-inflated gamma distribution parameterised by shape and scale,
-  with a zero-probability `zeroprob`
+  Zero-inflated gamma distribution parameterised by shape, scale, and
+  zero-probability `zeroprob`
 
 - [`zigamma2(mean, sd, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/zigamma2.md):
   Zero-inflated gamma distribution reparameterised by mean, standard
-  deviation and zero-probability `zeroprob`
+  deviation, and zero-probability `zeroprob`
 
 - [`ziinvgauss(mean, shape, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/ziinvgauss.md):
   Zero-inflated inverse Gaussian distribution parameterised by mean,
-  shape and zero-probability `zeroprob`
+  shape, and zero-probability `zeroprob`
 
 - [`zilnorm(meanlog, sdlog, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md):
-  Zero-inflated log normal distribution parameterised by meanlog, sdlog
+  Zero-inflated log normal distribution parameterised by meanlog, sdlog,
   and zero-probability `zeroprob`
+
+- [`ziweibull(shape, scale, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/ziweibull/md):
+  Zero-inflated Weibull distribution parameterised by shape, scale, and
+  zero-probability `zeroprob`
 
 - [`zoibeta(shape1, shape2, zeroprob, oneprob)`](https://janolefi.github.io/RTMBdist/reference/zoibeta.md):
   Zero- and one-inflated beta distribution parameterised by shape

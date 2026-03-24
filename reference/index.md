@@ -259,6 +259,10 @@
   [`pzipois()`](https://janolefi.github.io/RTMBdist/reference/zipois.md)
   [`rzipois()`](https://janolefi.github.io/RTMBdist/reference/zipois.md)
   : Zero-inflated Poisson distribution
+- [`dziweibull()`](https://janolefi.github.io/RTMBdist/reference/ziweibull.md)
+  [`pziweibull()`](https://janolefi.github.io/RTMBdist/reference/ziweibull.md)
+  [`rziweibull()`](https://janolefi.github.io/RTMBdist/reference/ziweibull.md)
+  : Zero-inflated Weibull distribution
 - [`dzoibeta()`](https://janolefi.github.io/RTMBdist/reference/zoibeta.md)
   [`pzoibeta()`](https://janolefi.github.io/RTMBdist/reference/zoibeta.md)
   [`rzoibeta()`](https://janolefi.github.io/RTMBdist/reference/zoibeta.md)
