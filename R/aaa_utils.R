@@ -116,7 +116,6 @@ log_zi <- function(x, logdens, zeroprob) {
   logdens <- as.finite(logdens) # turn +/- Inf into finite
   logdens <- RTMB::logspace_add(
     log(iszero(x)) + log(zeroprob),
-    # log(ispos_strict(x)) + log1p(-zeroprob) + logdens
     log(isnonzero(x)) + log1p(-zeroprob) + logdens
   )
 }
