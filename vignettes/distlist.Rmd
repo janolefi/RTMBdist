@@ -90,7 +90,7 @@ knitr::opts_chunk$set(
 
 * [`zilnorm(meanlog, sdlog, zeroprob)`](../reference/zilnorm.html): Zero-inflated log normal distribution parameterised by meanlog, sdlog, and zero-probability `zeroprob`
 
-* [`ziweibull(shape, scale, zeroprob)`](../reference/ziweibull/html): Zero-inflated Weibull distribution parameterised by shape, scale, and zero-probability `zeroprob`
+* [`ziweibull(shape, scale, zeroprob)`](../reference/ziweibull.html): Zero-inflated Weibull distribution parameterised by shape, scale, and zero-probability `zeroprob`
 
 * [`zoibeta(shape1, shape2, zeroprob, oneprob)`](../reference/zoibeta.html): Zero- and one-inflated beta distribution parameterised by shape parameters `shape1`, `shape2`, zero-probability `zeroprob` and one-probability `oneprob`
 
