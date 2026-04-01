@@ -27,7 +27,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    LaMa (>= 2.0.6),
+    LaMa (>= 2.1.0),
     Matrix,
     TMB,
     gamlss.data,
