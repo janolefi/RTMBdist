@@ -143,7 +143,7 @@
   Zero-inflated log normal distribution parameterised by meanlog, sdlog,
   and zero-probability `zeroprob`
 
-- [`ziweibull(shape, scale, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/ziweibull/md):
+- [`ziweibull(shape, scale, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/ziweibull.md):
   Zero-inflated Weibull distribution parameterised by shape, scale, and
   zero-probability `zeroprob`
 
