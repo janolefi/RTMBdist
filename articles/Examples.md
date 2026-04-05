@@ -609,7 +609,7 @@ par <- list(
   mu_y       = rep(-0.5,p),               #       ---------||---------
   off_diag_x = rep(0,p),                  #       ---------||---------
   h          = matrix(0,nrow=n,ncol=p),   #       ---------||---------
-  log_df     = log(20)                    # this allows for heavier tails
+  log_df     = log(10)                    # this allows for heavier tails
 )
 
 # Negative joint likelihood (nll) of data and parameters
@@ -619,10 +619,11 @@ nll_svt <- function(par) {
   y <- OBS(y)
   
   # Parameters on natural scale
-  sigma <- exp(log_sigma)
-  phi <- plogis(logit_phi)
+  sigma <- exp(log_sigma); ADREPORT(sigma)
+  phi <- plogis(logit_phi); ADREPORT(phi)
   sigma_init <- sigma / sqrt(1-phi^2)
-  df <- exp(log_df)
+  df <- exp(log_df); ADREPORT(df)
+  ADREPORT(mu_y)
   
   nll <- 0  # Start collecting contributions
   
@@ -653,23 +654,18 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  13.707   0.023  13.731
-rep <- sdreport(obj_svt)
-rep
-#> sdreport(.) result
-#>              Estimate Std. Error
-#> logit_phi   3.6269542 0.49413568
-#> logit_phi   3.1290137 0.38240912
-#> logit_phi   4.7269255 0.80777552
-#> log_sigma  -1.9420595 0.21824559
-#> log_sigma  -2.0048373 0.17178092
-#> log_sigma  -2.4015626 0.34312782
-#> mu_y       -1.1388822 0.18663075
-#> mu_y       -1.0938327 0.11876150
-#> mu_y       -1.5630285 0.31299779
-#> off_diag_x -1.3641053 0.06465394
-#> off_diag_x -1.1315426 0.06265752
-#> off_diag_x  0.7446955 0.04688460
-#> log_df      1.9632807 0.13715707
-#> Maximum gradient component: 0.0009298736
+#>  14.082   0.022  14.106
+sdr_svt <- sdreport(obj_svt)
+summary(sdr_svt, "report")
+#>          Estimate  Std. Error
+#> sigma  0.14340470 0.031297755
+#> sigma  0.13468225 0.023135810
+#> sigma  0.09057673 0.031079410
+#> phi    0.97409443 0.012470016
+#> phi    0.95807405 0.015360711
+#> phi    0.99122411 0.007026834
+#> df     7.12265197 0.976921824
+#> mu_y  -1.13887764 0.186641877
+#> mu_y  -1.09383519 0.118761923
+#> mu_y  -1.56301208 0.312999106
 ```

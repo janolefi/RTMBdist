@@ -594,7 +594,7 @@ the covariance matrix anymore, but only proportional to it.</p>
 <span>  mu_y       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>,<span class="va">p</span><span class="op">)</span>,               <span class="co">#       ---------||---------</span></span>
 <span>  off_diag_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">p</span><span class="op">)</span>,                  <span class="co">#       ---------||---------</span></span>
 <span>  h          <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0</span>,nrow<span class="op">=</span><span class="va">n</span>,ncol<span class="op">=</span><span class="va">p</span><span class="op">)</span>,   <span class="co">#       ---------||---------</span></span>
-<span>  log_df     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>                    <span class="co"># this allows for heavier tails</span></span>
+<span>  log_df     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>                    <span class="co"># this allows for heavier tails</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Negative joint likelihood (nll) of data and parameters</span></span>
@@ -604,10 +604,11 @@ the covariance matrix anymore, but only proportional to it.</p>
 <span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/RTMB/man/TMB-interface.html" class="external-link">OBS</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="co"># Parameters on natural scale</span></span>
-<span>  <span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">log_sigma</span><span class="op">)</span></span>
-<span>  <span class="va">phi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Logistic.html" class="external-link">plogis</a></span><span class="op">(</span><span class="va">logit_phi</span><span class="op">)</span></span>
+<span>  <span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">log_sigma</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/pkg/RTMB/man/TMB-interface.html" class="external-link">ADREPORT</a></span><span class="op">(</span><span class="va">sigma</span><span class="op">)</span></span>
+<span>  <span class="va">phi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Logistic.html" class="external-link">plogis</a></span><span class="op">(</span><span class="va">logit_phi</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/pkg/RTMB/man/TMB-interface.html" class="external-link">ADREPORT</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span></span>
 <span>  <span class="va">sigma_init</span> <span class="op">&lt;-</span> <span class="va">sigma</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">phi</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">log_df</span><span class="op">)</span></span>
+<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">log_df</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/pkg/RTMB/man/TMB-interface.html" class="external-link">ADREPORT</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/RTMB/man/TMB-interface.html" class="external-link">ADREPORT</a></span><span class="op">(</span><span class="va">mu_y</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="va">nll</span> <span class="op">&lt;-</span> <span class="fl">0</span>  <span class="co"># Start collecting contributions</span></span>
 <span>  </span>
@@ -638,25 +639,20 @@ the covariance matrix anymore, but only proportional to it.</p>
 <span>  <span class="va">opt_svt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/nlminb.html" class="external-link">nlminb</a></span><span class="op">(</span><span class="va">obj_svt</span><span class="op">$</span><span class="va">par</span>, <span class="va">obj_svt</span><span class="op">$</span><span class="va">fn</span>, <span class="va">obj_svt</span><span class="op">$</span><span class="va">gr</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  13.707   0.023  13.731</span></span>
-<span><span class="va">rep</span> <span class="op">&lt;-</span> <span class="fu">sdreport</span><span class="op">(</span><span class="va">obj_svt</span><span class="op">)</span></span>
-<span><span class="va">rep</span></span>
-<span><span class="co">#&gt; sdreport(.) result</span></span>
-<span><span class="co">#&gt;              Estimate Std. Error</span></span>
-<span><span class="co">#&gt; logit_phi   3.6269542 0.49413568</span></span>
-<span><span class="co">#&gt; logit_phi   3.1290137 0.38240912</span></span>
-<span><span class="co">#&gt; logit_phi   4.7269255 0.80777552</span></span>
-<span><span class="co">#&gt; log_sigma  -1.9420595 0.21824559</span></span>
-<span><span class="co">#&gt; log_sigma  -2.0048373 0.17178092</span></span>
-<span><span class="co">#&gt; log_sigma  -2.4015626 0.34312782</span></span>
-<span><span class="co">#&gt; mu_y       -1.1388822 0.18663075</span></span>
-<span><span class="co">#&gt; mu_y       -1.0938327 0.11876150</span></span>
-<span><span class="co">#&gt; mu_y       -1.5630285 0.31299779</span></span>
-<span><span class="co">#&gt; off_diag_x -1.3641053 0.06465394</span></span>
-<span><span class="co">#&gt; off_diag_x -1.1315426 0.06265752</span></span>
-<span><span class="co">#&gt; off_diag_x  0.7446955 0.04688460</span></span>
-<span><span class="co">#&gt; log_df      1.9632807 0.13715707</span></span>
-<span><span class="co">#&gt; Maximum gradient component: 0.0009298736</span></span></code></pre></div>
+<span><span class="co">#&gt;  14.082   0.022  14.106</span></span>
+<span><span class="va">sdr_svt</span> <span class="op">&lt;-</span> <span class="fu">sdreport</span><span class="op">(</span><span class="va">obj_svt</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sdr_svt</span>, <span class="st">"report"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          Estimate  Std. Error</span></span>
+<span><span class="co">#&gt; sigma  0.14340470 0.031297755</span></span>
+<span><span class="co">#&gt; sigma  0.13468225 0.023135810</span></span>
+<span><span class="co">#&gt; sigma  0.09057673 0.031079410</span></span>
+<span><span class="co">#&gt; phi    0.97409443 0.012470016</span></span>
+<span><span class="co">#&gt; phi    0.95807405 0.015360711</span></span>
+<span><span class="co">#&gt; phi    0.99122411 0.007026834</span></span>
+<span><span class="co">#&gt; df     7.12265197 0.976921824</span></span>
+<span><span class="co">#&gt; mu_y  -1.13887764 0.186641877</span></span>
+<span><span class="co">#&gt; mu_y  -1.09383519 0.118761923</span></span>
+<span><span class="co">#&gt; mu_y  -1.56301208 0.312999106</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
