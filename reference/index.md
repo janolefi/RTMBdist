@@ -118,6 +118,8 @@
   [`qlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   [`rlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   : Laplace distribution
+- [`mcreport()`](https://janolefi.github.io/RTMBdist/reference/mcreport.md)
+  : Sample parameters from approximate Gaussian posterior distribution
 - [`dmvt()`](https://janolefi.github.io/RTMBdist/reference/mvt.md)
   [`rmvt()`](https://janolefi.github.io/RTMBdist/reference/mvt.md) :
   Multivariate t distribution
@@ -156,6 +158,8 @@
   [`qpowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
   [`rpowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
   : Power Exponential distribution (PE and PE2)
+- [`rgmrf()`](https://janolefi.github.io/RTMBdist/reference/rgmrf.md) :
+  Sample from a multivariate Gaussian with a sparse precision matrix
 - [`dskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
   [`rskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
   : Skellam distribution
