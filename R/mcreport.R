@@ -81,7 +81,7 @@ append_report_suffix <- function(report_names, par_names, suffix = ".report") {
 #'
 #' # sample from asymptotic distribution of the MLE
 #' samples <- mcreport(obj, report = TRUE)
-#' # paramaters
+#' # parameters
 #' mean(unlist(samples$loc)); sd(unlist(samples$loc))
 #' # reported transformed parameters
 #' mean(unlist(samples$scale)); sd(unlist(samples$scale))
@@ -121,7 +121,7 @@ append_report_suffix <- function(report_names, par_names, suffix = ".report") {
 #'
 #' # RTMB Laplace approximation
 #' par <- list(beta0 = 1, log_sd_gamma = log(2), gamma = rep(0,10))
-#' obj <- MakeADFun(nll, par, random = "gamma")
+#' obj <- MakeADFun(nll, par, random = "gamma", silent = TRUE)
 #'
 #' # model fitting using AD gradient
 #' opt <- nlminb(obj$par, obj$fn, obj$gr)

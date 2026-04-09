@@ -1,7 +1,7 @@
 Package: RTMBdist
 Type: Package
 Title: Distributions Compatible with Automatic Differentiation by 'RTMB'
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(
     person(given = "Jan-Ole", family = "Fischer", 
           email = "jan-ole.fischer@mailbox.org",
