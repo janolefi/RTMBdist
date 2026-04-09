@@ -50,9 +50,9 @@ mcreport(
 
 ## Value
 
-A list structured like the original parameter list used in the MakeADFun
-call (potentially including additional `REPORT`ed quantities). Each
-entry is a list with `nSamples` entries.
+A list structured like the original parameter list used in the
+`MakeADFun` call (potentially including additional `REPORT`ed
+quantities). Each entry is a list with `nSamples` entries.
 
 ## Details
 
