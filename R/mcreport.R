@@ -47,7 +47,7 @@ append_report_suffix <- function(report_names, par_names, suffix = ".report") {
 #'
 #' @param ... For internal use only
 #'
-#' @returns A list structured like the original parameter list used in the \link[RTMB]{MakeADFun} call (potentially including additional \code{REPORT}ed quantities). Each entry is a list with \code{nSamples} entries.
+#' @returns A list structured like the original parameter list used in the \code{\link[RTMB]{MakeADFun}} call (potentially including additional \code{REPORT}ed quantities). Each entry is a list with \code{nSamples} entries.
 #'
 #' @export
 #'
