@@ -101,7 +101,7 @@ opt <- nlminb(obj$par, obj$fn, obj$gr)
 samples <- mcreport(obj, report = TRUE)
 #> Evaluating Hessian...
 #> Computing reported quantities...
-# paramaters
+# parameters
 mean(unlist(samples$loc)); sd(unlist(samples$loc))
 #> [1] 5.00983
 #> [1] 0.1991763
@@ -149,131 +149,18 @@ nll <- function(par) {
 
 # RTMB Laplace approximation
 par <- list(beta0 = 1, log_sd_gamma = log(2), gamma = rep(0,10))
-obj <- MakeADFun(nll, par, random = "gamma")
+obj <- MakeADFun(nll, par, random = "gamma", silent = TRUE)
 
 # model fitting using AD gradient
 opt <- nlminb(obj$par, obj$fn, obj$gr)
-#> iter: 1  value: 466.6571 mgc: 25.89414 ustep: 1 
-#> iter: 2  value: 458.8619 mgc: 7.783187 ustep: 1 
-#> iter: 3  value: 457.9038 mgc: 2.314415 ustep: 1 
-#> iter: 4  value: 457.8477 mgc: 0.496922 ustep: 1 
-#> iter: 5  value: 457.8473 mgc: 0.04143599 ustep: 1 
-#> iter: 6  value: 457.8473 mgc: 0.0003582528 ustep: 1 
-#> iter: 7  value: 457.8473 mgc: 2.737444e-08 ustep: 1 
-#> iter: 8  mgc: 1.315614e-14 
-#> iter: 1  mgc: 1.315614e-14 
-#> Matching hessian patterns... Done
-#> outer mgc:  4.99482 
-#> iter: 1  value: 455.6624 mgc: 7.257169 ustep: 1 
-#> iter: 2  value: 454.8264 mgc: 2.830034 ustep: 1 
-#> iter: 3  value: 454.8157 mgc: 0.3392154 ustep: 1 
-#> iter: 4  value: 454.8157 mgc: 0.006531764 ustep: 1 
-#> iter: 5  value: 454.8157 mgc: 2.531136e-06 ustep: 1 
-#> iter: 6  mgc: 3.78364e-13 
-#> iter: 1  mgc: 3.78364e-13 
-#> outer mgc:  4.523853 
-#> iter: 1  value: 464.6336 mgc: 19.65283 ustep: 1 
-#> iter: 2  value: 456.8745 mgc: 7.303745 ustep: 1 
-#> iter: 3  value: 456.8412 mgc: 0.5108803 ustep: 1 
-#> iter: 4  value: 456.8412 mgc: 0.004387372 ustep: 1 
-#> iter: 5  value: 456.8412 mgc: 4.812511e-07 ustep: 1 
-#> iter: 6  mgc: 8.437695e-15 
-#> iter: 1  value: 454.2411 mgc: 6.474134 ustep: 1 
-#> iter: 2  value: 454.2219 mgc: 0.3670008 ustep: 1 
-#> iter: 3  value: 454.2219 mgc: 0.001768257 ustep: 1 
-#> iter: 4  value: 454.2219 mgc: 5.308701e-08 ustep: 1 
-#> mgc: 1.154632e-14 
-#> iter: 1  mgc: 1.154632e-14 
-#> outer mgc:  0.6986839 
-#> iter: 1  value: 454.7849 mgc: 6.485323 ustep: 1 
-#> iter: 2  value: 454.7346 mgc: 0.4341287 ustep: 1 
-#> iter: 3  value: 454.7345 mgc: 0.005420217 ustep: 1 
-#> iter: 4  value: 454.7345 mgc: 2.08349e-06 ustep: 1 
-#> iter: 5  mgc: 3.099743e-13 
-#> iter: 1  value: 454.1972 mgc: 1.090947 ustep: 1 
-#> iter: 2  value: 454.1972 mgc: 0.009769479 ustep: 1 
-#> iter: 3  value: 454.1972 mgc: 1.859163e-06 ustep: 1 
-#> iter: 4  mgc: 1.279532e-13 
-#> iter: 1  mgc: 1.279532e-13 
-#> outer mgc:  0.2913437 
-#> iter: 1  value: 454.2338 mgc: 1.013011 ustep: 1 
-#> iter: 2  value: 454.2337 mgc: 0.0079488 ustep: 1 
-#> iter: 3  value: 454.2337 mgc: 1.019005e-06 ustep: 1 
-#> iter: 4  mgc: 3.608225e-14 
-#> iter: 1  mgc: 3.608225e-14 
-#> outer mgc:  0.2254721 
-#> iter: 1  value: 454.1926 mgc: 0.1157754 ustep: 1 
-#> iter: 2  value: 454.1926 mgc: 0.00130599 ustep: 1 
-#> iter: 3  value: 454.1926 mgc: 1.619449e-07 ustep: 1 
-#> iter: 4  mgc: 9.65894e-15 
-#> iter: 1  mgc: 9.65894e-15 
-#> outer mgc:  0.1946059 
-#> iter: 1  value: 454.2073 mgc: 0.1411521 ustep: 1 
-#> iter: 2  value: 454.2073 mgc: 0.0004344698 ustep: 1 
-#> iter: 3  value: 454.2073 mgc: 1.828603e-08 ustep: 1 
-#> mgc: 1.132427e-14 
-#> iter: 1  mgc: 1.132427e-14 
-#> outer mgc:  0.02203839 
-#> iter: 1  value: 454.2057 mgc: 0.0734571 ustep: 1 
-#> iter: 2  value: 454.2057 mgc: 4.119246e-05 ustep: 1 
-#> iter: 3  mgc: 2.812395e-11 
-#> iter: 1  mgc: 2.812395e-11 
-#> outer mgc:  0.003305415 
-#> iter: 1  value: 454.2061 mgc: 0.01035708 ustep: 1 
-#> iter: 2  value: 454.2061 mgc: 8.01635e-07 ustep: 1 
-#> iter: 3  mgc: 1.64313e-14 
-#> iter: 1  mgc: 1.64313e-14 
-#> outer mgc:  1.362425e-05 
-#> iter: 1  value: 454.2061 mgc: 1.796294e-05 ustep: 1 
-#> iter: 2  mgc: 2.229716e-12 
-#> iter: 1  mgc: 2.229716e-12 
-#> outer mgc:  1.12991e-08 
-#> iter: 1  mgc: 2.229716e-12 
 
 # draw samples
 samples <- mcreport(obj, report = TRUE)
 #> Computing joint precision...
-#> iter: 1  mgc: 2.229716e-12 
-#> outer mgc:  1.12991e-08 
-#> iter: 1  value: 454.2064 mgc: 0.02352665 ustep: 1 
-#> iter: 2  value: 454.2064 mgc: 4.305452e-06 ustep: 1 
-#> iter: 3  mgc: 3.10918e-13 
-#> outer mgc:  0.00852029 
-#> iter: 1  value: 454.2058 mgc: 0.02353236 ustep: 1 
-#> iter: 2  value: 454.2058 mgc: 4.300467e-06 ustep: 1 
-#> iter: 3  mgc: 3.338996e-13 
-#> outer mgc:  0.008520353 
-#> iter: 1  value: 454.2074 mgc: 0.003501856 ustep: 1 
-#> iter: 2  value: 454.2074 mgc: 1.187864e-06 ustep: 1 
-#> iter: 3  mgc: 1.338929e-13 
-#> outer mgc:  0.01353103 
-#> iter: 1  value: 454.2047 mgc: 0.003508867 ustep: 1 
-#> iter: 2  value: 454.2047 mgc: 1.190836e-06 ustep: 1 
-#> iter: 3  mgc: 1.39222e-13 
-#> outer mgc:  0.01354524 
 #> Computing reported quantities...
 
 # run sdreport
 sdr <- sdreport(obj)
-#> iter: 1  mgc: 2.229716e-12 
-#> outer mgc:  1.12991e-08 
-#> iter: 1  value: 454.2064 mgc: 0.02352665 ustep: 1 
-#> iter: 2  value: 454.2064 mgc: 4.305452e-06 ustep: 1 
-#> iter: 3  mgc: 3.10918e-13 
-#> outer mgc:  0.00852029 
-#> iter: 1  value: 454.2058 mgc: 0.02353236 ustep: 1 
-#> iter: 2  value: 454.2058 mgc: 4.300467e-06 ustep: 1 
-#> iter: 3  mgc: 3.338996e-13 
-#> outer mgc:  0.008520353 
-#> iter: 1  value: 454.2074 mgc: 0.003501856 ustep: 1 
-#> iter: 2  value: 454.2074 mgc: 1.187864e-06 ustep: 1 
-#> iter: 3  mgc: 1.338929e-13 
-#> outer mgc:  0.01353103 
-#> iter: 1  value: 454.2047 mgc: 0.003508867 ustep: 1 
-#> iter: 2  value: 454.2047 mgc: 1.190836e-06 ustep: 1 
-#> iter: 3  mgc: 1.39222e-13 
-#> outer mgc:  0.01354524 
-#> outer mgc:  1.032585 
 
 # standard deviation using delta method
 as.list(sdr, "Std", report = TRUE)$probs

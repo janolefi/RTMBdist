@@ -654,7 +654,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  13.928   0.025  13.955
+#>  13.914   0.025  13.940
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate  Std. Error
