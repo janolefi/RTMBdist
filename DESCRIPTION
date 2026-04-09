@@ -13,6 +13,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
     stats,
+    Matrix,
     gamlss.dist,
     circular,
     sn,
@@ -27,11 +28,10 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    LaMa (>= 2.1.0),
-    Matrix,
     TMB,
     gamlss.data,
-    mvtnorm
+    mvtnorm,
+    LaMa (>= 2.1.0)
 Config/testthat/edition: 3
 URL: https://janolefi.github.io/RTMBdist/
 VignetteBuilder: knitr
