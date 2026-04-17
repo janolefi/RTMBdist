@@ -208,13 +208,26 @@ from package `LaMa` to conveniently create design and penalty matrices
 for the smooth functions. Internally, this just interfaces `mgcv`. The
 penalty matrix is converted to a sparse matrix using the `Matrix`
 package, to work with `RTMB`’s
-[`dgmrf()`](https://rdrr.io/pkg/RTMB/man/MVgauss.html) function.
+[`dgmrf()`](https://rdrr.io/pkg/RTMB/man/MVgauss.html) function. For
+convenience, we also create a prediction design matrix for a sequence of
+age values, which we will use to get predictions and confidence
+intervals for the smooth functions. We bind the two matrices together to
+compute the prediction alongside the fitted values inside the
+likelihood. Note that this does not introduce overhead because `RTMB`
+ignores computations that do not contribute to the final function value.
 
 ``` r
 k <- 10 # Basis dimension
 modmat <- make_matrices(~ s(age, bs="cs"), data = dbbmi)
 X <- modmat$Z                              # Design matrix
 S <- Matrix(modmat$S[[1]], sparse = TRUE)  # Sparse penalty matrix
+
+# Prediction design matrix
+x_p <- seq(min(dbbmi$age), max(dbbmi$age), length = 100)
+X_p <- predict(modmat, newdata = data.frame(age = x_p))
+
+idx <- 1:nrow(X)
+X <- rbind(X, X_p) 
 ```
 
 The joint negative log-likelihood function computes covariate dependent
@@ -224,7 +237,7 @@ random effects with a multivariate normal distribution with zero mean
 and a precision matrix that is a scaled version of the penalty matrix,
 which is achieved by calling
 [`dgmrf()`](https://rdrr.io/pkg/RTMB/man/MVgauss.html) for each of them.
-The scaling/ smoothing parameters are estimated by *restricted maximum
+The smoothing parameters are estimated by *restricted maximum
 likelihood* (REML), which is achieved by treating them as fixed effects
 and integrating out the regression coefficients and other fixed effects
 using the Laplace approximation.
@@ -234,9 +247,12 @@ nll_dbbmi <- function(par) {
   getAll(par, dat, warn=FALSE)
   bmi <- OBS(bmi)
   # Calculating response parameters
-  mu <- exp(X %*% c(beta0_mu, beta_age_mu)); ADREPORT(mu) # Location
-  sigma <- exp(X %*% c(beta0_sigma, beta_age_sigma)); ADREPORT(sigma) # Scale
-  nu <- X %*% c(beta0_nu, beta_age_nu); ADREPORT(nu) # Skewness
+  mu <- exp(X %*% c(beta0_mu, beta_age_mu))
+  mu_p <- mu[-idx,]; mu <- mu[idx,]; ADREPORT(mu_p) # Location
+  sigma <- exp(X %*% c(beta0_sigma, beta_age_sigma))
+  sigma_p <- sigma[-idx,]; sigma <- sigma[idx,]; ADREPORT(sigma_p) # Scale
+  nu <- X %*% c(beta0_nu, beta_age_nu)
+  nu_p <- nu[-idx]; nu <- nu[idx,]; ADREPORT(nu_p) # Skewness
   tau <- exp(log_tau); ADREPORT(tau) # Kurtosis
   # Data likelihood: Box-Cox power exponential distribution
   nll <- - sum(dbcpe(bmi, mu, sigma, nu, tau, log=TRUE))
@@ -261,7 +277,8 @@ dat <- list(
   bmi = dbbmi$bmi,
   age = dbbmi$age,
   X = X,
-  S = S
+  S = S,
+  idx = idx
 )
 ```
 
@@ -291,22 +308,16 @@ This way, we can easily plot the estimated smooth functions with
 confidence intervals and the conditional distribution of BMI given age.
 
 ``` r
-age <- dbbmi$age
-ord <- order(age)
-
 # Plotting estimated effects
 oldpar <- par(mfrow = c(1,3))
-plot(age[ord], par$mu[ord], type = "l", lwd = 2, bty = "n", xlab = "Age", ylab = "Mu")
-polygon(c(age[ord], rev(age[ord])),
-        c(par$mu[ord] + 2*par_sd$mu[ord], rev(par$mu[ord] - 2*par_sd$mu[ord])),
+plot(x_p, par$mu_p, type = "l", lwd = 2, bty = "n", xlab = "Age", ylab = "Mu")
+polygon(c(x_p, rev(x_p)), c(par$mu_p + 2*par_sd$mu_p, rev(par$mu_p - 2*par_sd$mu_p)),
         col = "#00000020", border = "NA")
-plot(age[ord], par$sigma[ord], type = "l", lwd = 2, bty = "n", xlab = "Age", ylab = "Sigma")
-polygon(c(age[ord], rev(age[ord])),
-        c(par$sigma[ord] + 2*par_sd$sigma[ord], rev(par$sigma[ord] - 2*par_sd$sigma[ord])),
+plot(x_p, par$sigma_p, type = "l", lwd = 2, bty = "n", xlab = "Age", ylab = "Sigma")
+polygon(c(x_p, rev(x_p)), c(par$sigma_p + 2*par_sd$sigma_p, rev(par$sigma_p - 2*par_sd$sigma_p)),
         col = "#00000020", border = "NA")
-plot(age[ord], par$nu[ord], type = "l", lwd = 2, bty = "n", xlab = "Age", ylab = "Nu")
-polygon(c(age[ord], rev(age[ord])),
-        c(par$nu[ord] + 2*par_sd$nu[ord], rev(par$nu[ord] - 2*par_sd$nu[ord])),
+plot(x_p, par$nu_p, type = "l", lwd = 2, bty = "n", xlab = "Age", ylab = "Nu")
+polygon(c(x_p, rev(x_p)), c(par$nu_p + 2*par_sd$nu_p, rev(par$nu_p - 2*par_sd$nu_p)),
         col = "#00000020", border = "NA")
 ```
 
@@ -320,7 +331,7 @@ par(oldpar)
 # Plotting conditional distribution
 plot(dbbmi$age, dbbmi$bmi, pch = 16, col = "#00000020",
      xlab = "Age", ylab = "BMI", bty = "n")
-lines(age[ord], par$mu[ord], lwd = 3, col = "deepskyblue")
+lines(x_p, par$mu_p, lwd = 3, col = "deepskyblue")
 
 # Compute quantiles (point estimates)
 par <- lapply(par, as.numeric)
@@ -328,8 +339,8 @@ ps <- seq(0, 1, length = 8)
 ps[1] <- 0.005 # avoid 0 and 1
 ps[length(ps)] <- 0.995 # avoid 0 and 1
 for(p in ps) {
-  q <- qbcpe(p, par$mu, par$sigma, par$nu, par$tau) # quantiles
-  lines(age[ord], q[ord], col = "deepskyblue")
+  q <- qbcpe(p, par$mu_p, par$sigma_p, par$nu_p, par$tau) # quantiles
+  lines(x_p, q, col = "deepskyblue")
 }
 legend("topleft", lwd = c(3, 1), col = "deepskyblue", legend = c("Mean", "Quantiles"), bty = "n")
 ```
@@ -654,7 +665,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  14.234   0.024  14.260
+#>  13.399   0.020  13.421
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate  Std. Error
