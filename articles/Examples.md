@@ -1,6 +1,7 @@
 # Worked Examples
 
 ``` r
+
 library(RTMBdist)
 ```
 
@@ -16,10 +17,12 @@ the observations given the time and chick follow a Box-Cox Cole-Green
 (BCCG) distribution, which allows for skewness in the data.
 
 ``` r
+
 data(ChickWeight)
 ```
 
 ``` r
+
 parameters <- list(
   mua=0,          # Mean slope
   log_sda=1,      # log-Std of slopes
@@ -37,6 +40,7 @@ the `RTMB` vignette, but with the normal likelihood replaced by the BCCG
 likelihood, and hence also some necessary parameter transformations.
 
 ``` r
+
 nll_chick <- function(parms) {
   getAll(ChickWeight, parms, warn=FALSE)
   # Optional (enables extra RTMB features)
@@ -65,6 +69,7 @@ Laplace-approximated marginal log-likelihood function and optimising
 this using any standard numerical optimiser.
 
 ``` r
+
 obj_chick <- MakeADFun(nll_chick, parameters, random=c("a", "b"), silent = TRUE)
 opt_chick <- nlminb(obj_chick$par, obj_chick$fn, obj_chick$gr)
 ```
@@ -75,6 +80,7 @@ adequate. All of this is done by a simple call to
 [`checkConsistency()`](https://rdrr.io/pkg/RTMB/man/TMB-interface.html).
 
 ``` r
+
 set.seed(1)
 checkConsistency(obj_chick)
 #> Parameters used for simulation:
@@ -97,6 +103,7 @@ probability integral transform using
 [`oneStepPredict()`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html).
 
 ``` r
+
 osa_chick <- oneStepPredict(obj_chick, discrete=FALSE, trace=FALSE)
 qqnorm(osa_chick$res); abline(0,1)
 ```
@@ -116,10 +123,12 @@ for each spray type, to account for the fact that some sprays are more
 effective than others.
 
 ``` r
+
 data(InsectSprays)
 ```
 
 ``` r
+
 # Creating the model matrix
 X <- model.matrix(~ spray - 1, data = InsectSprays)
 
@@ -137,6 +146,7 @@ dat <- list(
 ```
 
 ``` r
+
 nll_insect <- function(par) {
   getAll(par, dat, warn=FALSE)
   count <- OBS(count)
@@ -152,6 +162,7 @@ nll_insect <- function(par) {
 ```
 
 ``` r
+
 obj_insect <- MakeADFun(nll_insect, par, random = "beta", silent = TRUE)
 opt_insect <- nlminb(obj_insect$par, obj_insect$fn, obj_insect$gr)
 
@@ -189,12 +200,14 @@ using penalised splines. The kurtosis parameter will be kept constant.
 We start by loading packages that are needed.
 
 ``` r
+
 library(gamlss.data)   # Data
 library(LaMa)          # Creating model matrices
 library(Matrix)        # Sparse matrices
 ```
 
 ``` r
+
 data(dbbmi)
 # Subset (just for speed here)
 set.seed(1)
@@ -217,6 +230,7 @@ likelihood. Note that this does not introduce overhead because `RTMB`
 ignores computations that do not contribute to the final function value.
 
 ``` r
+
 k <- 10 # Basis dimension
 modmat <- make_matrices(~ s(age, bs="cs"), data = dbbmi)
 X <- modmat$Z                              # Design matrix
@@ -243,6 +257,7 @@ and integrating out the regression coefficients and other fixed effects
 using the Laplace approximation.
 
 ``` r
+
 nll_dbbmi <- function(par) {
   getAll(par, dat, warn=FALSE)
   bmi <- OBS(bmi)
@@ -266,6 +281,7 @@ nll_dbbmi <- function(par) {
 ```
 
 ``` r
+
 par <- list(
   beta0_mu = log(18), beta0_sigma = log(0.15),
   beta0_nu = -1, beta_age_mu = rep(0, k-1),
@@ -288,6 +304,7 @@ constructing the Laplace-approximated restricted log-likelihood function
 and optimising this.
 
 ``` r
+
 # Restricted maximum likelihood (REML) - also integrating out fixed effects
 random <- names(par)[names(par) != "log_lambda"]
 obj_dbbmi <- MakeADFun(nll_dbbmi, par, random = random, silent = TRUE)
@@ -299,6 +316,7 @@ We can have access to all
 quantities and their standard deviation using `sdreport()`.
 
 ``` r
+
 sdr <- sdreport(obj_dbbmi, ignore.parm.uncertainty = TRUE)
 par <- as.list(sdr, "Est", report = TRUE)
 par_sd <- as.list(sdr, "Std", report = TRUE)
@@ -308,6 +326,7 @@ This way, we can easily plot the estimated smooth functions with
 confidence intervals and the conditional distribution of BMI given age.
 
 ``` r
+
 # Plotting estimated effects
 oldpar <- par(mfrow = c(1,3))
 plot(x_p, par$mu_p, type = "l", lwd = 2, bty = "n", xlab = "Age", ylab = "Mu")
@@ -324,10 +343,12 @@ polygon(c(x_p, rev(x_p)), c(par$nu_p + 2*par_sd$nu_p, rev(par$nu_p - 2*par_sd$nu
 ![](Examples_files/figure-html/effects_plot-1.png)
 
 ``` r
+
 par(oldpar)
 ```
 
 ``` r
+
 # Plotting conditional distribution
 plot(dbbmi$age, dbbmi$bmi, pch = 16, col = "#00000020",
      xlab = "Age", ylab = "BMI", bty = "n")
@@ -359,6 +380,7 @@ number of zeros in the data, we will here also fit a zero-inflated
 binomial model and compare the results.
 
 ``` r
+
 library(gamlss.data)
 head(aep)
 #>   los noinap     loglos sex ward year age y.noinap y.failures
@@ -374,6 +396,7 @@ We start by fitting the 2 binomial models. We only define one likelihood
 function and fix the zero probability to 0 for the binomial model.
 
 ``` r
+
 # Defininig the model matrix for the model reported in Gange et al. (1996)
 X <- model.matrix(~ age + ward + loglos * year, data = aep)
 
@@ -434,6 +457,7 @@ overdispersion. The parameter \theta_i is modelled as a function of year
 only, exactly as in Gange et al. (1996).
 
 ``` r
+
 # Beta-binomial likelihood
 nll_aep2 <- function(par) {
   getAll(par, dat)
@@ -481,6 +505,7 @@ where each component has normal marginal distributions and a Clayton
 copula to model the dependence between the two variables.
 
 ``` r
+
 data(faithful)
 ```
 
@@ -492,6 +517,7 @@ for the components is straightforward, it’s just imporant to not confuse
 mixture components and dimensions.
 
 ``` r
+
 nll_copula <- function(par) {
   getAll(par, faithful)
   REPORT(mu1); REPORT(mu2)
@@ -527,6 +553,7 @@ We fit the model as usual, now using reporting to easily extract the
 estimated parameters on their natural scale:
 
 ``` r
+
 # Initial parameters
 par <- list(
   mu1 = c(55, 2), mu2 = c(80, 4),
@@ -552,6 +579,7 @@ alpha  <- mod_copula$alpha
 We can plot the result:
 
 ``` r
+
 # Scatterplot
 plot(faithful$waiting, faithful$eruptions, pch = 20, bty = "n",
      xlab = "Waiting time", ylab = "Eruption time", col = "#00000070")
@@ -600,6 +628,7 @@ fit to financial returns data, due to the heavier tails.
 We get the data from
 
 ``` r
+
 source("https://raw.githubusercontent.com/kaskr/RTMB/master/tmb_examples/sdv_multi_data.R")
 ```
 
@@ -610,6 +639,7 @@ the data likelihood. Note that the `Cov` matrix is now not actually the
 covariance matrix anymore, but only proportional to it.
 
 ``` r
+
 # Multivatiate SV model from Table 5 of Skaug and Yu "A flexible and automated likelihood based 
 # framework for inference in stochastic volatility models." Computational Statistics & Data Analysis 76 (2014): 642-654.
 
@@ -665,7 +695,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  13.399   0.020  13.421
+#>  13.369   0.021  13.391
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate  Std. Error

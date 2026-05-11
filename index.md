@@ -26,6 +26,7 @@ You can install the released version from
 [CRAN](https://CRAN.R-project.org/package=RTMBdist) with:
 
 ``` r
+
 install.packages("RTMBdist")
 ```
 
@@ -33,12 +34,14 @@ or the development version from
 [GitHub](https://github.com/janolefi/RTMBdist) with:
 
 ``` r
+
 remotes::install_github("janolefi/RTMBdist")
 ```
 
 ## Introductory example
 
 ``` r
+
 library(RTMBdist)
 ```
 
@@ -46,6 +49,7 @@ Let’s do numerical maximum likelihood estimation with a `gumbel`
 distribution:
 
 ``` r
+
 # simulate data
 x <- rgumbel(100, location = 5, scale = 2)
 
@@ -74,6 +78,7 @@ Through the magic of `RTMB`, we can also immediately simulate new data
 from the fitted model and calculate residuals:
 
 ``` r
+
 # simulate new data
 x_new <- obj$simulate()$x
 
