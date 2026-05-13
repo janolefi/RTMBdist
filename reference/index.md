@@ -127,7 +127,6 @@
   [`pnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
   [`qnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
   [`rnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
-  [`pnbinom()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
   : Reparameterised negative binomial distribution
 - [`doibeta()`](https://janolefi.github.io/RTMBdist/reference/oibeta.md)
   [`poibeta()`](https://janolefi.github.io/RTMBdist/reference/oibeta.md)

@@ -14,8 +14,6 @@ pnbinom2(q, mu, size, lower.tail = TRUE, log.p = FALSE)
 qnbinom2(p, mu, size, lower.tail = TRUE, log.p = FALSE)
 
 rnbinom2(n, mu, size)
-
-pnbinom(q, size, prob, lower.tail = TRUE, log.p = FALSE)
 ```
 
 ## Arguments
