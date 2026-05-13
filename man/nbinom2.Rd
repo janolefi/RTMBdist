@@ -6,7 +6,6 @@
 \alias{pnbinom2}
 \alias{qnbinom2}
 \alias{rnbinom2}
-\alias{pnbinom}
 \title{Reparameterised negative binomial distribution}
 \usage{
 dnbinom2(x, mu, size, log = FALSE)
@@ -16,8 +15,6 @@ pnbinom2(q, mu, size, lower.tail = TRUE, log.p = FALSE)
 qnbinom2(p, mu, size, lower.tail = TRUE, log.p = FALSE)
 
 rnbinom2(n, mu, size)
-
-pnbinom(q, size, prob, lower.tail = TRUE, log.p = FALSE)
 }
 \arguments{
 \item{x, q}{vector of quantiles}

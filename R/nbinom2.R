@@ -97,21 +97,19 @@ rnbinom2 <- function(n, mu, size) {
 
   stats::rnbinom(n, mu = mu, size = size)
 }
-#' @rdname nbinom2
-#' @export
-#' @importFrom RTMB pbeta
-pnbinom <- function(q, size, prob, lower.tail = TRUE, log.p = FALSE) {
-  if(!ad_context()) {
-    # ensure mu, size > 0
-    if (any(prob < 0 | prob > 1)) stop("prob must be in [0,1]")
-    if (any(size <= 0)) stop("size must be strictly positive.")
-  }
 
-  p <- RTMB::pbeta(prob, size, q+1) # doesn't look correct but is
-  # RTMB doesn't have AD version of pbinom
-
-  if(!lower.tail) p <- 1 - p
-  if(log.p) p <- log(p)
-
-  return(p)
-}
+# pnbinom <- function(q, size, prob, lower.tail = TRUE, log.p = FALSE) {
+#   if(!ad_context()) {
+#     # ensure mu, size > 0
+#     if (any(prob < 0 | prob > 1)) stop("prob must be in [0,1]")
+#     if (any(size <= 0)) stop("size must be strictly positive.")
+#   }
+#
+#   p <- RTMB::pbeta(prob, size, q+1) # doesn't look correct but is
+#   # RTMB doesn't have AD version of pbinom
+#
+#   if(!lower.tail) p <- 1 - p
+#   if(log.p) p <- log(p)
+#
+#   return(p)
+# }
