@@ -48,10 +48,6 @@ rnbinom2(n, mu, size)
 
   number of random values to return.
 
-- prob:
-
-  probability of success in each trial. 0 \< prob \<= 1.
-
 ## Value
 
 `dnbinom2` gives the density, `pnbinom2` gives the distribution
