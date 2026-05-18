@@ -30,8 +30,6 @@ rnbinom2(n, mu, size)
 \item{p}{vector of probabilities}
 
 \item{n}{number of random values to return.}
-
-\item{prob}{probability of success in each trial. 0 < prob <= 1.}
 }
 \value{
 \code{dnbinom2} gives the density, \code{pnbinom2} gives the distribution function, \code{qnbinom2} gives the quantile function, and \code{rnbinom2} generates random deviates.
