@@ -81,7 +81,10 @@ pskewnorm <- function(q, xi = 0, omega = 1, alpha = 0, lower.tail = TRUE, log.p 
     if (any(omega <= 0)) stop("omega must be strictly positive.")
   }
 
-  psn(x = q, xi = xi, omega = omega, alpha = alpha, lower.tail = lower.tail, log.p = log.p)
+  p <- psn(x = q, xi = xi, omega = omega, alpha = alpha)
+  if (!lower.tail) p <- 1 - p
+  if (log.p) p <- log(p)
+  p
 }
 
 #' @rdname skewnorm
@@ -94,7 +97,9 @@ qskewnorm <- function(p, xi = 0, omega = 1, alpha = 0, lower.tail = TRUE, log.p 
     if (any(omega <= 0)) stop("omega must be strictly positive.")
   }
 
-  qsn(p = p, xi = xi, omega = omega, alpha = alpha, lower.tail = lower.tail, log.p = log.p)
+  if (log.p) p <- exp(p)
+  if (!lower.tail) p <- 1 - p
+  qsn(p = p, xi = xi, omega = omega, alpha = alpha)
 }
 
 #' @rdname skewnorm

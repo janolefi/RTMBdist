@@ -82,7 +82,10 @@ pskewt <- function(q, mu = 0, sigma = 1, skew = 0, df = 1e2, method = 0,
   # if (sigma <= 0) stop("sigma must be strictly positive.")
   # if (df <= 0) stop("df must be strictly positive.")
 
-  pst(q, xi=mu, omega=sigma, alpha=skew, nu=df, method=method, lower.tail=lower.tail, log.p=log.p)
+  p <- pst(q, xi=mu, omega=sigma, alpha=skew, nu=df, method=method)
+  if (!lower.tail) p <- 1 - p
+  if (log.p) p <- log(p)
+  p
 }
 
 #' @rdname skewt
