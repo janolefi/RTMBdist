@@ -154,7 +154,8 @@ dpgweibull <- function(x, scale = 1, shape = 1, powershape = 1, log = FALSE) {
 
 #' @rdname pgweibull
 #' @export
-qpgweibull <- function(p, scale = 1, shape = 1, powershape = 1) {
+qpgweibull <- function(p, scale = 1, shape = 1, powershape = 1,
+                       lower.tail = TRUE, log.p = FALSE) {
 
   if(!ad_context()) {
     # ensure scale, shape, powershape > 0
@@ -162,6 +163,9 @@ qpgweibull <- function(p, scale = 1, shape = 1, powershape = 1) {
     if (any(shape <= 0)) stop("shape must be strictly positive.")
     if (any(powershape <= 0)) stop("powershape must be strictly positive.")
   }
+
+  if (log.p) p <- exp(p)
+  if (!lower.tail) p <- 1 - p
 
   # renaming to match the formula
   theta <- scale

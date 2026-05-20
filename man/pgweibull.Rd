@@ -19,7 +19,14 @@ ppgweibull(q, scale = 1, shape = 1, powershape = 1,
 
 dpgweibull(x, scale = 1, shape = 1, powershape = 1, log = FALSE)
 
-qpgweibull(p, scale = 1, shape = 1, powershape = 1)
+qpgweibull(
+  p,
+  scale = 1,
+  shape = 1,
+  powershape = 1,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
 rpgweibull(n, scale = 1, shape = 1, powershape = 1)
 }

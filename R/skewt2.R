@@ -92,10 +92,10 @@ pskewt2 <- function(q, mean = 0, sd = 1, skew = 0, df = 1e2,
 #' @rdname skewt2
 #' @export
 qskewt2 <- function(p, mean = 0, sd = 1, skew = 0, df = 1e2,
-                    tol = 1e-8, method = 0) {
+                    tol = 1e-8, method = 0, lower.tail = TRUE, log.p = FALSE) {
   p2 <- .skewt2_internal_params(mean, sd, skew, df)
   qskewt(p, mu = p2$mu, sigma = p2$sigma, skew = skew, df = df,
-         tol = tol, method = method)
+         tol = tol, method = method, lower.tail = lower.tail, log.p = log.p)
 }
 
 #' @rdname skewt2

@@ -9,7 +9,15 @@
 \usage{
 dvm(x, mu = 0, kappa = 1, log = FALSE)
 
-pvm(q, mu = 0, kappa = 1, from = NULL, tol = 1e-20)
+pvm(
+  q,
+  mu = 0,
+  kappa = 1,
+  from = NULL,
+  tol = 1e-20,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
 rvm(n, mu = 0, kappa = 1, wrap = TRUE)
 }
@@ -25,6 +33,10 @@ rvm(n, mu = 0, kappa = 1, wrap = TRUE)
 \item{from}{value from which the integration for CDF starts. If \code{NULL}, is set to \code{mu - pi}.}
 
 \item{tol}{the precision in evaluating the distribution function}
+
+\item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
+
+\item{log.p}{logical; if \code{TRUE}, probabilities are returned as \eqn{\log(p)}.}
 
 \item{n}{number of random values to return.}
 

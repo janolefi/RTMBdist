@@ -13,6 +13,8 @@
 #' @param n number of random values to return.
 #' @param tol the precision in evaluating the distribution function
 #' @param from value from which the integration for CDF starts. If \code{NULL}, is set to \code{mu - pi}.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.
+#' @param log.p logical; if \code{TRUE}, probabilities are returned as \eqn{\log(p)}.
 #' @param wrap logical; if \code{TRUE}, generated angles are wrapped to the interval from -pi to pi.
 #'
 #' @return \code{dvm} gives the density, \code{pvm} gives the distribution function, and \code{rvm} generates random deviates.
@@ -61,7 +63,8 @@ dvm = function(x, mu = 0, kappa = 1, log = FALSE) {
 #' @rdname vm
 #' @export
 #' @importFrom circular pvonmises
-pvm = function(q, mu = 0, kappa = 1, from = NULL, tol = 1e-20) {
+pvm = function(q, mu = 0, kappa = 1, from = NULL, tol = 1e-20,
+               lower.tail = TRUE, log.p = FALSE) {
   # NA handling
   ind = which(!is.na(q))
 
@@ -80,7 +83,10 @@ pvm = function(q, mu = 0, kappa = 1, from = NULL, tol = 1e-20) {
 
   probs[-ind] = NA
 
-  as.numeric(probs)
+  probs <- as.numeric(probs)
+  if (!lower.tail) probs <- 1 - probs
+  if (log.p) probs <- log(probs)
+  probs
 }
 
 #' @rdname vm

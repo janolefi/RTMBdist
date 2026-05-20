@@ -14,8 +14,8 @@
 #' @param mean mean parameter
 #' @param sd standard deviation, must be positive.
 #' @param alpha skewness parameter, +/- \code{Inf} is allowed.
-#' @param log logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
-#' @param ... additional parameters to be passed to the \code{sn} package functions for \code{pskewnorm} and \code{qskewnorm}.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.
+#' @param log,log.p logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
 #'
 #' @return
 #' \code{dskewnorm2} gives the density, \code{pskewnorm2} gives the distribution function, \code{qskewnorm2} gives the quantile function, and \code{rskewnorm2} generates random deviates.
@@ -50,25 +50,25 @@ dskewnorm2 <- function(x, mean = 0, sd = 1, alpha = 0, log = FALSE) {
 
 #' @rdname skewnorm2
 #' @export
-pskewnorm2 <- function(q, mean = 0, sd = 1, alpha = 0, ...) {
+pskewnorm2 <- function(q, mean = 0, sd = 1, alpha = 0, lower.tail = TRUE, log.p = FALSE) {
 
   # parameter transformation
   delta <- alpha / sqrt(1 + alpha^2)
   omega <- sd / sqrt(1 - (2 * delta^2) / pi)
   xi <- mean - omega * delta * sqrt(2 / pi)
 
-  pskewnorm(q = q, xi = xi, omega = omega, alpha = alpha, ...)
+  pskewnorm(q = q, xi = xi, omega = omega, alpha = alpha, lower.tail = lower.tail, log.p = log.p)
 }
 
 #' @rdname skewnorm2
 #' @export
-qskewnorm2 <- function(p, mean = 0, sd = 1, alpha = 0, ...) {
+qskewnorm2 <- function(p, mean = 0, sd = 1, alpha = 0, lower.tail = TRUE, log.p = FALSE) {
   # parameter transformation
   delta <- alpha / sqrt(1 + alpha^2)
   omega <- sd / sqrt(1 - (2 * delta^2) / pi)
   xi <- mean - omega * delta * sqrt(2 / pi)
 
-  qskewnorm(p = p, xi = xi, omega = omega, alpha = alpha, ...)
+  qskewnorm(p = p, xi = xi, omega = omega, alpha = alpha, lower.tail = lower.tail, log.p = log.p)
 }
 
 #' @rdname skewnorm2

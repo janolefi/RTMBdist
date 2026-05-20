@@ -12,7 +12,8 @@
 #' @param mu location parameter
 #' @param sigma scale parameter, must be positive.
 #' @param df degrees of freedom, must be positive.
-#' @param log logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.
+#' @param log,log.p logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
 #'
 #' @return
 #' \code{dt2} gives the density, \code{pt2} gives the distribution function, \code{qt2} gives the quantile function, and \code{rt2} generates random deviates.
@@ -55,10 +56,12 @@ dt2 = function(x, mu, sigma, df, log = FALSE){
 #' @rdname t2
 #' @export
 #' @importFrom stats pt
-pt2 <- function(q, mu, sigma, df){
+pt2 <- function(q, mu, sigma, df, lower.tail = TRUE, log.p = FALSE){
   z <- (q - mu) / sigma
-  # stats::pt(z, df)
-  pt(z, df)
+  p <- pt(z, df)
+  if (!lower.tail) p <- 1 - p
+  if (log.p) p <- log(p)
+  p
 }
 #' @rdname t2
 #' @export
@@ -70,7 +73,9 @@ rt2 <- function(n, mu, sigma, df) {
 #' @rdname t2
 #' @export
 #' @importFrom stats qt
-qt2 <- function(p, mu, sigma, df){
+qt2 <- function(p, mu, sigma, df, lower.tail = TRUE, log.p = FALSE){
+  if (log.p) p <- exp(p)
+  if (!lower.tail) p <- 1 - p
   z <- stats::qt(p, df)
   return(mu + sigma * z)
 }

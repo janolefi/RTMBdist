@@ -13,7 +13,17 @@ dskewt2(x, mean = 0, sd = 1, skew = 0, df = 100, log = FALSE)
 pskewt2(q, mean = 0, sd = 1, skew = 0, df = 100,
         method = 0, lower.tail = TRUE, log.p = FALSE)
 
-qskewt2(p, mean = 0, sd = 1, skew = 0, df = 100, tol = 1e-08, method = 0)
+qskewt2(
+  p,
+  mean = 0,
+  sd = 1,
+  skew = 0,
+  df = 100,
+  tol = 1e-08,
+  method = 0,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
 rskewt2(n, mean = 0, sd = 1, skew = 0, df = 100)
 }

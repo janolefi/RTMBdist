@@ -11,7 +11,8 @@
 #' @param mean mean parameter, must be positive.
 #' @param sd standard deviation parameter, must be positive.
 #' @param zeroprob zero-inflation probability between 0 and 1.
-#' @param log logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.
+#' @param log,log.p logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
 #'
 #' @return
 #' \code{dzigamma2} gives the density, \code{pzigamma2} gives the distribution function, and \code{rzigamma} generates random deviates.
@@ -45,7 +46,7 @@ dzigamma2 = function(x, mean = 1, sd = 1, zeroprob = 0, log = FALSE) {
 }
 #' @rdname zigamma2
 #' @export
-pzigamma2 <- function(q, mean = 1, sd = 1, zeroprob = 0) {
+pzigamma2 <- function(q, mean = 1, sd = 1, zeroprob = 0, lower.tail = TRUE, log.p = FALSE) {
   if(!ad_context()) {
     # ensure shape > 0, scale > 0, zeroprob in [0,1]
     if (any(mean <= 0)) stop("mean must be > 0")
@@ -57,7 +58,8 @@ pzigamma2 <- function(q, mean = 1, sd = 1, zeroprob = 0) {
   shape = mean^2 / sd^2
   scale = sd^2 / mean
 
-  pzigamma(q, shape = shape, scale = scale, zeroprob = zeroprob)
+  pzigamma(q, shape = shape, scale = scale, zeroprob = zeroprob,
+           lower.tail = lower.tail, log.p = log.p)
 }
 #' @rdname zigamma2
 #' @export
