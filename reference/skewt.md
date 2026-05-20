@@ -12,7 +12,7 @@ pskewt(q, mu = 0, sigma = 1, skew = 0, df = 100,
        method = 0, lower.tail = TRUE, log.p = FALSE)
 
 qskewt(p, mu = 0, sigma = 1, skew = 0, df = 100,
-       tol = 1e-8, method = 0)
+       tol = 1e-8, method = 0, lower.tail = TRUE, log.p = FALSE)
 
 rskewt(n, mu = 0, sigma = 1, skew = 0, df = 100)
 ```

@@ -9,7 +9,7 @@ standard deviation.
 ``` r
 dzigamma2(x, mean = 1, sd = 1, zeroprob = 0, log = FALSE)
 
-pzigamma2(q, mean = 1, sd = 1, zeroprob = 0)
+pzigamma2(q, mean = 1, sd = 1, zeroprob = 0, lower.tail = TRUE, log.p = FALSE)
 
 rzigamma2(n, mean = 1, sd = 1, zeroprob = 0)
 ```
@@ -32,10 +32,15 @@ rzigamma2(n, mean = 1, sd = 1, zeroprob = 0)
 
   zero-inflation probability between 0 and 1.
 
-- log:
+- log, log.p:
 
   logical; if `TRUE`, probabilities/ densities \\p\\ are returned as
   \\\log(p)\\.
+
+- lower.tail:
+
+  logical; if `TRUE` (default), probabilities are \\P\[X \le x\]\\,
+  otherwise \\P\[X \> x\]\\.
 
 - n:
 

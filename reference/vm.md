@@ -8,7 +8,15 @@ distribution.
 ``` r
 dvm(x, mu = 0, kappa = 1, log = FALSE)
 
-pvm(q, mu = 0, kappa = 1, from = NULL, tol = 1e-20)
+pvm(
+  q,
+  mu = 0,
+  kappa = 1,
+  from = NULL,
+  tol = 1e-20,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
 rvm(n, mu = 0, kappa = 1, wrap = TRUE)
 ```
@@ -41,6 +49,15 @@ rvm(n, mu = 0, kappa = 1, wrap = TRUE)
 - tol:
 
   the precision in evaluating the distribution function
+
+- lower.tail:
+
+  logical; if `TRUE` (default), probabilities are \\P\[X \le x\]\\,
+  otherwise \\P\[X \> x\]\\.
+
+- log.p:
+
+  logical; if `TRUE`, probabilities are returned as \\\log(p)\\.
 
 - n:
 

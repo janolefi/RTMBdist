@@ -9,9 +9,9 @@ standard deviation and skew magnitude
 ``` r
 dskewnorm2(x, mean = 0, sd = 1, alpha = 0, log = FALSE)
 
-pskewnorm2(q, mean = 0, sd = 1, alpha = 0, ...)
+pskewnorm2(q, mean = 0, sd = 1, alpha = 0, lower.tail = TRUE, log.p = FALSE)
 
-qskewnorm2(p, mean = 0, sd = 1, alpha = 0, ...)
+qskewnorm2(p, mean = 0, sd = 1, alpha = 0, lower.tail = TRUE, log.p = FALSE)
 
 rskewnorm2(n, mean = 0, sd = 1, alpha = 0)
 ```
@@ -34,15 +34,15 @@ rskewnorm2(n, mean = 0, sd = 1, alpha = 0)
 
   skewness parameter, +/- `Inf` is allowed.
 
-- log:
+- log, log.p:
 
   logical; if `TRUE`, probabilities/ densities \\p\\ are returned as
   \\\log(p)\\.
 
-- ...:
+- lower.tail:
 
-  additional parameters to be passed to the `sn` package functions for
-  `pskewnorm` and `qskewnorm`.
+  logical; if `TRUE` (default), probabilities are \\P\[X \le x\]\\,
+  otherwise \\P\[X \> x\]\\.
 
 - p:
 
