@@ -13,7 +13,7 @@
 #'
 #' @param dfun  density function, e.g. dbeta2
 #' @param pfun  CDF function,     e.g. pbeta2
-#' @param qfun  quantile function, e.g. qbeta2
+#' @param qfun  quantile function, e.g. qbeta2; pass NULL to skip the round-trip test
 #' @param xs    numeric vector of test points inside the support
 #' @param lower lower integration bound (default -Inf)
 #' @param upper upper integration bound (default  Inf)
@@ -21,7 +21,7 @@
 #'
 #' @note Do NOT include log, log.p, or lower.tail in ... — they are handled
 #'   internally by each check.
-check_continuous_dist <- function(dfun, pfun, qfun,
+check_continuous_dist <- function(dfun, pfun, qfun = NULL,
                                   xs,
                                   lower = -Inf, upper = Inf,
                                   ...) {
@@ -34,13 +34,15 @@ check_continuous_dist <- function(dfun, pfun, qfun,
     label = "log=TRUE matches log(density)"
   )
 
-  # 2. q(p(x)) round-trip -----------------------------------------------------
-  expect_equal(
-    qfun(pfun(xs, ...), ...),
-    xs,
-    tolerance = 1e-6,
-    label = "q(p(x)) round-trip"
-  )
+  # 2. q(p(x)) round-trip (skipped when qfun = NULL) --------------------------
+  if (!is.null(qfun)) {
+    expect_equal(
+      qfun(pfun(xs, ...), ...),
+      xs,
+      tolerance = 1e-6,
+      label = "q(p(x)) round-trip"
+    )
+  }
 
   # 3. lower.tail complement --------------------------------------------------
   expect_equal(
