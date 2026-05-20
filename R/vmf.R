@@ -63,6 +63,10 @@ dvmf <- function(x, mu, kappa, log = FALSE) {
   # check if mu has the correct dimension
   if(ncol(mu) != p) stop("x and mu must have the same dimension")
 
+  # broadcast single mu row across all observations
+  if(nrow(x) > 1 && nrow(mu) == 1)
+    mu <- mu[rep(1L, nrow(x)), , drop = FALSE]
+
   cprod <- rowSums(mu * x) # t(mu) %*% x for each row fast
 
   # stable calculation of log(besselI(kappa, p/2-1))

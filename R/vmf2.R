@@ -57,6 +57,10 @@ dvmf2 <- function(x, theta, log = FALSE) {
   # check if mu has the correct dimension
   if(ncol(theta) != p) stop("x and theta must have the same dimension")
 
+  # broadcast single theta row across all observations
+  if(nrow(x) > 1 && nrow(theta) == 1)
+    theta <- theta[rep(1L, nrow(x)), , drop = FALSE]
+
   kappa <- sqrt(rowSums(theta^2)) # kappa is the norm of theta
 
   cprod <- rowSums(theta * x) # t(theta) %*% x for each row fast
