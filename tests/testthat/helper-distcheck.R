@@ -66,6 +66,101 @@ check_continuous_dist <- function(dfun, pfun, qfun = NULL,
 }
 
 
+#' Run tests 1, 3, and 4 for a zero-inflated continuous distribution
+#'
+#' Zero-inflated distributions have a point mass at 0 and a continuous density
+#' for x > 0, so the standard normalisation test (integrate == 1) does not apply.
+#' Instead we check: d(0) + integral_of_continuous_part == 1.
+#'
+#' @param dfun  density function, e.g. dzigamma
+#' @param pfun  CDF function,     e.g. pzigamma
+#' @param xs    strictly positive test points
+#' @param upper upper integration bound for the continuous part (default Inf)
+#' @param ...   named distribution parameters including zeroprob
+check_zeroinfl_dist <- function(dfun, pfun, xs, upper = Inf, ...) {
+
+  # 1. log=TRUE consistency at x > 0 -----------------------------------------
+  expect_equal(
+    dfun(xs, ..., log = TRUE),
+    log(dfun(xs, ...)),
+    tolerance = 1e-10,
+    label = "log=TRUE matches log(density) for x > 0"
+  )
+
+  # 3. lower.tail complement --------------------------------------------------
+  expect_equal(
+    pfun(xs, ..., lower.tail = FALSE),
+    1 - pfun(xs, ...),
+    tolerance = 1e-10,
+    label = "lower.tail=FALSE is complement of lower.tail=TRUE"
+  )
+
+  # 4. point mass + continuous integral = 1 -----------------------------------
+  # integrate() assigns measure zero to the single point x=0, so the integral
+  # gives the (1 - zeroprob) continuous mass; adding d(0) recovers 1.
+  result <- tryCatch(
+    integrate(dfun, lower = 0, upper = upper, ...),
+    error = function(e) list(value = NA_real_)
+  )
+  expect_equal(
+    dfun(0, ...) + result$value,
+    1,
+    tolerance = 1e-4,
+    label = "point mass d(0) + continuous integral = 1"
+  )
+}
+
+
+#' Run tests 1, 3, and 4 for a mixed (inflated) continuous distribution
+#'
+#' Handles distributions with point masses at one or more boundary values
+#' (e.g. zero-inflated, one-inflated, zero-one-inflated beta).
+#' The normalisation check verifies:
+#'   sum(d(point_masses)) + integral of continuous part = 1
+#'
+#' @param dfun         density function
+#' @param pfun         CDF function
+#' @param xs           test points strictly inside the continuous support
+#' @param lower        lower integration bound for the continuous part (default 0)
+#' @param upper        upper integration bound for the continuous part (default 1)
+#' @param point_masses numeric vector of inflated-mass locations (e.g. 0, 1, c(0,1))
+#' @param ...          named distribution parameters
+check_inflated_dist <- function(dfun, pfun, xs,
+                                lower = 0, upper = 1,
+                                point_masses = 0,
+                                ...) {
+
+  # 1. log=TRUE consistency at interior points --------------------------------
+  expect_equal(
+    dfun(xs, ..., log = TRUE),
+    log(dfun(xs, ...)),
+    tolerance = 1e-10,
+    label = "log=TRUE matches log(density) at interior points"
+  )
+
+  # 3. lower.tail complement --------------------------------------------------
+  expect_equal(
+    pfun(xs, ..., lower.tail = FALSE),
+    1 - pfun(xs, ...),
+    tolerance = 1e-10,
+    label = "lower.tail=FALSE is complement of lower.tail=TRUE"
+  )
+
+  # 4. point masses + continuous integral = 1 ---------------------------------
+  pm_total <- sum(dfun(point_masses, ...))
+  result <- tryCatch(
+    integrate(dfun, lower = lower, upper = upper, ...),
+    error = function(e) list(value = NA_real_)
+  )
+  expect_equal(
+    pm_total + result$value,
+    1,
+    tolerance = 1e-4,
+    label = "sum of point masses + continuous integral = 1"
+  )
+}
+
+
 #' Run tests 1, 3, and 4 for a discrete distribution
 #'
 #' The q(p(x)) round-trip (test 2) is skipped because most discrete
