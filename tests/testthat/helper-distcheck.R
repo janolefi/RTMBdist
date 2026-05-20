@@ -165,13 +165,15 @@ check_inflated_dist <- function(dfun, pfun, xs,
 #'
 #' The q(p(x)) round-trip (test 2) is skipped because most discrete
 #' distributions in the package do not expose a quantile function.
+#' Pass pfun = NULL to also skip the lower.tail complement test (test 3),
+#' e.g. for distributions that have no CDF function at all.
 #'
 #' @param dfun         PMF function, e.g. dzipois
-#' @param pfun         CDF function, e.g. pzipois
+#' @param pfun         CDF function, e.g. pzipois; pass NULL to skip test 3
 #' @param xs_int       integer vector of test points
 #' @param sum_support  integer vector spanning the full support (default 0:500)
 #' @param ...          named distribution parameters
-check_discrete_dist <- function(dfun, pfun,
+check_discrete_dist <- function(dfun, pfun = NULL,
                                 xs_int,
                                 sum_support = 0:500,
                                 ...) {
@@ -184,13 +186,15 @@ check_discrete_dist <- function(dfun, pfun,
     label = "log=TRUE matches log(pmf)"
   )
 
-  # 3. lower.tail complement --------------------------------------------------
-  expect_equal(
-    pfun(xs_int, ..., lower.tail = FALSE),
-    1 - pfun(xs_int, ...),
-    tolerance = 1e-10,
-    label = "lower.tail=FALSE is complement of lower.tail=TRUE"
-  )
+  # 3. lower.tail complement (skipped when pfun = NULL) -----------------------
+  if (!is.null(pfun)) {
+    expect_equal(
+      pfun(xs_int, ..., lower.tail = FALSE),
+      1 - pfun(xs_int, ...),
+      tolerance = 1e-10,
+      label = "lower.tail=FALSE is complement of lower.tail=TRUE"
+    )
+  }
 
   # 4. PMF sums to 1 ----------------------------------------------------------
   expect_equal(
