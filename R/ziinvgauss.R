@@ -96,8 +96,5 @@ rziinvgauss <- function(n, mean = 1, shape = 1, zeroprob = 0) {
   res <- rep(0, n)
   is_zero <- u < zeroprob
   res[!is_zero] <- rinvgauss(sum(!is_zero), mean = mean, shape = shape)
-
-  u <- runif(n)
-  res <- ifelse(u < zeroprob, 0, rinvgauss(n, mean = mean, shape = shape))
   return(res)
 }

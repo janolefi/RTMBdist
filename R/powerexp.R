@@ -137,9 +137,16 @@ rpowerexp <- function(n, mu = 0, sigma = 1, nu = 2) {
 dpowerexp2 <- function(x, mu = 0, sigma = 1, nu = 2, log = FALSE) {
 
   if (!ad_context()) {
+    args <- as.list(environment())
+    simulation_check(args)
     if (any(sigma <= 0)) stop("sigma must be > 0")
     if (any(nu <= 0)) stop("nu must be > 0")
   }
+
+  if (inherits(x, "simref"))
+    return(dGenericSim("dpowerexp2", x = x, mu = mu, sigma = sigma, nu = nu, log = log))
+  if (inherits(x, "osa"))
+    return(dGenericOSA("dpowerexp2", x = x, mu = mu, sigma = sigma, nu = nu, log = log))
 
   # standardized variable
   z <- (x - mu) / sigma

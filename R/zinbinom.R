@@ -66,7 +66,7 @@ pzinbinom <- function(q, size, prob, zeroprob = 0, lower.tail = TRUE, log.p = FA
   }
 
   # pnbinom gives 0 for q < 0, so no handling of that case necessary
-  p <- zeroprob + (1 - zeroprob) * pnbinom(q, size=size, prob=prob)
+  p <- zeroprob + (1 - zeroprob) * RTMB::pnbinom(q, size = size, prob = prob)
 
   if (!lower.tail) p <- 1 - p
   if (log.p) p <- log(p)

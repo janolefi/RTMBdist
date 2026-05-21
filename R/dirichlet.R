@@ -137,7 +137,7 @@ ddirichlet_osa <- function(x, alpha, log = FALSE) {
       ## x[i] ~ Scaled Beta, but 'dbeta' doesn't have a scale argument
       xi <- x[i]
       xi@x <- xi@x / sx
-      ans <- ans <- ans + dbeta(xi, alpha[i], sa, log=TRUE)
+      ans <- ans + dbeta(xi, alpha[i], sa, log = TRUE)
       ans <- ans - xi@keep[,1] * log(sx)
     }
   }

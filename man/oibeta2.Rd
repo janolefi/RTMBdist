@@ -20,7 +20,7 @@ roibeta2(n, mu, phi, oneprob = 0)
 
 \item{phi}{concentration parameter, must be positive.}
 
-\item{oneprob}{zero-inflation probability between 0 and 1.}
+\item{oneprob}{one-inflation probability between 0 and 1.}
 
 \item{log, log.p}{logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.}
 

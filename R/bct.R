@@ -107,16 +107,6 @@ pbct <- function(q, mu = 5, sigma = 0.1, nu = 1, tau = 2, lower.tail = TRUE, log
     if (any(tau <= 0)) stop("tau must be > 0")
   }
 
-  ## length of return value
-  n <- max(length(q), length(mu), length(sigma), length(nu), length(tau))
-  q <- rep_len(q, n)
-  mu <- rep_len(mu, n)
-  sigma <- rep_len(sigma, n)
-  nu <- rep_len(nu, n)
-  tau <- rep_len(tau, n)
-  z <- rep_len(0, n)
-  FYy <-  FYy1 <- FYy2 <- FYy3 <- rep_len(0, n)
-
   ##  calculate the cdf
   iz <- iszero(nu)
   z <- (1 - iz) * (((q / mu)^nu - 1) / ((nu + .Machine$double.xmin) * sigma)) +

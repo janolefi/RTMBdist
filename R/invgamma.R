@@ -107,6 +107,6 @@ rinvgamma <- function(n, shape, rate, scale = 1/rate) {
   if (any(rate <= 0)) stop("rate must be strictly positive.")
   if (any(scale <= 0)) stop("scale must be strictly positive.")
 
-  x <- stats::rgamma(n, shape=shape, rate=rate)
+  x <- stats::rgamma(n, shape = shape, rate = 1 / scale)
   1 / x
 }

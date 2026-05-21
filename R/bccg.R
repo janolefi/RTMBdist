@@ -94,18 +94,6 @@ pbccg <- function(q, mu = 1, sigma = 0.1, nu = 1, lower.tail = TRUE, log.p = FAL
     if (any(sigma <= 0)) stop("sigma must be > 0")
   }
 
-  ## length of return value
-  n <- max(length(q), length(mu), length(sigma), length(nu))
-  q <- rep_len(q, n)
-  mu <- rep_len(mu, n)
-  sigma <- rep_len(sigma, n)
-  nu <- rep_len(nu, n)
-
-  z <- rep_len(0, n)
-  FYy1 <- rep_len(0, n)
-  FYy2 <- rep_len(0, n)
-  FYy3 <- rep_len(0, n)
-
   iz <- iszero(nu)
 
   z <- (1-iz) * (((q / mu)^nu - 1)/(nu * sigma)) +

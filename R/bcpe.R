@@ -60,9 +60,9 @@ dbcpe <- function(x, mu = 5, sigma = 0.1, nu = 1, tau = 2, log = FALSE) {
   if(!ad_context()) {
     args <- as.list(environment())
     simulation_check(args) # informative error message if likelihood in wrong order
-    if (any(mu < 0))  stop("mu must be > 0")
-    if (any(sigma < 0))  stop("sigma must be > 0")
-    if (any(tau < 0))  stop("tau must be > 0")
+    if (any(mu <= 0))  stop("mu must be > 0")
+    if (any(sigma <= 0))  stop("sigma must be > 0")
+    if (any(tau <= 0))  stop("tau must be > 0")
   }
 
   # potentially escape to RNG or CDF
@@ -111,20 +111,10 @@ pbcpe <- function(q, mu = 5, sigma = 0.1, nu = 1, tau = 2, lower.tail = TRUE, lo
   # and modified to allow for automatic differentiation
 
   if(!ad_context()) {
-    if (any(mu < 0))  stop("mu must be > 0")
-    if (any(sigma < 0))  stop("sigma must be > 0")
-    if (any(tau < 0))  stop("tau must be > 0")
+    if (any(mu <= 0))  stop("mu must be > 0")
+    if (any(sigma <= 0))  stop("sigma must be > 0")
+    if (any(tau <= 0))  stop("tau must be > 0")
   }
-
-  ## length of return value
-  n <- max(length(q), length(mu), length(sigma), length(nu), length(tau))
-  q <- rep_len(q, n)
-  mu <- rep_len(mu, n)
-  sigma <- rep_len(sigma, n)
-  nu <- rep_len(nu, n)
-  tau <- rep_len(tau, n)
-  z <- rep_len(0, n)
-  FYy2 <- FYy1 <- FYy3 <- rep_len(0, n)
 
   ##  calculate the cdf
   iz <- iszero(nu)
@@ -160,12 +150,12 @@ qbcpe <- function(p, mu = 5, sigma = 0.1, nu = 1, tau = 2, lower.tail = TRUE, lo
 }
 #' @rdname bcpe
 #' @export
-#' @importFrom gamlss.dist pBCPE
+#' @importFrom gamlss.dist rBCPE
 rbcpe <- function(n, mu = 5, sigma = 0.1, nu = 1, tau = 2) {
 
-  if (any(mu < 0))  stop("mu must be > 0")
-  if (any(sigma < 0))  stop("sigma must be > 0")
-  if (any(tau < 0))  stop("tau must be > 0")
+  if (any(mu <= 0))  stop("mu must be > 0")
+  if (any(sigma <= 0))  stop("sigma must be > 0")
+  if (any(tau <= 0))  stop("tau must be > 0")
 
   gamlss.dist::rBCPE(n, mu = mu, sigma = sigma, nu = nu, tau = tau)
 }

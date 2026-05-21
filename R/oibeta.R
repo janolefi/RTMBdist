@@ -9,7 +9,7 @@
 #' @param x,q vector of quantiles
 #' @param n number of random values to return.
 #' @param shape1,shape2 non-negative shape parameters of the beta distribution
-#' @param oneprob zero-inflation probability between 0 and 1.
+#' @param oneprob one-inflation probability between 0 and 1.
 #' @param log,log.p logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
 #' @param lower.tail logical; if \code{TRUE}, probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.
 #'

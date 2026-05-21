@@ -90,10 +90,12 @@ qkumar <- function(p, a, b, lower.tail = TRUE, log.p = FALSE) {
 #' @importFrom stats runif
 rkumar <- function(n, a, b) {
 
-  args <- as.list(environment())
-  simulation_check(args) # informative error message if likelihood in wrong order
-  if (any(a <= 0))  stop("a must be positive")
-  if (any(b <= 0))  stop("b must be positive")
+  if (!ad_context()) {
+    args <- as.list(environment())
+    simulation_check(args) # informative error message if likelihood in wrong order
+    if (any(a <= 0))  stop("a must be positive")
+    if (any(b <= 0))  stop("b must be positive")
+  }
 
   n <- ceiling(n)
   p <- runif(n)

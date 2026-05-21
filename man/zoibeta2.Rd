@@ -23,7 +23,7 @@ rzoibeta2(n, mu, phi, zeroprob = 0, oneprob = 0)
 
 \item{zeroprob}{zero-inflation probability between 0 and 1.}
 
-\item{oneprob}{zero-inflation probability between 0 and 1.}
+\item{oneprob}{one-inflation probability between 0 and 1.}
 
 \item{log, log.p}{logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.}
 

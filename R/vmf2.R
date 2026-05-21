@@ -46,6 +46,8 @@ dvmf2 <- function(x, theta, log = FALSE) {
     x[] <- rvmf2(n, theta=theta)
     return(0)
   }
+  if(inherits(x, "osa"))
+    stop("OSA residuals are not supported for dvmf2")
 
   # if x or theta are vectors, turn into 1 x p matrices
   if(is.null(dim(x))) x <- matrix(x, nrow = 1)

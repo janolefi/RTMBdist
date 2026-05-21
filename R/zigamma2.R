@@ -15,7 +15,7 @@
 #' @param log,log.p logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
 #'
 #' @return
-#' \code{dzigamma2} gives the density, \code{pzigamma2} gives the distribution function, and \code{rzigamma} generates random deviates.
+#' \code{dzigamma2} gives the density, \code{pzigamma2} gives the distribution function, and \code{rzigamma2} generates random deviates.
 #'
 #' @examples
 #' x <- rzigamma2(1, 2, 1, 0.5)

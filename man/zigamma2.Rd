@@ -29,7 +29,7 @@ rzigamma2(n, mean = 1, sd = 1, zeroprob = 0)
 \item{n}{number of random values to return}
 }
 \value{
-\code{dzigamma2} gives the density, \code{pzigamma2} gives the distribution function, and \code{rzigamma} generates random deviates.
+\code{dzigamma2} gives the density, \code{pzigamma2} gives the distribution function, and \code{rzigamma2} generates random deviates.
 }
 \description{
 Density, distribution function, and random generation for

@@ -44,7 +44,7 @@ If \eqn{X \sim \text{Chisq}(\nu)}, then \eqn{1/X \sim \text{invChisq}(\nu)}.
 
 The inverse Chi-squared distribution with \eqn{\nu} degrees of freedom has
 density
-\deqn{f(x) = \frac{(\nu/2)^{\nu/2}}{\Gamma(\nu/2)} x^{-(\nu/2+1)} \exp(-\nu/(2x)), \quad x>0.}
+\deqn{f(x) = \frac{(\nu s/2)^{\nu/2}}{\Gamma(\nu/2)} x^{-(\nu/2+1)} \exp\!\left(-\frac{\nu s}{2x}\right), \quad x>0,}
 
 This implementation of \code{dinvchisq}, \code{pinvchisq}, and \code{qinvchisq} allows for automatic differentiation with \code{RTMB}.
 }
