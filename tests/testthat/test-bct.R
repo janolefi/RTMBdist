@@ -21,3 +21,7 @@ test_that("bct passes standard distribution checks (mu=5, sigma=0.3, nu=2, tau=1
     mu = 5, sigma = 0.3, nu = 2, tau = 10
   )
 })
+
+test_that("bct AD gradient has no NaN", {
+  check_ad_gradient(dbct,       rbct,       mu = 5, sigma = 0.3, nu = 2, tau = 10)
+})

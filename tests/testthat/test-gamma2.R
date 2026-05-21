@@ -26,6 +26,10 @@ test_that("gamma2 passes standard distribution checks (mean=0.5, sd=0.5)", {
   )
 })
 
+test_that("gamma2 AD gradient has no NaN", {
+  check_ad_gradient(dgamma2, rgamma2, mean = 2, sd = 1)
+})
+
 test_that("gamma2 matches dgamma with converted shape and scale", {
   x <- c(0.5, 1, 2, 3, 4)
   mean <- 2; sd <- 1

@@ -21,3 +21,21 @@ test_that("vmf log=TRUE is consistent with log(density) (2D, kappa=5)", {
     tolerance = 1e-10
   )
 })
+
+test_that("vmf AD gradient has no NaN", {
+  # mu is a fixed unit vector; differentiate w.r.t. kappa (scalar)
+  set.seed(42)
+  mu <- c(1, 0, 0)
+  x  <- rvmf(100, mu = mu, kappa = 2)
+  nll <- function(par) {
+    -sum(dvmf(x, mu = mu, kappa = par[1], log = TRUE))
+  }
+  F <- tryCatch(
+    RTMB::MakeTape(nll, 2),
+    error = function(e) { fail(paste("MakeTape failed:", conditionMessage(e))); NULL }
+  )
+  if (!is.null(F)) {
+    grad <- F$jacobian(2)
+    expect_false(any(is.nan(grad)), label = "no NaN in AD gradient")
+  }
+})

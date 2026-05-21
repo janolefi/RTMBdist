@@ -17,3 +17,7 @@ test_that("ziweibull passes zero-inflated distribution checks (shape=0.5, scale=
     shape = 0.5, scale = 2, zeroprob = 0.15
   )
 })
+
+test_that("ziweibull AD gradient has no NaN", {
+  check_ad_gradient(dziweibull, rziweibull, shape = 2, scale = 1, zeroprob = 0.2)
+})

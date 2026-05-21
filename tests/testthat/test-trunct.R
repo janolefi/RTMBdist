@@ -21,3 +21,7 @@ test_that("trunct passes standard distribution checks (df=10, min=0, max=Inf)", 
     df = 10, min = 0
   )
 })
+
+test_that("trunct AD gradient has no NaN", {
+  check_ad_gradient(dtrunct,    rtrunct,    df = 5, min = -3, max = 3)
+})

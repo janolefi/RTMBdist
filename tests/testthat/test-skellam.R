@@ -20,3 +20,7 @@ test_that("skellam passes discrete distribution checks (mu1=5, mu2=1)", {
     mu1 = 5, mu2 = 1
   )
 })
+
+test_that("skellam AD gradient has no NaN", {
+  check_ad_gradient(dskellam,   rskellam,   mu1 = 5, mu2 = 2)
+})

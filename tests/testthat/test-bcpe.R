@@ -21,3 +21,7 @@ test_that("bcpe passes standard distribution checks (mu=5, sigma=0.3, nu=2, tau=
     mu = 5, sigma = 0.3, nu = 2, tau = 1.5
   )
 })
+
+test_that("bcpe AD gradient has no NaN", {
+  check_ad_gradient(dbcpe,      rbcpe,      mu = 5, sigma = 0.3, nu = 2, tau = 1.5)
+})

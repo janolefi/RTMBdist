@@ -40,3 +40,7 @@ test_that("powerexp2 passes standard distribution checks (mu=1, sigma=2, nu=1)",
     mu = 1, sigma = 2, nu = 1
   )
 })
+
+test_that("powerexp AD gradient has no NaN", {
+  check_ad_gradient(dpowerexp,  rpowerexp,  mu = 0, sigma = 1, nu = 2)
+})

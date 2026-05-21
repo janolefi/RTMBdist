@@ -23,3 +23,7 @@ test_that("invchisq passes standard distribution checks (df=10, scale=0.5)", {
     df = 10, scale = 0.5
   )
 })
+
+test_that("invchisq AD gradient has no NaN", {
+  check_ad_gradient(dinvchisq,  rinvchisq,  df = 10, scale = 0.5)
+})

@@ -22,3 +22,7 @@ test_that("foldnorm passes standard distribution checks (mu=1, sigma=2)", {
     mu = 1, sigma = 2
   )
 })
+
+test_that("foldnorm AD gradient has no NaN", {
+  check_ad_gradient(dfoldnorm,  rfoldnorm,  mu = 1, sigma = 2)
+})

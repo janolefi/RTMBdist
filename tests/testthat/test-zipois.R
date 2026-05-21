@@ -21,3 +21,7 @@ test_that("zipois passes discrete distribution checks (lambda=5, zeroprob=0.2)",
     lambda = 5, zeroprob = 0.2
   )
 })
+
+test_that("zipois AD gradient has no NaN", {
+  check_ad_gradient(dzipois,    rzipois,    lambda = 3, zeroprob = 0.2)
+})

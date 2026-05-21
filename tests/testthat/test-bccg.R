@@ -21,3 +21,7 @@ test_that("bccg passes standard distribution checks (mu=3, sigma=0.3, nu=2)", {
     mu = 3, sigma = 0.3, nu = 2
   )
 })
+
+test_that("bccg AD gradient has no NaN", {
+  check_ad_gradient(dbccg,      rbccg,      mu = 3, sigma = 0.3, nu = 2)
+})

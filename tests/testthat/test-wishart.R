@@ -26,3 +26,21 @@ test_that("wishart log=TRUE is consistent with log(density) (3D array of matrice
     tolerance = 1e-10
   )
 })
+
+test_that("wishart AD gradient has no NaN", {
+  # Sigma is fixed; differentiate w.r.t. nu (scalar)
+  set.seed(42)
+  Sigma <- diag(2)
+  x <- rwishart(10, nu = 5, Sigma = Sigma)
+  nll <- function(par) {
+    -sum(dwishart(x, nu = par[1], Sigma = Sigma, log = TRUE))
+  }
+  F <- tryCatch(
+    RTMB::MakeTape(nll, 5),
+    error = function(e) { fail(paste("MakeTape failed:", conditionMessage(e))); NULL }
+  )
+  if (!is.null(F)) {
+    grad <- F$jacobian(5)
+    expect_false(any(is.nan(grad)), label = "no NaN in AD gradient")
+  }
+})

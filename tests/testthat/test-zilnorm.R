@@ -17,3 +17,7 @@ test_that("zilnorm passes zero-inflated distribution checks (meanlog=1, sdlog=0.
     meanlog = 1, sdlog = 0.5, zeroprob = 0.35
   )
 })
+
+test_that("zilnorm AD gradient has no NaN", {
+  check_ad_gradient(dzilnorm,   rzilnorm,   meanlog = 0, sdlog = 1, zeroprob = 0.2)
+})

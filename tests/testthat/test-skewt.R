@@ -19,3 +19,7 @@ test_that("skewt passes standard distribution checks (mu=0, sigma=1, skew=2, df=
     mu = 0, sigma = 1, skew = 2, df = 5
   )
 })
+
+test_that("skewt AD gradient has no NaN", {
+  check_ad_gradient(dskewt,     rskewt,     mu = 0, sigma = 1, skew = 2, df = 5)
+})

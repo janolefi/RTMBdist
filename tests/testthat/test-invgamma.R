@@ -22,3 +22,7 @@ test_that("invgamma passes standard distribution checks (shape=3, rate=2)", {
     shape = 3, rate = 2
   )
 })
+
+test_that("invgamma AD gradient has no NaN", {
+  check_ad_gradient(dinvgamma,  rinvgamma,  shape = 3, rate = 2)
+})

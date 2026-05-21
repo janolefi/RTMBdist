@@ -7,6 +7,55 @@
 #   2. round-trip  — q(p(x)) == x            (continuous only)
 #   3. lower.tail  — p(x, lower.tail=FALSE) == 1 - p(x)
 #   4. normalised  — integral of pdf == 1  /  sum of pmf == 1
+#   5. AD gradient — MakeTape(nll) Jacobian contains no NaN
+
+
+#' Check that the AD gradient of a distribution's NLL is free of NaN (test 5)
+#'
+#' Simulates n observations from rfun using the supplied parameter values,
+#' builds a negative log-likelihood with dfun inside RTMB::MakeTape, evaluates
+#' the Jacobian at those same parameter values, and asserts that no gradient
+#' component is NaN.
+#'
+#' @param .dfun density function, e.g. dllogis
+#' @param .rfun random generation function, e.g. rllogis
+#' @param ...   named distribution parameters at sensible true values,
+#'              e.g. alpha = 1, beta = 2
+#' @param .n    number of simulated observations (default 20)
+#' @param .seed random seed (default 42)
+#'
+#' @note Parameters use a leading dot so that common distribution parameter
+#'   names (df, mu, sigma, ...) cannot partially match the helper's own
+#'   formals via R's partial-matching rules.
+check_ad_gradient <- function(.dfun, .rfun, ..., .n = 20, .seed = 42) {
+  set.seed(.seed)
+  params <- list(...)
+  x   <- do.call(.rfun, c(list(n = .n), params))
+  par <- unlist(params)   # named numeric vector, used as tape starting point
+
+  nll <- function(par) {
+    x <- RTMB::OBS(x)
+    -sum(do.call(.dfun, c(list(x = x), as.list(par), list(log = TRUE))))
+  }
+
+  environment(nll) <- environment() # make sure nll has access to x
+
+  F <- tryCatch(
+    RTMB::MakeTape(nll, par),
+    error = function(e) {
+      fail(paste("MakeTape failed:", conditionMessage(e)))
+      NULL
+    }
+  )
+
+  if (!is.null(F)) {
+    grad <- F$jacobian(par)
+    expect_false(
+      any(is.nan(grad)),
+      label = "no NaN in AD gradient"
+    )
+  }
+}
 
 
 #' Run tests 1-4 for a continuous distribution

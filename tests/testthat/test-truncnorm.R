@@ -21,3 +21,7 @@ test_that("truncnorm passes standard distribution checks (mean=2, sd=1, min=0, m
     mean = 2, sd = 1, min = 0
   )
 })
+
+test_that("truncnorm AD gradient has no NaN", {
+  check_ad_gradient(dtruncnorm, rtruncnorm, mean = 0, sd = 1, min = -3, max = 3)
+})

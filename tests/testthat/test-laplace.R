@@ -19,3 +19,7 @@ test_that("laplace passes standard distribution checks (mu=2, b=3)", {
     mu = 2, b = 3
   )
 })
+
+test_that("laplace AD gradient has no NaN", {
+  check_ad_gradient(dlaplace, rlaplace, mu = 2, b = 1.5)
+})

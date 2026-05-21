@@ -19,3 +19,7 @@ test_that("t2 passes standard distribution checks (mu=2, sigma=3, df=10)", {
     mu = 2, sigma = 3, df = 10
   )
 })
+
+test_that("t2 AD gradient has no NaN", {
+  check_ad_gradient(dt2,        rt2,        mu = 0, sigma = 1, df = 5)
+})

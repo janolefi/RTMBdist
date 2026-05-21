@@ -2,7 +2,6 @@
 # Support: x > 0; parameters alpha > 0 (scale/median), beta > 0 (shape)
 # Note: for beta < 1 the density is unbounded at x = 0, so normalisation
 # tests use beta >= 1 to avoid non-finite values at the lower integration boundary.
-#
 
 test_that("llogis passes check_continuous_dist (alpha=1, beta=2)", {
   check_continuous_dist(

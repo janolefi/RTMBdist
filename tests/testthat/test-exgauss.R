@@ -22,3 +22,7 @@ test_that("exgauss passes standard distribution checks (mu=2, sigma=0.5, lambda=
     mu = 2, sigma = 0.5, lambda = 2
   )
 })
+
+test_that("exgauss AD gradient has no NaN", {
+  check_ad_gradient(dexgauss,   rexgauss,   mu = 2, sigma = 0.5, lambda = 2)
+})

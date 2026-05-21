@@ -19,3 +19,7 @@ test_that("genpois passes discrete distribution checks (lambda=5, phi=0.5)", {
     lambda = 5, phi = 0.5
   )
 })
+
+test_that("genpois AD gradient has no NaN", {
+  check_ad_gradient(dgenpois,   rgenpois,   lambda = 5, phi = 0.5)
+})

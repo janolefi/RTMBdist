@@ -20,3 +20,7 @@ test_that("ztnbinom2 passes discrete distribution checks (mu=8, size=5)", {
     mu = 8, size = 5
   )
 })
+
+test_that("ztnbinom2 AD gradient has no NaN", {
+  check_ad_gradient(dztnbinom2, rztnbinom2, mu = 5, size = 3)
+})

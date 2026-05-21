@@ -28,3 +28,7 @@ test_that("wrpcauchy density integrates to 1 (mu=1, rho=0.8)", {
   result <- integrate(dwrpcauchy, lower = -pi, upper = pi, mu = 1, rho = 0.8)
   expect_equal(result$value, 1, tolerance = 1e-4)
 })
+
+test_that("wrpcauchy AD gradient has no NaN", {
+  check_ad_gradient(dwrpcauchy, rwrpcauchy, mu = 0, rho = 0.5)
+})

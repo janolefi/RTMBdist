@@ -19,3 +19,7 @@ test_that("skewnorm passes standard distribution checks (xi=1, omega=2, alpha=3)
     xi = 1, omega = 2, alpha = 3
   )
 })
+
+test_that("skewnorm AD gradient has no NaN", {
+  check_ad_gradient(dskewnorm,  rskewnorm,  xi = 0, omega = 1, alpha = 2)
+})

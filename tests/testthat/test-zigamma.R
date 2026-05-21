@@ -17,3 +17,7 @@ test_that("zigamma passes zero-inflated distribution checks (shape=0.5, scale=2,
     shape = 0.5, scale = 2, zeroprob = 0.1
   )
 })
+
+test_that("zigamma AD gradient has no NaN", {
+  check_ad_gradient(dzigamma,   rzigamma,   shape = 2, scale = 1, zeroprob = 0.2)
+})

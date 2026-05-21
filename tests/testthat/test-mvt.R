@@ -30,3 +30,22 @@ test_that("mvt log=TRUE is consistent with log(density) (3D, mu=c(1,2,3), df=10)
     tolerance = 1e-10
   )
 })
+
+test_that("mvt AD gradient has no NaN", {
+  # mu and Sigma are fixed; differentiate w.r.t. df (scalar)
+  set.seed(42)
+  mu    <- c(0, 0)
+  Sigma <- diag(2)
+  x <- rmvt(100, mu = mu, Sigma = Sigma, df = 5)
+  nll <- function(par) {
+    -sum(dmvt(x, mu = mu, Sigma = Sigma, df = par[1], log = TRUE))
+  }
+  F <- tryCatch(
+    RTMB::MakeTape(nll, 5),
+    error = function(e) { fail(paste("MakeTape failed:", conditionMessage(e))); NULL }
+  )
+  if (!is.null(F)) {
+    grad <- F$jacobian(5)
+    expect_false(any(is.nan(grad)), label = "no NaN in AD gradient")
+  }
+})

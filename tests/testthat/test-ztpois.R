@@ -20,3 +20,7 @@ test_that("ztpois passes discrete distribution checks (lambda=8)", {
     lambda = 8
   )
 })
+
+test_that("ztpois AD gradient has no NaN", {
+  check_ad_gradient(dztpois,    rztpois,    lambda = 3)
+})

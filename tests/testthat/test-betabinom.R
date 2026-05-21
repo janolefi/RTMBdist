@@ -20,3 +20,7 @@ test_that("betabinom passes discrete distribution checks (size=20, shape1=0.5, s
     size = 20, shape1 = 0.5, shape2 = 0.5
   )
 })
+
+test_that("betabinom AD gradient has no NaN", {
+  check_ad_gradient(dbetabinom, rbetabinom, size = 20, shape1 = 2, shape2 = 3)
+})

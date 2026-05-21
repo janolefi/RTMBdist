@@ -17,3 +17,7 @@ test_that("ziinvgauss passes zero-inflated distribution checks (mean=2, shape=3,
     mean = 2, shape = 3, zeroprob = 0.1
   )
 })
+
+test_that("ziinvgauss AD gradient has no NaN", {
+  check_ad_gradient(dziinvgauss,rziinvgauss,mean = 2, shape = 3, zeroprob = 0.2)
+})

@@ -19,3 +19,7 @@ test_that("gumbel passes standard distribution checks (location=2, scale=3)", {
     location = 2, scale = 3
   )
 })
+
+test_that("gumbel AD gradient has no NaN", {
+  check_ad_gradient(dgumbel, rgumbel, location = 5, scale = 2)
+})

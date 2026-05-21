@@ -17,3 +17,7 @@ test_that("zigamma2 passes zero-inflated distribution checks (mean=1, sd=2, zero
     mean = 1, sd = 2, zeroprob = 0.4
   )
 })
+
+test_that("zigamma2 AD gradient has no NaN", {
+  check_ad_gradient(dzigamma2,  rzigamma2,  mean = 2, sd = 1, zeroprob = 0.2)
+})

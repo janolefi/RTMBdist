@@ -21,3 +21,7 @@ test_that("pgweibull passes standard distribution checks (scale=2, shape=2, powe
     scale = 2, shape = 2, powershape = 3
   )
 })
+
+test_that("pgweibull AD gradient has no NaN", {
+  check_ad_gradient(dpgweibull, rpgweibull, scale = 2, shape = 2, powershape = 3)
+})

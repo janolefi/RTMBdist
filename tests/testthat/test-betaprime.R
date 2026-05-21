@@ -33,3 +33,7 @@ test_that("pbetaprime matches pbeta via the q/(1+q) transform", {
     tolerance = 1e-10
   )
 })
+
+test_that("betaprime AD gradient has no NaN", {
+  check_ad_gradient(dbetaprime, rbetaprime, shape1 = 2, shape2 = 3)
+})

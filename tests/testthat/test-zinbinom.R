@@ -19,3 +19,7 @@ test_that("zinbinom passes discrete distribution checks (size=5, prob=0.6, zerop
     size = 5, prob = 0.6, zeroprob = 0.3
   )
 })
+
+test_that("zinbinom AD gradient has no NaN", {
+  check_ad_gradient(dzinbinom,  rzinbinom,  size = 5, prob = 0.4, zeroprob = 0.2)
+})

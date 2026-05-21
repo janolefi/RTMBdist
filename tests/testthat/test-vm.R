@@ -22,3 +22,7 @@ test_that("vm passes standard distribution checks (mu=1, kappa=3)", {
     mu = 1, kappa = 3
   )
 })
+
+test_that("vm AD gradient has no NaN", {
+  check_ad_gradient(dvm,        rvm,        mu = 1, kappa = 2)
+})

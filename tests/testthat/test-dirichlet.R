@@ -24,3 +24,20 @@ test_that("dirichlet log=TRUE is consistent with log(density) (alpha=c(0.5,0.5,0
     tolerance = 1e-10
   )
 })
+
+test_that("dirichlet AD gradient has no NaN", {
+  set.seed(42)
+  alpha_true <- c(2, 3, 5)
+  x <- rdirichlet(100, alpha_true)
+  nll <- function(par) {
+    -sum(ddirichlet(x, alpha = par, log = TRUE))
+  }
+  F <- tryCatch(
+    RTMB::MakeTape(nll, alpha_true),
+    error = function(e) { fail(paste("MakeTape failed:", conditionMessage(e))); NULL }
+  )
+  if (!is.null(F)) {
+    grad <- F$jacobian(alpha_true)
+    expect_false(any(is.nan(grad)), label = "no NaN in AD gradient")
+  }
+})

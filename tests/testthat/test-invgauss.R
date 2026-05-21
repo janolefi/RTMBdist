@@ -21,3 +21,7 @@ test_that("invgauss passes standard distribution checks (mean=2, shape=3)", {
     mean = 2, shape = 3
   )
 })
+
+test_that("invgauss AD gradient has no NaN", {
+  check_ad_gradient(dinvgauss, rinvgauss, mean = 2, shape = 3)
+})
