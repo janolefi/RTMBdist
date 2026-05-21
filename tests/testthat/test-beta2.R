@@ -27,3 +27,7 @@ test_that("beta2 passes standard distribution checks (mu=0.7, phi=20)", {
     mu = 0.7, phi = 20
   )
 })
+
+test_that("beta2 AD gradient has no NaN", {
+  check_ad_gradient(dbeta2, rbeta2, mu = 0.7, phi = 1.5)
+})

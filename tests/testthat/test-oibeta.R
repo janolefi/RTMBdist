@@ -22,3 +22,7 @@ test_that("oibeta passes inflated distribution checks (shape1=0.5, shape2=2, one
     shape1 = 0.5, shape2 = 2, oneprob = 0.3
   )
 })
+
+test_that("oibeta AD gradient has no NaN", {
+  check_ad_gradient(doibeta, roibeta, shape1 = 2, shape2 = 3, oneprob = 0.2)
+})

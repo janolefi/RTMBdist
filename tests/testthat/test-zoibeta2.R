@@ -22,3 +22,7 @@ test_that("zoibeta2 passes inflated distribution checks (mu=0.6, phi=8, zeroprob
     mu = 0.6, phi = 8, zeroprob = 0.2, oneprob = 0.2
   )
 })
+
+test_that("zoibeta2 AD gradient has no NaN", {
+  check_ad_gradient(dzoibeta2, rzoibeta2, mu = 0.4, phi = 5, zeroprob = 0.15, oneprob = 0.15)
+})

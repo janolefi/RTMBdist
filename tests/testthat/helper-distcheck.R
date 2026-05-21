@@ -34,7 +34,7 @@ check_ad_gradient <- function(.dfun, .rfun, ..., .n = 20, .seed = 42) {
   par <- unlist(params)   # named numeric vector, used as tape starting point
 
   nll <- function(par) {
-    x <- RTMB::OBS(x)
+    # x <- RTMB::OBS(x) # creates trouble in joint test suite because xs are mixed up
     -sum(do.call(.dfun, c(list(x = x), as.list(par), list(log = TRUE))))
   }
 

@@ -19,3 +19,7 @@ test_that("zibeta passes zero-inflated distribution checks (shape1=0.5, shape2=0
     shape1 = 0.5, shape2 = 0.5, zeroprob = 0.3
   )
 })
+
+test_that("zibeta AD gradient has no NaN", {
+  check_ad_gradient(dzibeta, rzibeta, shape1 = 2, shape2 = 3, zeroprob = 0.2)
+})

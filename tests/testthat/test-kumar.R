@@ -22,3 +22,7 @@ test_that("kumar passes standard distribution checks (a=0.5, b=2)", {
     a = 0.5, b = 2
   )
 })
+
+test_that("kumar AD gradient has no NaN", {
+  check_ad_gradient(dkumar, rkumar, a = 2, b = 3)
+})

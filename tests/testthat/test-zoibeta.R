@@ -22,3 +22,7 @@ test_that("zoibeta passes inflated distribution checks (shape1=0.5, shape2=0.5, 
     shape1 = 0.5, shape2 = 0.5, zeroprob = 0.2, oneprob = 0.2
   )
 })
+
+test_that("zoibeta AD gradient has no NaN", {
+  check_ad_gradient(dzoibeta, rzoibeta, shape1 = 2, shape2 = 3, zeroprob = 0.15, oneprob = 0.15)
+})
