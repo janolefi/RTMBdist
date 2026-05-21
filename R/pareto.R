@@ -51,10 +51,6 @@ dpareto <- function(x, mu = 1, log = FALSE) {
     return(dGenericOSA("dpareto", x=x, mu=mu, log=log))
   }
 
-  ly <- max(length(x), length(mu))
-  x <- rep(x, length = ly)
-  mu <- rep(mu, length = ly)
-
   logdens <- log(mu) - (mu + 1) * log(x) +
     log(greater(x, 1)) # return - Inf for x <= 1
 

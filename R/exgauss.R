@@ -58,10 +58,6 @@ dexgauss <- function(x, mu = 0, sigma = 1, lambda = 1, log = FALSE) {
     return(dGenericOSA("dexgauss", x=x, mu=mu, sigma=sigma, lambda=lambda, log=log))
   }
 
-  ly <- length(x)
-  mu <- rep(mu, length = ly)
-  sigma <- rep(sigma, length = ly)
-  lambda <- rep(lambda, length = ly)
   nu <- 1 / lambda
 
   z <- x - mu - ((sigma * sigma) / nu)
@@ -88,10 +84,6 @@ pexgauss <- function(q, mu = 0, sigma = 1, lambda = 1, lower.tail = TRUE, log.p 
     if (any(lambda <= 0)) stop("lambda must be > 0")
   }
 
-  ly <- length(q)
-  mu <- rep(mu, length = ly)
-  sigma <- rep(sigma, length = ly)
-  lamba <- rep(lambda, length = ly)
   nu <- 1 / lambda
 
   z <- q - mu - (sigma^2 / nu)
