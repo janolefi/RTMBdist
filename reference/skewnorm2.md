@@ -64,6 +64,12 @@ This implementation of `dskewnorm2` allows for automatic differentiation
 with `RTMB` while the other functions are imported from the `sn`
 package.
 
+Uses the same density as `skewnorm` with location \\\xi\\, scale
+\\\omega\\, and shape \\\alpha\\ reparameterised from the mean \\m\\,
+standard deviation \\s\\, and skewness parameter \\\alpha\\: \$\$\delta
+= \frac{\alpha}{\sqrt{1+\alpha^2}}, \quad \omega = \frac{s}{\sqrt{1 -
+2\delta^2/\pi}}, \quad \xi = m - \omega\delta\sqrt{2/\pi}.\$\$
+
 ## See also
 
 [skewnorm](https://janolefi.github.io/RTMBdist/reference/skewnorm.md),

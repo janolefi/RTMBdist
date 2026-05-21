@@ -55,6 +55,11 @@ function, and `rzoibeta` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+\$\$f(x;\\a,b,p_0,p_1) = p_0\\\mathbf{1}\[x=0\] +
+(1-p_0-p_1)\\f\_{\mathrm{Beta}}(x;\\a,b)\\\mathbf{1}\[x\in(0,1)\] +
+p_1\\\mathbf{1}\[x=1\],\$\$ where \\p_0\\ = `zeroprob` and \\p_1\\ =
+`oneprob`.
+
 ## Examples
 
 ``` r

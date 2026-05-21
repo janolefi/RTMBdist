@@ -59,6 +59,10 @@ function, and `rzinbinom2` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+Uses the same density as `zinbinom` with \\p = r/(r+\mu)\\:
+\$\$P(X=k;\\\mu,r,p_0) = p_0\\\mathbf{1}\[k=0\] +
+(1-p_0)\\P\_{\mathrm{NB}}\\\left(k;\\r,\tfrac{r}{r+\mu}\right).\$\$
+
 ## Examples
 
 ``` r

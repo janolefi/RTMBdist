@@ -62,6 +62,14 @@ generates random deviates.
 This implementation of `dgengamma`, `pgengamma`, and `qgengamma` allows
 for automatic differentiation with `RTMB`.
 
+For \\\nu \neq 0\\ the density is that of a generalised gamma: setting
+\\z = (x/\mu)^\nu\\, \$\$f(x;\\\mu,\sigma,\nu) =
+\frac{\|\nu\|}{x\\({\sigma\|\nu\|})^{2/(\sigma\nu)^2}\\\Gamma\\\left(1/(\sigma\nu)^2\right)}\\
+z^{1/(\sigma\nu)^2}\\ \exp\\\left(-\frac{z}{(\sigma\|\nu\|)^2}\right),
+\quad x \> 0.\$\$ For \\\nu = 0\\ the distribution reduces to a
+log-normal with log-mean \\\log\mu\\ and log-standard-deviation
+\\\sigma\\.
+
 ## References
 
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.

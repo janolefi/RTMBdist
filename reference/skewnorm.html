@@ -99,6 +99,8 @@ the skew normal distribution.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dskewnorm</code> allows for automatic differentiation with <code>RTMB</code> while the other functions are imported from the <code>sn</code> package.
 See <code>sn::<a href="https://rdrr.io/pkg/sn/man/dsn.html" class="external-link">dsn</a></code> for more details.</p>
+<p>$$f(x;\,\xi,\omega,\alpha) = \frac{2}{\omega}\,\phi\!\left(\frac{x-\xi}{\omega}\right)\Phi\!\left(\alpha\frac{x-\xi}{\omega}\right),$$
+where \(\phi\) and \(\Phi\) are the standard normal PDF and CDF.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

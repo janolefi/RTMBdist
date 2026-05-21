@@ -50,6 +50,9 @@ This implementation of `dwrpcauchy` allows for automatic differentiation
 with `RTMB`. `rwrpcauchy` is simply a wrapper for
 `rwrappedcauchy`imported from `circular`.
 
+\$\$f(x;\\\mu,\rho) = \frac{1}{2\pi}\cdot\frac{1-\rho^2}{1 + \rho^2 -
+2\rho\cos(x-\mu)}.\$\$
+
 ## Examples
 
 ``` r

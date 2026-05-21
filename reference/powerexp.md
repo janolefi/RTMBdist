@@ -77,6 +77,15 @@ while this does not hold for `powerexp2`.
 See `gamlss.dist::`[`PE`](https://rdrr.io/pkg/gamlss.dist/man/PE.html)
 for more details.
 
+For `powerexp` (PE), \\\sigma\\ is the standard deviation; the density
+is \$\$f(x;\\\mu,\sigma,\nu) = \frac{\nu}{2c\\\sigma\\\Gamma(1/\nu)}
+\exp\\\left(-\tfrac{1}{2}\left\|\frac{x-\mu}{c\sigma}\right\|^\nu\right),\$\$
+where \\c = \[2^{-2/\nu}\Gamma(1/\nu)/\Gamma(3/\nu)\]^{1/2}\\.
+
+For `powerexp2` (PE2), \\\sigma\\ is a scale parameter; the density is
+\$\$f(x;\\\mu,\sigma,\nu) = \frac{\nu}{2\sigma\\\Gamma(1/\nu)}
+\exp\\\left(-\left\|\frac{x-\mu}{\sigma}\right\|^\nu\right).\$\$
+
 ## References
 
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.

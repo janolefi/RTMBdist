@@ -100,6 +100,8 @@ the t distribution with location and scale parameters.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dt2</code> allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>$$f(x;\,\mu,\sigma,\nu) = \frac{1}{\sigma}\,f_t\!\left(\frac{x-\mu}{\sigma};\,\nu\right),$$
+where \(f_t(\cdot;\nu)\) is the Student-\(t\) PDF with \(\nu\) degrees of freedom.</p>
     </div>
 
     <div class="section level2">

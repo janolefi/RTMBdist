@@ -103,6 +103,9 @@ the Box–Cox t distribution.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dbct</code> and <code>pbct</code> allows for automatic differentiation with <code>RTMB</code> while the other functions are imported from <code>gamlss.dist</code> package.
 See <code>gamlss.dist::<a href="https://rdrr.io/pkg/gamlss.dist/man/BCt.html" class="external-link">BCT</a></code> for more details.</p>
+<p>The density is
+$$f(x; \mu, \sigma, \nu, \tau) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma} \frac{f_t(z;\tau)}{F_t\!\left(1/(\sigma|\nu|);\tau\right)}, \quad x &gt; 0,$$
+where \(z = [(x/\mu)^\nu - 1]/(\nu\sigma)\) for \(\nu \neq 0\) and \(z = \log(x/\mu)/\sigma\) for \(\nu = 0\), and \(f_t(\cdot;\tau)\) and \(F_t(\cdot;\tau)\) are the PDF and CDF of Student's \(t\) distribution with \(\tau\) degrees of freedom.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

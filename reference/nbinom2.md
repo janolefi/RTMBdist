@@ -61,6 +61,11 @@ This implementation allows for automatic differentiation with `RTMB`.
 `pnbinom` is an AD-compatible implementation of the standard
 parameterisation of the CDF, missing from `RTMB`.
 
+Reparameterises the negative binomial by mean \\\mu\\ via \\p =
+r/(r+\mu)\\: \$\$P(X=k;\\\mu,r) =
+\binom{k+r-1}{k}\left(\frac{r}{r+\mu}\right)^r\left(\frac{\mu}{r+\mu}\right)^k,
+\quad k = 0,1,2,\ldots\$\$
+
 ## Examples
 
 ``` r

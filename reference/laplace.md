@@ -66,6 +66,9 @@ generates random deviates.
 This implementation of `dlaplace` allows for automatic differentiation
 with `RTMB`.
 
+\$\$f(x;\\\mu,b) =
+\frac{1}{2b}\exp\\\left(-\frac{\|x-\mu\|}{b}\right).\$\$
+
 ## Examples
 
 ``` r

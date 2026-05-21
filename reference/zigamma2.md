@@ -55,6 +55,11 @@ function, and `rzigamma2` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+Uses the same density as `zigamma` with \\\text{shape} = \mu^2/s^2\\ and
+\\\text{scale} = s^2/\mu\\: \$\$f(x;\\\mu,s,p_0) =
+p_0\\\mathbf{1}\[x=0\] +
+(1-p_0)\\f\_{\mathrm{Gamma}}(x;\\\mu^2/s^2,\\s^2/\mu)\\\mathbf{1}\[x\>0\].\$\$
+
 ## Examples
 
 ``` r

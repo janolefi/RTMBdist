@@ -68,6 +68,10 @@ generates random deviates.
 This implementation of `dtrunct2` allows for automatic differentiation
 with `RTMB`.
 
+\$\$f(x;\\\nu,\mu,\sigma,a,b) =
+\frac{f_t((x-\mu)/\sigma;\\\nu)/\sigma}{F_t((b-\mu)/\sigma;\\\nu) -
+F_t((a-\mu)/\sigma;\\\nu)}, \quad x \in \[a, b\].\$\$
+
 ## Examples
 
 ``` r

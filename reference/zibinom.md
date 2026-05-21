@@ -53,6 +53,9 @@ distribution function, and `rzibinom` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+\$\$P(X=k;\\n,p,p_0) = p_0\\\mathbf{1}\[k=0\] +
+(1-p_0)\\P\_{\mathrm{Bin}}(k;\\n,p),\$\$ where \\p_0\\ is `zeroprob`.
+
 ## Examples
 
 ``` r

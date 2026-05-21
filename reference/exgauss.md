@@ -68,6 +68,12 @@ If \\X \sim N(\mu, \sigma^2)\\ and \\Y \sim \text{Exp}(\lambda)\\, then
 \\Z = X + Y\\ follows the exponentially modified Gaussian distribution
 with parameters \\\mu\\, \\\sigma\\, and \\\lambda\\.
 
+The density is \$\$f(x;\\\mu,\sigma,\lambda) = \lambda
+\exp\\\Bigl(\lambda\mu + \tfrac{\lambda^2\sigma^2}{2} - \lambda
+x\Bigr)\\ \Phi\\\left(\frac{x - \mu -
+\lambda\sigma^2}{\sigma}\right),\$\$ where \\\Phi\\ is the standard
+normal CDF.
+
 ## References
 
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.

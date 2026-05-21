@@ -79,6 +79,10 @@ This implementation of `dvm` allows for automatic differentiation with
 `RTMB`. `rvm` and `pvm` are simply wrappers of the corresponding
 functions from `circular`.
 
+\$\$f(x;\\\mu,\kappa) = \frac{\exp(\kappa\cos(x-\mu))}{2\pi\\
+I_0(\kappa)},\$\$ where \\I_0\\ is the modified Bessel function of the
+first kind of order 0.
+
 ## Examples
 
 ``` r

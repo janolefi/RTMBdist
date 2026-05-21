@@ -96,6 +96,8 @@ the zero-inflated negative binomial distribution.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>$$P(X=k;\,r,p,p_0) = p_0\,\mathbf{1}[k=0] + (1-p_0)\,P_{\mathrm{NB}}(k;\,r,p),$$
+where \(p_0\) is <code>zeroprob</code>.</p>
     </div>
 
     <div class="section level2">

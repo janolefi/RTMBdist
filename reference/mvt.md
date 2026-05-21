@@ -50,6 +50,12 @@ Note: for `df` \\\le 1\\ the mean is undefined, and for `df` \\\le 2\\
 the covariance is infinite. For `df` \> 2, the covariance is
 `df/(df-2) * Sigma`.
 
+\$\$f(\mathbf{x};\\\boldsymbol{\mu},\Sigma,\nu) =
+\frac{\Gamma((\nu+d)/2)}{\Gamma(\nu/2)\\(\nu\pi)^{d/2}\\\|\Sigma\|^{1/2}}
+\left(1 + \frac{(\mathbf{x}-\boldsymbol{\mu})^\top
+\Sigma^{-1}(\mathbf{x}-\boldsymbol{\mu})}{\nu}\right)^{-(\nu+d)/2},\$\$
+where \\d\\ is the dimension.
+
 ## Examples
 
 ``` r

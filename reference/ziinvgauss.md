@@ -55,6 +55,11 @@ function, and `rziinvgauss` generates random deviates.
 This implementation of `zidinvgauss` allows for automatic
 differentiation with `RTMB`.
 
+\$\$f(x;\\\mu,\lambda,p_0) = p_0\\\mathbf{1}\[x=0\] +
+(1-p_0)\\f\_{\mathrm{IG}}(x;\\\mu,\lambda)\\\mathbf{1}\[x\>0\],\$\$
+where \\p_0\\ is `zeroprob` and \\f\_{\mathrm{IG}}\\ is the inverse
+Gaussian density.
+
 ## Examples
 
 ``` r

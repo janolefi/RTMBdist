@@ -38,6 +38,11 @@ rdirichlet(n, alpha)
 This implementation of `ddirichlet` allows for automatic differentiation
 with `RTMB`.
 
+\$\$f(\mathbf{x};\\\boldsymbol{\alpha}) = \frac{\Gamma\\\left(\sum_i
+\alpha_i\right)}{\prod_i \Gamma(\alpha_i)} \prod_i x_i^{\alpha_i -
+1},\$\$ where \\\mathbf{x}\\ lies on the unit simplex and \\\alpha_i \>
+0\\.
+
 ## Examples
 
 ``` r

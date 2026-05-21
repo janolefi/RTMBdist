@@ -76,6 +76,8 @@ If <code>x</code> is a matrix, each row should sum to one.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>ddirichlet</code> allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>$$f(\mathbf{x};\,\boldsymbol{\alpha}) = \frac{\Gamma\!\left(\sum_i \alpha_i\right)}{\prod_i \Gamma(\alpha_i)} \prod_i x_i^{\alpha_i - 1},$$
+where \(\mathbf{x}\) lies on the unit simplex and \(\alpha_i &gt; 0\).</p>
     </div>
 
     <div class="section level2">

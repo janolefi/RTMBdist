@@ -65,6 +65,13 @@ differentiation with `RTMB` while the other functions are imported from
 `gamlss.dist::`[`BCCG`](https://rdrr.io/pkg/gamlss.dist/man/BCCG.html)
 for more details.
 
+The density is \$\$f(x; \mu, \sigma, \nu) = \frac{x^{\nu-1}}{\mu^{\nu}
+\sigma \sqrt{2\pi}} \exp\\\left(-\tfrac{z^2}{2}\right)
+\Bigl\[\Phi\\\left(\tfrac{1}{\sigma\|\nu\|}\right)\Bigr\]^{-1}, \quad x
+\> 0,\$\$ where \\z = \[(x/\mu)^\nu - 1\]/(\nu\sigma)\\ for \\\nu \neq
+0\\ and \\z = \log(x/\mu)/\sigma\\ for \\\nu = 0\\, and \\\Phi\\ is the
+standard normal CDF.
+
 ## References
 
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.

@@ -96,6 +96,8 @@ the zero-inflated negative binomial distribution reparameterised in terms of mea
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>Uses the same density as <code>zinbinom</code> with \(p = r/(r+\mu)\):
+$$P(X=k;\,\mu,r,p_0) = p_0\,\mathbf{1}[k=0] + (1-p_0)\,P_{\mathrm{NB}}\!\left(k;\,r,\tfrac{r}{r+\mu}\right).$$</p>
     </div>
 
     <div class="section level2">

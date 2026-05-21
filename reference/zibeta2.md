@@ -59,6 +59,10 @@ function, and `rzibeta2` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+Uses the same density as `zibeta` with \\a = \mu\phi\\ and \\b =
+(1-\mu)\phi\\: \$\$f(x;\\\mu,\phi,p_0) = p_0\\\mathbf{1}\[x=0\] +
+(1-p_0)\\f\_{\mathrm{Beta}}(x;\\\mu\phi,\\(1-\mu)\phi)\\\mathbf{1}\[x\in(0,1)\].\$\$
+
 ## Examples
 
 ``` r

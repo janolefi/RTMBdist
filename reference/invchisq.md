@@ -28,7 +28,7 @@ rinvchisq(n, df, scale = 1/df)
 - scale:
 
   optional positive scale parameter. Default value of `1/df` corresponds
-  to standard inverse gamma
+  to standard inverse Chi-squared
 
 - log, log.p:
 

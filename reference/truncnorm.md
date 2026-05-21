@@ -64,6 +64,11 @@ generates random deviates.
 This implementation of `dtruncnorm` allows for automatic differentiation
 with `RTMB`.
 
+\$\$f(x;\\\mu,\sigma,a,b) =
+\frac{\phi((x-\mu)/\sigma)/\sigma}{\Phi((b-\mu)/\sigma) -
+\Phi((a-\mu)/\sigma)}, \quad x \in \[a, b\],\$\$ where \\\phi\\ and
+\\\Phi\\ are the standard normal PDF and CDF.
+
 ## Examples
 
 ``` r

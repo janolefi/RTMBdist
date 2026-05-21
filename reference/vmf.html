@@ -79,6 +79,8 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dvmf</code> allows for automatic differentiation with <code>RTMB</code>. <code>rvmf</code> is a reparameterised import from <code><a href="https://rdrr.io/pkg/movMF/man/movMF_distribution.html" class="external-link">movMF::rmovMF</a></code>.</p>
+<p>$$f(\mathbf{x};\,\boldsymbol{\mu},\kappa) = C_p(\kappa)\,\exp(\kappa\,\boldsymbol{\mu}^\top\mathbf{x}),$$
+where \(C_p(\kappa) = \kappa^{p/2-1} / ((2\pi)^{p/2} I_{p/2-1}(\kappa))\) is the normalising constant and \(I_\nu\) is the modified Bessel function of the first kind of order \(\nu\).</p>
     </div>
 
     <div class="section level2">

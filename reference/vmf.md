@@ -45,6 +45,12 @@ This implementation of `dvmf` allows for automatic differentiation with
 `RTMB`. `rvmf` is a reparameterised import from
 [`movMF::rmovMF`](https://rdrr.io/pkg/movMF/man/movMF_distribution.html).
 
+\$\$f(\mathbf{x};\\\boldsymbol{\mu},\kappa) =
+C_p(\kappa)\\\exp(\kappa\\\boldsymbol{\mu}^\top\mathbf{x}),\$\$ where
+\\C_p(\kappa) = \kappa^{p/2-1} / ((2\pi)^{p/2} I\_{p/2-1}(\kappa))\\ is
+the normalising constant and \\I\_\nu\\ is the modified Bessel function
+of the first kind of order \\\nu\\.
+
 ## Examples
 
 ``` r

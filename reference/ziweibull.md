@@ -54,6 +54,10 @@ function, and `rziweibull` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+\$\$f(x;\\k,\lambda,p_0) = p_0\\\mathbf{1}\[x=0\] +
+(1-p_0)\\f\_{\mathrm{Weibull}}(x;\\k,\lambda)\\\mathbf{1}\[x\>0\],\$\$
+where \\p_0\\ is `zeroprob`, \\k\\ = `shape`, \\\lambda\\ = `scale`.
+
 ## Examples
 
 ``` r

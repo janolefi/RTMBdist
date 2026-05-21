@@ -105,6 +105,7 @@ the truncated t distribution with location <code>mu</code> and scale <code>sigma
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dtrunct2</code> allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>$$f(x;\,\nu,\mu,\sigma,a,b) = \frac{f_t((x-\mu)/\sigma;\,\nu)/\sigma}{F_t((b-\mu)/\sigma;\,\nu) - F_t((a-\mu)/\sigma;\,\nu)}, \quad x \in [a, b].$$</p>
     </div>
 
     <div class="section level2">

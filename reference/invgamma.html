@@ -91,6 +91,8 @@ the inverse Gamma distribution.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dinvgamma</code>, <code>pinvgamma</code>, and <code>qinvgamma</code> allows for automatic differentiation with <code>RTMB</code>.</p>
 <p>If \(X \sim \Gamma(\alpha, \beta)\), then \(1/X \sim \text{InvGamma}(\alpha, \beta)\).</p>
+<p>$$f(x;\,\alpha,s) = \frac{s^\alpha}{\Gamma(\alpha)}\, x^{-(\alpha+1)}\exp\!\left(-\frac{s}{x}\right), \quad x &gt; 0,$$
+where \(s = \text{scale} = 1/\text{rate}\).</p>
     </div>
 
     <div class="section level2">

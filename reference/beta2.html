@@ -105,6 +105,9 @@ the beta distribution reparameterised in terms of mean and concentration.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation allows for automatic differentiation with <code>RTMB</code>.</p>
 <p>Currently, <code>dbeta</code> masks <code>RTMB::dbeta</code> because the latter has a numerically unstable gradient.</p>
+<p><code>dbeta</code> and <code>dbeta2</code> compute the beta density. <code>dbeta2</code> reparameterises by
+mean \(\mu\) and concentration \(\phi\):
+$$f(x; \mu, \phi) = \frac{x^{\mu\phi - 1}(1-x)^{(1-\mu)\phi - 1}}{B(\mu\phi,\, (1-\mu)\phi)}, \quad x \in (0,1).$$</p>
     </div>
 
     <div class="section level2">

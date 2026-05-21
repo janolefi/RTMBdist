@@ -68,6 +68,14 @@ differentiation with `RTMB` while the other functions are imported from
 `gamlss.dist::`[`BCT`](https://rdrr.io/pkg/gamlss.dist/man/BCt.html) for
 more details.
 
+The density is \$\$f(x; \mu, \sigma, \nu, \tau) =
+\frac{x^{\nu-1}}{\mu^{\nu} \sigma}
+\frac{f_t(z;\tau)}{F_t\\\left(1/(\sigma\|\nu\|);\tau\right)}, \quad x \>
+0,\$\$ where \\z = \[(x/\mu)^\nu - 1\]/(\nu\sigma)\\ for \\\nu \neq 0\\
+and \\z = \log(x/\mu)/\sigma\\ for \\\nu = 0\\, and \\f_t(\cdot;\tau)\\
+and \\F_t(\cdot;\tau)\\ are the PDF and CDF of Student's \\t\\
+distribution with \\\tau\\ degrees of freedom.
+
 ## References
 
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.

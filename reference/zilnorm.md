@@ -54,6 +54,11 @@ function, and `rzilnorm` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+\$\$f(x;\\\mu\_{\ell},\sigma\_\ell,p_0) = p_0\\\mathbf{1}\[x=0\] +
+(1-p_0)\\f\_{\mathrm{LN}}(x;\\\mu\_\ell,\sigma\_\ell)\\\mathbf{1}\[x\>0\],\$\$
+where \\p_0\\ is `zeroprob`, \\\mu\_\ell\\ = `meanlog`, \\\sigma\_\ell\\
+= `sdlog`, and \\f\_{\mathrm{LN}}\\ is the log-normal density.
+
 ## Examples
 
 ``` r

@@ -50,6 +50,10 @@ and `roibeta` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+\$\$f(x;\\a,b,p_1) = p_1\\\mathbf{1}\[x=1\] +
+(1-p_1)\\f\_{\mathrm{Beta}}(x;\\a,b)\\\mathbf{1}\[x\in(0,1)\],\$\$ where
+\\f\_{\mathrm{Beta}}\\ is the beta density and \\p_1\\ is `oneprob`.
+
 ## Examples
 
 ``` r

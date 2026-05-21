@@ -58,6 +58,11 @@ deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+Reparameterises the gamma distribution via \\\text{shape} = \mu^2/s^2\\
+and \\\text{scale} = s^2/\mu\\: \$\$f(x;\\\mu, s) = \frac{x^{\mu^2/s^2 -
+1} \exp(-x s^2/\mu^2)}{(s^2/\mu)^{\mu^2/s^2}\\\Gamma(\mu^2/s^2)}, \quad
+x \> 0.\$\$
+
 ## Examples
 
 ``` r

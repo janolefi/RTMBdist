@@ -55,6 +55,10 @@ function, and `roibeta2` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+Uses the same density as `oibeta` with \\a = \mu\phi\\ and \\b =
+(1-\mu)\phi\\: \$\$f(x;\\\mu,\phi,p_1) = p_1\\\mathbf{1}\[x=1\] +
+(1-p_1)\\f\_{\mathrm{Beta}}(x;\\\mu\phi,\\(1-\mu)\phi)\\\mathbf{1}\[x\in(0,1)\].\$\$
+
 ## Examples
 
 ``` r

@@ -91,6 +91,12 @@ NEVER be initialised with exactly zero. This will cause the initial and
 all subsequent derivatives to be exactly zero and hence the parameter
 will remain at its initial value.
 
+\$\$f(x;\\\mu,\sigma,\lambda,\nu) = \frac{2}{\sigma}\\
+f_t\\\left(\frac{x-\mu}{\sigma};\\\nu\right)
+F_t\\\left(\lambda\sqrt{\frac{\nu+1}{\nu + z^2}}\cdot
+z;\\\nu+1\right),\$\$ where \\z=(x-\mu)/\sigma\\, \\f_t(\cdot;\nu)\\ is
+the Student-\\t\\ PDF, and \\F_t(\cdot;\nu+1)\\ is its CDF.
+
 ## See also
 
 [skewt2](https://janolefi.github.io/RTMBdist/reference/skewt2.md),

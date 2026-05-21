@@ -116,6 +116,8 @@ This implementation of <code>dskewt</code> allows for automatic differentiation 
 See <code>sn::<a href="https://rdrr.io/pkg/sn/man/dst.html" class="external-link">dst</a></code> for more details.</p>
 <p><strong>Caution:</strong> In a numerial optimisation, the <code>skew</code> parameter should NEVER be initialised with exactly zero.
 This will cause the initial and all subsequent derivatives to be exactly zero and hence the parameter will remain at its initial value.</p>
+<p>$$f(x;\,\mu,\sigma,\lambda,\nu) = \frac{2}{\sigma}\, f_t\!\left(\frac{x-\mu}{\sigma};\,\nu\right) F_t\!\left(\lambda\sqrt{\frac{\nu+1}{\nu + z^2}}\cdot z;\,\nu+1\right),$$
+where \(z=(x-\mu)/\sigma\), \(f_t(\cdot;\nu)\) is the Student-\(t\) PDF, and \(F_t(\cdot;\nu+1)\) is its CDF.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

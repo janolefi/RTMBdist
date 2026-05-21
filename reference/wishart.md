@@ -39,6 +39,13 @@ rwishart(n, nu, Sigma)
 `dwishart` gives the density, `rwishart` generates random deviates
 (matrix for `n = 1`, array with `n` slices for `n > 1`)
 
+## Details
+
+\$\$f(X;\\\nu,\Sigma) =
+\frac{\|X\|^{(\nu-p-1)/2}\exp\\\left(-\tfrac{1}{2}\operatorname{tr}(\Sigma^{-1}X)\right)}{2^{\nu
+p/2}\\\|\Sigma\|^{\nu/2}\\\Gamma_p(\nu/2)},\$\$ where \\p\\ is the
+dimension and \\\Gamma_p\\ is the multivariate gamma function.
+
 ## Examples
 
 ``` r

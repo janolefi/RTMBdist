@@ -54,6 +54,10 @@ function, and `rzigamma` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+\$\$f(x;\\\alpha,s,p_0) = p_0\\\mathbf{1}\[x=0\] +
+(1-p_0)\\f\_{\mathrm{Gamma}}(x;\\\alpha,s)\\\mathbf{1}\[x\>0\],\$\$
+where \\p_0\\ is `zeroprob`.
+
 ## Examples
 
 ``` r

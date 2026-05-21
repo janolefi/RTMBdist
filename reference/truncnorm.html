@@ -100,6 +100,8 @@ the truncated normal distribution.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dtruncnorm</code> allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>$$f(x;\,\mu,\sigma,a,b) = \frac{\phi((x-\mu)/\sigma)/\sigma}{\Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma)}, \quad x \in [a, b],$$
+where \(\phi\) and \(\Phi\) are the standard normal PDF and CDF.</p>
     </div>
 
     <div class="section level2">

@@ -60,6 +60,9 @@ function, and `rzoibeta2` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+Uses the same density as `zoibeta` with \\a = \mu\phi\\ and \\b =
+(1-\mu)\phi\\.
+
 ## Examples
 
 ``` r

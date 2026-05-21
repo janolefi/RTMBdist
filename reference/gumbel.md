@@ -58,6 +58,9 @@ deviates.
 This implementation of `dgumbel` allows for automatic differentiation
 with `RTMB`.
 
+\$\$f(x;\\\mu,\sigma) = \frac{1}{\sigma}\exp\\\bigl(-(z + e^{-z})\bigr),
+\quad z = \frac{x-\mu}{\sigma}.\$\$
+
 ## Examples
 
 ``` r

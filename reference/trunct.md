@@ -58,6 +58,10 @@ deviates.
 This implementation of `dtrunct` allows for automatic differentiation
 with `RTMB`.
 
+\$\$f(x;\\\nu,a,b) = \frac{f_t(x;\\\nu)}{F_t(b;\\\nu) - F_t(a;\\\nu)},
+\quad x \in \[a, b\],\$\$ where \\f_t(\cdot;\nu)\\ and
+\\F_t(\cdot;\nu)\\ are the Student-\\t\\ PDF and CDF.
+
 ## Examples
 
 ``` r

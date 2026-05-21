@@ -99,6 +99,9 @@ the Box–Cox Cole and Green distribution.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dbccg</code> and <code>pbccg</code> allows for automatic differentiation with <code>RTMB</code> while the other functions are imported from <code>gamlss.dist</code> package.
 See <code>gamlss.dist::<a href="https://rdrr.io/pkg/gamlss.dist/man/BCCG.html" class="external-link">BCCG</a></code> for more details.</p>
+<p>The density is
+$$f(x; \mu, \sigma, \nu) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma \sqrt{2\pi}} \exp\!\left(-\tfrac{z^2}{2}\right) \Bigl[\Phi\!\left(\tfrac{1}{\sigma|\nu|}\right)\Bigr]^{-1}, \quad x &gt; 0,$$
+where \(z = [(x/\mu)^\nu - 1]/(\nu\sigma)\) for \(\nu \neq 0\) and \(z = \log(x/\mu)/\sigma\) for \(\nu = 0\), and \(\Phi\) is the standard normal CDF.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

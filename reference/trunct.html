@@ -95,6 +95,8 @@ the truncated t distribution.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dtrunct</code> allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>$$f(x;\,\nu,a,b) = \frac{f_t(x;\,\nu)}{F_t(b;\,\nu) - F_t(a;\,\nu)}, \quad x \in [a, b],$$
+where \(f_t(\cdot;\nu)\) and \(F_t(\cdot;\nu)\) are the Student-\(t\) PDF and CDF.</p>
     </div>
 
     <div class="section level2">

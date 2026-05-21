@@ -71,6 +71,11 @@ This implementation allows for automatic differentiation with `RTMB`.
 Currently, `dbeta` masks `RTMB::dbeta` because the latter has a
 numerically unstable gradient.
 
+`dbeta` and `dbeta2` compute the beta density. `dbeta2` reparameterises
+by mean \\\mu\\ and concentration \\\phi\\: \$\$f(x; \mu, \phi) =
+\frac{x^{\mu\phi - 1}(1-x)^{(1-\mu)\phi - 1}}{B(\mu\phi,\\
+(1-\mu)\phi)}, \quad x \in (0,1).\$\$
+
 ## Examples
 
 ``` r

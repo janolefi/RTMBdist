@@ -57,6 +57,8 @@ differentiation with `RTMB` while the other functions are imported from
 `gamlss.dist::`[`PARETO`](https://rdrr.io/pkg/gamlss.dist/man/PARETO2.html)
 for more details.
 
+\$\$f(x;\\\mu) = \frac{\mu}{x^{\mu+1}}, \quad x \> 1.\$\$
+
 ## References
 
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.

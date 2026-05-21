@@ -46,6 +46,9 @@ samples.
 This implementation of `dbetabinom` allows for automatic differentiation
 with `RTMB`.
 
+\$\$P(X = k;\\ n, a, b) = \binom{n}{k} \frac{B(k+a,\\ n-k+b)}{B(a,\\
+b)}, \quad k = 0, 1, \ldots, n.\$\$
+
 ## Examples
 
 ``` r

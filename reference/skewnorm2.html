@@ -98,6 +98,9 @@ the skew normal distribution reparameterised in terms of mean, standard deviatio
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dskewnorm2</code> allows for automatic differentiation with <code>RTMB</code> while the other functions are imported from the <code>sn</code> package.</p>
+<p>Uses the same density as <code>skewnorm</code> with location \(\xi\), scale \(\omega\), and shape \(\alpha\)
+reparameterised from the mean \(m\), standard deviation \(s\), and skewness parameter \(\alpha\):
+$$\delta = \frac{\alpha}{\sqrt{1+\alpha^2}}, \quad \omega = \frac{s}{\sqrt{1 - 2\delta^2/\pi}}, \quad \xi = m - \omega\delta\sqrt{2/\pi}.$$</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

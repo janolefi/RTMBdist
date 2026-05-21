@@ -103,6 +103,9 @@ the Box-Cox Power Exponential distribution.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dbcpe</code> and <code>pbcpe</code> allows for automatic differentiation with <code>RTMB</code> while the other functions are imported from <code>gamlss.dist</code> package.
 See <code>gamlss.dist::<a href="https://rdrr.io/pkg/gamlss.dist/man/BCPE.html" class="external-link">BCPE</a></code> for more details.</p>
+<p>The density is
+$$f(x; \mu, \sigma, \nu, \tau) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma} \frac{f_T(z;\tau)}{F_T\!\left(1/(\sigma|\nu|);\tau\right)}, \quad x &gt; 0,$$
+where \(z = [(x/\mu)^\nu - 1]/(\nu\sigma)\) for \(\nu \neq 0\) and \(z = \log(x/\mu)/\sigma\) for \(\nu = 0\), and \(f_T(\cdot;\tau)\) and \(F_T(\cdot;\tau)\) are the PDF and CDF of the power exponential (PE) distribution with shape \(\tau\).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

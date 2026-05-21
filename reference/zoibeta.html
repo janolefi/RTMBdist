@@ -93,6 +93,8 @@ the zero-one-inflated beta distribution.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>$$f(x;\,a,b,p_0,p_1) = p_0\,\mathbf{1}[x=0] + (1-p_0-p_1)\,f_{\mathrm{Beta}}(x;\,a,b)\,\mathbf{1}[x\in(0,1)] + p_1\,\mathbf{1}[x=1],$$
+where \(p_0\) = <code>zeroprob</code> and \(p_1\) = <code>oneprob</code>.</p>
     </div>
 
     <div class="section level2">

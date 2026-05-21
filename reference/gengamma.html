@@ -98,6 +98,9 @@ the generalised Gamma distribution.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dgengamma</code>, <code>pgengamma</code>, and <code>qgengamma</code> allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>For \(\nu \neq 0\) the density is that of a generalised gamma: setting \(z = (x/\mu)^\nu\),
+$$f(x;\,\mu,\sigma,\nu) = \frac{|\nu|}{x\,({\sigma|\nu|})^{2/(\sigma\nu)^2}\,\Gamma\!\left(1/(\sigma\nu)^2\right)}\, z^{1/(\sigma\nu)^2}\, \exp\!\left(-\frac{z}{(\sigma|\nu|)^2}\right), \quad x &gt; 0.$$
+For \(\nu = 0\) the distribution reduces to a log-normal with log-mean \(\log\mu\) and log-standard-deviation \(\sigma\).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

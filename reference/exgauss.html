@@ -101,6 +101,9 @@ the exponentially modified Gaussian distribution.</p>
 <code>qexgauss</code> and <code>rexgauss</code> are reparameterised imports from <code>gamlss.dist::<a href="https://rdrr.io/pkg/gamlss.dist/man/exGAUS.html" class="external-link">exGAUS</a></code>.</p>
 <p>If \(X \sim N(\mu, \sigma^2)\) and \(Y \sim \text{Exp}(\lambda)\), then
 \(Z = X + Y\) follows the exponentially modified Gaussian distribution with parameters \(\mu\), \(\sigma\), and \(\lambda\).</p>
+<p>The density is
+$$f(x;\,\mu,\sigma,\lambda) = \lambda \exp\!\Bigl(\lambda\mu + \tfrac{\lambda^2\sigma^2}{2} - \lambda x\Bigr)\, \Phi\!\left(\frac{x - \mu - \lambda\sigma^2}{\sigma}\right),$$
+where \(\Phi\) is the standard normal CDF.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

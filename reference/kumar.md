@@ -49,6 +49,10 @@ rkumar(n, a, b)
 `qkumar` gives the quantile function, and `rkumar` generates random
 deviates.
 
+## Details
+
+\$\$f(x;\\a,b) = a b\\ x^{a-1}(1-x^a)^{b-1}, \quad x \in (0,1).\$\$
+
 ## Examples
 
 ``` r

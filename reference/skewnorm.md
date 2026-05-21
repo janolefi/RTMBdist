@@ -64,6 +64,10 @@ with `RTMB` while the other functions are imported from the `sn`
 package. See `sn::`[`dsn`](https://rdrr.io/pkg/sn/man/dsn.html) for more
 details.
 
+\$\$f(x;\\\xi,\omega,\alpha) =
+\frac{2}{\omega}\\\phi\\\left(\frac{x-\xi}{\omega}\right)\Phi\\\left(\alpha\frac{x-\xi}{\omega}\right),\$\$
+where \\\phi\\ and \\\Phi\\ are the standard normal PDF and CDF.
+
 ## See also
 
 [skewnorm2](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md),

@@ -65,6 +65,9 @@ This implementation of `dinvgauss` allows for automatic differentiation
 with `RTMB`. `qinvgauss` and `rinvgauss` are imported from the `statmod`
 package.
 
+\$\$f(x;\\\mu,\lambda) = \sqrt{\frac{\lambda}{2\pi x^3}}
+\exp\\\left(-\frac{\lambda(x-\mu)^2}{2\mu^2 x}\right), \quad x \> 0.\$\$
+
 ## Examples
 
 ``` r

@@ -49,6 +49,10 @@ distribution function, and `rzipois` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+\$\$P(X=k;\\\lambda,p_0) = p_0\\\mathbf{1}\[k=0\] +
+(1-p_0)\\P\_{\mathrm{Pois}}(k;\\\lambda),\$\$ where \\p_0\\ is
+`zeroprob`.
+
 ## Examples
 
 ``` r

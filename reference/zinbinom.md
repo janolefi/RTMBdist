@@ -58,6 +58,9 @@ function, and `rzinbinom` generates random deviates.
 
 This implementation allows for automatic differentiation with `RTMB`.
 
+\$\$P(X=k;\\r,p,p_0) = p_0\\\mathbf{1}\[k=0\] +
+(1-p_0)\\P\_{\mathrm{NB}}(k;\\r,p),\$\$ where \\p_0\\ is `zeroprob`.
+
 ## Examples
 
 ``` r

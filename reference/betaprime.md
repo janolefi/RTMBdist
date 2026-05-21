@@ -56,6 +56,9 @@ This implementation allows for automatic differentiation with `RTMB`.
 If \\X \sim \text{Beta}(\alpha, \beta)\\, then \\\frac{X}{1-X} \sim
 \text{Betaprime}(\alpha, \beta)\\
 
+\$\$f(x;\\ a, b) = \frac{x^{a-1}}{(1+x)^{a+b}\\ B(a,b)}, \quad x \>
+0.\$\$
+
 ## Examples
 
 ``` r
