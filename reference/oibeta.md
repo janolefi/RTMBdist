@@ -25,7 +25,7 @@ roibeta(n, shape1, shape2, oneprob = 0)
 
 - oneprob:
 
-  zero-inflation probability between 0 and 1.
+  one-inflation probability between 0 and 1.
 
 - log, log.p:
 

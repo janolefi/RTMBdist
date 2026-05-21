@@ -59,8 +59,8 @@ generates random deviates.
 If \\X \sim \text{Chisq}(\nu)\\, then \\1/X \sim \text{invChisq}(\nu)\\.
 
 The inverse Chi-squared distribution with \\\nu\\ degrees of freedom has
-density \$\$f(x) = \frac{(\nu/2)^{\nu/2}}{\Gamma(\nu/2)} x^{-(\nu/2+1)}
-\exp(-\nu/(2x)), \quad x\>0.\$\$
+density \$\$f(x) = \frac{(\nu s/2)^{\nu/2}}{\Gamma(\nu/2)}
+x^{-(\nu/2+1)} \exp\\\left(-\frac{\nu s}{2x}\right), \quad x\>0,\$\$
 
 This implementation of `dinvchisq`, `pinvchisq`, and `qinvchisq` allows
 for automatic differentiation with `RTMB`.

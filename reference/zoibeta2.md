@@ -35,7 +35,7 @@ rzoibeta2(n, mu, phi, zeroprob = 0, oneprob = 0)
 
 - oneprob:
 
-  zero-inflation probability between 0 and 1.
+  one-inflation probability between 0 and 1.
 
 - log, log.p:
 

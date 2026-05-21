@@ -49,7 +49,7 @@ rzigamma2(n, mean = 1, sd = 1, zeroprob = 0)
 ## Value
 
 `dzigamma2` gives the density, `pzigamma2` gives the distribution
-function, and `rzigamma` generates random deviates.
+function, and `rzigamma2` generates random deviates.
 
 ## Details
 

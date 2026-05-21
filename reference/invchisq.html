@@ -97,7 +97,7 @@ for the inverse Chi-squared distribution.</p>
     <p>If \(X \sim \text{Chisq}(\nu)\), then \(1/X \sim \text{invChisq}(\nu)\).</p>
 <p>The inverse Chi-squared distribution with \(\nu\) degrees of freedom has
 density
-$$f(x) = \frac{(\nu/2)^{\nu/2}}{\Gamma(\nu/2)} x^{-(\nu/2+1)} \exp(-\nu/(2x)), \quad x&gt;0.$$</p>
+$$f(x) = \frac{(\nu s/2)^{\nu/2}}{\Gamma(\nu/2)} x^{-(\nu/2+1)} \exp\!\left(-\frac{\nu s}{2x}\right), \quad x&gt;0,$$</p>
 <p>This implementation of <code>dinvchisq</code>, <code>pinvchisq</code>, and <code>qinvchisq</code> allows for automatic differentiation with <code>RTMB</code>.</p>
     </div>
 
