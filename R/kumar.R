@@ -41,7 +41,7 @@ dkumar <- function(x, a, b, log = FALSE) {
     return(dGenericOSA("dkumar", x=x, a=a, b=b, log=log))
   }
 
-  logdens <- log(a) + log(b) + (a-1) * log(x) + (b-1) * log1p(-x^a)
+  logdens <- log(a) + log(b) + (a-1) * log(x) + (b-1) * as.finite(log1p(-x^a))
 
   if(log) return(logdens)
   return(exp(logdens))
