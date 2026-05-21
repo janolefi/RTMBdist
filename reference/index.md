@@ -118,6 +118,11 @@
   [`qlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   [`rlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   : Laplace distribution
+- [`dllogis()`](https://janolefi.github.io/RTMBdist/reference/llogis.md)
+  [`pllogis()`](https://janolefi.github.io/RTMBdist/reference/llogis.md)
+  [`qllogis()`](https://janolefi.github.io/RTMBdist/reference/llogis.md)
+  [`rllogis()`](https://janolefi.github.io/RTMBdist/reference/llogis.md)
+  : Log-logistic distribution
 - [`mcreport()`](https://janolefi.github.io/RTMBdist/reference/mcreport.md)
   : Sample parameters from approximate Gaussian posterior distribution
 - [`dmvt()`](https://janolefi.github.io/RTMBdist/reference/mvt.md)

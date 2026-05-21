@@ -56,6 +56,10 @@
 - [`laplace(mu, b)`](https://janolefi.github.io/RTMBdist/reference/laplace.md):
   Laplace distribution parameterised by location `mu` and scale `b`
 
+- [`llogis(alpha, beta)`](https://janolefi.github.io/RTMBdist/reference/llogis.md):
+  Log-logistic distribution parameterised by scale `alpha` (equal to the
+  median) and shape `beta`
+
 - [`oibeta(shape1, shape2, oneprob)`](https://janolefi.github.io/RTMBdist/reference/oibeta.md):
   One-inflated beta distribution parameterised by shape parameters
   `shape1`, `shape2` and one-probability `oneprob`
