@@ -2,6 +2,10 @@
 #'
 #' Density and random generation for the wishart distribution
 #'
+#' @details
+#' \deqn{f(X;\,\nu,\Sigma) = \frac{|X|^{(\nu-p-1)/2}\exp\!\left(-\tfrac{1}{2}\operatorname{tr}(\Sigma^{-1}X)\right)}{2^{\nu p/2}\,|\Sigma|^{\nu/2}\,\Gamma_p(\nu/2)},}
+#' where \eqn{p} is the dimension and \eqn{\Gamma_p} is the multivariate gamma function.
+#'
 #' @param x positive definite \eqn{p \times p} matrix or array of such matrices of dimension \eqn{p \times p \times n} (for \eqn{n} density evaluations)
 #' @param nu degrees of freedom, needs to be greater than \code{p - 1}
 #' @param Sigma scale matrix, needs to be positive definite and match the dimension of \code{x}.

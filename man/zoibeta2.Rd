@@ -40,6 +40,8 @@ the zero-one-inflated beta distribution reparameterised in terms of mean and con
 }
 \details{
 This implementation allows for automatic differentiation with \code{RTMB}.
+
+Uses the same density as \code{zoibeta} with \eqn{a = \mu\phi} and \eqn{b = (1-\mu)\phi}.
 }
 \examples{
 set.seed(123)

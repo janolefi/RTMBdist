@@ -6,6 +6,9 @@
 #' @details
 #' This implementation allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{f(x;\,a,b,p_0) = p_0\,\mathbf{1}[x=0] + (1-p_0)\,f_{\mathrm{Beta}}(x;\,a,b)\,\mathbf{1}[x\in(0,1)],}
+#' where \eqn{p_0} is \code{zeroprob}.
+#'
 #' @param x,q vector of quantiles
 #' @param n number of random values to return.
 #' @param shape1,shape2 non-negative shape parameters of the beta distribution

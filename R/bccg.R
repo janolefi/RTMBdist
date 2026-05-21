@@ -7,6 +7,10 @@
 #' This implementation of \code{dbccg} and \code{pbccg} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
 #' See \code{gamlss.dist::\link[gamlss.dist]{BCCG}} for more details.
 #'
+#' The density is
+#' \deqn{f(x; \mu, \sigma, \nu) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma \sqrt{2\pi}} \exp\!\left(-\tfrac{z^2}{2}\right) \Bigl[\Phi\!\left(\tfrac{1}{\sigma|\nu|}\right)\Bigr]^{-1}, \quad x > 0,}
+#' where \eqn{z = [(x/\mu)^\nu - 1]/(\nu\sigma)} for \eqn{\nu \neq 0} and \eqn{z = \log(x/\mu)/\sigma} for \eqn{\nu = 0}, and \eqn{\Phi} is the standard normal CDF.
+#'
 #' @references
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.

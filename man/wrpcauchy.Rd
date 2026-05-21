@@ -32,6 +32,8 @@ Density and random generation for the wrapped Cauchy distribution.
 \details{
 This implementation of \code{dwrpcauchy} allows for automatic differentiation with \code{RTMB}.
 \code{rwrpcauchy} is simply a wrapper for \code{rwrappedcauchy}imported from \code{circular}.
+
+\deqn{f(x;\,\mu,\rho) = \frac{1}{2\pi}\cdot\frac{1-\rho^2}{1 + \rho^2 - 2\rho\cos(x-\mu)}.}
 }
 \examples{
 set.seed(1)

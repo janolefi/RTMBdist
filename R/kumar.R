@@ -3,6 +3,9 @@
 #' Density, distribution function, quantile function, and random generation for
 #' the Kumaraswamy distribution.
 #'
+#' @details
+#' \deqn{f(x;\,a,b) = a b\, x^{a-1}(1-x^a)^{b-1}, \quad x \in (0,1).}
+#'
 #' @param x,q vector of quantiles in \eqn{(0,1)}
 #' @param p vector of probabilities
 #' @param a,b positive shape parameters

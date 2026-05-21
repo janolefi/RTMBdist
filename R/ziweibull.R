@@ -6,6 +6,9 @@
 #' @details
 #' This implementation allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{f(x;\,k,\lambda,p_0) = p_0\,\mathbf{1}[x=0] + (1-p_0)\,f_{\mathrm{Weibull}}(x;\,k,\lambda)\,\mathbf{1}[x>0],}
+#' where \eqn{p_0} is \code{zeroprob}, \eqn{k} = \code{shape}, \eqn{\lambda} = \code{scale}.
+#'
 #' @param x,q vector of quantiles
 #' @param n number of random values to return
 #' @param shape positive shape parameter

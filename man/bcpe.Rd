@@ -45,6 +45,10 @@ the Box-Cox Power Exponential distribution.
 \details{
 This implementation of \code{dbcpe} and \code{pbcpe} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
 See \code{gamlss.dist::\link[gamlss.dist]{BCPE}} for more details.
+
+The density is
+\deqn{f(x; \mu, \sigma, \nu, \tau) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma} \frac{f_T(z;\tau)}{F_T\!\left(1/(\sigma|\nu|);\tau\right)}, \quad x > 0,}
+where \eqn{z = [(x/\mu)^\nu - 1]/(\nu\sigma)} for \eqn{\nu \neq 0} and \eqn{z = \log(x/\mu)/\sigma} for \eqn{\nu = 0}, and \eqn{f_T(\cdot;\tau)} and \eqn{F_T(\cdot;\tau)} are the PDF and CDF of the power exponential (PE) distribution with shape \eqn{\tau}.
 }
 \examples{
 x <- rbcpe(1, mu = 5, sigma = 0.1, nu = 1, tau = 1)

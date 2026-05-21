@@ -6,6 +6,8 @@
 #' @details
 #' This implementation of \code{dtrunct2} allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{f(x;\,\nu,\mu,\sigma,a,b) = \frac{f_t((x-\mu)/\sigma;\,\nu)/\sigma}{F_t((b-\mu)/\sigma;\,\nu) - F_t((a-\mu)/\sigma;\,\nu)}, \quad x \in [a, b].}
+#'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities
 #' @param n number of random values to return.

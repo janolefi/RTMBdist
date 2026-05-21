@@ -6,6 +6,9 @@
 #' This implementation of \code{dvm} allows for automatic differentiation with \code{RTMB}.
 #' \code{rvm} and \code{pvm} are simply wrappers of the corresponding functions from \code{circular}.
 #'
+#' \deqn{f(x;\,\mu,\kappa) = \frac{\exp(\kappa\cos(x-\mu))}{2\pi\, I_0(\kappa)},}
+#' where \eqn{I_0} is the modified Bessel function of the first kind of order 0.
+#'
 #' @param x,q vector of angles measured in radians at which to evaluate the density function.
 #' @param mu mean direction of the distribution measured in radians.
 #' @param kappa non-negative numeric value for the concentration parameter of the distribution.

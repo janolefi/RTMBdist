@@ -44,6 +44,9 @@ the truncated normal distribution.
 }
 \details{
 This implementation of \code{dtruncnorm} allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\mu,\sigma,a,b) = \frac{\phi((x-\mu)/\sigma)/\sigma}{\Phi((b-\mu)/\sigma) - \Phi((a-\mu)/\sigma)}, \quad x \in [a, b],}
+where \eqn{\phi} and \eqn{\Phi} are the standard normal PDF and CDF.
 }
 \examples{
 x <- rtruncnorm(1, mean = 2, sd = 2, min = -1, max = 5)

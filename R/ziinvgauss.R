@@ -6,6 +6,9 @@
 #' @details
 #' This implementation of \code{zidinvgauss} allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{f(x;\,\mu,\lambda,p_0) = p_0\,\mathbf{1}[x=0] + (1-p_0)\,f_{\mathrm{IG}}(x;\,\mu,\lambda)\,\mathbf{1}[x>0],}
+#' where \eqn{p_0} is \code{zeroprob} and \eqn{f_{\mathrm{IG}}} is the inverse Gaussian density.
+#'
 #' @param x,q vector of quantiles
 #' @param n number of random values to return
 #' @param mean location parameter

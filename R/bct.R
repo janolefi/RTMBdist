@@ -7,6 +7,10 @@
 #' This implementation of \code{dbct} and \code{pbct} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
 #' See \code{gamlss.dist::\link[gamlss.dist]{BCT}} for more details.
 #'
+#' The density is
+#' \deqn{f(x; \mu, \sigma, \nu, \tau) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma} \frac{f_t(z;\tau)}{F_t\!\left(1/(\sigma|\nu|);\tau\right)}, \quad x > 0,}
+#' where \eqn{z = [(x/\mu)^\nu - 1]/(\nu\sigma)} for \eqn{\nu \neq 0} and \eqn{z = \log(x/\mu)/\sigma} for \eqn{\nu = 0}, and \eqn{f_t(\cdot;\tau)} and \eqn{F_t(\cdot;\tau)} are the PDF and CDF of Student's \eqn{t} distribution with \eqn{\tau} degrees of freedom.
+#'
 #' @references
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.

@@ -45,6 +45,9 @@ the t distribution with location and scale parameters.
 }
 \details{
 This implementation of \code{dt2} allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\mu,\sigma,\nu) = \frac{1}{\sigma}\,f_t\!\left(\frac{x-\mu}{\sigma};\,\nu\right),}
+where \eqn{f_t(\cdot;\nu)} is the Student-\eqn{t} PDF with \eqn{\nu} degrees of freedom.
 }
 \examples{
 x <- rt2(1, 1, 2, 5)

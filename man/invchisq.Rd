@@ -21,7 +21,7 @@ rinvchisq(n, df, scale = 1/df)
 
 \item{df}{degrees of freedom (\eqn{\nu > 0})}
 
-\item{scale}{optional positive scale parameter. Default value of \code{1/df} corresponds to standard inverse gamma}
+\item{scale}{optional positive scale parameter. Default value of \code{1/df} corresponds to standard inverse Chi-squared}
 
 \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities are returned as \eqn{\log(p)}.}
 

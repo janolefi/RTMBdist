@@ -46,6 +46,10 @@ This implementation of \code{dexgauss} and \code{pexgauss} allows for automatic 
 
 If \eqn{X \sim N(\mu, \sigma^2)} and \eqn{Y \sim \text{Exp}(\lambda)}, then
 \eqn{Z = X + Y} follows the exponentially modified Gaussian distribution with parameters \eqn{\mu}, \eqn{\sigma}, and \eqn{\lambda}.
+
+The density is
+\deqn{f(x;\,\mu,\sigma,\lambda) = \lambda \exp\!\Bigl(\lambda\mu + \tfrac{\lambda^2\sigma^2}{2} - \lambda x\Bigr)\, \Phi\!\left(\frac{x - \mu - \lambda\sigma^2}{\sigma}\right),}
+where \eqn{\Phi} is the standard normal CDF.
 }
 \examples{
 x <- rexgauss(1, 1, 2, 2)

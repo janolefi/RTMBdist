@@ -39,6 +39,9 @@ the zero-inflated negative binomial distribution.
 }
 \details{
 This implementation allows for automatic differentiation with \code{RTMB}.
+
+\deqn{P(X=k;\,r,p,p_0) = p_0\,\mathbf{1}[k=0] + (1-p_0)\,P_{\mathrm{NB}}(k;\,r,p),}
+where \eqn{p_0} is \code{zeroprob}.
 }
 \examples{
 set.seed(123)

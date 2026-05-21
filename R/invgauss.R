@@ -7,6 +7,7 @@
 #' This implementation of \code{dinvgauss} allows for automatic differentiation with \code{RTMB}.
 #' \code{qinvgauss} and \code{rinvgauss} are imported from the \code{statmod} package.
 #'
+#' \deqn{f(x;\,\mu,\lambda) = \sqrt{\frac{\lambda}{2\pi x^3}} \exp\!\left(-\frac{\lambda(x-\mu)^2}{2\mu^2 x}\right), \quad x > 0.}
 #'
 #' @param x,q vector of quantiles, must be positive.
 #' @param p vector of probabilities

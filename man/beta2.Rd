@@ -49,6 +49,10 @@ the beta distribution reparameterised in terms of mean and concentration.
 This implementation allows for automatic differentiation with \code{RTMB}.
 
 Currently, \code{dbeta} masks \code{RTMB::dbeta} because the latter has a numerically unstable gradient.
+
+\code{dbeta} and \code{dbeta2} compute the beta density. \code{dbeta2} reparameterises by
+mean \eqn{\mu} and concentration \eqn{\phi}:
+\deqn{f(x; \mu, \phi) = \frac{x^{\mu\phi - 1}(1-x)^{(1-\mu)\phi - 1}}{B(\mu\phi,\, (1-\mu)\phi)}, \quad x \in (0,1).}
 }
 \examples{
 set.seed(123)

@@ -6,6 +6,8 @@
 #' @details
 #' This implementation of \code{dlaplace} allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{f(x;\,\mu,b) = \frac{1}{2b}\exp\!\left(-\frac{|x-\mu|}{b}\right).}
+#'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities
 #' @param n number of random values to return

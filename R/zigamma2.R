@@ -6,6 +6,9 @@
 #' @details
 #' This implementation allows for automatic differentiation with \code{RTMB}.
 #'
+#' Uses the same density as \code{zigamma} with \eqn{\text{shape} = \mu^2/s^2} and \eqn{\text{scale} = s^2/\mu}:
+#' \deqn{f(x;\,\mu,s,p_0) = p_0\,\mathbf{1}[x=0] + (1-p_0)\,f_{\mathrm{Gamma}}(x;\,\mu^2/s^2,\,s^2/\mu)\,\mathbf{1}[x>0].}
+#'
 #' @param x,q vector of quantiles
 #' @param n number of random values to return
 #' @param mean mean parameter, must be positive.

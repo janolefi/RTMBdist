@@ -5,6 +5,9 @@
 #' @details
 #' This implementation of \code{ddirichlet} allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{f(\mathbf{x};\,\boldsymbol{\alpha}) = \frac{\Gamma\!\left(\sum_i \alpha_i\right)}{\prod_i \Gamma(\alpha_i)} \prod_i x_i^{\alpha_i - 1},}
+#' where \eqn{\mathbf{x}} lies on the unit simplex and \eqn{\alpha_i > 0}.
+#'
 #' @param x vector or matrix of quantiles. If \code{x} is a vector, it needs to sum to one.
 #' If \code{x} is a matrix, each row should sum to one.
 #' @param n number of random values to return.

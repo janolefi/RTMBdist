@@ -8,6 +8,8 @@
 #'
 #' If \eqn{X \sim \text{Beta}(\alpha, \beta)}, then \eqn{\frac{X}{1-X} \sim \text{Betaprime}(\alpha, \beta)}
 #'
+#' \deqn{f(x;\, a, b) = \frac{x^{a-1}}{(1+x)^{a+b}\, B(a,b)}, \quad x > 0.}
+#'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities
 #' @param n number of random values to return.

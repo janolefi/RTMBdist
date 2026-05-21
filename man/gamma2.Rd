@@ -40,6 +40,9 @@ the gamma distribution reparameterised in terms of mean and standard deviation.
 }
 \details{
 This implementation allows for automatic differentiation with \code{RTMB}.
+
+Reparameterises the gamma distribution via \eqn{\text{shape} = \mu^2/s^2} and \eqn{\text{scale} = s^2/\mu}:
+\deqn{f(x;\,\mu, s) = \frac{x^{\mu^2/s^2 - 1} \exp(-x s^2/\mu^2)}{(s^2/\mu)^{\mu^2/s^2}\,\Gamma(\mu^2/s^2)}, \quad x > 0.}
 }
 \examples{
 x <- rgamma2(1)

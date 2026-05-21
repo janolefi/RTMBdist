@@ -8,6 +8,9 @@
 #'
 #' If \eqn{X \sim \Gamma(\alpha, \beta)}, then \eqn{1/X \sim \text{InvGamma}(\alpha, \beta)}.
 #'
+#' \deqn{f(x;\,\alpha,s) = \frac{s^\alpha}{\Gamma(\alpha)}\, x^{-(\alpha+1)}\exp\!\left(-\frac{s}{x}\right), \quad x > 0,}
+#' where \eqn{s = \text{scale} = 1/\text{rate}}.
+#'
 #' @param x,q vector of quantiles, must be positive.
 #' @param p vector of probabilities
 #' @param n number of random values to return

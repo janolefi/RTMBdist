@@ -6,6 +6,8 @@
 #' This implementation of \code{dwrpcauchy} allows for automatic differentiation with \code{RTMB}.
 #' \code{rwrpcauchy} is simply a wrapper for \code{rwrappedcauchy}imported from \code{circular}.
 #'
+#' \deqn{f(x;\,\mu,\rho) = \frac{1}{2\pi}\cdot\frac{1-\rho^2}{1 + \rho^2 - 2\rho\cos(x-\mu)}.}
+#'
 #' @param x vector of angles measured in radians at which to evaluate the density function.
 #' @param mu mean direction of the distribution measured in radians.
 #' @param rho concentration parameter of the distribution, must be in the interval from 0 to 1.

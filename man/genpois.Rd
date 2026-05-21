@@ -47,6 +47,8 @@ The other functions are imported from \code{gamlss.dist::GPO}.
 
 The distribution has mean \eqn{\lambda} and variance \eqn{\lambda(1 + \phi \lambda)^2}.
 For \eqn{\phi = 0} it reduces to the Poisson distribution, however \eqn{\phi} must be strictly positive here.
+
+\deqn{P(X = x;\,\lambda,\phi) = \frac{\lambda\,(1+\phi x)^{x-1}\,e^{-\lambda(1+\phi x)/(1+\phi\lambda)}}{(1+\phi\lambda)^x\, x!}, \quad x = 0, 1, 2, \ldots}
 }
 \examples{
 set.seed(123)

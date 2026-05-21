@@ -10,6 +10,10 @@
 #' If \eqn{X \sim N(\mu, \sigma^2)} and \eqn{Y \sim \text{Exp}(\lambda)}, then
 #' \eqn{Z = X + Y} follows the exponentially modified Gaussian distribution with parameters \eqn{\mu}, \eqn{\sigma}, and \eqn{\lambda}.
 #'
+#' The density is
+#' \deqn{f(x;\,\mu,\sigma,\lambda) = \lambda \exp\!\Bigl(\lambda\mu + \tfrac{\lambda^2\sigma^2}{2} - \lambda x\Bigr)\, \Phi\!\left(\frac{x - \mu - \lambda\sigma^2}{\sigma}\right),}
+#' where \eqn{\Phi} is the standard normal CDF.
+#'
 #' @references
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.

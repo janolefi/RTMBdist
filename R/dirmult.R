@@ -5,6 +5,9 @@
 #' @details
 #' This implementation of \code{ddirmult} allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{P(\mathbf{x};\,\boldsymbol{\alpha}, n) = \frac{\Gamma(\alpha_0)\,\Gamma(n+1)}{\Gamma(n+\alpha_0)} \prod_i \frac{\Gamma(x_i + \alpha_i)}{\Gamma(\alpha_i)\,\Gamma(x_i+1)},}
+#' where \eqn{\alpha_0 = \sum_i \alpha_i} and \eqn{n = \sum_i x_i}.
+#'
 #' @param x vector or matrix of non-negative counts, where rows are observations and columns are categories.
 #' @param size vector of total counts for each observation. Needs to match the row sums of \code{x}.
 #' @param n number of random values to return.

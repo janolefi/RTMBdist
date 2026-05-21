@@ -8,6 +8,9 @@
 #'
 #' \code{pnbinom} is an AD-compatible implementation of the standard parameterisation of the CDF, missing from \code{RTMB}.
 #'
+#' Reparameterises the negative binomial by mean \eqn{\mu} via \eqn{p = r/(r+\mu)}:
+#' \deqn{P(X=k;\,\mu,r) = \binom{k+r-1}{k}\left(\frac{r}{r+\mu}\right)^r\left(\frac{\mu}{r+\mu}\right)^k, \quad k = 0,1,2,\ldots}
+#'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities
 #' @param n number of random values to return.

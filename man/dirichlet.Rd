@@ -28,6 +28,9 @@ Density and and random generation for the Dirichlet distribution.
 }
 \details{
 This implementation of \code{ddirichlet} allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(\mathbf{x};\,\boldsymbol{\alpha}) = \frac{\Gamma\!\left(\sum_i \alpha_i\right)}{\prod_i \Gamma(\alpha_i)} \prod_i x_i^{\alpha_i - 1},}
+where \eqn{\mathbf{x}} lies on the unit simplex and \eqn{\alpha_i > 0}.
 }
 \examples{
 # single alpha

@@ -37,6 +37,9 @@ the zero-inflated gamma distribution.
 }
 \details{
 This implementation allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\alpha,s,p_0) = p_0\,\mathbf{1}[x=0] + (1-p_0)\,f_{\mathrm{Gamma}}(x;\,\alpha,s)\,\mathbf{1}[x>0],}
+where \eqn{p_0} is \code{zeroprob}.
 }
 \examples{
 x <- rzigamma(1, 1, 1, 0.5)

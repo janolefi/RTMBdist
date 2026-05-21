@@ -51,6 +51,9 @@ Density, distribution function, and random generation for the von Mises distribu
 \details{
 This implementation of \code{dvm} allows for automatic differentiation with \code{RTMB}.
 \code{rvm} and \code{pvm} are simply wrappers of the corresponding functions from \code{circular}.
+
+\deqn{f(x;\,\mu,\kappa) = \frac{\exp(\kappa\cos(x-\mu))}{2\pi\, I_0(\kappa)},}
+where \eqn{I_0} is the modified Bessel function of the first kind of order 0.
 }
 \examples{
 set.seed(1)

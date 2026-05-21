@@ -42,6 +42,10 @@ the generalised Gamma distribution.
 }
 \details{
 This implementation of \code{dgengamma}, \code{pgengamma}, and \code{qgengamma} allows for automatic differentiation with \code{RTMB}.
+
+For \eqn{\nu \neq 0} the density is that of a generalised gamma: setting \eqn{z = (x/\mu)^\nu},
+\deqn{f(x;\,\mu,\sigma,\nu) = \frac{|\nu|}{x\,({\sigma|\nu|})^{2/(\sigma\nu)^2}\,\Gamma\!\left(1/(\sigma\nu)^2\right)}\, z^{1/(\sigma\nu)^2}\, \exp\!\left(-\frac{z}{(\sigma|\nu|)^2}\right), \quad x > 0.}
+For \eqn{\nu = 0} the distribution reduces to a log-normal with log-mean \eqn{\log\mu} and log-standard-deviation \eqn{\sigma}.
 }
 \examples{
 x <- rgengamma(5, mu = 4, sigma = 0.5, nu = 0.5)

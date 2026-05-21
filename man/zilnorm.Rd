@@ -39,6 +39,9 @@ the zero-inflated log normal distribution.
 }
 \details{
 This implementation allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\mu_{\ell},\sigma_\ell,p_0) = p_0\,\mathbf{1}[x=0] + (1-p_0)\,f_{\mathrm{LN}}(x;\,\mu_\ell,\sigma_\ell)\,\mathbf{1}[x>0],}
+where \eqn{p_0} is \code{zeroprob}, \eqn{\mu_\ell} = \code{meanlog}, \eqn{\sigma_\ell} = \code{sdlog}, and \eqn{f_{\mathrm{LN}}} is the log-normal density.
 }
 \examples{
 x <- rzilnorm(1, 1, 1, 0.5)

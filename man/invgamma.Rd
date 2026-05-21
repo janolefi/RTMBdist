@@ -40,6 +40,9 @@ the inverse Gamma distribution.
 This implementation of \code{dinvgamma}, \code{pinvgamma}, and \code{qinvgamma} allows for automatic differentiation with \code{RTMB}.
 
 If \eqn{X \sim \Gamma(\alpha, \beta)}, then \eqn{1/X \sim \text{InvGamma}(\alpha, \beta)}.
+
+\deqn{f(x;\,\alpha,s) = \frac{s^\alpha}{\Gamma(\alpha)}\, x^{-(\alpha+1)}\exp\!\left(-\frac{s}{x}\right), \quad x > 0,}
+where \eqn{s = \text{scale} = 1/\text{rate}}.
 }
 \examples{
 x <- rinvgamma(1, 1, 0.5)

@@ -42,6 +42,10 @@ the skew normal distribution reparameterised in terms of mean, standard deviatio
 }
 \details{
 This implementation of \code{dskewnorm2} allows for automatic differentiation with \code{RTMB} while the other functions are imported from the \code{sn} package.
+
+Uses the same density as \code{skewnorm} with location \eqn{\xi}, scale \eqn{\omega}, and shape \eqn{\alpha}
+reparameterised from the mean \eqn{m}, standard deviation \eqn{s}, and skewness parameter \eqn{\alpha}:
+\deqn{\delta = \frac{\alpha}{\sqrt{1+\alpha^2}}, \quad \omega = \frac{s}{\sqrt{1 - 2\delta^2/\pi}}, \quad \xi = m - \omega\delta\sqrt{2/\pi}.}
 }
 \examples{
 # alpha is skew parameter

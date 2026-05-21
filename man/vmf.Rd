@@ -29,6 +29,9 @@ Density, distribution function, and random generation for the von Mises-Fisher d
 }
 \details{
 This implementation of \code{dvmf} allows for automatic differentiation with \code{RTMB}. \code{rvmf} is a reparameterised import from \code{movMF::rmovMF}.
+
+\deqn{f(\mathbf{x};\,\boldsymbol{\mu},\kappa) = C_p(\kappa)\,\exp(\kappa\,\boldsymbol{\mu}^\top\mathbf{x}),}
+where \eqn{C_p(\kappa) = \kappa^{p/2-1} / ((2\pi)^{p/2} I_{p/2-1}(\kappa))} is the normalising constant and \eqn{I_\nu} is the modified Bessel function of the first kind of order \eqn{\nu}.
 }
 \examples{
 set.seed(123)

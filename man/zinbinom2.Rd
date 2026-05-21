@@ -39,6 +39,9 @@ the zero-inflated negative binomial distribution reparameterised in terms of mea
 }
 \details{
 This implementation allows for automatic differentiation with \code{RTMB}.
+
+Uses the same density as \code{zinbinom} with \eqn{p = r/(r+\mu)}:
+\deqn{P(X=k;\,\mu,r,p_0) = p_0\,\mathbf{1}[k=0] + (1-p_0)\,P_{\mathrm{NB}}\!\left(k;\,r,\tfrac{r}{r+\mu}\right).}
 }
 \examples{
 set.seed(123)

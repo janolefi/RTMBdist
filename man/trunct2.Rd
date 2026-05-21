@@ -47,6 +47,8 @@ the truncated t distribution with location \code{mu} and scale \code{sigma}.
 }
 \details{
 This implementation of \code{dtrunct2} allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\nu,\mu,\sigma,a,b) = \frac{f_t((x-\mu)/\sigma;\,\nu)/\sigma}{F_t((b-\mu)/\sigma;\,\nu) - F_t((a-\mu)/\sigma;\,\nu)}, \quad x \in [a, b].}
 }
 \examples{
 x <- rtrunct2(1, df = 5, mu = 2, sigma = 3, min = -1, max = 5)

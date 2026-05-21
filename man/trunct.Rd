@@ -41,6 +41,9 @@ the truncated t distribution.
 }
 \details{
 This implementation of \code{dtrunct} allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\nu,a,b) = \frac{f_t(x;\,\nu)}{F_t(b;\,\nu) - F_t(a;\,\nu)}, \quad x \in [a, b],}
+where \eqn{f_t(\cdot;\nu)} and \eqn{F_t(\cdot;\nu)} are the Student-\eqn{t} PDF and CDF.
 }
 \examples{
 x <- rtrunct(1, df = 5, min = -1, max = 5)

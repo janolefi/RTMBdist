@@ -5,6 +5,8 @@
 #' @details
 #' This implementation of \code{dbetabinom} allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{P(X = k;\, n, a, b) = \binom{n}{k} \frac{B(k+a,\, n-k+b)}{B(a,\, b)}, \quad k = 0, 1, \ldots, n.}
+#'
 #' @param x vector of non-negative counts.
 #' @param size vector of total counts (number of trials). Needs to be >= \code{x}.
 #' @param n number of random values to return (for \code{rbetabinom}).

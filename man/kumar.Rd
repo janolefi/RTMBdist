@@ -36,6 +36,9 @@ rkumar(n, a, b)
 Density, distribution function, quantile function, and random generation for
 the Kumaraswamy distribution.
 }
+\details{
+\deqn{f(x;\,a,b) = a b\, x^{a-1}(1-x^a)^{b-1}, \quad x \in (0,1).}
+}
 \examples{
 x <- rkumar(1, a = 1, b = 2)
 d <- dkumar(x, a = 1, b = 2)

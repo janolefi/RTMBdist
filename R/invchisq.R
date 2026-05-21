@@ -16,7 +16,7 @@
 #' @param p vector of probabilities
 #' @param n number of random values to return
 #' @param df degrees of freedom (\eqn{\nu > 0})
-#' @param scale optional positive scale parameter. Default value of \code{1/df} corresponds to standard inverse gamma
+#' @param scale optional positive scale parameter. Default value of \code{1/df} corresponds to standard inverse Chi-squared
 #' @param log,log.p logical; if \code{TRUE}, probabilities/densities are returned as \eqn{\log(p)}.
 #' @param lower.tail logical; if \code{TRUE}, probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.
 #'

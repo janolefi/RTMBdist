@@ -6,6 +6,9 @@
 #' @details
 #' This implementation allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{P(X=k;\,\lambda,p_0) = p_0\,\mathbf{1}[k=0] + (1-p_0)\,P_{\mathrm{Pois}}(k;\,\lambda),}
+#' where \eqn{p_0} is \code{zeroprob}.
+#'
 #' @param x,q integer vector of counts
 #' @param n number of random values to return.
 #' @param lambda vector of (non-negative) means

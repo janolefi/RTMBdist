@@ -6,6 +6,9 @@
 #' @details
 #' This implementation allows for automatic differentiation with \code{RTMB}.
 #'
+#' \deqn{P(X=k;\,n,p,p_0) = p_0\,\mathbf{1}[k=0] + (1-p_0)\,P_{\mathrm{Bin}}(k;\,n,p),}
+#' where \eqn{p_0} is \code{zeroprob}.
+#'
 #' @param x,q vector of quantiles
 #' @param n number of random values to return.
 #' @param size number of trials (zero or more).

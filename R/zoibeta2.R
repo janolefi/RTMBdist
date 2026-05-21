@@ -6,6 +6,8 @@
 #' @details
 #' This implementation allows for automatic differentiation with \code{RTMB}.
 #'
+#' Uses the same density as \code{zoibeta} with \eqn{a = \mu\phi} and \eqn{b = (1-\mu)\phi}.
+#'
 #' @param x,q vector of quantiles
 #' @param n number of random values to return.
 #' @param mu mean parameter, must be in the interval from 0 to 1.

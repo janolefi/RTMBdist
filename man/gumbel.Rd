@@ -40,6 +40,8 @@ the Gumbel distribution.
 }
 \details{
 This implementation of \code{dgumbel} allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\mu,\sigma) = \frac{1}{\sigma}\exp\!\bigl(-(z + e^{-z})\bigr), \quad z = \frac{x-\mu}{\sigma}.}
 }
 \examples{
 x <- rgumbel(1, 0.5, 2)

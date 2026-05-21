@@ -43,6 +43,9 @@ the skew normal distribution.
 \details{
 This implementation of \code{dskewnorm} allows for automatic differentiation with \code{RTMB} while the other functions are imported from the \code{sn} package.
 See \code{sn::\link[sn]{dsn}} for more details.
+
+\deqn{f(x;\,\xi,\omega,\alpha) = \frac{2}{\omega}\,\phi\!\left(\frac{x-\xi}{\omega}\right)\Phi\!\left(\alpha\frac{x-\xi}{\omega}\right),}
+where \eqn{\phi} and \eqn{\Phi} are the standard normal PDF and CDF.
 }
 \examples{
 # alpha is skew parameter

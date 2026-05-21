@@ -43,6 +43,8 @@ the Laplace distribution.
 }
 \details{
 This implementation of \code{dlaplace} allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\mu,b) = \frac{1}{2b}\exp\!\left(-\frac{|x-\mu|}{b}\right).}
 }
 \examples{
 x <- rlaplace(1, 1, 1)

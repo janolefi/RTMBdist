@@ -37,6 +37,8 @@ the folded normal distribution.
 }
 \details{
 This implementation of \code{dfoldnorm} allows for automatic differentiation with \code{RTMB}.
+
+\deqn{f(x;\,\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}}\left[\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) + \exp\!\left(-\frac{(x+\mu)^2}{2\sigma^2}\right)\right], \quad x \geq 0.}
 }
 \examples{
 x <- rfoldnorm(1, 1, 2)

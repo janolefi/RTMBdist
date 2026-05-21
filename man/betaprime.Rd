@@ -40,6 +40,8 @@ the Beta prime distribution.
 This implementation allows for automatic differentiation with \code{RTMB}.
 
 If \eqn{X \sim \text{Beta}(\alpha, \beta)}, then \eqn{\frac{X}{1-X} \sim \text{Betaprime}(\alpha, \beta)}
+
+\deqn{f(x;\, a, b) = \frac{x^{a-1}}{(1+x)^{a+b}\, B(a,b)}, \quad x > 0.}
 }
 \examples{
 x <- rbetaprime(1, 2, 1)

@@ -8,6 +8,9 @@
 #' Note: for \code{df} \eqn{\le 1} the mean is undefined, and for \code{df} \eqn{\le 2} the covariance is infinite.
 #' For \code{df} > 2, the covariance is \code{df/(df-2) * Sigma}.
 #'
+#' \deqn{f(\mathbf{x};\,\boldsymbol{\mu},\Sigma,\nu) = \frac{\Gamma((\nu+d)/2)}{\Gamma(\nu/2)\,(\nu\pi)^{d/2}\,|\Sigma|^{1/2}} \left(1 + \frac{(\mathbf{x}-\boldsymbol{\mu})^\top \Sigma^{-1}(\mathbf{x}-\boldsymbol{\mu})}{\nu}\right)^{-(\nu+d)/2},}
+#' where \eqn{d} is the dimension.
+#'
 #' @param x vector or matrix of quantiles
 #' @param n number of random values to return.
 #' @param mu vector or matrix of location parameters (mean if \code{df} > 1)

@@ -6,6 +6,9 @@
 #' @details
 #' This implementation allows for automatic differentiation with \code{RTMB}.
 #'
+#' Reparameterises the gamma distribution via \eqn{\text{shape} = \mu^2/s^2} and \eqn{\text{scale} = s^2/\mu}:
+#' \deqn{f(x;\,\mu, s) = \frac{x^{\mu^2/s^2 - 1} \exp(-x s^2/\mu^2)}{(s^2/\mu)^{\mu^2/s^2}\,\Gamma(\mu^2/s^2)}, \quad x > 0.}
+#'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities
 #' @param n number of random values to return.
