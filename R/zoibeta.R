@@ -55,7 +55,8 @@ dzoibeta <- function(x, shape1, shape2, zeroprob = 0, oneprob = 0, log = FALSE) 
                        zeroprob=zeroprob, oneprob=oneprob, log=log))
   }
 
-  logdens <- RTMB::dbeta(x, shape1 = shape1, shape2 = shape2, log = TRUE)
+  logdens <- dbeta(x, shape1 = shape1, shape2 = shape2, log = TRUE,
+                   eps = .Machine$double.xmin)
 
   # turn + Inf into finite
   logdens <- as.finite(logdens)

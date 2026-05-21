@@ -48,7 +48,8 @@ doibeta <- function(x, shape1, shape2, oneprob = 0, log = FALSE) {
     return(dGenericOSA("doibeta", x=x, shape1=shape1, shape2=shape2, oneprob=oneprob, log=log))
   }
 
-  logdens <- RTMB::dbeta(x, shape1 = shape1, shape2 = shape2, log = TRUE)
+  logdens <- dbeta(x, shape1 = shape1, shape2 = shape2, log = TRUE,
+                   eps = .Machine$double.xmin)
   logdens <- log_zi(x-1, logdens, oneprob) # use zi function for one inflation by shifting x
 
   # making sure x == 0 evaluates to -Inf

@@ -62,7 +62,7 @@ dzibeta <- function(x, shape1, shape2, zeroprob = 0, log = FALSE) {
   logdens <- log_zi(x, logdens, zeroprob)
 
   # making sure x == 1 evaluates to -Inf
-  logdens <- logdens + log(1-iszero(x-1))
+  logdens <- logdens + log1p(-iszero(x-1))
 
   if (log) return(logdens)
   return(exp(logdens))
