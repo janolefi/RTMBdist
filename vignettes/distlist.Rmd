@@ -46,6 +46,8 @@ knitr::opts_chunk$set(
 
 * [`laplace(mu, b)`](../reference/laplace.html): Laplace distribution parameterised by location `mu` and scale `b`
 
+* [`llogis(alpha, beta)`](../reference/llogis.html): Log-logistic distribution parameterised by scale `alpha` (equal to the median) and shape `beta`
+
 * [`oibeta(shape1, shape2, oneprob)`](../reference/oibeta.html): One-inflated beta distribution parameterised by shape parameters `shape1`, `shape2` and one-probability `oneprob`
 
 * [`oibeta2(mu, phi, oneprob)`](../reference/oibeta2.html): One-inflated beta distribution reparameterised by mean `mu`, precision `phi`, and one-probability `oneprob`
