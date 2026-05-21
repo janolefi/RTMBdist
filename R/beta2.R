@@ -53,8 +53,10 @@ dbeta <- function(x, shape1, shape2, log = FALSE, eps = 0) {
 
   logB <- lbeta.ad(shape1, shape2)
   # logB <- RTMB::lbeta(shape1, shape2)
+  # logdens <- (shape1 - 1) * log(x + eps) + (shape2 - 1) * log1p(-x + eps) - logB
   logdens <- (shape1 - 1) * log(x + eps) +
-    (shape2 - 1) * log1p(-x + eps) - logB
+    (shape2 - 1) * log(1 - x + eps) - # log(1 - x) actually works better here if x = 1
+    logB
 
   if(log) return(logdens)
   return(exp(logdens))
