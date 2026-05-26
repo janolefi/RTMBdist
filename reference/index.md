@@ -88,6 +88,11 @@
   [`qgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
   [`rgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
   : Generalised Poisson distribution
+- [`dgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
+  [`pgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
+  [`qgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
+  [`rgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
+  : Gompertz distribution
 - [`dgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`pgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`qgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)

@@ -36,6 +36,9 @@
   Generalised gamma distribution parameterised by location `mu`, scale
   `sigma`, and skewness `nu`
 
+- [`gompertz(eta, b)`](https://janolefi.github.io/RTMBdist/reference/gompertz.md):
+  Gompertz distribution parameterised by shape `eta` and rate `b`
+
 - [`gumbel(location, scale)`](https://janolefi.github.io/RTMBdist/reference/gumbel.md):
   Gumbel distribution parameterised by `location` and `scale`
 
