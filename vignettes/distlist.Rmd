@@ -34,6 +34,8 @@ knitr::opts_chunk$set(
 
 * [`gengamma(mu, sigma, nu)`](../reference/gengamma.html): Generalised gamma distribution parameterised by location `mu`, scale `sigma`, and skewness `nu`
 
+* [`gompertz(eta, b)`](../reference/gompertz.html): Gompertz distribution parameterised by shape `eta` and rate `b`
+
 * [`gumbel(location, scale)`](../reference/gumbel.html): Gumbel distribution parameterised by `location` and `scale`
 
 * [`invchisq(df, scale)`](../reference/invchisq.html): Inverse Chi-squared distribution parameterised by degrees of freedom `df` and optional `scale`
