@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 <!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
 [![CRAN status](https://www.r-pkg.org/badges/version/RTMBdist)](https://CRAN.R-project.org/package=RTMBdist)
 [![metacran downloads](https://cranlogs.r-pkg.org/badges/last-month/RTMBdist)](https://cran.r-project.org/package=RTMBdist)
-[![total downloads](https://cranlogs.r-pkg.org:443/badges/grand-total/RTMBdist)]( https://cranlogs.r-pkg.org:443/badges/grand-total/RTMBdist)
+[![total downloads](https://cranlogs.r-pkg.org:443/badges/grand-total/RTMBdist)](https://cranlogs.r-pkg.org:443/badges/grand-total/RTMBdist)
 [![R-CMD-check](https://github.com/janolefi/RTMBdist/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/janolefi/RTMBdist/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -28,12 +28,13 @@ The [`RTMB`](https://kaskr.r-universe.dev/RTMB) package enables powerful and fle
 The full list of distributions currently available is given in the [List of distributions](https://janolefi.github.io/RTMBdist/articles/distlist.html) vignette.
 There are also a couple of [Worked examples](https://janolefi.github.io/RTMBdist/articles/Examples.html) demonstrating how to use `RTMBdist` in practice.
 
-Feel free to contribute or open an issue if you are missing a distribution!
+Feel free to contribute a distribution ([Guide to adding a distribution](https://janolefi.github.io/RTMBdist/articles/adding-a-distribution.html)) or open an issue!
 
 
 ## Installation
 
 You can install the released version from [CRAN](https://CRAN.R-project.org/package=RTMBdist) with:
+
 ```{r install_cran, eval = FALSE}
 install.packages("RTMBdist")
 ```
