@@ -17,8 +17,9 @@ vignette. There are also a couple of [Worked
 examples](https://janolefi.github.io/RTMBdist/articles/Examples.html)
 demonstrating how to use `RTMBdist` in practice.
 
-Feel free to contribute or open an issue if you are missing a
-distribution!
+Feel free to contribute a distribution ([Guide to adding a
+distribution](https://janolefi.github.io/RTMBdist/articles/adding-a-distribution.html))
+or open an issue!
 
 ## Installation
 
