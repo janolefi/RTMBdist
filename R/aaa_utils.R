@@ -48,10 +48,26 @@ abs_smooth <- function(x, epsilon = 1e-6) {
 }
 
 ## AD pmin/pmax helpers that work for both ad and numeric:
-pmin.ad <- function(x, y) (x + y - abs(x - y)) / 2
-pmax.ad <- function(x, y) (x + y + abs(x - y)) / 2
 # pmin.ad <- function(x, y) apply(cbind(x,y), 1, min)
 # pmax.ad <- function(x, y) apply(cbind(x,y), 1, max)
+
+# replace with loop versions for now
+pmin.ad <- function(x, y) {
+  n <- max(length(x), length(y))
+  x <- x[rep_len(seq_along(x), n)]   # recycle via integer indexing;
+  y <- y[rep_len(seq_along(y), n)]   # "[" has an explicit advector method
+  out <- x
+  for (j in seq_len(n)) out[j] <- min(x[j], y[j])
+  out
+}
+pmax.ad <- function(x, y) {
+  n <- max(length(x), length(y))
+  x <- x[rep_len(seq_along(x), n)]
+  y <- y[rep_len(seq_along(y), n)]
+  out <- x
+  for (j in seq_len(n)) out[j] <- min(-x[j], -y[j]) * (-1)
+  out
+}
 
 ## AD-indicator constructors
 # 1 if x == 0, 0 otherwise
