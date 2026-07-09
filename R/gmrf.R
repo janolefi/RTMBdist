@@ -30,21 +30,21 @@ rgmrf <- function(n, mean = 0, Q) {
                 error = function(e) NULL,
                 warning = function(w) NULL)
   if (is.null(L)) {
-    eps <- 1e-08 * mean(diag(Q))
+    eps <- max(1e-08 * mean(abs(diag(Q))), 1e-12)  # abs: diag can be <= 0 for a bad Hessian
     attempts <- 0
-    while (is.null(L) && attempts < 20) {
+    while (is.null(L) && attempts < 50) {
       Q <- Q + Matrix::Diagonal(x = rep(eps, nrow(Q)))
-      L <- tryCatch(Matrix::Cholesky(Q, super = TRUE, LDL = FALSE),
+      L <- tryCatch(suppressWarnings(Matrix::Cholesky(Q, super = TRUE, LDL = FALSE)),
                     error = function(e) NULL)
       eps <- eps * 2
       attempts <- attempts + 1
     }
-    warning(paste0("Precision matrix is not PD, adding jitter...\n",
-                   "Required ", attempts, " attempts"))
-    if (is.null(L)) stop("Matrix still not PD after 20 jitter attempts")
+    if (is.null(L)) stop("Matrix still not PD after 50 jitter attempts")
+    warning(paste0("Precision matrix is not PD, added jitter (",
+                   attempts, " attempts). Fit may not have converged; ",
+                   "samples may be unreliable."))
   }
 
-  # L <- Matrix::Cholesky(Q, super = TRUE, LDL = FALSE)
   u <- matrix(rnorm(ncol(L) * n), ncol(L), n)
   u <- Matrix::solve(L, u, system = "Lt")
   u <- Matrix::solve(L, u, system = "Pt")
