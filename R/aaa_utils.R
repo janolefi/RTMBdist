@@ -51,7 +51,7 @@ abs_smooth <- function(x, epsilon = 1e-6) {
 # pmin.ad <- function(x, y) apply(cbind(x,y), 1, min)
 # pmax.ad <- function(x, y) apply(cbind(x,y), 1, max)
 
-# replace with loop versions for now
+# Replace with loop versions for now to avoid method dispatch error in r-devel
 pmin.ad <- function(x, y) {
   n <- max(length(x), length(y))
   x <- x[rep_len(seq_along(x), n)]   # recycle via integer indexing;
