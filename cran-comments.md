@@ -11,6 +11,11 @@ apply(cbind(x, y), 1, min/max), which relied on class-preserving method
 dispatch for RTMB's AD types. They have been replaced by dispatch-safe
 equivalents, removing the failure mode entirely.
 
+This release also makes rgmrf() robust to indefinite input (previously a
+hard error after limited jitter attempts). This resolves the M1mac ERROR
+of the reverse dependency 'LaMa', whose example triggered that error path.
+A LaMa update improving the example itself will be submitted separately.
+
 ## Note on r-release-macos-x86_64
 
 The ERROR on this flavor ("Package required but not available: 'RTMB'") is
