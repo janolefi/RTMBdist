@@ -2,32 +2,20 @@
 
 ## Reason for submission
 
-This patch release fixes the ERROR reported in the CRAN check results
-(additional issue, M1mac): re-building the vignette 'Examples.Rmd' failed on
-r-devel (aarch64-apple-darwin) with "invalid 'type' (complex) of argument".
+RTMBdist was archived on 2026-07-15 following an R-devel regression in S4
+method dispatch for `apply()`. This was a change in R itself, not in RTMBdist,
+and R-core has since reverted it. The remaining macOS build issue in the
+dependency RTMB has also been resolved by its maintainer, and RTMB now checks
+cleanly on all CRAN platforms. RTMBdist passes checks on all platforms again.
 
-Cause: the internal helpers pmin.ad()/pmax.ad() used
-apply(cbind(x, y), 1, min/max), which relied on class-preserving method
-dispatch for RTMB's AD types. They have been replaced by dispatch-safe
-equivalents, removing the failure mode entirely.
+This version also adds minor stability improvements to `rgmrf()`.
 
-This release also makes rgmrf() robust to indefinite input (previously a
-hard error after limited jitter attempts). This resolves the M1mac ERROR
-of the reverse dependency 'LaMa', whose example triggered that error path.
-A LaMa update improving the example itself will be submitted separately.
+## Test environments
 
-## Note on r-release-macos-x86_64
-
-The ERROR on this flavor ("Package required but not available: 'RTMB'") is
-caused by the dependency RTMB not being available there. This is outside the
-control of this package.
+- local: macOS, R 4.x (release)
+- macOS builder (r-devel)
+- win-builder (r-devel and r-release)
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
-
-Checked on:
-
-* local macOS (aarch64), R release
-* GitHub Actions: macOS (R release), Windows (R release),
-  Ubuntu (R devel, release, oldrel-1)
