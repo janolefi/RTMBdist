@@ -162,7 +162,8 @@ We start by loading packages that are needed.
 
 ```{r packages, message = FALSE}
 library(gamlss.data)   # Data
-library(LaMa)          # Creating model matrices
+# library(LaMa)        # Creating model matrices
+library(mgcv)          # Creating model matrices
 library(Matrix)        # Sparse matrices
 ```
 
@@ -174,19 +175,32 @@ ind <- sample(1:nrow(dbbmi), 2000)
 dbbmi <- dbbmi[ind, ]
 ```
 
-We use the function `make_matrices()` from package `LaMa` to conveniently create design and penalty matrices for the smooth functions. Internally, this just interfaces `mgcv`. The penalty matrix is converted to a sparse matrix using the `Matrix` package, to work with `RTMB`'s `dgmrf()` function.
+<!-- We use the function `make_matrices()` from package `LaMa` to conveniently create design and penalty matrices for the smooth functions. Internally, this just interfaces `mgcv`.  -->
+We use the `mgcv` package to create design and penalty matrices.
+The penalty matrix is converted to a sparse matrix using the `Matrix` package, to work with `RTMB`'s `dgmrf()` function.
 For convenience, we also create a prediction design matrix for a sequence of age values, which we will use to get predictions and confidence intervals for the smooth functions. 
 We bind the two matrices together to compute the prediction alongside the fitted values inside the likelihood. Note that this does not introduce overhead because `RTMB` ignores computations that do not contribute to the final function value.
 
 ```{r creating model matrices}
 k <- 10 # Basis dimension
-modmat <- make_matrices(~ s(age, bs="cs"), data = dbbmi)
-X <- modmat$Z                              # Design matrix
-S <- Matrix(modmat$S[[1]], sparse = TRUE)  # Sparse penalty matrix
+
+# temporarily replace LaMa wrapper by mgcv setup until LaMa is back on CRAN
+fml <- ~ s(age, bs="cs")
+gam_setup <- gam(update(fml, dummy ~ .), data = cbind(dummy = 1, dbbmi), fit = FALSE)
+gam_setup0 <- gam(update(fml, dummy ~ .), data = cbind(dummy = 1, dbbmi), control = list(maxit = 1))
+X <- gam_setup$X
+S <- Matrix(gam_setup$S[[1]], sparse = TRUE)  # Sparse penalty matrix
+
+# modmat <- make_matrices(~ s(age, bs="cs"), data = dbbmi)
+# X <- modmat$Z                              # Design matrix
+# S <- Matrix(modmat$S[[1]], sparse = TRUE)  # Sparse penalty matrix
 
 # Prediction design matrix
 x_p <- seq(min(dbbmi$age), max(dbbmi$age), length = 100)
-X_p <- predict(modmat, newdata = data.frame(age = x_p))
+newdata <- data.frame(age = x_p)
+# X_p <- predict(modmat, newdata = data.frame(age = x_p))
+X_p <- predict.gam(gam_setup0, newdata = cbind(dummy = 1, newdata), 
+                   type = "lpmatrix")
 
 idx <- 1:nrow(X)
 X <- rbind(X, X_p) 
