@@ -202,7 +202,8 @@ We start by loading packages that are needed.
 ``` r
 
 library(gamlss.data)   # Data
-library(LaMa)          # Creating model matrices
+# library(LaMa)        # Creating model matrices
+library(mgcv)          # Creating model matrices
 library(Matrix)        # Sparse matrices
 ```
 
@@ -215,10 +216,7 @@ ind <- sample(1:nrow(dbbmi), 2000)
 dbbmi <- dbbmi[ind, ]
 ```
 
-We use the function
-[`make_matrices()`](https://janolefi.github.io/LaMa/reference/make_matrices.html)
-from package `LaMa` to conveniently create design and penalty matrices
-for the smooth functions. Internally, this just interfaces `mgcv`. The
+We use the `mgcv` package to create design and penalty matrices. The
 penalty matrix is converted to a sparse matrix using the `Matrix`
 package, to work with `RTMB`’s
 [`dgmrf()`](https://rdrr.io/pkg/RTMB/man/MVgauss.html) function. For
@@ -232,13 +230,24 @@ ignores computations that do not contribute to the final function value.
 ``` r
 
 k <- 10 # Basis dimension
-modmat <- make_matrices(~ s(age, bs="cs"), data = dbbmi)
-X <- modmat$Z                              # Design matrix
-S <- Matrix(modmat$S[[1]], sparse = TRUE)  # Sparse penalty matrix
+
+# temporarily replace LaMa wrapper by mgcv setup until LaMa is back on CRAN
+fml <- ~ s(age, bs="cs")
+gam_setup <- gam(update(fml, dummy ~ .), data = cbind(dummy = 1, dbbmi), fit = FALSE)
+gam_setup0 <- gam(update(fml, dummy ~ .), data = cbind(dummy = 1, dbbmi), control = list(maxit = 1))
+X <- gam_setup$X
+S <- Matrix(gam_setup$S[[1]], sparse = TRUE)  # Sparse penalty matrix
+
+# modmat <- make_matrices(~ s(age, bs="cs"), data = dbbmi)
+# X <- modmat$Z                              # Design matrix
+# S <- Matrix(modmat$S[[1]], sparse = TRUE)  # Sparse penalty matrix
 
 # Prediction design matrix
 x_p <- seq(min(dbbmi$age), max(dbbmi$age), length = 100)
-X_p <- predict(modmat, newdata = data.frame(age = x_p))
+newdata <- data.frame(age = x_p)
+# X_p <- predict(modmat, newdata = data.frame(age = x_p))
+X_p <- predict.gam(gam_setup0, newdata = cbind(dummy = 1, newdata), 
+                   type = "lpmatrix")
 
 idx <- 1:nrow(X)
 X <- rbind(X, X_p) 
@@ -695,7 +704,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  16.290  12.438  13.113
+#>  13.121   0.024  13.148
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate  Std. Error
@@ -705,8 +714,8 @@ summary(sdr_svt, "report")
 #> phi    0.97409443 0.012470016
 #> phi    0.95807405 0.015360711
 #> phi    0.99122411 0.007026834
-#> df     7.12265195 0.976921821
-#> mu_y  -1.13887764 0.186641878
+#> df     7.12265197 0.976921824
+#> mu_y  -1.13887764 0.186641877
 #> mu_y  -1.09383519 0.118761923
-#> mu_y  -1.56301208 0.312999105
+#> mu_y  -1.56301208 0.312999106
 ```
