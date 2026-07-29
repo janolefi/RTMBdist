@@ -31,7 +31,7 @@ Suggests:
     TMB,
     gamlss.data,
     mvtnorm,
-    mgcv
+    LaMa (>= 2.1.2)
 Config/testthat/edition: 3
 URL: https://janolefi.github.io/RTMBdist/
 VignetteBuilder: knitr
