@@ -64,7 +64,7 @@ dexgauss <- function(x, mu = 0, sigma = 1, lambda = 1, log = FALSE) {
 
   nu <- 1 / lambda
 
-  z <- x - mu - ((sigma * sigma) / nu)
+  z <- x - mu - ((sigma * sigma) * lambda)
 
   nu_gr <- greater(nu, 0.05 * sigma) # numerical stability
 
