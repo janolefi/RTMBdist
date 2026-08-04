@@ -123,6 +123,9 @@
   [`qlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   [`rlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   : Laplace distribution
+- [`laplace_check()`](https://janolefi.github.io/RTMBdist/reference/laplace_check.md)
+  [`print(`*`<laplace_check>`*`)`](https://janolefi.github.io/RTMBdist/reference/laplace_check.md)
+  : Assess the accuracy of the Laplace approximation
 - [`dllogis()`](https://janolefi.github.io/RTMBdist/reference/llogis.md)
   [`pllogis()`](https://janolefi.github.io/RTMBdist/reference/llogis.md)
   [`qllogis()`](https://janolefi.github.io/RTMBdist/reference/llogis.md)
