@@ -20,7 +20,7 @@ approximation. Default \code{1000}.}
 
 \item{x}{An object of class \code{"laplace_check"}.}
 
-\item{digits}{Number of significant digits for printed values.}
+\item{digits}{Number of decimal places for the diagnostic values.}
 
 \item{...}{Unused.}
 }
@@ -48,5 +48,42 @@ this ideal: a standard deviation near zero indicates a near-exact
 approximation.
 }
 \examples{
-# currently no example
+# Chicken weight example; taken from RTMB Introduction vignette
+data(ChickWeight)
+
+parameters <- list(
+  mua=0,          ## Mean slope
+  sda=1,          ## Std of slopes
+  mub=0,          ## Mean intercept
+  sdb=1,          ## Std of intercepts
+  sdeps=1,        ## Residual Std
+  a=rep(0, 50),   ## Random slope by chick
+  b=rep(0, 50)    ## Random intercept by chick
+)
+
+jnll <- function(parms) {
+  getAll(ChickWeight, parms, warn=FALSE)
+  ## Optional (enables extra RTMB features)
+  weight <- OBS(weight)
+  ## Initialize joint negative log likelihood
+  nll <- 0
+  ## Random slopes
+  nll <- nll - sum(dnorm(a, mean=mua, sd=sda, log=TRUE))
+  ## Random intercepts
+  nll <- nll - sum(dnorm(b, mean=mub, sd=sdb, log=TRUE))
+  ## Data
+  predWeight <- a[Chick] * Time + b[Chick]
+  nll <- nll - sum(dnorm(weight, predWeight, sd=sdeps, log=TRUE))
+  ## Get predicted weight uncertainties
+  ADREPORT(predWeight)
+  ## Return
+  nll
+}
+
+obj <- MakeADFun(jnll, parameters, random=c("a", "b"), silent = TRUE)
+opt <- nlminb(obj$par, obj$fn, obj$gr)
+
+chk <- laplace_check(obj)
+chk
+# Laplace approximation exact here: linear Gaussian-Gaussian example
 }

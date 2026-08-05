@@ -30,7 +30,44 @@
 #' @importFrom stats sd
 #'
 #' @examples
-#' # currently no example
+#' # Chicken weight example; taken from RTMB Introduction vignette
+#' data(ChickWeight)
+#'
+#' parameters <- list(
+#'   mua=0,          ## Mean slope
+#'   sda=1,          ## Std of slopes
+#'   mub=0,          ## Mean intercept
+#'   sdb=1,          ## Std of intercepts
+#'   sdeps=1,        ## Residual Std
+#'   a=rep(0, 50),   ## Random slope by chick
+#'   b=rep(0, 50)    ## Random intercept by chick
+#' )
+#'
+#' jnll <- function(parms) {
+#'   getAll(ChickWeight, parms, warn=FALSE)
+#'   ## Optional (enables extra RTMB features)
+#'   weight <- OBS(weight)
+#'   ## Initialize joint negative log likelihood
+#'   nll <- 0
+#'   ## Random slopes
+#'   nll <- nll - sum(dnorm(a, mean=mua, sd=sda, log=TRUE))
+#'   ## Random intercepts
+#'   nll <- nll - sum(dnorm(b, mean=mub, sd=sdb, log=TRUE))
+#'   ## Data
+#'   predWeight <- a[Chick] * Time + b[Chick]
+#'   nll <- nll - sum(dnorm(weight, predWeight, sd=sdeps, log=TRUE))
+#'   ## Get predicted weight uncertainties
+#'   ADREPORT(predWeight)
+#'   ## Return
+#'   nll
+#' }
+#'
+#' obj <- MakeADFun(jnll, parameters, random=c("a", "b"), silent = TRUE)
+#' opt <- nlminb(obj$par, obj$fn, obj$gr)
+#'
+#' chk <- laplace_check(obj)
+#' chk
+#' # Laplace approximation exact here: linear Gaussian-Gaussian example
 #' @export
 laplace_check <- function(obj, nSamples = 1000) {
   if (!is.list(obj) || is.null(obj$env)) {
@@ -90,31 +127,47 @@ laplace_check <- function(obj, nSamples = 1000) {
 }
 
 #' @param x An object of class \code{"laplace_check"}.
-#' @param digits Number of significant digits for printed values.
+#' @param digits Number of decimal places for the diagnostic values.
 #' @param ... Unused.
 #' @rdname laplace_check
 #' @export
 print.laplace_check <- function(x, digits = 4, ...) {
-  fmt <- function(v) formatC(v, digits = digits, format = "g")
+  num <- function(v, d = digits) formatC(v, format = "f", digits = d)
+  sci <- function(v) formatC(v, format = "e", digits = 1)
 
-  # verdict from the two most reliable summaries
-  verdict <- if (x$sd_logw < 0.5 && x$ess_ratio > 0.8) {
-    "Laplace approximation appears highly accurate."
-  } else if (x$sd_logw < 2 && x$ess_ratio > 0.5) {
-    "Laplace approximation appears reasonable; interpret with some caution."
+  rel_bias  <- abs(x$log_bias) / abs(x$lZ_laplace)   # bias relative to log-lik magnitude
+  lik_ratio <- exp(x$log_bias)                       # IS / Laplace on the likelihood scale
+
+  verdict <- if (x$ess_ratio > 0.5 && rel_bias < 1e-3) {
+    "The Laplace approximation appears accurate."
+  } else if (x$ess_ratio > 0.2) {
+    "Plausible, but the check is only moderately reliable; interpret with caution."
   } else {
-    "Laplace approximation may be inaccurate; interpret with caution."
+    paste("The check is unreliable here (very low effective sample size, e.g.",
+          "due to high latent dimension); it neither confirms nor rules out",
+          "an accurate approximation.")
   }
 
   cat("Laplace approximation check\n")
-  cat("---------------------------\n")
-  cat(sprintf("Samples drawn:              %d\n", x$nSamples))
-  cat("\nLog marginal likelihood\n")
-  cat(sprintf("  Laplace:                  %s\n", fmt(x$lZ_laplace)))
-  cat(sprintf("  Importance sampling:      %s\n", fmt(x$lZ_is)))
-  cat(sprintf("  Bias (IS - Laplace):      %s\n", fmt(x$log_bias)))
+  cat("===========================\n")
+  cat(sprintf("Monte Carlo samples:         %d\n\n", x$nSamples))
+
+  cat("Log marginal likelihood\n")
+  cat(sprintf("  Laplace:                   %s\n", num(x$lZ_laplace, 2)))
+  cat(sprintf("  Importance sampling:       %s   (unbiased; should match Laplace)\n",
+              num(x$lZ_is, 2)))
+  cat(sprintf("  Bias (IS - Laplace):       %s   (log scale; 0 = exact)\n",
+              num(x$log_bias)))
+  cat(sprintf("    likelihood ratio:        %s   (exp(bias); 1 = no error)\n",
+              num(lik_ratio, 3)))
+  cat(sprintf("    relative to log-lik:     %s   (0 = exact)\n", sci(rel_bias)))
+
   cat("\nDiagnostics\n")
-  cat(sprintf("  SD of log-weights:        %s   (0 = exact)\n", fmt(x$sd_logw)))
-  cat(sprintf("  Effective sample size:    %s%%\n", fmt(100 * x$ess_ratio)))
+  cat(sprintf("  SD of log-weights:         %s   (0 = exact; grows with non-Gaussianity and dimension)\n",
+              num(x$sd_logw)))
+  cat(sprintf("  Effective sample size:     %s%%   (100%% = ideal; low may reflect high dimension)\n",
+              num(100 * x$ess_ratio, 1)))
+
+  cat("\n", verdict, "\n", sep = "")
   invisible(x)
 }
