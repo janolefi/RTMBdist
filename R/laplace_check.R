@@ -148,8 +148,8 @@ print.laplace_check <- function(x, digits = 4, ...) {
           "an accurate approximation.")
   }
 
-  cat("Laplace approximation check\n")
-  cat("===========================\n")
+  cat("Laplace approximation check (importance sampling)\n")
+  cat("=================================================\n")
   cat(sprintf("Monte Carlo samples:         %d\n\n", x$nSamples))
 
   cat("Log marginal likelihood\n")
