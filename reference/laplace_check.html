@@ -77,7 +77,7 @@ approximation. Default <code>1000</code>.</p></dd>
 
 
 <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
-<dd><p>Number of significant digits for printed values.</p></dd>
+<dd><p>Number of decimal places for the diagnostic values.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -107,7 +107,60 @@ approximation.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># currently no example</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Chicken weight example; taken from RTMB Introduction vignette</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ChickWeight</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">parameters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  mua<span class="op">=</span><span class="fl">0</span>,          <span class="co">## Mean slope</span></span></span>
+<span class="r-in"><span>  sda<span class="op">=</span><span class="fl">1</span>,          <span class="co">## Std of slopes</span></span></span>
+<span class="r-in"><span>  mub<span class="op">=</span><span class="fl">0</span>,          <span class="co">## Mean intercept</span></span></span>
+<span class="r-in"><span>  sdb<span class="op">=</span><span class="fl">1</span>,          <span class="co">## Std of intercepts</span></span></span>
+<span class="r-in"><span>  sdeps<span class="op">=</span><span class="fl">1</span>,        <span class="co">## Residual Std</span></span></span>
+<span class="r-in"><span>  a<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span>,   <span class="co">## Random slope by chick</span></span></span>
+<span class="r-in"><span>  b<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span>    <span class="co">## Random intercept by chick</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">jnll</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">parms</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/RTMB/man/TMB-interface.html" class="external-link">getAll</a></span><span class="op">(</span><span class="va">ChickWeight</span>, <span class="va">parms</span>, warn<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">## Optional (enables extra RTMB features)</span></span></span>
+<span class="r-in"><span>  <span class="va">weight</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/RTMB/man/TMB-interface.html" class="external-link">OBS</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">## Initialize joint negative log likelihood</span></span></span>
+<span class="r-in"><span>  <span class="va">nll</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>  <span class="co">## Random slopes</span></span></span>
+<span class="r-in"><span>  <span class="va">nll</span> <span class="op">&lt;-</span> <span class="va">nll</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="va">a</span>, mean<span class="op">=</span><span class="va">mua</span>, sd<span class="op">=</span><span class="va">sda</span>, log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">## Random intercepts</span></span></span>
+<span class="r-in"><span>  <span class="va">nll</span> <span class="op">&lt;-</span> <span class="va">nll</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="va">b</span>, mean<span class="op">=</span><span class="va">mub</span>, sd<span class="op">=</span><span class="va">sdb</span>, log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">## Data</span></span></span>
+<span class="r-in"><span>  <span class="va">predWeight</span> <span class="op">&lt;-</span> <span class="va">a</span><span class="op">[</span><span class="va">Chick</span><span class="op">]</span> <span class="op">*</span> <span class="va">Time</span> <span class="op">+</span> <span class="va">b</span><span class="op">[</span><span class="va">Chick</span><span class="op">]</span></span></span>
+<span class="r-in"><span>  <span class="va">nll</span> <span class="op">&lt;-</span> <span class="va">nll</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="va">weight</span>, <span class="va">predWeight</span>, sd<span class="op">=</span><span class="va">sdeps</span>, log<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">## Get predicted weight uncertainties</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/RTMB/man/TMB-interface.html" class="external-link">ADREPORT</a></span><span class="op">(</span><span class="va">predWeight</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">## Return</span></span></span>
+<span class="r-in"><span>  <span class="va">nll</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu">MakeADFun</span><span class="op">(</span><span class="va">jnll</span>, <span class="va">parameters</span>, random<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/nlminb.html" class="external-link">nlminb</a></span><span class="op">(</span><span class="va">obj</span><span class="op">$</span><span class="va">par</span>, <span class="va">obj</span><span class="op">$</span><span class="va">fn</span>, <span class="va">obj</span><span class="op">$</span><span class="va">gr</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">chk</span> <span class="op">&lt;-</span> <span class="fu">laplace_check</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">chk</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Laplace approximation check</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ===========================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Monte Carlo samples:         1000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Log marginal likelihood</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Laplace:                   -2446.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Importance sampling:       -2446.99   (unbiased; should match Laplace)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Bias (IS - Laplace):       0.0000   (log scale; 0 = exact)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     likelihood ratio:        1.000   (exp(bias); 1 = no error)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     relative to log-lik:     1.9e-16   (0 = exact)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Diagnostics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   SD of log-weights:         0.0000   (0 = exact; grows with non-Gaussianity and dimension)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Effective sample size:     100.0%   (100% = ideal; low may reflect high dimension)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The Laplace approximation appears accurate.</span>
+<span class="r-in"><span><span class="co"># Laplace approximation exact here: linear Gaussian-Gaussian example</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
