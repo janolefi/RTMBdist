@@ -99,8 +99,8 @@ opt <- nlminb(obj$par, obj$fn, obj$gr)
 
 chk <- laplace_check(obj)
 chk
-#> Laplace approximation check
-#> ===========================
+#> Laplace approximation check (importance sampling)
+#> =================================================
 #> Monte Carlo samples:         1000
 #> 
 #> Log marginal likelihood
