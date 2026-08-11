@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cauchy) are already implemented in `RTMB`; check the distributions listed [here](https://kaskr.r-universe.dev/RTMB/doc/manual.html#Distributions).
+
 ## Continuous distributions
 
 * [`bccg(mu, sigma, nu)`](../reference/bccg.html): Box-Cox Cole and Green distribution parameterised by location `mu`, scale `sigma`, and skewness `nu`

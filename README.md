@@ -33,6 +33,11 @@ vignette. There are also a couple of [Worked
 examples](https://janolefi.github.io/RTMBdist/articles/Examples.html)
 demonstrating how to use `RTMBdist` in practice.
 
+Note that some famous non-standard distributions (Tweedie, SHASHo,
+COM-Pois, Cauchy) are already implemented in `RTMB`; check the
+distributions listed
+[here](https://kaskr.r-universe.dev/RTMB/doc/manual.html#Distributions).
+
 Feel free to contribute a distribution ([Guide to adding a
 distribution](https://janolefi.github.io/RTMBdist/articles/adding-a-distribution.html))
 or open an issue!
