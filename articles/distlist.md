@@ -1,5 +1,10 @@
 # List of distributions
 
+Note that some famous non-standard distributions (Tweedie, SHASHo,
+COM-Pois, Cauchy) are already implemented in `RTMB`; check the
+distributions listed
+[here](https://kaskr.r-universe.dev/RTMB/doc/manual.html#Distributions).
+
 ## Continuous distributions
 
 - [`bccg(mu, sigma, nu)`](https://janolefi.github.io/RTMBdist/reference/bccg.md):

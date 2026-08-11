@@ -238,9 +238,9 @@ kept constant.</p>
 <span><span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dbbmi</span><span class="op">)</span>, <span class="fl">2000</span><span class="op">)</span></span>
 <span><span class="va">dbbmi</span> <span class="op">&lt;-</span> <span class="va">dbbmi</span><span class="op">[</span><span class="va">ind</span>, <span class="op">]</span></span></code></pre></div>
 <p>We use the function <code><a href="https://janolefi.github.io/LaMa/reference/make_matrices.html" class="external-link">make_matrices()</a></code> from package
-<code>LaMa</code> to conveniently create design and penalty matrices for
-the smooth functions, which uses <code>mgcv</code> internally. The
-penalty matrix is converted to a sparse matrix using the
+<code>LaMa</code> (which uses <code>mgcv</code> internally) to
+conveniently create design and penalty matrices for the smooth
+functions. The penalty matrix is converted to a sparse matrix using the
 <code>Matrix</code> package, to work with <code>RTMB</code>’s
 <code><a href="https://rdrr.io/pkg/RTMB/man/MVgauss.html" class="external-link">dgmrf()</a></code> function. For convenience, we also create a
 prediction design matrix for a sequence of age values, which we will use
@@ -652,7 +652,7 @@ the covariance matrix anymore, but only proportional to it.</p>
 <span>  <span class="va">opt_svt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/nlminb.html" class="external-link">nlminb</a></span><span class="op">(</span><span class="va">obj_svt</span><span class="op">$</span><span class="va">par</span>, <span class="va">obj_svt</span><span class="op">$</span><span class="va">fn</span>, <span class="va">obj_svt</span><span class="op">$</span><span class="va">gr</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  12.651  11.134  10.022</span></span>
+<span><span class="co">#&gt;  12.373  11.077   9.735</span></span>
 <span><span class="va">sdr_svt</span> <span class="op">&lt;-</span> <span class="fu">sdreport</span><span class="op">(</span><span class="va">obj_svt</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sdr_svt</span>, <span class="st">"report"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          Estimate  Std. Error</span></span>
