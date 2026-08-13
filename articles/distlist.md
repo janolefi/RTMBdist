@@ -175,6 +175,10 @@ distributions listed
   Beta-binomial distribution parameterised by size `size`, shape
   parameters `shape1` and `shape2`
 
+- [`combinom(size, prob, nu)`](https://janolefi.github.io/RTMBdist/reference/combinom.md):
+  Conway-Maxwell-binomial distribution parameterised by size `size`,
+  success probability `prob` and dispersion `nu`
+
 - [`genpois(lambda, phi)`](https://janolefi.github.io/RTMBdist/reference/genpois.md):
   Generalised Poisson distribution parameterised by mean `lambda` and
   dispersion `phi`

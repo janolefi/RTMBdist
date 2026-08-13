@@ -146,6 +146,11 @@ qqnorm(osa$res); abline(0, 1)
   : Gumbel copula constructors
 - [`cmvgauss()`](https://janolefi.github.io/RTMBdist/reference/cmvgauss.md)
   : Multivariate Gaussian copula constructor
+- [`dcombinom()`](https://janolefi.github.io/RTMBdist/reference/combinom.md)
+  [`pcombinom()`](https://janolefi.github.io/RTMBdist/reference/combinom.md)
+  [`qcombinom()`](https://janolefi.github.io/RTMBdist/reference/combinom.md)
+  [`rcombinom()`](https://janolefi.github.io/RTMBdist/reference/combinom.md)
+  : Conway-Maxwell-binomial distribution
 - [`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md)
   : Joint density under a bivariate copula
 - [`ddcopula()`](https://janolefi.github.io/RTMBdist/reference/ddcopula.md)
