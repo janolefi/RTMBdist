@@ -171,6 +171,12 @@ distributions listed
 
 ## Discrete distributions
 
+- [`bell(theta)`](https://janolefi.github.io/RTMBdist/reference/bell.md):
+  Bell distribution for overdispersed counts, parameterised by `theta`
+
+- [`bell2(mu)`](https://janolefi.github.io/RTMBdist/reference/bell2.md):
+  Bell distribution reparameterised by mean `mu`
+
 - [`betabinom(size, shape1, shape2)`](https://janolefi.github.io/RTMBdist/reference/betabinom.md):
   Beta-binomial distribution parameterised by size `size`, shape
   parameters `shape1` and `shape2`

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RTMBdist</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="rtmbdist-development-version">RTMBdist (development version)<a class="anchor" aria-label="anchor" href="#rtmbdist-development-version"></a></h2>
 <ul><li><p>Ongoing development version.</p></li>
+<li><p>Added the Bell distribution (<code><a href="../reference/bell.html">dbell()</a></code>, <code><a href="../reference/bell.html">pbell()</a></code>, <code><a href="../reference/bell.html">qbell()</a></code>, <code><a href="../reference/bell.html">rbell()</a></code>) and its mean parameterisation (<code><a href="../reference/bell2.html">dbell2()</a></code>, <code><a href="../reference/bell2.html">pbell2()</a></code>, <code><a href="../reference/bell2.html">qbell2()</a></code>, <code><a href="../reference/bell2.html">rbell2()</a></code>), a one-parameter distribution for overdispersed counts. Log Bell numbers are used throughout and cached, so the density stays finite well past the point at which the Bell numbers themselves overflow double precision. One-step-ahead residuals are supported via <code>method = "cdf"</code>.</p></li>
+<li><p>Added <code><a href="../reference/lambertW.html">lambertW()</a></code>, an AD-compatible implementation of the principal branch of the Lambert W function. Derivatives of all orders are exact, so it can be used in models fitted by Laplace approximation.</p></li>
 <li><p>Added the Conway-Maxwell-binomial distribution (<code><a href="../reference/combinom.html">dcombinom()</a></code>, <code><a href="../reference/combinom.html">pcombinom()</a></code>, <code><a href="../reference/combinom.html">qcombinom()</a></code>, <code><a href="../reference/combinom.html">rcombinom()</a></code>), a binomial generalisation with an additional dispersion parameter <code>nu</code>. The density and distribution function are differentiable with respect to <code>x</code>, so one-step-ahead residuals are supported.</p></li>
 </ul></div>
     <div class="section level2">

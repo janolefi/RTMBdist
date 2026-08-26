@@ -19,6 +19,16 @@
   [`qbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md)
   [`rbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md) :
   Box–Cox t distribution (BCT)
+- [`dbell()`](https://janolefi.github.io/RTMBdist/reference/bell.md)
+  [`pbell()`](https://janolefi.github.io/RTMBdist/reference/bell.md)
+  [`qbell()`](https://janolefi.github.io/RTMBdist/reference/bell.md)
+  [`rbell()`](https://janolefi.github.io/RTMBdist/reference/bell.md) :
+  Bell distribution
+- [`dbell2()`](https://janolefi.github.io/RTMBdist/reference/bell2.md)
+  [`pbell2()`](https://janolefi.github.io/RTMBdist/reference/bell2.md)
+  [`qbell2()`](https://janolefi.github.io/RTMBdist/reference/bell2.md)
+  [`rbell2()`](https://janolefi.github.io/RTMBdist/reference/bell2.md) :
+  Reparameterised Bell distribution
 - [`dbeta()`](https://janolefi.github.io/RTMBdist/reference/beta2.md)
   [`dbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md)
   [`pbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md)
@@ -123,6 +133,8 @@
   [`qkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md)
   [`rkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md) :
   Kumaraswamy distribution
+- [`lambertW()`](https://janolefi.github.io/RTMBdist/reference/lambertW.md)
+  : Lambert W function (principal branch)
 - [`dlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   [`plaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
   [`qlaplace()`](https://janolefi.github.io/RTMBdist/reference/laplace.md)
