@@ -28,6 +28,88 @@ erfc <- function(x) {
   1 - erf(x) # + eps
 }
 
+#' Lambert W function (principal branch)
+#'
+#' Solves \eqn{W(x) e^{W(x)} = x} for the principal branch \eqn{W_0}.
+#'
+#' @param x vector of evaluation points, \eqn{x \ge -1/e}.
+#'
+#' @details
+#' This implementation allows for automatic differentiation with \code{RTMB}.
+#'
+#' The value is obtained by Halley iteration, which converges to machine
+#' precision in a handful of steps over the whole domain. For AD, the function
+#' is registered as an atomic operation via \code{\link[RTMB]{ADjoint}} with
+#' the analytic derivative
+#' \deqn{W'(x) = \frac{1}{e^{W(x)} (1 + W(x))},}
+#' expressed through the returned value rather than through \eqn{x}. Written
+#' this way the derivative is itself an AD-able expression, so derivatives of
+#' every order are available; in particular the third-order derivatives that
+#' the gradient of a Laplace approximation requires.
+#'
+#' The principal branch is defined for \eqn{x \ge -1/e}, with
+#' \eqn{W_0(-1/e) = -1} and \eqn{W_0(x) \ge -1} throughout. Values below
+#' \eqn{-1/e} return \code{NaN} with a warning. The derivative is infinite at
+#' the branch point \eqn{x = -1/e}.
+#'
+#' @returns The principal branch of the Lambert W function evaluated at \code{x}.
+#' @export
+#'
+#' @examples
+#' lambertW(exp(1)) # 1
+#' lambertW(0) # 0
+#' x <- c(0.5, 1, 10, 1000)
+#' lambertW(x) * exp(lambertW(x)) - x # ~ 0
+lambertW <- function(x) {
+  if (inherits(x, "advector")) return(lambertW.ad(x))
+  lambertW.num(x)
+}
+
+# Double-precision principal branch, by Halley iteration. Vectorised, and free
+# of NaN warnings: each initial-guess branch is only ever evaluated on the
+# subset of x it is valid for.
+lambertW.num <- function(x) {
+  x <- as.numeric(x)
+  if (any(x < -exp(-1), na.rm = TRUE))
+    warning("lambertW: x < -1/e is outside the principal branch")
+
+  y <- rep(NaN, length(x))
+  ok <- !is.na(x) & x >= -exp(-1)
+  xo <- x[ok]
+
+  # Initial guess, by regime. Each branch is only ever evaluated on the subset
+  # it is valid for, so no NaNs are produced along the way.
+  yo <- xo / (1 + xo)
+  near <- xo < -0.3 # branch point: series in p = sqrt(2 (e x + 1))
+  p <- sqrt(2 * pmax(exp(1) * xo[near] + 1, 0))
+  yo[near] <- -1 + p - p^2 / 3 + 11 * p^3 / 72
+  hi <- xo > 1 # asymptotic W(x) ~ log(x) - log(log(x))
+  yo[hi] <- log(xo[hi]) - log(log1p(xo[hi]))
+
+  # Halley. Converges in ~3 steps; 12 leaves a wide margin near the branch
+  # point, where convergence is slowest and the denominator vanishes.
+  for (i in 1:12) {
+    e <- exp(yo)
+    f <- yo * e - xo
+    step <- f / (e * (yo + 1) - (yo + 2) * f / (2 * yo + 2))
+    step[!is.finite(step)] <- 0
+    yo <- pmax(yo - step, -1) # the principal branch never goes below -1
+  }
+  y[ok] <- yo
+  y
+}
+
+# AD version. df is written in terms of the returned value y (and uses only
+# AD-able operations), so RTMB can differentiate it again, and again: the
+# recursion closes and derivatives of all orders are exact. Using
+# 1 / (exp(y) (1 + y)) rather than the equivalent y / (x (1 + y)) also keeps
+# the derivative finite at x = 0, where the latter is 0/0.
+lambertW.ad <- RTMB::ADjoint(
+  f = function(x) lambertW.num(x),
+  df = function(x, y, dy) dy / (exp(y) * (1 + y)),
+  name = "lambertW"
+)
+
 #' Smooth approximation to the absolute value function
 #'
 #' @param x vector of evaluation points

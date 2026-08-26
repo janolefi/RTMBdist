@@ -105,6 +105,10 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 ## Discrete distributions
 
+* [`bell(theta)`](../reference/bell.html): Bell distribution for overdispersed counts, parameterised by `theta`
+
+* [`bell2(mu)`](../reference/bell2.html): Bell distribution reparameterised by mean `mu`
+
 * [`betabinom(size, shape1, shape2)`](../reference/betabinom.html): Beta-binomial distribution parameterised by size `size`, shape parameters `shape1` and `shape2`
 
 * [`combinom(size, prob, nu)`](../reference/combinom.html): Conway-Maxwell-binomial distribution parameterised by size `size`, success probability `prob` and dispersion `nu`
