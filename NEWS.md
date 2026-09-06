@@ -1,6 +1,20 @@
-# RTMBdist (development version)
+# RTMBdist 1.1.0
 
-- Ongoing development version.
+- Removed the dependency on `gamlss.dist`, which is scheduled for archival on CRAN. The quantile and random generation functions of the Box-Cox Cole-Green (`qbccg()`, `rbccg()`), Box-Cox *t* (`qbct()`, `rbct()`), Box-Cox power exponential (`qbcpe()`, `rbcpe()`), power exponential (`qpowerexp()`, `rpowerexp()`, `qpowerexp2()`, `rpowerexp2()`), Pareto (`qpareto()`, `rpareto()`), generalised Poisson (`pgenpois()`, `qgenpois()`, `rgenpois()`) and exponentially modified Gaussian (`qexgauss()`) distributions are now implemented natively. Results are unchanged except for the fixes below.
+
+- Fixed argument recycling in `qbccg()`, `qbct()`, `qbcpe()`, `qgenpois()` and `pgenpois()`. Evaluating a single quantile against vectorised parameters previously collapsed the result to length one, and a parameter vector shorter than `x` silently truncated it. These functions now return one value per recycled argument tuple.
+
+- Fixed `qbct()` and `rbct()`, which failed with an error when `mu`, `sigma` or `tau` was supplied as a vector.
+
+- `qpareto()` now honours `lower.tail`, which was previously accepted but ignored.
+
+- `log.p = TRUE` now works in `qpareto()`, `qbct()` and `qgenpois()`. These previously validated `p` before transforming it back from the log scale, so the argument could not be used.
+
+- `qexgauss()` is substantially more accurate. It inverts `pexgauss()` with a tighter convergence tolerance, reducing the round-trip error `|p(q(p)) - p|` from roughly 1e-6 to roughly 1e-14.
+
+- `pgenpois()` no longer falls back to the Poisson distribution for `phi < 1e-4` and evaluates the generalised Poisson distribution function across the whole parameter range.
+
+- `pbetaprime()`, `pinvchisq()` and `pinvgamma()` are now differentiable, so one-step-ahead residuals via `method = "cdf"` are available for the beta prime, inverse chi-squared and inverse gamma distributions.
 
 - Added the Bell distribution (`dbell()`, `pbell()`, `qbell()`, `rbell()`) and its mean parameterisation (`dbell2()`, `pbell2()`, `qbell2()`, `rbell2()`), a one-parameter distribution for overdispersed counts. Log Bell numbers are used throughout and cached, so the density stays finite well past the point at which the Bell numbers themselves overflow double precision. One-step-ahead residuals are supported via `method = "cdf"`.
 

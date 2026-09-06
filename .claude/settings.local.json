@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sSL https://raw.githubusercontent.com/glmmTMB/glmmTMB/master/glmmTMB/DESCRIPTION)",
+      "Bash(curl -sSL \"https://api.github.com/repos/glmmTMB/glmmTMB/commits?path=glmmTMB/src/distrib.h&per_page=10\")",
+      "Bash(Rscript -e 'library\\(RTMB\\); ns <- asNamespace\\(\"RTMB\"\\); objs <- ls\\(ns, all.names=TRUE\\); hits <- objs[grepl\\(\"uniroot\", objs, ignore.case=TRUE\\)]; print\\(hits\\); for \\(h in hits\\) {cat\\(\"\\\\n----\", h, \"----\\\\n\"\\); print\\(get\\(h, ns\\)\\)}')",
+      "Bash(Rscript -e 'p <- system.file\\(package=\"RTMB\"\\); db <- tools::Rd_db\\(\"RTMB\"\\); nm <- names\\(db\\); print\\(nm[grepl\\(\"uniroot|Tape|solve|newton\", nm, ignore.case=TRUE\\)]\\)')",
+      "Bash(Rscript -e 'db <- tools::Rd_db\\(\"RTMB\"\\); tools::Rd2txt\\(db[[\"ADuniroot.Rd\"]]\\)')",
+      "Bash(Rscript proto.R)",
+      "Bash(Rscript -e ' *)"
+    ]
+  }
+}

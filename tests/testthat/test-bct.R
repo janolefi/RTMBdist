@@ -25,3 +25,12 @@ test_that("bct passes standard distribution checks (mu=5, sigma=0.3, nu=2, tau=1
 test_that("bct AD gradient has no NaN", {
   check_ad_gradient(dbct,       rbct,       mu = 5, sigma = 0.3, nu = 2, tau = 10)
 })
+
+test_that("qbct honours lower.tail and log.p", {
+  p <- c(0.01, 0.1, 0.5, 0.9, 0.99)
+  args <- list(mu = 5, sigma = 0.3, nu = 2, tau = 10)
+  expect_equal(do.call(qbct, c(list(p), args)),
+               do.call(qbct, c(list(1 - p), args, lower.tail = FALSE)))
+  expect_equal(do.call(qbct, c(list(p), args)),
+               do.call(qbct, c(list(log(p)), args, log.p = TRUE)))
+})

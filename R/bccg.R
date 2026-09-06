@@ -4,8 +4,8 @@
 #' the Box–Cox Cole and Green distribution.
 #'
 #' @details
-#' This implementation of \code{dbccg} and \code{pbccg} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
-#' See \code{gamlss.dist::\link[gamlss.dist]{BCCG}} for more details.
+#' \code{dbccg} and \code{pbccg} allow for automatic differentiation with \code{RTMB}.
+#' The parameterisation follows the \code{BCCG} family of the \code{gamlss.dist} package.
 #'
 #' The density is
 #' \deqn{f(x; \mu, \sigma, \nu) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma \sqrt{2\pi}} \exp\!\left(-\tfrac{z^2}{2}\right) \Bigl[\Phi\!\left(\tfrac{1}{\sigma|\nu|}\right)\Bigr]^{-1}, \quad x > 0,}
@@ -122,25 +122,49 @@ pbccg <- function(q, mu = 1, sigma = 0.1, nu = 1, lower.tail = TRUE, log.p = FAL
 #' @rdname bccg
 #' @export
 #' @usage qbccg(p, mu = 1, sigma = 0.1, nu = 1, lower.tail = TRUE, log.p = FALSE)
-#' @importFrom gamlss.dist qBCCG
 qbccg <- function(p, mu = 1, sigma = 0.1, nu = 1, lower.tail = TRUE, log.p = FALSE) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/BCCG.R
 
   if (!ad_context()) {
     if (any(mu <= 0)) stop("mu must be > 0")
     if (any(sigma <= 0)) stop("sigma must be > 0")
   }
 
-  gamlss.dist::qBCCG(p, mu = mu, sigma = sigma, nu = nu,
-                     lower.tail = lower.tail, log.p = log.p)
+  if (log.p) p <- exp(p)
+  if (!lower.tail) p <- 1 - p
+
+  if (!ad_context()) {
+    if (any(p < 0 | p > 1)) stop("p must be in [0, 1]")
+  }
+
+  # gamlss.dist branches on length(nu) and uses ifelse(), which returns a result
+  # of the same length as nu and so silently truncates when nu is shorter than p;
+  # recycling everything to a common length up front avoids that
+  n <- max(lengths(list(p, mu, sigma, nu)))
+  p <- rep_len(p, n); mu <- rep_len(mu, n)
+  sigma <- rep_len(sigma, n); nu <- rep_len(nu, n)
+
+  # the standard normal for z is truncated to z < 1 / (sigma * |nu|), so the
+  # quantile has to be taken from the correspondingly rescaled normal
+  Fz <- stats::pnorm(1 / (sigma * abs(nu)))
+  z <- ifelse(nu <= 0, stats::qnorm(p * Fz), stats::qnorm(1 - (1 - p) * Fz))
+
+  return(inv_boxcox(mu, sigma, nu, z))
 }
 
 #' @rdname bccg
 #' @export
-#' @importFrom gamlss.dist rBCCG
+#' @importFrom stats runif
 rbccg <- function(n, mu = 1, sigma = 0.1, nu = 1) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/BCCG.R
 
   if (any(mu <= 0)) stop("mu must be > 0")
   if (any(sigma <= 0)) stop("sigma must be > 0")
 
-  gamlss.dist::rBCCG(n, mu = mu, sigma = sigma, nu = nu)
+  n <- ceiling(n)
+  p <- runif(n)
+
+  qbccg(p, mu = mu, sigma = sigma, nu = nu)
 }

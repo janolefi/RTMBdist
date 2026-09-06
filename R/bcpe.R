@@ -1,4 +1,8 @@
 # inner functions
+# f.T, F.T and q.T are the density, cdf and quantile function of the standardised
+# power exponential, taken from
+# https://github.com/gamlss-dev/gamlss.dist/blob/main/R/BCPE.R
+# (f.T and F.T modified to allow for automatic differentiation)
 f.T <- function(t, tau, log = FALSE){
   log.c <- 0.5 * (-(2 / tau) * log(2) + lgamma(1/tau) - lgamma(3/tau))
   c <- exp(log.c)
@@ -14,6 +18,14 @@ F.T <- function(t, tau){
   cdf <- 0.5*(1 + F.s * sign(t))
   cdf
 }
+# quantile function of the standardised power exponential; inverse of F.T
+q.T <- function(p, tau){
+  log.c <- 0.5 * (-(2/tau) * log(2) + lgamma(1/tau) - lgamma(3/tau))
+  c <- exp(log.c)
+  s <- stats::qgamma((2 * p - 1) * sign(p - 0.5), shape = 1/tau, scale = 1)
+  z <- sign(p - 0.5) * ((2 * s)^(1/tau)) * c
+  z
+}
 
 #' Box-Cox Power Exponential distribution (BCPE)
 #'
@@ -21,8 +33,8 @@ F.T <- function(t, tau){
 #' the Box-Cox Power Exponential distribution.
 #'
 #' @details
-#' This implementation of \code{dbcpe} and \code{pbcpe} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
-#' See \code{gamlss.dist::\link[gamlss.dist]{BCPE}} for more details.
+#' \code{dbcpe} and \code{pbcpe} allow for automatic differentiation with \code{RTMB}.
+#' The parameterisation follows the \code{BCPE} family of the \code{gamlss.dist} package.
 #'
 #' The density is
 #' \deqn{f(x; \mu, \sigma, \nu, \tau) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma} \frac{f_T(z;\tau)}{F_T\!\left(1/(\sigma|\nu|);\tau\right)}, \quad x > 0,}
@@ -140,8 +152,9 @@ pbcpe <- function(q, mu = 5, sigma = 0.1, nu = 1, tau = 2, lower.tail = TRUE, lo
 #' @rdname bcpe
 #' @export
 #' @usage qbcpe(p, mu = 5, sigma = 0.1, nu = 1, tau = 2, lower.tail = TRUE, log.p = FALSE)
-#' @importFrom gamlss.dist qBCPE
 qbcpe <- function(p, mu = 5, sigma = 0.1, nu = 1, tau = 2, lower.tail = TRUE, log.p = FALSE) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/BCPE.R
 
   if(!ad_context()) {
     if (any(mu < 0))  stop("mu must be > 0")
@@ -149,17 +162,37 @@ qbcpe <- function(p, mu = 5, sigma = 0.1, nu = 1, tau = 2, lower.tail = TRUE, lo
     if (any(tau < 0))  stop("tau must be > 0")
   }
 
-  gamlss.dist::qBCPE(p, mu = mu, sigma = sigma, nu = nu, tau = tau,
-                     lower.tail = lower.tail, log.p = log.p)
+  if(log.p) p <- exp(p)
+  if(!lower.tail) p <- 1 - p
+
+  if(!ad_context()) {
+    if (any(p < 0 | p > 1)) stop("p must be in [0, 1]")
+  }
+
+  # see qbccg: gamlss.dist's ifelse() branching truncates when nu is shorter than p
+  n <- max(lengths(list(p, mu, sigma, nu, tau)))
+  p <- rep_len(p, n); mu <- rep_len(mu, n); sigma <- rep_len(sigma, n)
+  nu <- rep_len(nu, n); tau <- rep_len(tau, n)
+
+  FT <- F.T(1 / (sigma * abs(nu)), tau)
+  za <- ifelse(nu < 0, q.T(p * FT, tau), q.T(1 - (1 - p) * FT, tau))
+  za <- ifelse(nu == 0, q.T(p, tau), za)
+
+  return(inv_boxcox(mu, sigma, nu, za))
 }
 #' @rdname bcpe
 #' @export
-#' @importFrom gamlss.dist rBCPE
+#' @importFrom stats runif
 rbcpe <- function(n, mu = 5, sigma = 0.1, nu = 1, tau = 2) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/BCPE.R
 
   if (any(mu <= 0))  stop("mu must be > 0")
   if (any(sigma <= 0))  stop("sigma must be > 0")
   if (any(tau <= 0))  stop("tau must be > 0")
 
-  gamlss.dist::rBCPE(n, mu = mu, sigma = sigma, nu = nu, tau = tau)
+  n <- ceiling(n)
+  p <- runif(n)
+
+  qbcpe(p, mu = mu, sigma = sigma, nu = nu, tau = tau)
 }

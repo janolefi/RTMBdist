@@ -43,7 +43,7 @@ the generalised Poisson distribution.
 }
 \details{
 This implementation of \code{dgenpois} allows for automatic differentiation with \code{RTMB}.
-The other functions are imported from \code{gamlss.dist::GPO}.
+The parameterisation follows the \code{GPO} family of the \code{gamlss.dist} package.
 
 The distribution has mean \eqn{\lambda} and variance \eqn{\lambda(1 + \phi \lambda)^2}.
 For \eqn{\phi = 0} it reduces to the Poisson distribution, however \eqn{\phi} must be strictly positive here.

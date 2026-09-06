@@ -1,7 +1,7 @@
 Package: RTMBdist
 Type: Package
 Title: Distributions Compatible with Automatic Differentiation by 'RTMB'
-Version: 1.0.6
+Version: 1.1.0
 Authors@R: c(
     person(given = "Jan-Ole", family = "Fischer", 
           email = "jan-ole.fischer@mailbox.org",
@@ -9,12 +9,11 @@ Authors@R: c(
           comment = c(ORCID = "0009-0004-1556-9053")))
 Description: 
   Extends the functionality of the 'RTMB' <https://kaskr.r-universe.dev/RTMB> package by providing a collection of non-standard probability distributions compatible with automatic differentiation (AD). While 'RTMB' enables flexible and efficient modelling, including random effects, its built-in support is limited to standard distributions. The package adds additional AD-compatible distributions, broadening the range of models that can be implemented and estimated using 'RTMB'. Automatic differentiation and Laplace approximation are described in Kristensen et al. (2016) <doi:10.18637/jss.v070.i05>.
-License: MIT + file LICENSE
+License: GPL-2 | GPL-3
 Encoding: UTF-8
 Imports:
     stats,
     Matrix,
-    gamlss.dist,
     circular,
     sn,
     statmod,

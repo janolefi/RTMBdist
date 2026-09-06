@@ -43,8 +43,8 @@ Density, distribution function, quantile function, and random generation for
 the Box–Cox t distribution.
 }
 \details{
-This implementation of \code{dbct} and \code{pbct} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
-See \code{gamlss.dist::\link[gamlss.dist]{BCT}} for more details.
+\code{dbct} and \code{pbct} allow for automatic differentiation with \code{RTMB}.
+The parameterisation follows the \code{BCT} family of the \code{gamlss.dist} package.
 
 The density is
 \deqn{f(x; \mu, \sigma, \nu, \tau) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma} \frac{f_t(z;\tau)}{F_t\!\left(1/(\sigma|\nu|);\tau\right)}, \quad x > 0,}

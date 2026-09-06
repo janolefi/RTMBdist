@@ -37,8 +37,8 @@ Density, distribution function, quantile function, and random generation for
 the pareto distribution.
 }
 \details{
-This implementation of \code{dpareto} and \code{ppareto} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
-See \code{gamlss.dist::\link[gamlss.dist]{PARETO}} for more details.
+\code{dpareto} and \code{ppareto} allow for automatic differentiation with \code{RTMB}.
+The parameterisation follows the \code{PARETO} family of the \code{gamlss.dist} package.
 
 \deqn{f(x;\,\mu) = \frac{\mu}{x^{\mu+1}}, \quad x > 1.}
 }

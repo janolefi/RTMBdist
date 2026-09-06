@@ -4,8 +4,8 @@
 #' the pareto distribution.
 #'
 #' @details
-#' This implementation of \code{dpareto} and \code{ppareto} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
-#' See \code{gamlss.dist::\link[gamlss.dist]{PARETO}} for more details.
+#' \code{dpareto} and \code{ppareto} allow for automatic differentiation with \code{RTMB}.
+#' The parameterisation follows the \code{PARETO} family of the \code{gamlss.dist} package.
 #'
 #' \deqn{f(x;\,\mu) = \frac{\mu}{x^{\mu+1}}, \quad x > 1.}
 #'
@@ -81,26 +81,39 @@ ppareto <- function(q, mu = 1, lower.tail = TRUE, log.p = FALSE) {
 
 #' @rdname pareto
 #' @export
-#' @importFrom gamlss.dist qPARETO
 qpareto <- function(p, mu = 1, lower.tail = TRUE, log.p = FALSE) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/PARETO.R
 
   if(!ad_context()) {
     if(any(mu <= 0)) stop("mu must be > 0")
   }
 
-  gamlss.dist::qPARETO(p, mu = mu, lower.tail = lower.tail, log.p = log.p)
+  if(log.p) p <- exp(p)
+  if(!lower.tail) p <- 1 - p
+
+  if(!ad_context()) {
+    if(any(p < 0 | p > 1)) stop("p must be in [0, 1]")
+  }
+
+  1 / (1 - p)^(1 / mu)
 }
 
 #' @rdname pareto
 #' @export
-#' @importFrom gamlss.dist rPARETO
+#' @importFrom stats runif
 rpareto <- function(n, mu = 1) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/PARETO.R
 
   if(!ad_context()) {
     if(any(mu <= 0)) stop("mu must be > 0")
   }
 
-  gamlss.dist::rPARETO(n, mu = mu)
+  n <- ceiling(n)
+  p <- runif(n)
+
+  qpareto(p, mu = mu)
 }
 
 

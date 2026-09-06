@@ -242,7 +242,21 @@ lmultigamma <- function(a, p) {
   sum(lgamma(a + (1 - 1:p)/2))
 }
 
+# Inverse Box-Cox transformation shared by the BCCG, BCT and BCPE quantile
+# functions: maps z on the standardised scale back to the response scale.
+# At nu = 0 the first branch evaluates to 1^Inf = 1, so ifelse() stays finite.
+inv_boxcox <- function(mu, sigma, nu, z) {
+  ifelse(nu != 0, mu * (nu * sigma * z + 1)^(1 / nu), mu * exp(sigma * z))
+}
+
 reggamma <- function(s, x) {
+  if (ad_context()) {
+    # RTMB's pgamma errors when lower.tail is passed inside an AD context, so
+    # the upper tail is formed by complement there; outside AD the direct
+    # upper-tail evaluation is kept because it is accurate far into the tail
+    return(1 - pgamma(x, shape = s, scale = 1))
+  }
+
   pgamma(x, shape = s, scale = 1, lower.tail = FALSE)
 }
 

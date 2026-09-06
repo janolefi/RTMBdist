@@ -5,7 +5,10 @@
 #'
 #' @details
 #' This implementation of \code{dexgauss} and \code{pexgauss} allows for automatic differentiation with \code{RTMB}.
-#' \code{qexgauss} and \code{rexgauss} are reparameterised imports from \code{gamlss.dist::\link[gamlss.dist]{exGAUS}}.
+#' \code{qexgauss} inverts \code{pexgauss} numerically, as the exponentially modified
+#' Gaussian has no closed-form quantile function.
+#' The parameterisation follows the \code{exGAUS} family of the \code{gamlss.dist}
+#' package, with the exponential rate \eqn{\lambda = 1/\nu}.
 #'
 #' If \eqn{X \sim N(\mu, \sigma^2)} and \eqn{Y \sim \text{Exp}(\lambda)}, then
 #' \eqn{Z = X + Y} follows the exponentially modified Gaussian distribution with parameters \eqn{\mu}, \eqn{\sigma}, and \eqn{\lambda}.
@@ -103,17 +106,52 @@ pexgauss <- function(q, mu = 0, sigma = 1, lambda = 1, lower.tail = TRUE, log.p 
 }
 #' @rdname exgauss
 #' @export
-#' @importFrom gamlss.dist qexGAUS
 qexgauss <- function(p, mu = 0, sigma = 1, lambda = 1, lower.tail = TRUE, log.p = FALSE) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/exGAUS.R
+  # there is no closed form, so the cdf is bracketed outwards from mu in steps
+  # of sigma and then inverted with uniroot
+
   if (!ad_context()) {
     # ensure sigma > 0, lambda > 0
     if (any(sigma <= 0)) stop("sigma must be > 0")
     if (any(lambda <= 0)) stop("lambda must be > 0")
   }
 
-  nu <- 1 / lambda
-  gamlss.dist::qexGAUS(p, mu = mu, sigma = sigma, nu = nu,
-                       lower.tail = lower.tail, log.p = log.p)
+  if (log.p) p <- exp(p)
+  if (!lower.tail) p <- 1 - p
+
+  if (!ad_context()) {
+    if (any(p < 0 | p > 1)) stop("p must be in [0, 1]")
+  }
+
+  lp <- max(lengths(list(p, mu, sigma, lambda)))
+  p <- rep_len(p, lp); mu <- rep_len(mu, lp)
+  sigma <- rep_len(sigma, lp); lambda <- rep_len(lambda, lp)
+
+  q <- numeric(lp)
+  for (i in seq_len(lp)) {
+
+    if (p[i] <= 0) { q[i] <- -Inf; next }
+    if (p[i] >= 1) { q[i] <-  Inf; next }
+
+    h <- function(z) pexgauss(z, mu = mu[i], sigma = sigma[i], lambda = lambda[i])
+
+    # step outwards from mu in multiples of sigma until the root is bracketed;
+    # s = +1 searches upwards, s = -1 downwards
+    s <- if (h(mu[i]) < p[i]) 1 else -1
+    k <- 1
+    repeat {
+      edge <- mu[i] + s * k * sigma[i]
+      if (s * (h(edge) - p[i]) >= 0 || k >= 1e6) break
+      k <- k + 1
+    }
+
+    q[i] <- stats::uniroot(function(z) h(z) - p[i], sort(c(mu[i], edge)),
+                           tol = .Machine$double.eps^0.75)$root
+  }
+
+  return(q)
 }
 #' @rdname exgauss
 #' @export

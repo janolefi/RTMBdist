@@ -4,7 +4,7 @@
 #' the skew t distribution (type 2).
 #'
 #' @details
-#' This corresponds to the skew t type 2 distribution in GAMLSS (\code{\link[gamlss.dist]{ST2}}), see pp. 411-412 of Rigby et al. (2019) and the version implemented in the \code{sn} package.
+#' This corresponds to the skew t type 2 distribution in GAMLSS (\code{ST2}), see pp. 411-412 of Rigby et al. (2019) and the version implemented in the \code{sn} package.
 #' This implementation of \code{dskewt} allows for automatic differentiation with \code{RTMB} while the other functions are imported from the \code{sn} package.
 #' See \code{sn::\link[sn]{dst}} for more details.
 #'

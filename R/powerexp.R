@@ -4,11 +4,11 @@
 #' the Power Exponential distribution (two versions).
 #'
 #' @details
-#' This implementation of the densities and distribution functions allow for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
+#' The densities and distribution functions allow for automatic differentiation with \code{RTMB}.
 #'
 #' For \code{powerexp}, \code{mu} is the mean and \code{sigma} is the standard deviation while this does not hold for \code{powerexp2}.
 #'
-#' See \code{gamlss.dist::\link[gamlss.dist]{PE}} for more details.
+#' The parameterisation follows the \code{PE} and \code{PE2} families of the \code{gamlss.dist} package.
 #'
 #' For \code{powerexp} (PE), \eqn{\sigma} is the standard deviation; the density is
 #' \deqn{f(x;\,\mu,\sigma,\nu) = \frac{\nu}{2c\,\sigma\,\Gamma(1/\nu)} \exp\!\left(-\tfrac{1}{2}\left|\frac{x-\mu}{c\sigma}\right|^\nu\right),}
@@ -115,33 +115,53 @@ ppowerexp <- function(q, mu = 0, sigma = 1, nu = 2, lower.tail = TRUE, log.p = F
 #' @rdname powerexp
 #' @export
 #' @usage qpowerexp(p, mu = 0, sigma = 1, nu = 2, lower.tail = TRUE, log.p = FALSE)
-#' @importFrom gamlss.dist qPE
 qpowerexp <- function(p, mu = 0, sigma = 1, nu = 2, lower.tail = TRUE, log.p = FALSE) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/PE.R
 
   if (!ad_context()) {
     if (any(sigma <= 0)) stop("sigma must be > 0")
     if (any(nu <= 0)) stop("nu must be > 0")
   }
 
-  gamlss.dist::qPE(p, mu = mu, sigma = sigma, nu = nu,
-                   lower.tail = lower.tail, log.p = log.p)
+  if (log.p) p <- exp(p)
+  if (!lower.tail) p <- 1 - p
+
+  if (!ad_context()) {
+    if (any(p < 0 | p > 1)) stop("p must be in [0, 1]")
+  }
+
+  log.c <- 0.5 * (-(2/nu) * log(2) + lgamma(1/nu) - lgamma(3/nu))
+  c <- exp(log.c)
+  suppressWarnings(s <- stats::qgamma((2 * p - 1) * sign(p - 0.5), shape = 1/nu, scale = 1))
+  z <- sign(p - 0.5) * ((2 * s)^(1/nu)) * c
+
+  return(mu + sigma * z)
 }
 
 #' @rdname powerexp
 #' @export
-#' @importFrom gamlss.dist rPE
+#' @importFrom stats runif
 rpowerexp <- function(n, mu = 0, sigma = 1, nu = 2) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/PE.R
 
   if (any(sigma <= 0)) stop("sigma must be > 0")
   if (any(nu <= 0)) stop("nu must be > 0")
 
-  gamlss.dist::rPE(n, mu = mu, sigma = sigma, nu = nu)
+  n <- ceiling(n)
+  p <- runif(n)
+
+  qpowerexp(p, mu = mu, sigma = sigma, nu = nu)
 }
 
 #' @rdname powerexp
 #' @export
 #' @import RTMB
 dpowerexp2 <- function(x, mu = 0, sigma = 1, nu = 2, log = FALSE) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/PE2.R
+  # and modified to allow for automatic differentiation
 
   if (!ad_context()) {
     args <- as.list(environment())
@@ -195,25 +215,40 @@ ppowerexp2 <- function(q, mu = 0, sigma = 1, nu = 2, lower.tail = TRUE, log.p = 
 #' @rdname powerexp
 #' @export
 #' @usage qpowerexp2(p, mu = 0, sigma = 1, nu = 2, lower.tail = TRUE, log.p = FALSE)
-#' @importFrom gamlss.dist qPE2
 qpowerexp2 <- function(p, mu = 0, sigma = 1, nu = 2, lower.tail = TRUE, log.p = FALSE) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/PE2.R
 
   if (!ad_context()) {
     if (any(sigma <= 0)) stop("sigma must be > 0")
     if (any(nu <= 0)) stop("nu must be > 0")
   }
 
-  gamlss.dist::qPE2(p, mu = mu, sigma = sigma, nu = nu,
-                    lower.tail = lower.tail, log.p = log.p)
+  if (log.p) p <- exp(p)
+  if (!lower.tail) p <- 1 - p
+
+  if (!ad_context()) {
+    if (any(p < 0 | p > 1)) stop("p must be in [0, 1]")
+  }
+
+  suppressWarnings(s <- stats::qgamma((2 * p - 1) * sign(p - 0.5), shape = 1/nu, scale = 1))
+  z <- sign(p - 0.5) * (s^(1/nu))
+
+  return(mu + sigma * z)
 }
 
 #' @rdname powerexp
 #' @export
-#' @importFrom gamlss.dist rPE2
+#' @importFrom stats runif
 rpowerexp2 <- function(n, mu = 0, sigma = 1, nu = 2) {
+
+  # taken from https://github.com/gamlss-dev/gamlss.dist/blob/main/R/PE2.R
 
   if (any(sigma <= 0)) stop("sigma must be > 0")
   if (any(nu <= 0)) stop("nu must be > 0")
 
-  gamlss.dist::rPE2(n, mu = mu, sigma = sigma, nu = nu)
+  n <- ceiling(n)
+  p <- runif(n)
+
+  qpowerexp2(p, mu = mu, sigma = sigma, nu = nu)
 }

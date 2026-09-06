@@ -41,8 +41,8 @@ Density, distribution function, quantile function, and random generation for
 the Box–Cox Cole and Green distribution.
 }
 \details{
-This implementation of \code{dbccg} and \code{pbccg} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
-See \code{gamlss.dist::\link[gamlss.dist]{BCCG}} for more details.
+\code{dbccg} and \code{pbccg} allow for automatic differentiation with \code{RTMB}.
+The parameterisation follows the \code{BCCG} family of the \code{gamlss.dist} package.
 
 The density is
 \deqn{f(x; \mu, \sigma, \nu) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma \sqrt{2\pi}} \exp\!\left(-\tfrac{z^2}{2}\right) \Bigl[\Phi\!\left(\tfrac{1}{\sigma|\nu|}\right)\Bigr]^{-1}, \quad x > 0,}

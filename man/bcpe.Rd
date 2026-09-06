@@ -43,8 +43,8 @@ Density, distribution function, quantile function, and random generation for
 the Box-Cox Power Exponential distribution.
 }
 \details{
-This implementation of \code{dbcpe} and \code{pbcpe} allows for automatic differentiation with \code{RTMB} while the other functions are imported from \code{gamlss.dist} package.
-See \code{gamlss.dist::\link[gamlss.dist]{BCPE}} for more details.
+\code{dbcpe} and \code{pbcpe} allow for automatic differentiation with \code{RTMB}.
+The parameterisation follows the \code{BCPE} family of the \code{gamlss.dist} package.
 
 The density is
 \deqn{f(x; \mu, \sigma, \nu, \tau) = \frac{x^{\nu-1}}{\mu^{\nu} \sigma} \frac{f_T(z;\tau)}{F_T\!\left(1/(\sigma|\nu|);\tau\right)}, \quad x > 0,}
