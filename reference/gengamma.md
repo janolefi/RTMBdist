@@ -72,10 +72,19 @@ log-normal with log-mean \\\log\mu\\ and log-standard-deviation
 
 ## References
 
+Lopatatzidis, A. and Green, P. J. (2000) Nonparametric quantile
+regression using the gamma distribution. Unpublished.
+
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.
 (2019) Distributions for modeling location, scale, and shape: Using
 GAMLSS in R, Chapman and Hall/CRC, doi:10.1201/9780429298547. An older
 version can be found in https://www.gamlss.com/.
+
+## See also
+
+[gamma2](https://janolefi.github.io/RTMBdist/reference/gamma2.md),
+[bccg](https://janolefi.github.io/RTMBdist/reference/bccg.md),
+[invgauss](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
 
 ## Examples
 

@@ -76,10 +76,20 @@ and \\F_T(\cdot;\tau)\\ are the PDF and CDF of the power exponential
 
 ## References
 
+Rigby, R. A. and Stasinopoulos, D. M. (2004) Smooth centile curves for
+skew and kurtotic data modelled using the Box-Cox Power Exponential
+distribution. Statistics in Medicine, 23, 3053-3076.
+
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.
 (2019) Distributions for modeling location, scale, and shape: Using
 GAMLSS in R, Chapman and Hall/CRC, doi:10.1201/9780429298547. An older
 version can be found in https://www.gamlss.com/.
+
+## See also
+
+[bccg](https://janolefi.github.io/RTMBdist/reference/bccg.md),
+[bct](https://janolefi.github.io/RTMBdist/reference/bct.md),
+[powerexp](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
 
 ## Examples
 

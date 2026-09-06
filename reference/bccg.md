@@ -71,10 +71,20 @@ standard normal CDF.
 
 ## References
 
+Cole, T. J. and Green, P. J. (1992) Smoothing reference centile curves:
+the LMS method and penalized likelihood. Statistics in Medicine, 11,
+1305-1319.
+
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.
 (2019) Distributions for modeling location, scale, and shape: Using
 GAMLSS in R, Chapman and Hall/CRC, doi:10.1201/9780429298547. An older
 version can be found in https://www.gamlss.com/.
+
+## See also
+
+[bct](https://janolefi.github.io/RTMBdist/reference/bct.md),
+[bcpe](https://janolefi.github.io/RTMBdist/reference/bcpe.md),
+[gengamma](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
 
 ## Examples
 

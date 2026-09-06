@@ -87,10 +87,19 @@ For `powerexp2` (PE2), \\\sigma\\ is a scale parameter; the density is
 
 ## References
 
+Nelson, D. B. (1991) Conditional heteroskedasticity in asset returns: a
+new approach. Econometrica, 59, 347-370.
+
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.
 (2019) Distributions for modeling location, scale, and shape: Using
 GAMLSS in R, Chapman and Hall/CRC, doi:10.1201/9780429298547. An older
 version can be found in https://www.gamlss.com/.
+
+## See also
+
+[bcpe](https://janolefi.github.io/RTMBdist/reference/bcpe.md),
+[jsu](https://janolefi.github.io/RTMBdist/reference/jsu.md),
+[laplace](https://janolefi.github.io/RTMBdist/reference/laplace.md)
 
 ## Examples
 

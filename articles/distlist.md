@@ -58,6 +58,14 @@ distributions listed
 - [`invgauss(mean, shape)`](https://janolefi.github.io/RTMBdist/reference/invgauss.md):
   Inverse Gaussian distribution parameterised by mean and shape
 
+- [`jsu(mu, sigma, nu, tau)`](https://janolefi.github.io/RTMBdist/reference/jsu.md):
+  Johnson SU distribution parameterised by location `mu`, scale `sigma`,
+  skewness `nu`, and kurtosis `tau`
+
+- [`jsu2(mu, sigma, nu, tau)`](https://janolefi.github.io/RTMBdist/reference/jsu.md):
+  Johnson SU distribution reparameterised by mean `mu`, standard
+  deviation `sigma`, skewness `nu`, and kurtosis `tau`
+
 - [`kumar(a, b)`](https://janolefi.github.io/RTMBdist/reference/kumar.md):
   Kumaraswamy distribution parameterised by shape parameters `a` and `b`
 

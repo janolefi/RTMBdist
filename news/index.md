@@ -2,6 +2,31 @@
 
 ## RTMBdist 1.1.0
 
+- Added the Johnson SU distribution in both the original
+  parameterisation
+  ([`djsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md),
+  [`pjsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md),
+  [`qjsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md),
+  [`rjsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)) and
+  the moment parameterisation
+  ([`djsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md),
+  [`pjsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md),
+  [`qjsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md),
+  [`rjsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)), a
+  four-parameter distribution on the real line covering a wide range of
+  skewness and kurtosis. In
+  [`djsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md) the
+  location and scale arguments are exactly the mean and standard
+  deviation. The density and distribution function are both
+  differentiable, so simulation and one-step-ahead residuals are
+  supported. Unlike `gamlss.dist`, the reparameterisation stays finite
+  for very large `tau`, where the distribution approaches the normal.
+
+- Added references to the primary source for each distribution derived
+  from `gamlss.dist`, and cross-links between related families.
+  [`pgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
+  and friends previously had no references at all.
+
 - Removed the dependency on `gamlss.dist`, which is scheduled for
   archival on CRAN. The quantile and random generation functions of the
   Box-Cox Cole-Green

@@ -64,6 +64,11 @@ Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.
 GAMLSS in R, Chapman and Hall/CRC, doi:10.1201/9780429298547. An older
 version can be found in https://www.gamlss.com/.
 
+## See also
+
+[llogis](https://janolefi.github.io/RTMBdist/reference/llogis.md),
+[gengamma](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
+
 ## Examples
 
 ``` r

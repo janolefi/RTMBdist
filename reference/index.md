@@ -128,6 +128,15 @@
   [`qinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
   [`rinvgauss()`](https://janolefi.github.io/RTMBdist/reference/invgauss.md)
   : Inverse Gaussian distribution
+- [`djsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)
+  [`pjsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)
+  [`qjsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)
+  [`rjsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)
+  [`djsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)
+  [`pjsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)
+  [`qjsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md)
+  [`rjsu2()`](https://janolefi.github.io/RTMBdist/reference/jsu.md) :
+  Johnson SU distribution (JSU)
 - [`dkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md)
   [`pkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md)
   [`qkumar()`](https://janolefi.github.io/RTMBdist/reference/kumar.md)

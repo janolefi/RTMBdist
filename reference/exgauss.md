@@ -77,10 +77,19 @@ normal CDF.
 
 ## References
 
+Cousineau, D., Brown, S. and Heathcote, A. (2004) Fitting distributions
+using maximum likelihood: Methods and packages. Behavior Research
+Methods, Instruments, & Computers, 36, 742-756.
+
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.
 (2019) Distributions for modeling location, scale, and shape: Using
 GAMLSS in R, Chapman and Hall/CRC, doi:10.1201/9780429298547. An older
 version can be found in https://www.gamlss.com/.
+
+## See also
+
+[jsu](https://janolefi.github.io/RTMBdist/reference/jsu.md),
+[skewnorm](https://janolefi.github.io/RTMBdist/reference/skewnorm.md)
 
 ## Examples
 

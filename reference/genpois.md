@@ -72,6 +72,19 @@ however \\\phi\\ must be strictly positive here.
 x)^{x-1}\\e^{-\lambda(1+\phi x)/(1+\phi\lambda)}}{(1+\phi\lambda)^x\\
 x!}, \quad x = 0, 1, 2, \ldots\$\$
 
+## References
+
+Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F.
+(2019) Distributions for modeling location, scale, and shape: Using
+GAMLSS in R, Chapman and Hall/CRC, doi:10.1201/9780429298547. An older
+version can be found in https://www.gamlss.com/.
+
+## See also
+
+[nbinom2](https://janolefi.github.io/RTMBdist/reference/nbinom2.md),
+[zipois](https://janolefi.github.io/RTMBdist/reference/zipois.md),
+[bell](https://janolefi.github.io/RTMBdist/reference/bell.md)
+
 ## Examples
 
 ``` r
