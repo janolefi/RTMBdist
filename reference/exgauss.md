@@ -60,9 +60,10 @@ generates random deviates.
 ## Details
 
 This implementation of `dexgauss` and `pexgauss` allows for automatic
-differentiation with `RTMB`. `qexgauss` and `rexgauss` are
-reparameterised imports from
-`gamlss.dist::`[`exGAUS`](https://rdrr.io/pkg/gamlss.dist/man/exGAUS.html).
+differentiation with `RTMB`. `qexgauss` inverts `pexgauss` numerically,
+as the exponentially modified Gaussian has no closed-form quantile
+function. The parameterisation follows the `exGAUS` family of the
+`gamlss.dist` package, with the exponential rate \\\lambda = 1/\nu\\.
 
 If \\X \sim N(\mu, \sigma^2)\\ and \\Y \sim \text{Exp}(\lambda)\\, then
 \\Z = X + Y\\ follows the exponentially modified Gaussian distribution

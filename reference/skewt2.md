@@ -88,14 +88,13 @@ deviates.
 
 ## Details
 
-This corresponds to the skew t type 2 distribution in GAMLSS
-([`ST2`](https://rdrr.io/pkg/gamlss.dist/man/ST1.html)), see pp. 411-412
-of Rigby et al. (2019) and the version implemented in the `sn` package.
-However, it is reparameterised in terms of a standard deviation
-parameter `sd` rather than just a scale parameter `sigma`. Details of
-this reparameterisation are given below. This implementation of `dskewt`
-allows for automatic differentiation with `RTMB` while the other
-functions are imported from the `sn` package. See
+This corresponds to the skew t type 2 distribution in GAMLSS (`ST2`),
+see pp. 411-412 of Rigby et al. (2019) and the version implemented in
+the `sn` package. However, it is reparameterised in terms of a standard
+deviation parameter `sd` rather than just a scale parameter `sigma`.
+Details of this reparameterisation are given below. This implementation
+of `dskewt` allows for automatic differentiation with `RTMB` while the
+other functions are imported from the `sn` package. See
 `sn::`[`dst`](https://rdrr.io/pkg/sn/man/dst.html) for more details.
 
 **Caution:** In a numerial optimisation, the `skew` parameter should

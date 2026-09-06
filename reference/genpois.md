@@ -61,8 +61,8 @@ distribution function, `qgenpois` gives the quantile function, and
 ## Details
 
 This implementation of `dgenpois` allows for automatic differentiation
-with `RTMB`. The other functions are imported from
-[`gamlss.dist::GPO`](https://rdrr.io/pkg/gamlss.dist/man/GPO.html).
+with `RTMB`. The parameterisation follows the `GPO` family of the
+`gamlss.dist` package.
 
 The distribution has mean \\\lambda\\ and variance \\\lambda(1 + \phi
 \lambda)^2\\. For \\\phi = 0\\ it reduces to the Poisson distribution,

@@ -67,15 +67,14 @@ generates random deviates.
 
 ## Details
 
-This implementation of the densities and distribution functions allow
-for automatic differentiation with `RTMB` while the other functions are
-imported from `gamlss.dist` package.
+The densities and distribution functions allow for automatic
+differentiation with `RTMB`.
 
 For `powerexp`, `mu` is the mean and `sigma` is the standard deviation
 while this does not hold for `powerexp2`.
 
-See `gamlss.dist::`[`PE`](https://rdrr.io/pkg/gamlss.dist/man/PE.html)
-for more details.
+The parameterisation follows the `PE` and `PE2` families of the
+`gamlss.dist` package.
 
 For `powerexp` (PE), \\\sigma\\ is the standard deviation; the density
 is \$\$f(x;\\\mu,\sigma,\nu) = \frac{\nu}{2c\\\sigma\\\Gamma(1/\nu)}

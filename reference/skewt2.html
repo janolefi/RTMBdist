@@ -11,7 +11,7 @@ correspond to the true mean and standard deviation."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">RTMBdist</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,7 +124,7 @@ correspond to the <em>true</em> mean and standard deviation.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This corresponds to the skew t type 2 distribution in GAMLSS (<code><a href="https://rdrr.io/pkg/gamlss.dist/man/ST1.html" class="external-link">ST2</a></code>), see pp. 411-412 of Rigby et al. (2019) and the version implemented in the <code>sn</code> package.
+    <p>This corresponds to the skew t type 2 distribution in GAMLSS (<code>ST2</code>), see pp. 411-412 of Rigby et al. (2019) and the version implemented in the <code>sn</code> package.
 However, it is reparameterised in terms of a standard deviation parameter <code>sd</code> rather than just a scale parameter <code>sigma</code>. Details of this reparameterisation are given below.
 This implementation of <code>dskewt</code> allows for automatic differentiation with <code>RTMB</code> while the other functions are imported from the <code>sn</code> package.
 See <code>sn::<a href="https://rdrr.io/pkg/sn/man/dst.html" class="external-link">dst</a></code> for more details.</p>

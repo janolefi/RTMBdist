@@ -63,11 +63,8 @@ deviates.
 
 ## Details
 
-This implementation of `dbcpe` and `pbcpe` allows for automatic
-differentiation with `RTMB` while the other functions are imported from
-`gamlss.dist` package. See
-`gamlss.dist::`[`BCPE`](https://rdrr.io/pkg/gamlss.dist/man/BCPE.html)
-for more details.
+`dbcpe` and `pbcpe` allow for automatic differentiation with `RTMB`. The
+parameterisation follows the `BCPE` family of the `gamlss.dist` package.
 
 The density is \$\$f(x; \mu, \sigma, \nu, \tau) =
 \frac{x^{\nu-1}}{\mu^{\nu} \sigma}

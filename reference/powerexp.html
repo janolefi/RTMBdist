@@ -9,7 +9,7 @@ the Power Exponential distribution (two versions)."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">RTMBdist</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,9 +106,9 @@ the Power Exponential distribution (two versions).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This implementation of the densities and distribution functions allow for automatic differentiation with <code>RTMB</code> while the other functions are imported from <code>gamlss.dist</code> package.</p>
+    <p>The densities and distribution functions allow for automatic differentiation with <code>RTMB</code>.</p>
 <p>For <code>powerexp</code>, <code>mu</code> is the mean and <code>sigma</code> is the standard deviation while this does not hold for <code>powerexp2</code>.</p>
-<p>See <code>gamlss.dist::<a href="https://rdrr.io/pkg/gamlss.dist/man/PE.html" class="external-link">PE</a></code> for more details.</p>
+<p>The parameterisation follows the <code>PE</code> and <code>PE2</code> families of the <code>gamlss.dist</code> package.</p>
 <p>For <code>powerexp</code> (PE), \(\sigma\) is the standard deviation; the density is
 $$f(x;\,\mu,\sigma,\nu) = \frac{\nu}{2c\,\sigma\,\Gamma(1/\nu)} \exp\!\left(-\tfrac{1}{2}\left|\frac{x-\mu}{c\sigma}\right|^\nu\right),$$
 where \(c = [2^{-2/\nu}\Gamma(1/\nu)/\Gamma(3/\nu)]^{1/2}\).</p>

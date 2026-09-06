@@ -51,11 +51,9 @@ deviates.
 
 ## Details
 
-This implementation of `dpareto` and `ppareto` allows for automatic
-differentiation with `RTMB` while the other functions are imported from
-`gamlss.dist` package. See
-`gamlss.dist::`[`PARETO`](https://rdrr.io/pkg/gamlss.dist/man/PARETO2.html)
-for more details.
+`dpareto` and `ppareto` allow for automatic differentiation with `RTMB`.
+The parameterisation follows the `PARETO` family of the `gamlss.dist`
+package.
 
 \$\$f(x;\\\mu) = \frac{\mu}{x^{\mu+1}}, \quad x \> 1.\$\$
 

@@ -59,11 +59,8 @@ deviates.
 
 ## Details
 
-This implementation of `dbccg` and `pbccg` allows for automatic
-differentiation with `RTMB` while the other functions are imported from
-`gamlss.dist` package. See
-`gamlss.dist::`[`BCCG`](https://rdrr.io/pkg/gamlss.dist/man/BCCG.html)
-for more details.
+`dbccg` and `pbccg` allow for automatic differentiation with `RTMB`. The
+parameterisation follows the `BCCG` family of the `gamlss.dist` package.
 
 The density is \$\$f(x; \mu, \sigma, \nu) = \frac{x^{\nu-1}}{\mu^{\nu}
 \sigma \sqrt{2\pi}} \exp\\\left(-\tfrac{z^2}{2}\right)

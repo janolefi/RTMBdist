@@ -62,11 +62,8 @@ gives the quantile function, and `rbct` generates random deviates.
 
 ## Details
 
-This implementation of `dbct` and `pbct` allows for automatic
-differentiation with `RTMB` while the other functions are imported from
-`gamlss.dist` package. See
-`gamlss.dist::`[`BCT`](https://rdrr.io/pkg/gamlss.dist/man/BCt.html) for
-more details.
+`dbct` and `pbct` allow for automatic differentiation with `RTMB`. The
+parameterisation follows the `BCT` family of the `gamlss.dist` package.
 
 The density is \$\$f(x; \mu, \sigma, \nu, \tau) =
 \frac{x^{\nu-1}}{\mu^{\nu} \sigma}

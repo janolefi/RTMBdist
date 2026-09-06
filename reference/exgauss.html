@@ -9,7 +9,7 @@ the exponentially modified Gaussian distribution."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">RTMBdist</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,7 +99,10 @@ the exponentially modified Gaussian distribution.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dexgauss</code> and <code>pexgauss</code> allows for automatic differentiation with <code>RTMB</code>.
-<code>qexgauss</code> and <code>rexgauss</code> are reparameterised imports from <code>gamlss.dist::<a href="https://rdrr.io/pkg/gamlss.dist/man/exGAUS.html" class="external-link">exGAUS</a></code>.</p>
+<code>qexgauss</code> inverts <code>pexgauss</code> numerically, as the exponentially modified
+Gaussian has no closed-form quantile function.
+The parameterisation follows the <code>exGAUS</code> family of the <code>gamlss.dist</code>
+package, with the exponential rate \(\lambda = 1/\nu\).</p>
 <p>If \(X \sim N(\mu, \sigma^2)\) and \(Y \sim \text{Exp}(\lambda)\), then
 \(Z = X + Y\) follows the exponentially modified Gaussian distribution with parameters \(\mu\), \(\sigma\), and \(\lambda\).</p>
 <p>The density is

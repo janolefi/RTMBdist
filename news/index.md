@@ -1,8 +1,80 @@
 # Changelog
 
-## RTMBdist (development version)
+## RTMBdist 1.1.0
 
-- Ongoing development version.
+- Removed the dependency on `gamlss.dist`, which is scheduled for
+  archival on CRAN. The quantile and random generation functions of the
+  Box-Cox Cole-Green
+  ([`qbccg()`](https://janolefi.github.io/RTMBdist/reference/bccg.md),
+  [`rbccg()`](https://janolefi.github.io/RTMBdist/reference/bccg.md)),
+  Box-Cox *t*
+  ([`qbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md),
+  [`rbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md)),
+  Box-Cox power exponential
+  ([`qbcpe()`](https://janolefi.github.io/RTMBdist/reference/bcpe.md),
+  [`rbcpe()`](https://janolefi.github.io/RTMBdist/reference/bcpe.md)),
+  power exponential
+  ([`qpowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md),
+  [`rpowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md),
+  [`qpowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md),
+  [`rpowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)),
+  Pareto
+  ([`qpareto()`](https://janolefi.github.io/RTMBdist/reference/pareto.md),
+  [`rpareto()`](https://janolefi.github.io/RTMBdist/reference/pareto.md)),
+  generalised Poisson
+  ([`pgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md),
+  [`qgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md),
+  [`rgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md))
+  and exponentially modified Gaussian
+  ([`qexgauss()`](https://janolefi.github.io/RTMBdist/reference/exgauss.md))
+  distributions are now implemented natively. Results are unchanged
+  except for the fixes below.
+
+- Fixed argument recycling in
+  [`qbccg()`](https://janolefi.github.io/RTMBdist/reference/bccg.md),
+  [`qbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md),
+  [`qbcpe()`](https://janolefi.github.io/RTMBdist/reference/bcpe.md),
+  [`qgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
+  and
+  [`pgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md).
+  Evaluating a single quantile against vectorised parameters previously
+  collapsed the result to length one, and a parameter vector shorter
+  than `x` silently truncated it. These functions now return one value
+  per recycled argument tuple.
+
+- Fixed [`qbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md)
+  and [`rbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md),
+  which failed with an error when `mu`, `sigma` or `tau` was supplied as
+  a vector.
+
+- [`qpareto()`](https://janolefi.github.io/RTMBdist/reference/pareto.md)
+  now honours `lower.tail`, which was previously accepted but ignored.
+
+- `log.p = TRUE` now works in
+  [`qpareto()`](https://janolefi.github.io/RTMBdist/reference/pareto.md),
+  [`qbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md) and
+  [`qgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md).
+  These previously validated `p` before transforming it back from the
+  log scale, so the argument could not be used.
+
+- [`qexgauss()`](https://janolefi.github.io/RTMBdist/reference/exgauss.md)
+  is substantially more accurate. It inverts
+  [`pexgauss()`](https://janolefi.github.io/RTMBdist/reference/exgauss.md)
+  with a tighter convergence tolerance, reducing the round-trip error
+  `|p(q(p)) - p|` from roughly 1e-6 to roughly 1e-14.
+
+- [`pgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
+  no longer falls back to the Poisson distribution for `phi < 1e-4` and
+  evaluates the generalised Poisson distribution function across the
+  whole parameter range.
+
+- [`pbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md),
+  [`pinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md)
+  and
+  [`pinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md)
+  are now differentiable, so one-step-ahead residuals via
+  `method = "cdf"` are available for the beta prime, inverse chi-squared
+  and inverse gamma distributions.
 
 - Added the Bell distribution
   ([`dbell()`](https://janolefi.github.io/RTMBdist/reference/bell.md),
