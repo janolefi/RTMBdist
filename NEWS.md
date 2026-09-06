@@ -1,5 +1,9 @@
 # RTMBdist 1.1.0
 
+- Added the Johnson SU distribution in both the original parameterisation (`djsu()`, `pjsu()`, `qjsu()`, `rjsu()`) and the moment parameterisation (`djsu2()`, `pjsu2()`, `qjsu2()`, `rjsu2()`), a four-parameter distribution on the real line covering a wide range of skewness and kurtosis. In `djsu2()` the location and scale arguments are exactly the mean and standard deviation. The density and distribution function are both differentiable, so simulation and one-step-ahead residuals are supported. Unlike `gamlss.dist`, the reparameterisation stays finite for very large `tau`, where the distribution approaches the normal.
+
+- Added references to the primary source for each distribution derived from `gamlss.dist`, and cross-links between related families. `pgenpois()` and friends previously had no references at all.
+
 - Removed the dependency on `gamlss.dist`, which is scheduled for archival on CRAN. The quantile and random generation functions of the Box-Cox Cole-Green (`qbccg()`, `rbccg()`), Box-Cox *t* (`qbct()`, `rbct()`), Box-Cox power exponential (`qbcpe()`, `rbcpe()`), power exponential (`qpowerexp()`, `rpowerexp()`, `qpowerexp2()`, `rpowerexp2()`), Pareto (`qpareto()`, `rpareto()`), generalised Poisson (`pgenpois()`, `qgenpois()`, `rgenpois()`) and exponentially modified Gaussian (`qexgauss()`) distributions are now implemented natively. Results are unchanged except for the fixes below.
 
 - Fixed argument recycling in `qbccg()`, `qbct()`, `qbcpe()`, `qgenpois()` and `pgenpois()`. Evaluating a single quantile against vectorised parameters previously collapsed the result to length one, and a parameter vector shorter than `x` silently truncated it. These functions now return one value per recycled argument tuple.

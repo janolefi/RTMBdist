@@ -46,6 +46,10 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 * [`invgauss(mean, shape)`](../reference/invgauss.html): Inverse Gaussian distribution parameterised by mean and shape
 
+* [`jsu(mu, sigma, nu, tau)`](../reference/jsu.html): Johnson SU distribution parameterised by location `mu`, scale `sigma`, skewness `nu`, and kurtosis `tau`
+
+* [`jsu2(mu, sigma, nu, tau)`](../reference/jsu.html): Johnson SU distribution reparameterised by mean `mu`, standard deviation `sigma`, skewness `nu`, and kurtosis `tau`
+
 * [`kumar(a, b)`](../reference/kumar.html): Kumaraswamy distribution parameterised by shape parameters `a` and `b`
 
 * [`laplace(mu, b)`](../reference/laplace.html): Laplace distribution parameterised by location `mu` and scale `b`
