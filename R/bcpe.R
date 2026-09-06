@@ -41,8 +41,13 @@ q.T <- function(p, tau){
 #' where \eqn{z = [(x/\mu)^\nu - 1]/(\nu\sigma)} for \eqn{\nu \neq 0} and \eqn{z = \log(x/\mu)/\sigma} for \eqn{\nu = 0}, and \eqn{f_T(\cdot;\tau)} and \eqn{F_T(\cdot;\tau)} are the PDF and CDF of the power exponential (PE) distribution with shape \eqn{\tau}.
 #'
 #' @references
+#' Rigby, R. A. and Stasinopoulos, D. M. (2004) Smooth centile curves for skew and kurtotic data modelled using the Box-Cox Power Exponential distribution.
+#' Statistics in Medicine, 23, 3053-3076.
+#'
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+#'
+#' @seealso [bccg], [bct], [powerexp]
 #'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities

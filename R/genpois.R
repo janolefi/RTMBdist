@@ -12,6 +12,12 @@
 #'
 #' \deqn{P(X = x;\,\lambda,\phi) = \frac{\lambda\,(1+\phi x)^{x-1}\,e^{-\lambda(1+\phi x)/(1+\phi\lambda)}}{(1+\phi\lambda)^x\, x!}, \quad x = 0, 1, 2, \ldots}
 #'
+#' @references
+#' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
+#' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+#'
+#' @seealso [nbinom2], [zipois], [bell]
+#'
 #' @param x,q integer vector of counts
 #' @param p vector of probabilities
 #' @param n number of random values to return.

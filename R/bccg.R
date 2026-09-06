@@ -12,8 +12,13 @@
 #' where \eqn{z = [(x/\mu)^\nu - 1]/(\nu\sigma)} for \eqn{\nu \neq 0} and \eqn{z = \log(x/\mu)/\sigma} for \eqn{\nu = 0}, and \eqn{\Phi} is the standard normal CDF.
 #'
 #' @references
+#' Cole, T. J. and Green, P. J. (1992) Smoothing reference centile curves: the LMS method and penalized likelihood.
+#' Statistics in Medicine, 11, 1305-1319.
+#'
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+#'
+#' @seealso [bct], [bcpe], [gengamma]
 #'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities

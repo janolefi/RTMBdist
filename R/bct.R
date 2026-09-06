@@ -12,8 +12,13 @@
 #' where \eqn{z = [(x/\mu)^\nu - 1]/(\nu\sigma)} for \eqn{\nu \neq 0} and \eqn{z = \log(x/\mu)/\sigma} for \eqn{\nu = 0}, and \eqn{f_t(\cdot;\tau)} and \eqn{F_t(\cdot;\tau)} are the PDF and CDF of Student's \eqn{t} distribution with \eqn{\tau} degrees of freedom.
 #'
 #' @references
+#' Rigby, R. A. and Stasinopoulos, D. M. (2006) Using the Box-Cox t distribution in GAMLSS to model skewness and kurtosis.
+#' Statistical Modelling, 6(3), 209. doi:10.1191/1471082X06st122oa
+#'
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+#'
+#' @seealso [bccg], [bcpe], [skewt]
 #'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities

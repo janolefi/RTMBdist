@@ -57,3 +57,10 @@ d <- dgenpois(x, 2, 3)
 p <- pgenpois(x, 2, 3)
 q <- qgenpois(p, 2, 3)
 }
+\references{
+Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
+doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+}
+\seealso{
+\link{nbinom2}, \link{zipois}, \link{bell}
+}

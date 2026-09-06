@@ -57,6 +57,12 @@ p <- pbct(x, mu = 10, sigma = 0.2, nu = 0.5, tau = 4)
 q <- qbct(p, mu = 10, sigma = 0.2, nu = 0.5, tau = 4)
 }
 \references{
+Rigby, R. A. and Stasinopoulos, D. M. (2006) Using the Box-Cox t distribution in GAMLSS to model skewness and kurtosis.
+Statistical Modelling, 6(3), 209. doi:10.1191/1471082X06st122oa
+
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+}
+\seealso{
+\link{bccg}, \link{bcpe}, \link{skewt}
 }

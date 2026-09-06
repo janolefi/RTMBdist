@@ -18,8 +18,13 @@
 #' \deqn{f(x;\,\mu,\sigma,\nu) = \frac{\nu}{2\sigma\,\Gamma(1/\nu)} \exp\!\left(-\left|\frac{x-\mu}{\sigma}\right|^\nu\right).}
 #'
 #' @references
+#' Nelson, D. B. (1991) Conditional heteroskedasticity in asset returns: a new approach.
+#' Econometrica, 59, 347-370.
+#'
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+#'
+#' @seealso [bcpe], [jsu], [laplace]
 #'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities

@@ -80,6 +80,12 @@ p <- ppowerexp2(x, mu = 0, sigma = 1, nu = 2)
 q <- qpowerexp2(p, mu = 0, sigma = 1, nu = 2)
 }
 \references{
+Nelson, D. B. (1991) Conditional heteroskedasticity in asset returns: a new approach.
+Econometrica, 59, 347-370.
+
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+}
+\seealso{
+\link{bcpe}, \link{jsu}, \link{laplace}
 }

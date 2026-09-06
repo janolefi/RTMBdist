@@ -54,6 +54,11 @@ p <- pgengamma(x, mu = 4, sigma = 0.5, nu = 0.5)
 q <- qgengamma(p, mu = 4, sigma = 0.5, nu = 0.5)
 }
 \references{
+Lopatatzidis, A. and Green, P. J. (2000) Nonparametric quantile regression using the gamma distribution. Unpublished.
+
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+}
+\seealso{
+\link{gamma2}, \link{bccg}, \link{invgauss}
 }

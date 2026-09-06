@@ -11,8 +11,12 @@
 #' For \eqn{\nu = 0} the distribution reduces to a log-normal with log-mean \eqn{\log\mu} and log-standard-deviation \eqn{\sigma}.
 #'
 #' @references
+#' Lopatatzidis, A. and Green, P. J. (2000) Nonparametric quantile regression using the gamma distribution. Unpublished.
+#'
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
+#'
+#' @seealso [gamma2], [bccg], [invgauss]
 #'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities
