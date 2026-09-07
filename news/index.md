@@ -2,17 +2,28 @@
 
 ## RTMBdist 1.1.0
 
-- Added the hurdle (zero-altered) Poisson distribution
-  ([`dhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md),
-  [`phpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md),
-  [`rhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md)),
-  in which the probability of a zero is a free parameter and the
-  positive counts follow the zero-truncated Poisson. Unlike
+- Added the hurdle (zero-altered) count distributions: Poisson
+  ([`dhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md)),
+  binomial
+  ([`dhbinom()`](https://janolefi.github.io/RTMBdist/reference/hbinom.md)),
+  negative binomial
+  ([`dhnbinom()`](https://janolefi.github.io/RTMBdist/reference/hnbinom.md))
+  and its mean parameterisation
+  ([`dhnbinom2()`](https://janolefi.github.io/RTMBdist/reference/hnbinom2.md)),
+  each with matching `p` and `r` functions. In a hurdle distribution the
+  probability of a zero is a free parameter and the positive counts
+  follow the corresponding zero-truncated distribution. Unlike
   zero-inflation, which can only add zeros, a hurdle model allows
   `zeroprob` to be smaller than the Poisson would give on its own. The
   density and distribution function are both differentiable, so
   simulation and one-step-ahead residuals via `method = "cdf"` are
   supported.
+
+- Fixed
+  [`pztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md)
+  and
+  [`pztnbinom2()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom2.md),
+  which returned `NaN` instead of 0 for quantiles below their support.
 
 - Added the Johnson SU distribution in both the original
   parameterisation

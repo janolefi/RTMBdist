@@ -216,6 +216,19 @@ distributions listed
   Zero-inflated negative binomial distribution reparameterised by mean
   `mu`, size `size` and zero-probability `zeroprob`
 
+- [`hbinom(size, prob, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hbinom.md):
+  Hurdle (zero-altered) binomial distribution parameterised by `size`,
+  `prob` and the probability of a zero `zeroprob`
+
+- [`hnbinom(size, prob, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hnbinom.md):
+  Hurdle (zero-altered) negative binomial distribution parameterised by
+  `size`, `prob` and the probability of a zero `zeroprob`
+
+- [`hnbinom2(mu, size, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hnbinom2.md):
+  Hurdle (zero-altered) negative binomial distribution reparameterised
+  by the untruncated mean `mu`, `size` and the probability of a zero
+  `zeroprob`
+
 - [`hpois(lambda, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hpois.md):
   Hurdle (zero-altered) Poisson distribution parameterised by the
   Poisson mean `lambda` and the probability of a zero `zeroprob`

@@ -210,6 +210,18 @@ qqnorm(osa$res); abline(0, 1)
   [`qgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`rgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   : Gumbel distribution
+- [`dhbinom()`](https://janolefi.github.io/RTMBdist/reference/hbinom.md)
+  [`phbinom()`](https://janolefi.github.io/RTMBdist/reference/hbinom.md)
+  [`rhbinom()`](https://janolefi.github.io/RTMBdist/reference/hbinom.md)
+  : Hurdle binomial distribution
+- [`dhnbinom()`](https://janolefi.github.io/RTMBdist/reference/hnbinom.md)
+  [`phnbinom()`](https://janolefi.github.io/RTMBdist/reference/hnbinom.md)
+  [`rhnbinom()`](https://janolefi.github.io/RTMBdist/reference/hnbinom.md)
+  : Hurdle negative binomial distribution
+- [`dhnbinom2()`](https://janolefi.github.io/RTMBdist/reference/hnbinom2.md)
+  [`phnbinom2()`](https://janolefi.github.io/RTMBdist/reference/hnbinom2.md)
+  [`rhnbinom2()`](https://janolefi.github.io/RTMBdist/reference/hnbinom2.md)
+  : Reparameterised hurdle negative binomial distribution
 - [`dhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md)
   [`phpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md)
   [`rhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md) :

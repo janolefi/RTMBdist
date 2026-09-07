@@ -75,9 +75,11 @@ version can be found in https://www.gamlss.com/.
 
 ## See also
 
+[hbinom](https://janolefi.github.io/RTMBdist/reference/hbinom.md),
+[hnbinom](https://janolefi.github.io/RTMBdist/reference/hnbinom.md),
+[hnbinom2](https://janolefi.github.io/RTMBdist/reference/hnbinom2.md),
 [zipois](https://janolefi.github.io/RTMBdist/reference/zipois.md),
-[ztpois](https://janolefi.github.io/RTMBdist/reference/ztpois.md),
-[genpois](https://janolefi.github.io/RTMBdist/reference/genpois.md)
+[ztpois](https://janolefi.github.io/RTMBdist/reference/ztpois.md)
 
 ## Examples
 
