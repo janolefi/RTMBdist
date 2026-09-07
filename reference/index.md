@@ -113,6 +113,10 @@
   [`qgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`rgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   : Gumbel distribution
+- [`dhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md)
+  [`phpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md)
+  [`rhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md) :
+  Hurdle Poisson distribution
 - [`dinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md)
   [`pinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md)
   [`qinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md)

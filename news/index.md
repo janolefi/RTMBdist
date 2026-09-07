@@ -2,6 +2,18 @@
 
 ## RTMBdist 1.1.0
 
+- Added the hurdle (zero-altered) Poisson distribution
+  ([`dhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md),
+  [`phpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md),
+  [`rhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md)),
+  in which the probability of a zero is a free parameter and the
+  positive counts follow the zero-truncated Poisson. Unlike
+  zero-inflation, which can only add zeros, a hurdle model allows
+  `zeroprob` to be smaller than the Poisson would give on its own. The
+  density and distribution function are both differentiable, so
+  simulation and one-step-ahead residuals via `method = "cdf"` are
+  supported.
+
 - Added the Johnson SU distribution in both the original
   parameterisation
   ([`djsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md),

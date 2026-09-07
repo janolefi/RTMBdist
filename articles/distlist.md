@@ -216,6 +216,10 @@ distributions listed
   Zero-inflated negative binomial distribution reparameterised by mean
   `mu`, size `size` and zero-probability `zeroprob`
 
+- [`hpois(lambda, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hpois.md):
+  Hurdle (zero-altered) Poisson distribution parameterised by the
+  Poisson mean `lambda` and the probability of a zero `zeroprob`
+
 - [`zipois(lambda, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/zipois.md):
   Zero-inflated Poisson distribution parameterised by rate `lambda` and
   zero-probability `zeroprob`
