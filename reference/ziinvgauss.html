@@ -95,6 +95,11 @@ the zero-inflated inverse Gaussian distribution.</p>
     <p>This implementation of <code>zidinvgauss</code> allows for automatic differentiation with <code>RTMB</code>.</p>
 <p>$$f(x;\,\mu,\lambda,p_0) = p_0\,\mathbf{1}[x=0] + (1-p_0)\,f_{\mathrm{IG}}(x;\,\mu,\lambda)\,\mathbf{1}[x&gt;0],$$
 where \(p_0\) is <code>zeroprob</code> and \(f_{\mathrm{IG}}\) is the inverse Gaussian density.</p>
+<p>Because the continuous part places no mass at zero, <code>zeroprob</code> is exactly
+\(P(X = 0)\), and zero-inflation coincides with a hurdle model here. The two
+constructions only differ for discrete distributions, where the base distribution
+can generate zeros of its own. GAMLSS therefore calls distributions of this type
+zero-adjusted rather than zero-inflated, as in its <code>ZAIG</code> family.</p>
     </div>
 
     <div class="section level2">

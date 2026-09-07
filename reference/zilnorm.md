@@ -59,6 +59,13 @@ This implementation allows for automatic differentiation with `RTMB`.
 where \\p_0\\ is `zeroprob`, \\\mu\_\ell\\ = `meanlog`, \\\sigma\_\ell\\
 = `sdlog`, and \\f\_{\mathrm{LN}}\\ is the log-normal density.
 
+Because the continuous part places no mass at zero, `zeroprob` is
+exactly \\P(X = 0)\\, and zero-inflation coincides with a hurdle model
+here. The two constructions only differ for discrete distributions,
+where the base distribution can generate zeros of its own. GAMLSS
+therefore calls distributions of this type zero-adjusted rather than
+zero-inflated.
+
 ## Examples
 
 ``` r

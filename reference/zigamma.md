@@ -58,6 +58,13 @@ This implementation allows for automatic differentiation with `RTMB`.
 (1-p_0)\\f\_{\mathrm{Gamma}}(x;\\\alpha,s)\\\mathbf{1}\[x\>0\],\$\$
 where \\p_0\\ is `zeroprob`.
 
+Because the continuous part places no mass at zero, `zeroprob` is
+exactly \\P(X = 0)\\, and zero-inflation coincides with a hurdle model
+here. The two constructions only differ for discrete distributions,
+where the base distribution can generate zeros of its own. GAMLSS
+therefore calls distributions of this type zero-adjusted rather than
+zero-inflated, as in its `ZAGA` family.
+
 ## Examples
 
 ``` r

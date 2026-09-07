@@ -60,6 +60,13 @@ differentiation with `RTMB`.
 where \\p_0\\ is `zeroprob` and \\f\_{\mathrm{IG}}\\ is the inverse
 Gaussian density.
 
+Because the continuous part places no mass at zero, `zeroprob` is
+exactly \\P(X = 0)\\, and zero-inflation coincides with a hurdle model
+here. The two constructions only differ for discrete distributions,
+where the base distribution can generate zeros of its own. GAMLSS
+therefore calls distributions of this type zero-adjusted rather than
+zero-inflated, as in its `ZAIG` family.
+
 ## Examples
 
 ``` r
