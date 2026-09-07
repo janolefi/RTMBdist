@@ -62,7 +62,9 @@ pztnbinom <- function(q, size, prob, lower.tail = TRUE, log.p = FALSE) {
   }
 
   # cdf <- pnbinom(q, size = size, prob = prob)
-  cdf <- pbeta(prob, size, q+1)
+  # q is clamped because pbeta() is NaN for a negative second shape; below the
+  # support the pmax.ad() below then returns 0, as it does for the other families
+  cdf <- pbeta(prob, size, pmax.ad(q, 0) + 1)
   p0 <- dnbinom(0, size = size, prob = prob)
   p <- pmax.ad(cdf - p0, 0) / (1 - p0)
 
