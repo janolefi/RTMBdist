@@ -40,6 +40,12 @@ This implementation allows for automatic differentiation with \code{RTMB}.
 
 Uses the same density as \code{zigamma} with \eqn{\text{shape} = \mu^2/s^2} and \eqn{\text{scale} = s^2/\mu}:
 \deqn{f(x;\,\mu,s,p_0) = p_0\,\mathbf{1}[x=0] + (1-p_0)\,f_{\mathrm{Gamma}}(x;\,\mu^2/s^2,\,s^2/\mu)\,\mathbf{1}[x>0].}
+
+Because the continuous part places no mass at zero, \code{zeroprob} is exactly
+\eqn{P(X = 0)}, and zero-inflation coincides with a hurdle model here. The two
+constructions only differ for discrete distributions, where the base distribution
+can generate zeros of its own. GAMLSS therefore calls distributions of this type
+zero-adjusted rather than zero-inflated, as in its \code{ZAGA} family.
 }
 \examples{
 x <- rzigamma2(1, 2, 1, 0.5)
