@@ -129,6 +129,8 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 * [`zinbinom2(mu, size, zeroprob)`](../reference/zinbinom2.html): Zero-inflated negative binomial distribution reparameterised by mean `mu`, size `size` and zero-probability `zeroprob`
 
+* [`hpois(lambda, zeroprob)`](../reference/hpois.html): Hurdle (zero-altered) Poisson distribution parameterised by the Poisson mean `lambda` and the probability of a zero `zeroprob`
+
 * [`zipois(lambda, zeroprob)`](../reference/zipois.html): Zero-inflated Poisson distribution parameterised by rate `lambda` and zero-probability `zeroprob`
 
 * [`ztbinom(size, prob)`](../reference/ztbinom.html): Zero-truncated binomial distribution parameterised by size `size` and success probability `prob`

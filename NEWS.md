@@ -1,5 +1,7 @@
 # RTMBdist 1.1.0
 
+- Added the hurdle (zero-altered) Poisson distribution (`dhpois()`, `phpois()`, `rhpois()`), in which the probability of a zero is a free parameter and the positive counts follow the zero-truncated Poisson. Unlike zero-inflation, which can only add zeros, a hurdle model allows `zeroprob` to be smaller than the Poisson would give on its own. The density and distribution function are both differentiable, so simulation and one-step-ahead residuals via `method = "cdf"` are supported.
+
 - Added the Johnson SU distribution in both the original parameterisation (`djsu()`, `pjsu()`, `qjsu()`, `rjsu()`) and the moment parameterisation (`djsu2()`, `pjsu2()`, `qjsu2()`, `rjsu2()`), a four-parameter distribution on the real line covering a wide range of skewness and kurtosis. In `djsu2()` the location and scale arguments are exactly the mean and standard deviation. The density and distribution function are both differentiable, so simulation and one-step-ahead residuals are supported. Unlike `gamlss.dist`, the reparameterisation stays finite for very large `tau`, where the distribution approaches the normal.
 
 - Added references to the primary source for each distribution derived from `gamlss.dist`, and cross-links between related families. `pgenpois()` and friends previously had no references at all.
