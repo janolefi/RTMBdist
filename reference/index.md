@@ -88,6 +88,11 @@
   [`pfoldnorm()`](https://janolefi.github.io/RTMBdist/reference/foldnorm.md)
   [`rfoldnorm()`](https://janolefi.github.io/RTMBdist/reference/foldnorm.md)
   : Folded normal distribution
+- [`dfrechet()`](https://janolefi.github.io/RTMBdist/reference/frechet.md)
+  [`pfrechet()`](https://janolefi.github.io/RTMBdist/reference/frechet.md)
+  [`qfrechet()`](https://janolefi.github.io/RTMBdist/reference/frechet.md)
+  [`rfrechet()`](https://janolefi.github.io/RTMBdist/reference/frechet.md)
+  : Frechet distribution
 - [`dgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
   [`pgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
   [`qgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
@@ -106,11 +111,21 @@
 - [`dgeom.ad()`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md)
   [`pgeom.ad()`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md)
   : AD-compatible geometric distribution
+- [`dgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md)
+  [`pgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md)
+  [`qgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md)
+  [`rgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md) :
+  Generalised extreme value distribution
 - [`dgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
   [`pgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
   [`qgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
   [`rgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
   : Gompertz distribution
+- [`dgpd()`](https://janolefi.github.io/RTMBdist/reference/gpd.md)
+  [`pgpd()`](https://janolefi.github.io/RTMBdist/reference/gpd.md)
+  [`qgpd()`](https://janolefi.github.io/RTMBdist/reference/gpd.md)
+  [`rgpd()`](https://janolefi.github.io/RTMBdist/reference/gpd.md) :
+  Generalised Pareto distribution
 - [`dgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`pgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`qgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)

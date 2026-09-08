@@ -66,6 +66,7 @@ version can be found in https://www.gamlss.com/.
 
 ## See also
 
+[gpd](https://janolefi.github.io/RTMBdist/reference/gpd.md),
 [llogis](https://janolefi.github.io/RTMBdist/reference/llogis.md),
 [gengamma](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
 

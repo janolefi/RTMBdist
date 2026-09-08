@@ -61,6 +61,12 @@ with `RTMB`.
 \$\$f(x;\\\mu,\sigma) = \frac{1}{\sigma}\exp\\\bigl(-(z + e^{-z})\bigr),
 \quad z = \frac{x-\mu}{\sigma}.\$\$
 
+## See also
+
+[gev](https://janolefi.github.io/RTMBdist/reference/gev.md),
+[frechet](https://janolefi.github.io/RTMBdist/reference/frechet.md),
+[gpd](https://janolefi.github.io/RTMBdist/reference/gpd.md)
+
 ## Examples
 
 ``` r

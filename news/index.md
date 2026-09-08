@@ -2,6 +2,24 @@
 
 ## RTMBdist 1.1.0
 
+- Added the extreme value distributions: the generalised extreme value
+  distribution
+  ([`dgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md)),
+  the generalised Pareto distribution
+  ([`dgpd()`](https://janolefi.github.io/RTMBdist/reference/gpd.md)) and
+  the Frechet distribution
+  ([`dfrechet()`](https://janolefi.github.io/RTMBdist/reference/frechet.md)),
+  each with matching `p`, `q` and `r` functions. The first two cover
+  their three shape regimes with a single expression rather than a
+  branch on the sign of `xi`, so the derivative with respect to the
+  shape is exact at `xi = 0`, which is the usual starting value when the
+  shape is estimated. Densities and distribution functions are
+  differentiable, so simulation and one-step-ahead residuals via
+  `method = "cdf"` are supported. Unlike `VGAM`, `evd` and `extraDistr`,
+  [`dgpd()`](https://janolefi.github.io/RTMBdist/reference/gpd.md)
+  returns `1 / sigma` rather than zero at the threshold itself, matching
+  [`stats::dexp()`](https://rdrr.io/r/stats/Exponential.html) at zero.
+
 - `RTMBdist` no longer masks anything in `stats`. The AD-compatible
   replacements for [`stats::pt()`](https://rdrr.io/r/stats/TDist.html),
   [`stats::plnorm()`](https://rdrr.io/r/stats/Lognormal.html),

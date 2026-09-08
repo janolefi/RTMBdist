@@ -34,12 +34,24 @@ distributions listed
   Folded normal distribution parameterised by location `mu` and scale
   `sigma`
 
+- [`frechet(mu, sigma, alpha)`](https://janolefi.github.io/RTMBdist/reference/frechet.md):
+  Frechet distribution parameterised by location `mu`, scale `sigma`,
+  and shape `alpha`
+
 - [`gamma2(mean, sd)`](https://janolefi.github.io/RTMBdist/reference/gamma2.md):
   Gamma distribution reparameterised by mean and standard deviation
 
 - [`gengamma(mu, sigma, nu)`](https://janolefi.github.io/RTMBdist/reference/gengamma.md):
   Generalised gamma distribution parameterised by location `mu`, scale
   `sigma`, and skewness `nu`
+
+- [`gev(mu, sigma, xi)`](https://janolefi.github.io/RTMBdist/reference/gev.md):
+  Generalised extreme value distribution parameterised by location `mu`,
+  scale `sigma`, and shape `xi`
+
+- [`gpd(mu, sigma, xi)`](https://janolefi.github.io/RTMBdist/reference/gpd.md):
+  Generalised Pareto distribution parameterised by threshold `mu`, scale
+  `sigma`, and shape `xi`
 
 - [`gompertz(eta, b)`](https://janolefi.github.io/RTMBdist/reference/gompertz.md):
   Gompertz distribution parameterised by shape `eta` and rate `b`
