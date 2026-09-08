@@ -5,7 +5,7 @@
 \alias{dzilnorm}
 \alias{pzilnorm}
 \alias{rzilnorm}
-\alias{plnorm}
+\alias{plnorm.ad}
 \title{Zero-inflated log normal distribution}
 \usage{
 dzilnorm(x, meanlog = 0, sdlog = 1, zeroprob = 0, log = FALSE)
@@ -15,7 +15,7 @@ pzilnorm(q, meanlog = 0, sdlog = 1, zeroprob = 0,
 
 rzilnorm(n, meanlog = 0, sdlog = 1, zeroprob = 0)
 
-plnorm(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE)
+plnorm.ad(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE)
 }
 \arguments{
 \item{x, q}{vector of quantiles}
@@ -32,6 +32,10 @@ plnorm(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE)
 }
 \value{
 \code{dzilnorm} gives the density, \code{pzilnorm} gives the distribution function, and \code{rzilnorm} generates random deviates.
+
+\code{plnorm.ad} is an AD-compatible replacement for \code{stats::plnorm}. It is used
+internally and is reached automatically whenever an argument is an AD variable,
+so \code{stats::plnorm} is left untouched for ordinary use.
 }
 \description{
 Density, distribution function, and random generation for

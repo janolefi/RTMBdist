@@ -6,7 +6,7 @@
 \alias{pt2}
 \alias{rt2}
 \alias{qt2}
-\alias{pt}
+\alias{pt.ad}
 \title{Student t distribution with location and scale}
 \usage{
 dt2(x, mu, sigma, df, log = FALSE)
@@ -17,7 +17,7 @@ rt2(n, mu, sigma, df)
 
 qt2(p, mu, sigma, df, lower.tail = TRUE, log.p = FALSE)
 
-pt(q, df)
+pt.ad(q, df)
 }
 \arguments{
 \item{x, q}{vector of quantiles}
@@ -38,6 +38,10 @@ pt(q, df)
 }
 \value{
 \code{dt2} gives the density, \code{pt2} gives the distribution function, \code{qt2} gives the quantile function, and \code{rt2} generates random deviates.
+
+\code{pt.ad} is an AD-compatible replacement for \code{stats::pt}. It is used
+internally and is reached automatically whenever an argument is an AD variable,
+so \code{stats::pt} is left untouched for ordinary use.
 }
 \description{
 Density, distribution function, quantile function, and random generation for

@@ -11,13 +11,15 @@
 #' counts follow the corresponding zero-truncated distribution. Writing
 #' \eqn{p_0} for \code{zeroprob},
 #' \deqn{P(X = 0) = p_0, \qquad
-#'       P(X = x) = (1 - p_0)\,\frac{P_{\mathrm{Bin}}(x;\,n,\pi)}{1 - (1-\pi)^{n}},
+#'       P(X = x) = (1 - p_0)\,\frac{P_{\mathrm{Bin}}(x;\,n,\pi)}{1 - \pi_0},
 #'       \quad x = 1, \ldots, n.}
+#' where \eqn{\pi_0 = P_{\mathrm{Bin}}(0;\,n,\pi)} is the probability of a zero under
+#' the ordinary binomial.
 #'
 #' Unlike zero-inflation, which can only add zeros to those the binomial already
 #' produces, \code{zeroprob} here is exactly the probability of a zero and may be
-#' larger \emph{or} smaller than \eqn{(1-\pi)^n}. The two coincide with the
-#' ordinary binomial when \code{zeroprob} equals \eqn{(1-\pi)^n}.
+#' larger \emph{or} smaller than \eqn{\pi_0}. The two coincide with the
+#' ordinary binomial when \code{zeroprob} equals \eqn{\pi_0}.
 #'
 #' @references
 #' Mullahy, J. (1986) Specification and testing of some modified count data models.
@@ -67,13 +69,10 @@ dhbinom <- function(x, size, prob, zeroprob = 0.5, log = FALSE) {
     return(dGenericOSA("dhbinom", x = x, size = size, prob = prob, zeroprob = zeroprob, log=log))
   }
 
-  # the point mass at zero and the rescaled zero-truncated binomial are combined
-  # on the log scale, so that either branch may be exactly zero without a NaN
-  log_zero <- log(zeroprob) + log(iszero(x))
-  log_pos <- log1p(-zeroprob) + dbinom(x, size, prob, log = TRUE) -
-    log1p(-dbinom(0, size, prob)) + log(ispos_strict(x))
-
-  logdens <- logspace_add(log_zero, log_pos)
+  # log_hurdle() combines the point mass at zero with the rescaled zero-truncated
+  # binomial on the log scale, so either branch may be exactly zero without a NaN
+  logdens <- log_hurdle(x, dbinom(x, size, prob, log = TRUE),
+                        dbinom(0, size, prob), zeroprob)
 
   if (log) return(logdens)
   return(exp(logdens))

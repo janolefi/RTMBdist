@@ -129,15 +129,29 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 * [`zinbinom2(mu, size, zeroprob)`](../reference/zinbinom2.html): Zero-inflated negative binomial distribution reparameterised by mean `mu`, size `size` and zero-probability `zeroprob`
 
+* [`hbetabinom(size, shape1, shape2, zeroprob)`](../reference/hbetabinom.html): Hurdle (zero-altered) beta-binomial distribution
+
 * [`hbinom(size, prob, zeroprob)`](../reference/hbinom.html): Hurdle (zero-altered) binomial distribution parameterised by `size`, `prob` and the probability of a zero `zeroprob`
 
 * [`hnbinom(size, prob, zeroprob)`](../reference/hnbinom.html): Hurdle (zero-altered) negative binomial distribution parameterised by `size`, `prob` and the probability of a zero `zeroprob`
 
 * [`hnbinom2(mu, size, zeroprob)`](../reference/hnbinom2.html): Hurdle (zero-altered) negative binomial distribution reparameterised by the untruncated mean `mu`, `size` and the probability of a zero `zeroprob`
 
+* [`hgeom(prob, zeroprob)`](../reference/hgeom.html): Hurdle (zero-altered) geometric distribution
+
 * [`hpois(lambda, zeroprob)`](../reference/hpois.html): Hurdle (zero-altered) Poisson distribution parameterised by the Poisson mean `lambda` and the probability of a zero `zeroprob`
 
+* [`zibetabinom(size, shape1, shape2, zeroprob)`](../reference/zibetabinom.html): Zero-inflated beta-binomial distribution
+
+* [`geom.ad(prob)`](../reference/geom.ad.html): AD-compatible geometric density and distribution function (`dgeom.ad()`, `pgeom.ad()`); `stats`' own `dgeom()`/`pgeom()` are left untouched
+
+* [`zigeom(prob, zeroprob)`](../reference/zigeom.html): Zero-inflated geometric distribution
+
 * [`zipois(lambda, zeroprob)`](../reference/zipois.html): Zero-inflated Poisson distribution parameterised by rate `lambda` and zero-probability `zeroprob`
+
+* [`ztbetabinom(size, shape1, shape2)`](../reference/ztbetabinom.html): Zero-truncated beta-binomial distribution
+
+* [`ztgeom(prob)`](../reference/ztgeom.html): Zero-truncated geometric distribution
 
 * [`ztbinom(size, prob)`](../reference/ztbinom.html): Zero-truncated binomial distribution parameterised by size `size` and success probability `prob`
 

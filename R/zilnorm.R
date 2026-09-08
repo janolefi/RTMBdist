@@ -25,6 +25,10 @@
 #' @return
 #' \code{dzilnorm} gives the density, \code{pzilnorm} gives the distribution function, and \code{rzilnorm} generates random deviates.
 #'
+#' \code{plnorm.ad} is an AD-compatible replacement for \code{stats::plnorm}. It is used
+#' internally and is reached automatically whenever an argument is an AD variable,
+#' so \code{stats::plnorm} is left untouched for ordinary use.
+#'
 #' @examples
 #' x <- rzilnorm(1, 1, 1, 0.5)
 #' d <- dzilnorm(x, 1, 1, 0.5)
@@ -102,7 +106,10 @@ rzilnorm <- function(n, meanlog = 0, sdlog = 1, zeroprob = 0) {
 #' @rdname zilnorm
 #' @importFrom RTMB pnorm
 #' @export
-plnorm <- function(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE) {
+plnorm.ad <- function(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE) {
+  # AD-compatible version of stats::plnorm. It is reached through the internal S4
+  # generic in R/ad-dispatch.R whenever an argument is an advector; plain numeric
+  # input goes to stats::plnorm instead.
   if(!ad_context()) {
     # ensure sdlog > 0
     if (any(sdlog <= 0)) stop("sdlog must be > 0")

@@ -1,5 +1,13 @@
 # RTMBdist 1.1.0
 
+- `RTMBdist` no longer masks anything in `stats`. The AD-compatible replacements for `stats::pt()`, `stats::plnorm()`, `stats::dgeom()` and `stats::pgeom()` are exported as `pt.ad()`, `plnorm.ad()`, `dgeom.ad()` and `pgeom.ad()`, and are reached through internal S4 generics that dispatch on the argument classes: plain numeric input goes to the `stats` versions, AD variables to the `.ad` versions. Previously `pt()` was exported with a reduced argument list, so `pt(q, df, lower.tail = FALSE)` failed for anyone who had loaded the package. As a side effect `lower.tail` and `log.p` now also work for `pt()` under automatic differentiation.
+
+- Added the zero-inflated (`dzigeom()`), zero-truncated (`dztgeom()`) and hurdle (`dhgeom()`) geometric distributions. These build on `RTMB`'s AD-compatible negative binomial with `size = 1`, so `stats`' own `dgeom()` and friends are left untouched.
+
+- Added the zero-inflated, zero-truncated and hurdle beta-binomial distributions (`dzibetabinom()`, `dztbetabinom()`, `dhbetabinom()`). Like `dbetabinom()` itself these have no distribution function, since the beta-binomial cdf has no closed form.
+
+- The documentation of the continuous zero-inflated distributions now explains that, because the continuous part places no mass at zero, `zeroprob` is exactly the probability of a zero and zero-inflation coincides with a hurdle model; GAMLSS calls these zero-adjusted rather than zero-inflated.
+
 - Added the hurdle (zero-altered) count distributions: Poisson (`dhpois()`), binomial (`dhbinom()`), negative binomial (`dhnbinom()`) and its mean parameterisation (`dhnbinom2()`), each with matching `p` and `r` functions. In a hurdle distribution the probability of a zero is a free parameter and the positive counts follow the corresponding zero-truncated distribution. Unlike zero-inflation, which can only add zeros, a hurdle model allows `zeroprob` to be smaller than the Poisson would give on its own. The density and distribution function are both differentiable, so simulation and one-step-ahead residuals via `method = "cdf"` are supported.
 
 - Fixed `pztnbinom()` and `pztnbinom2()`, which returned `NaN` instead of 0 for quantiles below their support.

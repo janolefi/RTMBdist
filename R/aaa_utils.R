@@ -219,6 +219,16 @@ log_zi <- function(x, logdens, zeroprob) {
     log(isnonzero(x)) + log1p(-zeroprob) + logdens
   )
 }
+# hurdle (zero-altered): the zeros are a free parameter and the positives follow
+# the zero-truncated base distribution. p0 is P(X = 0) under the base distribution.
+# x == 0: zeroprob
+# x > 0: (1 - zeroprob) * pmf(x) / (1 - p0)
+log_hurdle <- function(x, logdens, p0, zeroprob) {
+  RTMB::logspace_add(
+    log(iszero(x)) + log(zeroprob),
+    log(ispos_strict(x)) + log1p(-zeroprob) + logdens - log1p(-p0)
+  )
+}
 # x == 0: p0 + pmf(0)
 # x > 0: (1-p0) * pmf(x)
 log_zi_discrete <- function(x, logdens, zeroprob) {

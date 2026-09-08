@@ -21,6 +21,10 @@
 #' @return
 #' \code{dt2} gives the density, \code{pt2} gives the distribution function, \code{qt2} gives the quantile function, and \code{rt2} generates random deviates.
 #'
+#' \code{pt.ad} is an AD-compatible replacement for \code{stats::pt}. It is used
+#' internally and is reached automatically whenever an argument is an AD variable,
+#' so \code{stats::pt} is left untouched for ordinary use.
+#'
 #' @examples
 #' x <- rt2(1, 1, 2, 5)
 #' d <- dt2(x, 1, 2, 5)
@@ -61,7 +65,7 @@ dt2 = function(x, mu, sigma, df, log = FALSE){
 #' @importFrom stats pt
 pt2 <- function(q, mu, sigma, df, lower.tail = TRUE, log.p = FALSE){
   z <- (q - mu) / sigma
-  p <- pt(z, df)
+  p <- pt.ad(z, df)
   if (!lower.tail) p <- 1 - p
   if (log.p) p <- log(p)
   p
@@ -86,8 +90,10 @@ qt2 <- function(p, mu, sigma, df, lower.tail = TRUE, log.p = FALSE){
 #' @rdname t2
 #' @export
 #' @importFrom RTMB pbeta
-pt <- function(q, df) {
-  # AD compatible version of pt - slightly sketchy but works
+pt.ad <- function(q, df) {
+  # AD-compatible version of stats::pt, built from the incomplete beta function.
+  # It is reached through the internal S4 generic in R/ad-dispatch.R whenever an
+  # argument is an advector; plain numeric input goes to stats::pt instead.
 
   x <- df / (df + q^2)
   q <- q + 1e-8 # avoid numerical issues with q = 0

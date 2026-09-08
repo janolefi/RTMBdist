@@ -43,13 +43,15 @@ processes: the probability of a zero is a free parameter, and the positive
 counts follow the corresponding zero-truncated distribution. Writing
 \eqn{p_0} for \code{zeroprob},
 \deqn{P(X = 0) = p_0, \qquad
-      P(X = x) = (1 - p_0)\,\frac{P_{\mathrm{NB}}(x;\,r,\pi)}{1 - \pi^{r}},
+      P(X = x) = (1 - p_0)\,\frac{P_{\mathrm{NB}}(x;\,r,\pi)}{1 - \pi_0},
       \quad x = 1, 2, \ldots}
+where \eqn{\pi_0 = P_{\mathrm{NB}}(0;\,r,\pi)} is the probability of a zero under
+the ordinary negative binomial.
 
 Unlike zero-inflation, which can only add zeros to those the negative binomial
 already produces, \code{zeroprob} here is exactly the probability of a zero and
-may be larger \emph{or} smaller than \eqn{\pi^{r}}. The two coincide with the
-ordinary negative binomial when \code{zeroprob} equals \eqn{\pi^{r}}.
+may be larger \emph{or} smaller than \eqn{\pi_0}. The two coincide with the
+ordinary negative binomial when \code{zeroprob} equals \eqn{\pi_0}.
 }
 \examples{
 set.seed(123)
