@@ -1,6 +1,37 @@
 # Changelog
 
-## RTMBdist 1.1.0
+## RTMBdist 1.2.0
+
+- Added the Yule-Simon
+  ([`dyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md))
+  and Waring
+  ([`dwaring()`](https://janolefi.github.io/RTMBdist/reference/waring.md))
+  distributions, two classical long-tailed count laws, each with
+  matching `p` and `r` functions. Both are beta-geometric special cases
+  of the beta-negative binomial, with `size` fixed at one, and that
+  restriction is what gives them a closed-form distribution function
+  where the general beta-negative binomial has none; one-step-ahead
+  residuals via `method = "cdf"` are therefore available for these two.
+  [`dyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md)
+  follows `VGAM` and is supported on the positive integers, while
+  [`dwaring()`](https://janolefi.github.io/RTMBdist/reference/waring.md)
+  follows the `WARING` family of `gamlss.dist`, starts at zero and has
+  `mu` as its mean. The `YULE` family of `gamlss.dist` is
+  `dwaring(x, mu, mu)`.
+
+- Added the beta-negative binomial distribution
+  ([`dbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md))
+  and its mean parameterisation
+  ([`dbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)),
+  each with a matching `r` function. It is to the negative binomial what
+  the beta-binomial is to the binomial, and its extra beta layer gives a
+  considerably heavier tail. In
+  [`dbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md),
+  which follows the `BNB` family of `gamlss.dist`, `mu` is exactly the
+  mean; this is the more stable parameterisation to estimate in, because
+  the original one has a long likelihood ridge along which `size` and
+  `shape2` trade off. Like the beta-binomial, neither has a distribution
+  function, so one-step-ahead residuals are not available.
 
 - Added the extreme value distributions: the generalised extreme value
   distribution
@@ -89,6 +120,8 @@
   and
   [`pztnbinom2()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom2.md),
   which returned `NaN` instead of 0 for quantiles below their support.
+
+## RTMBdist 1.1.0
 
 - Added the Johnson SU distribution in both the original
   parameterisation

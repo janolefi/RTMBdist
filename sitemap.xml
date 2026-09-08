@@ -16,6 +16,8 @@
 <url><loc>https://janolefi.github.io/RTMBdist/reference/beta2.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/betabinom.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/betaprime.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/bnbinom.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/bnbinom2.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/cclayton.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/cfrank.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/cgaussian.html</loc></url>
@@ -77,8 +79,10 @@
 <url><loc>https://janolefi.github.io/RTMBdist/reference/vm.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/vmf.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/vmf2.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/waring.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/wishart.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/wrpcauchy.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/yules.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/zero_inflate.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/zibeta.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/zibeta2.html</loc></url>

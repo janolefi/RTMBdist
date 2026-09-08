@@ -140,6 +140,12 @@ qqnorm(osa$res); abline(0, 1)
   [`qbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
   [`rbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
   : Beta prime distribution
+- [`dbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
+  [`rbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
+  : Beta-negative binomial distribution
+- [`dbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)
+  [`rbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)
+  : Reparameterised beta-negative binomial distribution
 - [`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   [`Cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   : Clayton copula constructors
@@ -390,12 +396,20 @@ qqnorm(osa$res); abline(0, 1)
 - [`dvmf2()`](https://janolefi.github.io/RTMBdist/reference/vmf2.md)
   [`rvmf2()`](https://janolefi.github.io/RTMBdist/reference/vmf2.md) :
   Reparameterised von Mises-Fisher distribution
+- [`dwaring()`](https://janolefi.github.io/RTMBdist/reference/waring.md)
+  [`pwaring()`](https://janolefi.github.io/RTMBdist/reference/waring.md)
+  [`rwaring()`](https://janolefi.github.io/RTMBdist/reference/waring.md)
+  : Waring distribution
 - [`dwishart()`](https://janolefi.github.io/RTMBdist/reference/wishart.md)
   [`rwishart()`](https://janolefi.github.io/RTMBdist/reference/wishart.md)
   : Wishart distribution
 - [`dwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
   [`rwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
   : wrapped Cauchy distribution
+- [`dyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md)
+  [`pyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md)
+  [`ryules()`](https://janolefi.github.io/RTMBdist/reference/yules.md) :
+  Yule-Simon distribution
 - [`zero_inflate()`](https://janolefi.github.io/RTMBdist/reference/zero_inflate.md)
   : Zero-inflated density constructer
 - [`dzibeta()`](https://janolefi.github.io/RTMBdist/reference/zibeta.md)

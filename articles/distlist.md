@@ -201,6 +201,22 @@ distributions listed
   Beta-binomial distribution parameterised by size `size`, shape
   parameters `shape1` and `shape2`
 
+- [`bnbinom(size, shape1, shape2)`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md):
+  Beta-negative binomial distribution parameterised by `size` and the
+  shape parameters `shape1` and `shape2` of the beta prior
+
+- [`bnbinom2(mu, sigma, nu)`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md):
+  Beta-negative binomial distribution reparameterised by mean `mu` and
+  dispersion parameters `sigma` and `nu`
+
+- [`waring(mu, sigma)`](https://janolefi.github.io/RTMBdist/reference/waring.md):
+  Waring (beta-geometric) distribution parameterised by mean `mu` and
+  dispersion `sigma`
+
+- [`yules(shape)`](https://janolefi.github.io/RTMBdist/reference/yules.md):
+  Yule-Simon distribution parameterised by `shape`, supported on the
+  positive integers
+
 - [`combinom(size, prob, nu)`](https://janolefi.github.io/RTMBdist/reference/combinom.md):
   Conway-Maxwell-binomial distribution parameterised by size `size`,
   success probability `prob` and dispersion `nu`
