@@ -14,139 +14,182 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Background
+A new distribution is one R file, one test file, and one line in the
+distribution list. The complete example below is meant to be copied; the
+sections after it cover the cases it does not.
 
-RTMBdist provides additional probability distributions that work inside
-`RTMB::MakeTape` for automatic differentiation (AD). RTMB records a computation
-tape by operator overloading: every arithmetic operation on an `advector` is
-intercepted. All code must therefore be plain R arithmetic — anything that drops
-below R to compiled C++ is invisible to the tape. This is why built-in
-distributions such as `dgamma` must be called as `RTMB::dgamma`, not
-`stats::dgamma`, and why `@import RTMB` is needed whenever a function uses
-mathematical operations (`exp`, `log`, `sqrt`, etc.).
+## Calling other distributions
 
-Every density function must support three modes:
+`RTMB` records a computation tape by operator overloading, so a density has to
+be ordinary R arithmetic on whatever it is handed.
 
-1. **Plain R evaluation** — standard use outside of RTMB.
-2. **AD tape recording** — called with an `advector`; gradients must flow.
-3. **Simulation and OSA residuals** — called with a `simref` or `osa` object.
-
-## What to implement
-
-At minimum, provide a **density** (`d<dist>`) and a **random-number generator**
-(`r<dist>`). A **CDF** (`p<dist>`) and **quantile function** (`q<dist>`) are
-strongly preferred; they are required for OSA residuals and quantile-based
-tests. All four functions must be pure R arithmetic.
-
-## Naming conventions
-
-Follow the `d`/`p`/`q`/`r` prefix convention. Spell out distribution names
-rather than abbreviating — `gompertz`, `invgamma`, `laplace` — unless the name
-becomes unwieldy. Reparameterised variants take a `2` suffix: `beta2`,
-`gamma2`.
-
-## Files to create or modify
-
-| File | What to do |
-|---|---|
-| `R/<dist>.R` | implement `d`, `p`, `q`, `r` functions |
-| `tests/testthat/test-<dist>.R` | add standard tests |
-| `vignettes/distlist.Rmd` | add one bullet in alphabetical order |
-
----
-
-## Implementing the density function
+That is less restrictive than it sounds. `RTMB` promotes around 37 `stats`
+functions (`dnorm`, `dgamma`, `pbeta`, `lgamma`, `besselK` and so on) to S4
+generics with a method for AD variables, so you can just write the bare name.
+With `@import RTMB` on your function, `dgamma(x, shape)` dispatches on its
+arguments: ordinary numbers get the usual `stats` behaviour, AD variables get
+the tape-aware method.
 
 ```r
-dfoo <- function(x, theta1, theta2 = 1, log = FALSE) {
-
-  # 1. Validate inputs — skip during AD recording
-  if (!ad_context()) {
-    args <- as.list(environment())
-    simulation_check(args)           # catches likelihood written in wrong order
-    if (any(theta1 <= 0)) stop("theta1 must be positive")
-  }
-
-  # 2. Simulation and OSA escapes
-  if (inherits(x, "simref"))
-    return(dGenericSim("dfoo", x = x, theta1 = theta1, theta2 = theta2, log = log))
-  if (inherits(x, "osa"))
-    return(dGenericOSA("dfoo", x = x, theta1 = theta1, theta2 = theta2, log = log))
-
-  # 3. Log-density
-  logdens <- ...
-
-  if (log) return(logdens)
-  exp(logdens)
-}
+logdens <- dgamma(x, shape = shape, scale = scale, log = TRUE)   # yes
+logdens <- stats::dgamma(x, shape, scale, log = TRUE)            # no - breaks taping
+logdens <- RTMB::dgamma(x, shape, scale, log = TRUE)             # unnecessary
 ```
 
-A few rules:
+`stats::` pins the non-AD version and the tape breaks. `RTMB::` works, but it
+is noise and it hides the dispatch.
 
-- Always compute in log space and only call `exp()` at the very end.
-- The string passed to `dGenericSim`/`dGenericOSA` must exactly match the
-  function name, because RTMB uses it to look up the corresponding `p<dist>`
-  or `r<dist>`.
-- Parameter validation and `simulation_check` must be inside the
-  `if (!ad_context())` guard — they would fail or give wrong results on
-  `advector` inputs.
+For a function `RTMB` does not cover, see
+[When `RTMB` has no AD version](#when-rtmb-has-no-ad-version).
 
-## Implementing the CDF
+## A complete example
+
+This is the whole of `R/foo.R`, for a one-parameter distribution with density
+\eqn{f(x;\theta) = \theta e^{-\theta x}} on \eqn{x \ge 0}.
 
 ```r
-pfoo <- function(q, theta1, theta2 = 1, lower.tail = TRUE, log.p = FALSE) {
+#' Foo distribution
+#'
+#' Density, distribution function, quantile function, and random generation
+#' for the Foo distribution.
+#'
+#' @details
+#' The Foo distribution with rate \eqn{\theta > 0} has density
+#' \deqn{f(x;\,\theta) = \theta e^{-\theta x}, \quad x \ge 0.}
+#'
+#' @param x,q vector of quantiles
+#' @param p vector of probabilities
+#' @param n number of random values to return
+#' @param theta positive rate parameter
+#' @param log,log.p logical; if \code{TRUE}, probabilities/ densities are returned as \eqn{\log(p)}.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.
+#'
+#' @return
+#' \code{dfoo} gives the density, \code{pfoo} gives the distribution function,
+#' \code{qfoo} gives the quantile function, and \code{rfoo} generates random deviates.
+#'
+#' @examples
+#' set.seed(123)
+#' x <- rfoo(5, theta = 2)
+#' d <- dfoo(x, theta = 2)
+#' p <- pfoo(x, theta = 2)
+#' q <- qfoo(p, theta = 2)
+#' @name foo
+NULL
+
+#' @rdname foo
+#' @export
+#' @import RTMB
+dfoo <- function(x, theta, log = FALSE) {
+
   if (!ad_context()) {
-    if (any(theta1 <= 0)) stop("theta1 must be positive")
+    args <- as.list(environment())
+    simulation_check(args)   # informative error if the likelihood is written in the wrong order
+    if (any(theta <= 0)) stop("theta must be > 0")
   }
 
-  p <- ...   # compute CDF using RTMB:: functions where needed
+  # potentially escape to RNG or CDF
+  if (inherits(x, "simref")) return(dGenericSim("dfoo", x = x, theta = theta, log = log))
+  if (inherits(x, "osa"))    return(dGenericOSA("dfoo", x = x, theta = theta, log = log))
+
+  logdens <- log(theta) - theta * x + log(1 - smaller(x, 0))   # 0 outside x >= 0
+
+  if (log) return(logdens)
+  return(exp(logdens))
+}
+
+#' @rdname foo
+#' @export
+pfoo <- function(q, theta, lower.tail = TRUE, log.p = FALSE) {
+
+  if (!ad_context()) {
+    if (any(theta <= 0)) stop("theta must be > 0")
+  }
+
+  p <- (1 - smaller(q, 0)) * (-expm1(-theta * q))
 
   if (!lower.tail) p <- 1 - p
   if (log.p) p <- log(p)
-  p
+  return(p)
 }
-```
 
-No `simulation_check` is needed in `p<dist>`. Apply `lower.tail` and `log.p`
-at the end, in that order.
+#' @rdname foo
+#' @export
+qfoo <- function(p, theta, lower.tail = TRUE, log.p = FALSE) {
 
-## Implementing the quantile function
-
-```r
-qfoo <- function(p, theta1, theta2 = 1, lower.tail = TRUE, log.p = FALSE) {
   if (!ad_context()) {
-    if (any(theta1 <= 0)) stop("theta1 must be positive")
+    if (any(theta <= 0)) stop("theta must be > 0")
   }
 
-  if (log.p) p <- exp(p)          # undo transformations first ...
-  if (!lower.tail) p <- 1 - p     # ... in the reverse order of pfoo
+  if (log.p) p <- exp(p)          # undo the transformations first ...
+  if (!lower.tail) p <- 1 - p     # ... in the reverse order to pfoo
 
-  ...   # compute quantile
+  if (!ad_context()) {
+    if (any(p < 0 | p > 1)) stop("p must be in [0, 1]")
+  }
+
+  -log1p(-p) / theta
+}
+
+#' @rdname foo
+#' @export
+#' @importFrom stats runif
+rfoo <- function(n, theta) {
+  if (any(theta <= 0)) stop("theta must be > 0")
+
+  n <- ceiling(n)
+  qfoo(runif(n), theta)
 }
 ```
 
-## Implementing the RNG
+Five details in there are easy to get wrong:
+
+- Validation and `simulation_check` belong inside `if (!ad_context())`. On AD
+  variables they either fail or give the wrong answer.
+- The string passed to `dGenericSim`/`dGenericOSA` has to match the function
+  name exactly. `RTMB` uses it to find your `p` and `r` functions.
+- Work in log space and call `exp()` once, at the end.
+- Check `p` after undoing `log.p` and `lower.tail`, not before. Checking first
+  makes `log.p = TRUE` impossible, since `log(p)` is negative.
+- Match the support indicator to the boundary. Foo has support \eqn{x \ge 0},
+  so `1 - smaller(x, 0)` is right. `greater(x, 0)` is 0 at `x = 0` and would
+  give a density of 0 there instead of \eqn{\theta}.
+
+Then the test file, and one bullet in `vignettes/distlist.Rmd`:
+
+```
+* [`foo(theta)`](../reference/foo.html): Foo distribution parameterised by rate `theta`
+```
+
+## Tests
+
+`tests/testthat/test-foo.R`. Two parameter settings plus a gradient check is
+the minimum.
 
 ```r
-rfoo <- function(n, theta1, theta2 = 1) {
-  if (any(theta1 <= 0)) stop("theta1 must be positive")
-  ...
-}
+test_that("foo passes standard distribution checks (theta = 1)", {
+  check_continuous_dist(dfoo, pfoo, qfoo, xs = c(0.2, 0.5, 1, 2),
+                        lower = 0, upper = Inf, theta = 1)
+})
+
+test_that("foo AD gradient has no NaN", {
+  check_ad_gradient(dfoo, rfoo, theta = 1)
+})
 ```
 
-The RNG is never called during AD, so no `ad_context()` guard is needed.
-Two common approaches:
+| Your distribution is | Use |
+|---|---|
+| continuous | `check_continuous_dist(dfun, pfun, qfun, xs, lower, upper, ...)` |
+| continuous, no quantile function | same, with `qfun = NULL` |
+| discrete | `check_discrete_dist(dfun, pfun, xs_int, sum_support, ...)` |
+| discrete, no cdf | same, with `pfun = NULL` |
+| zero-inflated continuous | `check_zeroinfl_dist` |
+| inflated at 0 and/or 1 | `check_inflated_dist` |
 
-- **Inversion**: `qfoo(runif(n), theta1, theta2)` — works whenever `q<dist>`
-  exists.
-- **Direct formula**: use a known relationship to a base distribution,
-  e.g. `log(1 + rexp(n, rate = eta)) / b` for the Gompertz distribution.
-
----
+Choose `xs` so `pfoo(xs)` stays away from 0 and 1 — the `q(p(x))` round-trip
+cannot recover `x` once the cdf saturates in double precision.
 
 ## Numerical stability
-
-Prefer numerically stable forms whenever the argument may be close to zero:
 
 | Instead of | Write |
 |---|---|
@@ -154,54 +197,106 @@ Prefer numerically stable forms whenever the argument may be close to zero:
 | `log(1 + x)` | `log1p(x)` |
 | `1 - exp(-x)` | `-expm1(-x)` |
 | `x^2`, `x^3` | `x * x`, `x * x * x` |
-| `x^a` (non-integer exponent) | `exp(a * log(x))` |
+| `x^a`, non-integer `a` | `exp(a * log(x))` |
 
-Avoid expressions that produce `0 * (-Inf)` — this evaluates to `NaN` and
-kills the gradient. Common fixes:
-
-- Add a small offset before taking a log: `log(x + .Machine$double.xmin)`.
-- Clamp a log term that can hit `-Inf` at a boundary:
-  `as.finite(log(...))`.
-
-## Conditional logic
-
-Never branch on the value of `x` inside the tape with plain `if/else` or
-`ifelse` — the condition is not recorded and the gradient will be wrong.
-Use the smooth indicator helpers from `aaa_utils.R` instead:
-
-| Helper | Meaning |
-|---|---|
-| `iszero(x)` | 1 if x == 0, else 0 |
-| `isnonzero(x)` | 1 if x != 0, else 0 |
-| `ispos(x)` | 1 if x >= 0, else 0 |
-| `isneg(x)` | 1 if x < 0, else 0 |
-
-These are defined as pure arithmetic and propagate gradients correctly. Look distributions already implemented to see how to use this.
-
----
-
-## Zero-inflated distributions
-
-Two utility functions handle the mixture in a tape-compatible way:
-
-- `log_zi(x, logdens, zeroprob)` — continuous ZI: point mass at 0, density
-  for x > 0.
-- `log_zi_discrete(x, logdens, zeroprob)` — discrete ZI: adds inflation mass
-  on top of the PMF at 0.
-
-Typical usage:
+The one to watch for is `0 * (-Inf)`. That is `NaN`, and it takes out the whole
+gradient rather than the single element you were multiplying. It shows up when
+an indicator multiplies a log that is `-Inf` outside the support. Either put the
+indicator inside the log,
 
 ```r
-logdens <- RTMB::dgamma(x + .Machine$double.xmin, shape = shape, scale = scale, log = TRUE)
-logdens <- log_zi(x, logdens, zeroprob)
+logdens + log(greater(x, 0))      # rather than greater(x, 0) * logdens
 ```
 
-The `eps` offset prevents `log(0)` before `log_zi` has a chance to zero out
-the weight.
+or clamp with `as.finite()`, or offset the argument with
+`log(x + .Machine$double.xmin)`.
+
+## Branching without breaking the tape
+
+`if`/`else` and `ifelse()` on a taped value do not work: the branch is never
+recorded. Use the arithmetic indicators, which carry gradients.
+
+| Helper | Returns 1 when |
+|---|---|
+| `iszero(x)` | `x == 0` |
+| `isnonzero(x)` | `x != 0` |
+| `ispos(x)`, `ispos_strict(x)` | `x > 0` (note: **0 at `x = 0`**) |
+| `isneg(x)` | `x < 0` |
+| `greater(x, val)` | `x > val` |
+| `smaller(x, val)` | `x < val` |
+
+`pmax.ad()` and `pmin.ad()` are the tape-safe `pmax`/`pmin`.
+
+Outside a tape, `if (any(...)) stop(...)` is fine. That is what the
+`!ad_context()` guard is for.
+
+One more thing about `ifelse()`, even where it is legitimate: its result takes
+the length of the *test*. If the test is a parameter shorter than `x`, the
+answer is silently truncated. Recycle everything to a common length first.
+
+```r
+n <- max(lengths(list(x, a, b)))
+x <- rep_len(x, n); a <- rep_len(a, n); b <- rep_len(b, n)
+```
+
+## Zero-modified distributions
+
+`RTMBdist` ships four families built on a base distribution. The prefixes are
+`zi` (zero-inflated), `zt` (zero-truncated) and `h` (hurdle, also called
+zero-altered).
+
+Write \eqn{\pi_0} for the probability of a zero under the **base** distribution
+and \eqn{p_0} for the `zeroprob` parameter.
+
+| Family | At `x = 0` | At `x > 0` | Helper |
+|---|---|---|---|
+| zero-inflated, discrete | \eqn{p_0 + \pi_0} | \eqn{(1-p_0)\,f(x)} | `log_zi_discrete(x, logdens, zeroprob)` |
+| zero-inflated, continuous | \eqn{p_0} | \eqn{(1-p_0)\,f(x)} | `log_zi(x, logdens, zeroprob)` |
+| zero-truncated | 0 | \eqn{f(x)/(1-\pi_0)} | write it out, see below |
+| hurdle | \eqn{p_0} | \eqn{(1-p_0)\,f(x)/(1-\pi_0)} | `log_hurdle(x, logdens, p0, zeroprob)` |
+
+Zero-inflation and a hurdle only differ for discrete distributions. Inflation
+adds zeros on top of the ones the base already produces, so `zeroprob` is not
+the probability of a zero; a hurdle replaces them, so it is. For a continuous
+base the two are the same thing, because the continuous part puts no mass at
+zero. That is why `gamlss.dist` calls those zero-adjusted rather than
+zero-inflated, and why there is no `h` version of a continuous distribution
+here.
+
+Zero-truncated, using the Poisson as the example:
+
+```r
+dztfoo <- function(x, theta, log = FALSE) {
+  # ... guards and escapes as usual ...
+  logdens <- dfoo(x, theta, log = TRUE) -
+    log1p(-p0) +            # p0 = P(X = 0) under the base distribution
+    log(ispos_strict(x))    # -Inf below the support, so the density is 0 there
+  if (log) return(logdens)
+  return(exp(logdens))
+}
+```
+
+Hurdle, which reuses the same `p0`:
+
+```r
+dhfoo <- function(x, theta, zeroprob = 0.5, log = FALSE) {
+  # ... guards and escapes as usual ...
+  logdens <- log_hurdle(x, dfoo(x, theta, log = TRUE), p0, zeroprob)
+  if (log) return(logdens)
+  return(exp(logdens))
+}
+```
+
+`log_hurdle()` combines the two branches with `logspace_add()`, so either can be
+exactly zero, `zeroprob = 0` and `zeroprob = 1` included, without producing
+`NaN`. The cdf is
+`greater(q, -1) * (zeroprob + (1 - zeroprob) * pztfoo(q, theta))`. The RNG draws
+a uniform, keeps the zeros, and fills the rest from `rztfoo`.
 
 ## Reparameterised variants
 
-Transform parameters at the top and delegate to the base function:
+Transform the parameters at the top and delegate. The `2` suffix means a
+reparameterisation, usually in terms of the mean.
 
 ```r
 dfoo2 <- function(x, mean, sd, log = FALSE) {
@@ -215,105 +310,64 @@ dfoo2 <- function(x, mean, sd, log = FALSE) {
 }
 ```
 
-Do not skip the `simulation_check` and simref/osa escapes just because the
-base function also has them.
+Keep the `simulation_check` and the simref/osa escapes even though the base
+function has them. The escapes need to report `dfoo2`, not `dfoo`.
 
----
+## Distributions to read
 
-## Documentation
+The example above is deliberately simple. When you hit something it does not
+cover, the shortest route is usually to open a distribution that already solves
+the same problem.
 
-Use the `@name` / `NULL` trick to attach the shared Roxygen block to a dummy
-object and give each function `@rdname`:
-
-```r
-#' Foo distribution
-#'
-#' Density, distribution function, quantile function, and random generation
-#' for the Foo distribution.
-#'
-#' @details
-#' The Foo distribution with parameter \eqn{\theta > 0} has density
-#' \deqn{f(x;\,\theta) = \theta e^{-\theta x}, \quad x \ge 0.}
-#'
-#' @param x,q vector of quantiles
-#' @param p vector of probabilities
-#' @param n number of random values to return
-#' @param theta positive rate parameter
-#' @param log,log.p logical; if \code{TRUE}, probabilities/densities are
-#'   returned as \eqn{\log(p)}.
-#' @param lower.tail logical; if \code{TRUE} (default), probabilities are
-#'   \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.
-#' @references \url{https://en.wikipedia.org/wiki/...}
-#' @return \code{dfoo} gives the density, \code{pfoo} gives the distribution
-#'   function, \code{qfoo} gives the quantile function, and \code{rfoo}
-#'   generates random deviates.
-#' @examples
-#' x <- rfoo(1, theta = 2)
-#' d <- dfoo(x, theta = 2)
-#' p <- pfoo(x, theta = 2)
-#' q <- qfoo(p, theta = 2)
-#' @name foo
-NULL
-
-#' @rdname foo
-#' @export
-#' @import RTMB
-dfoo <- function(x, theta, log = FALSE) { ... }
-```
-
-Write the `\deqn{}` in clean mathematical form — not the numerically stable
-implementation. Use `@import RTMB` on every function that uses arithmetic or
-mathematical operations. Use `@importFrom stats r<base>` in the RNG for the
-base sampler.
-
----
-
-## Tests
-
-Place tests in `tests/testthat/test-<dist>.R`. Use two parameter combinations
-and always include an AD gradient check.
-
-**Continuous distribution:**
-
-```r
-test_that("foo passes standard distribution checks (theta=1)", {
-  check_continuous_dist(dfoo, pfoo, qfoo,
-    xs = c(0.2, 0.5, 1, 2),
-    lower = 0, upper = Inf,
-    theta = 1)
-})
-
-test_that("foo passes standard distribution checks (theta=3)", {
-  check_continuous_dist(dfoo, pfoo, qfoo,
-    xs = c(0.1, 0.4, 0.8, 1.5),
-    lower = 0, upper = Inf,
-    theta = 3)
-})
-
-test_that("foo AD gradient has no NaN", {
-  check_ad_gradient(dfoo, rfoo, theta = 1)
-})
-```
-
-Choose `xs` so that `pfoo(xs)` stays well away from 0 and 1 — the
-`q(p(x))` round-trip returns `Inf` or `-Inf` when the CDF saturates in
-double precision.
-
-Other helpers for different distribution types:
-
-| Type | Helper |
+| If you are writing | Read |
 |---|---|
-| Continuous | `check_continuous_dist` |
-| Continuous without quantile function | `check_continuous_dist(..., qfun = NULL)` |
-| Zero-inflated continuous | `check_zeroinfl_dist` |
-| Mixed/inflated (ZI+OI etc.) | `check_inflated_dist` |
-| Discrete | `check_discrete_dist` |
+| a plain continuous distribution, closed forms throughout | `R/gompertz.R`, `R/llogis.R` |
+| a discrete distribution | `R/ztpois.R`, `R/zipois.R` |
+| a reparameterisation of an existing one | `R/nbinom2.R`, `R/beta2.R` |
+| zero-inflated, zero-truncated or hurdle | `R/zipois.R`, `R/ztpois.R`, `R/hpois.R` |
+| something with an awkward support boundary | `R/pareto.R` (\eqn{x > 1}), `R/zibeta.R` (excluding \eqn{x = 1}) |
+| a term that has to be clamped to stay finite | `R/kumar.R` |
+| a quantile function that needs root finding | `R/exgauss.R` |
+| a density that needs branching on a parameter | `R/bccg.R`, `R/bcpe.R` |
+| an AD version of a `stats` function | `R/ad-dispatch.R`, `R/geom-ad.R` |
 
-## Vignette entry
+## Before you are done
 
-Add one bullet to `vignettes/distlist.Rmd` in the correct section
-(Continuous / Discrete / Multivariate) in alphabetical order:
+- `devtools::document()`, so `NAMESPACE` and the `man/` pages are regenerated.
+- `devtools::test()` for the new file, then the whole suite. A new distribution
+  that breaks an old test usually means a shared helper changed behaviour.
+- `devtools::check()`. Watch in particular for `checking Rd cross-references`,
+  which catches a `@seealso` pointing at a topic that does not exist.
+- Check the `NAMESPACE` diff. If it contains anything beyond your own exports,
+  something imported more than you meant it to.
 
+## When `RTMB` has no AD version {#when-rtmb-has-no-ad-version}
+
+`RTMB` covers most of `stats` but not all of it. `dgeom`, `pt` and `plnorm` have
+no AD method. Exporting your own version of one would mask the `stats` function
+for everyone who loads `RTMBdist` and break their ordinary calls.
+
+`R/ad-dispatch.R` avoids that. Write the AD implementation as `<fn>.ad`, export
+it, and register an unexported S4 generic:
+
+```r
+setGeneric("pt", signature = c("q", "df"))
+setMethod("pt", signature(q = "num", df = "num."), stats::pt)          # plain numbers
+setMethod("pt", signature(q = "ad",  df = "ad." ),                     # any AD variable
+          function(q, df, ncp, lower.tail = TRUE, log.p = FALSE) { ... pt.ad(q, df) ... })
 ```
-* [`foo(theta)`](../reference/foo.html): Foo distribution parameterised by rate `theta`
-```
+
+`num` and `ad` are `RTMB`'s dispatch classes: `ad` covers AD variables *and*
+numbers, `num` covers only numbers, so the more specific `num` method wins
+whenever nothing is being taped. A trailing dot (`num.`, `ad.`) also allows the
+argument to be missing.
+
+Since the generic is not exported, a user's `stats::pt()` is untouched, while
+inside the package a bare `pt()` dispatches correctly. It costs one S4 dispatch,
+under a microsecond, paid once when the tape is built rather than on every
+gradient evaluation.
+
+One import to avoid: never write `@importFrom stats pnorm` to get hold of a
+`pnorm`. That replaces `RTMB`'s AD-aware `pnorm` across the entire package and
+silently breaks taping in every file. Call `stats::pnorm()` at the point of use
+instead.
