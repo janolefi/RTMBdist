@@ -60,6 +60,15 @@ with `RTMB`.
 \exp\\\left(-\frac{(x+\mu)^2}{2\sigma^2}\right)\right\], \quad x \geq
 0.\$\$
 
+With \\\mu = 0\\ this is the half-normal distribution, the limiting case
+of the [half-t](https://janolefi.github.io/RTMBdist/reference/halft.md)
+as its degrees of freedom grow.
+
+## See also
+
+[halft](https://janolefi.github.io/RTMBdist/reference/halft.md),
+[halfcauchy](https://janolefi.github.io/RTMBdist/reference/halfcauchy.md)
+
 ## Examples
 
 ``` r

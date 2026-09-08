@@ -94,6 +94,12 @@ the folded normal distribution.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This implementation of <code>dfoldnorm</code> allows for automatic differentiation with <code>RTMB</code>.</p>
 <p>$$f(x;\,\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}}\left[\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) + \exp\!\left(-\frac{(x+\mu)^2}{2\sigma^2}\right)\right], \quad x \geq 0.$$</p>
+<p>With \(\mu = 0\) this is the half-normal distribution, the limiting case
+of the <a href="halft.html">half-t</a> as its degrees of freedom grow.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><a href="halft.html">halft</a>, <a href="halfcauchy.html">halfcauchy</a></p></div>
     </div>
 
     <div class="section level2">

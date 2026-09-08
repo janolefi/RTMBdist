@@ -137,6 +137,16 @@
   [`qgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`rgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   : Gumbel distribution
+- [`dhalfcauchy()`](https://janolefi.github.io/RTMBdist/reference/halfcauchy.md)
+  [`phalfcauchy()`](https://janolefi.github.io/RTMBdist/reference/halfcauchy.md)
+  [`qhalfcauchy()`](https://janolefi.github.io/RTMBdist/reference/halfcauchy.md)
+  [`rhalfcauchy()`](https://janolefi.github.io/RTMBdist/reference/halfcauchy.md)
+  : Half-Cauchy distribution
+- [`dhalft()`](https://janolefi.github.io/RTMBdist/reference/halft.md)
+  [`phalft()`](https://janolefi.github.io/RTMBdist/reference/halft.md)
+  [`qhalft()`](https://janolefi.github.io/RTMBdist/reference/halft.md)
+  [`rhalft()`](https://janolefi.github.io/RTMBdist/reference/halft.md) :
+  Half-t distribution
 - [`dhbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)
   [`rhbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)
   : Hurdle beta-binomial distribution

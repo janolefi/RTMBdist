@@ -2,6 +2,23 @@
 
 ## RTMBdist 1.2.0
 
+- Added the half-t
+  ([`dhalft()`](https://janolefi.github.io/RTMBdist/reference/halft.md))
+  and half-Cauchy
+  ([`dhalfcauchy()`](https://janolefi.github.io/RTMBdist/reference/halfcauchy.md))
+  distributions, each with matching `p`, `q` and `r` functions. These
+  are the standard weakly informative priors for the standard deviation
+  of a hierarchical model, so they are aimed squarely at models fitted
+  by the Laplace approximation. Both distribution functions are
+  differentiable, and
+  [`phalft()`](https://janolefi.github.io/RTMBdist/reference/halft.md)
+  differentiates with respect to `df` as well as `sigma`, so the degrees
+  of freedom can be estimated rather than fixed; one-step-ahead
+  residuals via `method = "cdf"` are supported. The half-Cauchy is the
+  half-t with `df = 1`, and the half-normal is
+  [`dfoldnorm()`](https://janolefi.github.io/RTMBdist/reference/foldnorm.md)
+  with `mu = 0`, which the half-t approaches as `df` grows.
+
 - Added the Yule-Simon
   ([`dyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md))
   and Waring

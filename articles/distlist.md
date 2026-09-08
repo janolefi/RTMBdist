@@ -59,6 +59,14 @@ distributions listed
 - [`gumbel(location, scale)`](https://janolefi.github.io/RTMBdist/reference/gumbel.md):
   Gumbel distribution parameterised by `location` and `scale`
 
+- [`halfcauchy(sigma)`](https://janolefi.github.io/RTMBdist/reference/halfcauchy.md):
+  Half-Cauchy distribution parameterised by scale `sigma`, a standard
+  weakly informative prior for hierarchical standard deviations
+
+- [`halft(df, sigma)`](https://janolefi.github.io/RTMBdist/reference/halft.md):
+  Half-t distribution parameterised by degrees of freedom `df` and scale
+  `sigma`
+
 - [`invchisq(df, scale)`](https://janolefi.github.io/RTMBdist/reference/invchisq.md):
   Inverse Chi-squared distribution parameterised by degrees of freedom
   `df` and optional `scale`
