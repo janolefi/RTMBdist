@@ -101,7 +101,7 @@ rzigamma <- function(n, shape, scale, zeroprob = 0) {
   u <- runif(n)
   res <- rep(0, n)
   is_zero <- u < zeroprob
-  res[!is_zero] <- rgamma(sum(!is_zero), shape = shape, scale = scale)
+  res[!is_zero] <- rgamma(sum(!is_zero), shape = rep_len(shape, n)[!is_zero], scale = rep_len(scale, n)[!is_zero])
 
   return(res)
 }

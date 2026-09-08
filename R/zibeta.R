@@ -120,7 +120,7 @@ rzibeta <- function(n, shape1, shape2, zeroprob = 0) {
   u <- runif(n)
   res <- rep(0, n)
   is_zero <- u < zeroprob
-  res[!is_zero] <- rbeta(sum(!is_zero), shape1, shape2)
+  res[!is_zero] <- rbeta(sum(!is_zero), rep_len(shape1, n)[!is_zero], rep_len(shape2, n)[!is_zero])
 
   return(res)
 }

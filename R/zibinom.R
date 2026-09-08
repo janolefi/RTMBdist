@@ -87,7 +87,7 @@ rzibinom <- function(n, size, prob, zeroprob = 0) {
   u <- runif(n)
   res <- rep(0, n)
   is_zero <- u < zeroprob
-  res[!is_zero] <- rbinom(sum(!is_zero), size=size, prob=prob)
+  res[!is_zero] <- rbinom(sum(!is_zero), size = rep_len(size, n)[!is_zero], prob = rep_len(prob, n)[!is_zero])
 
   return(res)
 }

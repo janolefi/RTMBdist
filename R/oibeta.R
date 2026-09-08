@@ -98,7 +98,7 @@ roibeta <- function(n, shape1, shape2, oneprob = 0) {
   u <- runif(n)
   res <- rep(1, n)
   is_one <- u < oneprob
-  res[!is_one] <- rbeta(sum(!is_one), shape1, shape2)
+  res[!is_one] <- rbeta(sum(!is_one), rep_len(shape1, n)[!is_one], rep_len(shape2, n)[!is_one])
 
   return(res)
 }

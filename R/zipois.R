@@ -82,7 +82,7 @@ rzipois <- function(n, lambda, zeroprob = 0) {
   u <- runif(n)
   res <- rep(0, n)
   is_zero <- u < zeroprob
-  res[!is_zero] <- rpois(sum(!is_zero), lambda)
+  res[!is_zero] <- rpois(sum(!is_zero), rep_len(lambda, n)[!is_zero])
 
   return(res)
 }

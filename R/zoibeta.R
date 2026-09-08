@@ -131,7 +131,7 @@ rzoibeta <- function(n, shape1, shape2, zeroprob = 0, oneprob = 0) {
   is_one  <- u >= zeroprob & u < zeroprob + oneprob
   is_cont <- !is_zero & !is_one
   res[is_one]  <- 1
-  res[is_cont] <- rbeta(sum(is_cont), shape1, shape2)
+  res[is_cont] <- rbeta(sum(is_cont), rep_len(shape1, n)[is_cont], rep_len(shape2, n)[is_cont])
 
   return(res)
 }

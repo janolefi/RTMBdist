@@ -98,7 +98,7 @@ rzilnorm <- function(n, meanlog = 0, sdlog = 1, zeroprob = 0) {
   u <- runif(n)
   res <- rep(0, n)
   is_zero <- u < zeroprob
-  res[!is_zero] <- rlnorm(sum(!is_zero), meanlog = meanlog, sdlog = sdlog)
+  res[!is_zero] <- rlnorm(sum(!is_zero), meanlog = rep_len(meanlog, n)[!is_zero], sdlog = rep_len(sdlog, n)[!is_zero])
 
   return(res)
 }
