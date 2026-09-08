@@ -2,15 +2,15 @@
 
 ## Purpose of this submission
 
-This release removes the dependency on 'gamlss.dist', which is scheduled for
+This release removes the dependency on gamlss.dist, which is scheduled for
 archival on 2026-09-27.
 
 RTMBdist previously imported seventeen quantile and random generation functions
-from 'gamlss.dist'. All of them are now implemented within RTMBdist itself, and
-'gamlss.dist' has been dropped from Imports. The archival therefore no longer
-affects this package, nor its strong reverse dependency 'LaMa'.
+from gamlss.dist. All of them are now implemented within RTMBdist itself, and
+gamlss.dist has been dropped from Imports. The archival therefore no longer
+affects this package, nor its strong reverse dependency LaMa.
 
-The ported functions were checked against 'gamlss.dist' 6.1-1 over a grid of
+The ported functions were checked against gamlss.dist 6.1-1 over a grid of
 roughly 1750 parameter combinations before and after the change. All results are
 unchanged except where noted in NEWS.md, and random number generation is
 identical stream-for-stream under a common seed.
@@ -24,8 +24,8 @@ exGAUS and PARETO) are derived from the corresponding families in 'gamlss.dist',
 which is released under GPL-2 | GPL-3. Previously most of that code was reached
 through Imports; it is now contained in RTMBdist itself. The package is
 therefore released under the same terms as the code it is derived from, matching
-the 'gamlss.dist' license field exactly. The derived files carry comments
-identifying the 'gamlss.dist' source file each was taken from.
+the gamlss.dist license field exactly. The derived files carry comments
+identifying the gamlss.dist source file each was taken from.
 
 ## Test environments
 
@@ -39,8 +39,8 @@ identifying the 'gamlss.dist' source file each was taken from.
 
 ## Reverse dependencies
 
-RTMBdist has one strong reverse dependency, 'LaMa', and one package that
-suggests it, 'multiSA'. Both were checked against this version and are
+RTMBdist has one strong reverse dependency, LaMa, and one package that
+suggests it, multiSA. Both were checked against this version and are
 unaffected.
 
 ## Other changes
