@@ -8,6 +8,8 @@
 #'
 #' \deqn{f(x;\,\mu,\sigma) = \frac{1}{\sigma}\exp\!\bigl(-(z + e^{-z})\bigr), \quad z = \frac{x-\mu}{\sigma}.}
 #'
+#' @seealso [gev], [frechet], [gpd]
+#'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities
 #' @param n number of random values to return

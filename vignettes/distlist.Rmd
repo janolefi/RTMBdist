@@ -32,9 +32,15 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 * [`foldnorm(mu, sigma)`](../reference/foldnorm.html): Folded normal distribution parameterised by location `mu` and scale `sigma`
 
+* [`frechet(mu, sigma, alpha)`](../reference/frechet.html): Frechet distribution parameterised by location `mu`, scale `sigma`, and shape `alpha`
+
 * [`gamma2(mean, sd)`](../reference/gamma2.html): Gamma distribution reparameterised by mean and standard deviation
 
 * [`gengamma(mu, sigma, nu)`](../reference/gengamma.html): Generalised gamma distribution parameterised by location `mu`, scale `sigma`, and skewness `nu`
+
+* [`gev(mu, sigma, xi)`](../reference/gev.html): Generalised extreme value distribution parameterised by location `mu`, scale `sigma`, and shape `xi`
+
+* [`gpd(mu, sigma, xi)`](../reference/gpd.html): Generalised Pareto distribution parameterised by threshold `mu`, scale `sigma`, and shape `xi`
 
 * [`gompertz(eta, b)`](../reference/gompertz.html): Gompertz distribution parameterised by shape `eta` and rate `b`
 

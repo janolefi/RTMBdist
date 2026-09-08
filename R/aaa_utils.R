@@ -259,6 +259,26 @@ inv_boxcox <- function(mu, sigma, nu, z) {
   ifelse(nu != 0, mu * (nu * sigma * z + 1)^(1 / nu), mu * exp(sigma * z))
 }
 
+# log(1 + u) / u, the ratio the generalised extreme value, generalised Pareto
+# and related families need in order to write -log(1 + xi z) / xi as a single
+# expression that stays finite at xi = 0 (where it equals 1).
+#
+# Writing it as a branch on iszero(xi) would give a zero derivative with respect
+# to xi at xi = 0, which is exactly the value people start an optimiser at. Here
+# the small-u branch is a Taylor series, so the derivative at u = 0 is the true
+# one. Neither branch is ever singular: away from zero, usafe is u; near zero,
+# usafe is u + 1, so the division is by a number close to 1 rather than close to
+# 0. Multiplying that finite value by the zero weight gives 0 rather than NaN.
+log1p_over_x <- function(u) {
+  small <- smaller(abs(u), 1e-2) # zero derivative, so it only selects a branch
+  usafe <- u + small
+
+  series <- 1 - u * (1/2 - u * (1/3 - u * (1/4 - u * (1/5 -
+              u * (1/6 - u * (1/7 - u / 8))))))
+
+  (1 - small) * (log1p(usafe) / usafe) + small * series
+}
+
 reggamma <- function(s, x) {
   if (ad_context()) {
     # RTMB's pgamma errors when lower.tail is passed inside an AD context, so

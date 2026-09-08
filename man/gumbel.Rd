@@ -49,3 +49,6 @@ d <- dgumbel(x, 0.5, 2)
 p <- pgumbel(x, 0.5, 2)
 q <- qgumbel(p, 0.5, 2)
 }
+\seealso{
+\link{gev}, \link{frechet}, \link{gpd}
+}

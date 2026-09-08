@@ -13,7 +13,7 @@
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 #' doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
 #'
-#' @seealso [llogis], [gengamma]
+#' @seealso [gpd], [llogis], [gengamma]
 #'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities

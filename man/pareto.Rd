@@ -54,5 +54,5 @@ Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Di
 doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
 }
 \seealso{
-\link{llogis}, \link{gengamma}
+\link{gpd}, \link{llogis}, \link{gengamma}
 }
