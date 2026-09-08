@@ -1,4 +1,8 @@
-# RTMBdist 1.1.0
+# RTMBdist 1.2.0
+
+- Added the Yule-Simon (`dyules()`) and Waring (`dwaring()`) distributions, two classical long-tailed count laws, each with matching `p` and `r` functions. Both are beta-geometric special cases of the beta-negative binomial, with `size` fixed at one, and that restriction is what gives them a closed-form distribution function where the general beta-negative binomial has none; one-step-ahead residuals via `method = "cdf"` are therefore available for these two. `dyules()` follows `VGAM` and is supported on the positive integers, while `dwaring()` follows the `WARING` family of `gamlss.dist`, starts at zero and has `mu` as its mean. The `YULE` family of `gamlss.dist` is `dwaring(x, mu, mu)`.
+
+- Added the beta-negative binomial distribution (`dbnbinom()`) and its mean parameterisation (`dbnbinom2()`), each with a matching `r` function. It is to the negative binomial what the beta-binomial is to the binomial, and its extra beta layer gives a considerably heavier tail. In `dbnbinom2()`, which follows the `BNB` family of `gamlss.dist`, `mu` is exactly the mean; this is the more stable parameterisation to estimate in, because the original one has a long likelihood ridge along which `size` and `shape2` trade off. Like the beta-binomial, neither has a distribution function, so one-step-ahead residuals are not available.
 
 - Added the extreme value distributions: the generalised extreme value distribution (`dgev()`), the generalised Pareto distribution (`dgpd()`) and the Frechet distribution (`dfrechet()`), each with matching `p`, `q` and `r` functions. The first two cover their three shape regimes with a single expression rather than a branch on the sign of `xi`, so the derivative with respect to the shape is exact at `xi = 0`, which is the usual starting value when the shape is estimated. Densities and distribution functions are differentiable, so simulation and one-step-ahead residuals via `method = "cdf"` are supported. Unlike `VGAM`, `evd` and `extraDistr`, `dgpd()` returns `1 / sigma` rather than zero at the threshold itself, matching `stats::dexp()` at zero.
 
@@ -13,6 +17,8 @@
 - Added the hurdle (zero-altered) count distributions: Poisson (`dhpois()`), binomial (`dhbinom()`), negative binomial (`dhnbinom()`) and its mean parameterisation (`dhnbinom2()`), each with matching `p` and `r` functions. In a hurdle distribution the probability of a zero is a free parameter and the positive counts follow the corresponding zero-truncated distribution. Unlike zero-inflation, which can only add zeros, a hurdle model allows `zeroprob` to be smaller than the Poisson would give on its own. The density and distribution function are both differentiable, so simulation and one-step-ahead residuals via `method = "cdf"` are supported.
 
 - Fixed `pztnbinom()` and `pztnbinom2()`, which returned `NaN` instead of 0 for quantiles below their support.
+
+# RTMBdist 1.1.0
 
 - Added the Johnson SU distribution in both the original parameterisation (`djsu()`, `pjsu()`, `qjsu()`, `rjsu()`) and the moment parameterisation (`djsu2()`, `pjsu2()`, `qjsu2()`, `rjsu2()`), a four-parameter distribution on the real line covering a wide range of skewness and kurtosis. In `djsu2()` the location and scale arguments are exactly the mean and standard deviation. The density and distribution function are both differentiable, so simulation and one-step-ahead residuals are supported. Unlike `gamlss.dist`, the reparameterisation stays finite for very large `tau`, where the distribution approaches the normal.
 
