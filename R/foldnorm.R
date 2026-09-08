@@ -8,6 +8,11 @@
 #'
 #' \deqn{f(x;\,\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}}\left[\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) + \exp\!\left(-\frac{(x+\mu)^2}{2\sigma^2}\right)\right], \quad x \geq 0.}
 #'
+#' With \eqn{\mu = 0} this is the half-normal distribution, the limiting case
+#' of the \link[=halft]{half-t} as its degrees of freedom grow.
+#'
+#' @seealso [halft], [halfcauchy]
+#'
 #' @param x,q vector of quantiles
 #' @param p vector of probabilities
 #' @param n number of random values to return

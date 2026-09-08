@@ -39,9 +39,15 @@ the folded normal distribution.
 This implementation of \code{dfoldnorm} allows for automatic differentiation with \code{RTMB}.
 
 \deqn{f(x;\,\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}}\left[\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) + \exp\!\left(-\frac{(x+\mu)^2}{2\sigma^2}\right)\right], \quad x \geq 0.}
+
+With \eqn{\mu = 0} this is the half-normal distribution, the limiting case
+of the \link[=halft]{half-t} as its degrees of freedom grow.
 }
 \examples{
 x <- rfoldnorm(1, 1, 2)
 d <- dfoldnorm(x, 1, 2)
 p <- pfoldnorm(x, 1, 2)
+}
+\seealso{
+\link{halft}, \link{halfcauchy}
 }

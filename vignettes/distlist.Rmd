@@ -46,6 +46,10 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 * [`gumbel(location, scale)`](../reference/gumbel.html): Gumbel distribution parameterised by `location` and `scale`
 
+* [`halfcauchy(sigma)`](../reference/halfcauchy.html): Half-Cauchy distribution parameterised by scale `sigma`, a standard weakly informative prior for hierarchical standard deviations
+
+* [`halft(df, sigma)`](../reference/halft.html): Half-t distribution parameterised by degrees of freedom `df` and scale `sigma`
+
 * [`invchisq(df, scale)`](../reference/invchisq.html): Inverse Chi-squared distribution parameterised by degrees of freedom `df` and optional `scale`
 
 * [`invgamma(shape, rate, scale)`](../reference/invgamma.html): Inverse gamma distribution parameterised by `shape`, `rate`, and `scale` of the corresponding gamma distribution
