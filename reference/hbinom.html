@@ -98,12 +98,14 @@ processes: the probability of a zero is a free parameter, and the positive
 counts follow the corresponding zero-truncated distribution. Writing
 \(p_0\) for <code>zeroprob</code>,
 $$P(X = 0) = p_0, \qquad
-      P(X = x) = (1 - p_0)\,\frac{P_{\mathrm{Bin}}(x;\,n,\pi)}{1 - (1-\pi)^{n}},
-      \quad x = 1, \ldots, n.$$</p>
+      P(X = x) = (1 - p_0)\,\frac{P_{\mathrm{Bin}}(x;\,n,\pi)}{1 - \pi_0},
+      \quad x = 1, \ldots, n.$$
+where \(\pi_0 = P_{\mathrm{Bin}}(0;\,n,\pi)\) is the probability of a zero under
+the ordinary binomial.</p>
 <p>Unlike zero-inflation, which can only add zeros to those the binomial already
 produces, <code>zeroprob</code> here is exactly the probability of a zero and may be
-larger <em>or</em> smaller than \((1-\pi)^n\). The two coincide with the
-ordinary binomial when <code>zeroprob</code> equals \((1-\pi)^n\).</p>
+larger <em>or</em> smaller than \(\pi_0\). The two coincide with the
+ordinary binomial when <code>zeroprob</code> equals \(\pi_0\).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

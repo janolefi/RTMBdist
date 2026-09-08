@@ -103,6 +103,9 @@
   [`qgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
   [`rgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
   : Generalised Poisson distribution
+- [`dgeom.ad()`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md)
+  [`pgeom.ad()`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md)
+  : AD-compatible geometric distribution
 - [`dgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
   [`pgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
   [`qgompertz()`](https://janolefi.github.io/RTMBdist/reference/gompertz.md)
@@ -113,10 +116,17 @@
   [`qgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   [`rgumbel()`](https://janolefi.github.io/RTMBdist/reference/gumbel.md)
   : Gumbel distribution
+- [`dhbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)
+  [`rhbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)
+  : Hurdle beta-binomial distribution
 - [`dhbinom()`](https://janolefi.github.io/RTMBdist/reference/hbinom.md)
   [`phbinom()`](https://janolefi.github.io/RTMBdist/reference/hbinom.md)
   [`rhbinom()`](https://janolefi.github.io/RTMBdist/reference/hbinom.md)
   : Hurdle binomial distribution
+- [`dhgeom()`](https://janolefi.github.io/RTMBdist/reference/hgeom.md)
+  [`phgeom()`](https://janolefi.github.io/RTMBdist/reference/hgeom.md)
+  [`rhgeom()`](https://janolefi.github.io/RTMBdist/reference/hgeom.md) :
+  Hurdle geometric distribution
 - [`dhnbinom()`](https://janolefi.github.io/RTMBdist/reference/hnbinom.md)
   [`phnbinom()`](https://janolefi.github.io/RTMBdist/reference/hnbinom.md)
   [`rhnbinom()`](https://janolefi.github.io/RTMBdist/reference/hnbinom.md)
@@ -241,7 +251,7 @@
   [`pt2()`](https://janolefi.github.io/RTMBdist/reference/t2.md)
   [`rt2()`](https://janolefi.github.io/RTMBdist/reference/t2.md)
   [`qt2()`](https://janolefi.github.io/RTMBdist/reference/t2.md)
-  [`pt()`](https://janolefi.github.io/RTMBdist/reference/t2.md) :
+  [`pt.ad()`](https://janolefi.github.io/RTMBdist/reference/t2.md) :
   Student t distribution with location and scale
 - [`dtruncnorm()`](https://janolefi.github.io/RTMBdist/reference/truncnorm.md)
   [`ptruncnorm()`](https://janolefi.github.io/RTMBdist/reference/truncnorm.md)
@@ -284,6 +294,9 @@
   [`pzibeta2()`](https://janolefi.github.io/RTMBdist/reference/zibeta2.md)
   [`rzibeta2()`](https://janolefi.github.io/RTMBdist/reference/zibeta2.md)
   : Reparameterised zero-inflated beta distribution
+- [`dzibetabinom()`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md)
+  [`rzibetabinom()`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md)
+  : Zero-inflated beta-binomial distribution
 - [`dzibinom()`](https://janolefi.github.io/RTMBdist/reference/zibinom.md)
   [`pzibinom()`](https://janolefi.github.io/RTMBdist/reference/zibinom.md)
   [`rzibinom()`](https://janolefi.github.io/RTMBdist/reference/zibinom.md)
@@ -296,6 +309,10 @@
   [`pzigamma2()`](https://janolefi.github.io/RTMBdist/reference/zigamma2.md)
   [`rzigamma2()`](https://janolefi.github.io/RTMBdist/reference/zigamma2.md)
   : Zero-inflated and reparameterised gamma distribution
+- [`dzigeom()`](https://janolefi.github.io/RTMBdist/reference/zigeom.md)
+  [`pzigeom()`](https://janolefi.github.io/RTMBdist/reference/zigeom.md)
+  [`rzigeom()`](https://janolefi.github.io/RTMBdist/reference/zigeom.md)
+  : Zero-inflated geometric distribution
 - [`dziinvgauss()`](https://janolefi.github.io/RTMBdist/reference/ziinvgauss.md)
   [`pziinvgauss()`](https://janolefi.github.io/RTMBdist/reference/ziinvgauss.md)
   [`rziinvgauss()`](https://janolefi.github.io/RTMBdist/reference/ziinvgauss.md)
@@ -303,7 +320,7 @@
 - [`dzilnorm()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
   [`pzilnorm()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
   [`rzilnorm()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
-  [`plnorm()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
+  [`plnorm.ad()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md)
   : Zero-inflated log normal distribution
 - [`dzinbinom()`](https://janolefi.github.io/RTMBdist/reference/zinbinom.md)
   [`pzinbinom()`](https://janolefi.github.io/RTMBdist/reference/zinbinom.md)
@@ -329,10 +346,17 @@
   [`pzoibeta2()`](https://janolefi.github.io/RTMBdist/reference/zoibeta2.md)
   [`rzoibeta2()`](https://janolefi.github.io/RTMBdist/reference/zoibeta2.md)
   : Reparameterised zero- and one-inflated beta distribution
+- [`dztbetabinom()`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md)
+  [`rztbetabinom()`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md)
+  : Zero-truncated beta-binomial distribution
 - [`dztbinom()`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md)
   [`pztbinom()`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md)
   [`rztbinom()`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md)
   : Zero-truncated Binomial distribution
+- [`dztgeom()`](https://janolefi.github.io/RTMBdist/reference/ztgeom.md)
+  [`pztgeom()`](https://janolefi.github.io/RTMBdist/reference/ztgeom.md)
+  [`rztgeom()`](https://janolefi.github.io/RTMBdist/reference/ztgeom.md)
+  : Zero-truncated geometric distribution
 - [`dztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md)
   [`pztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md)
   [`rztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md)

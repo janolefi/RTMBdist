@@ -216,6 +216,9 @@ distributions listed
   Zero-inflated negative binomial distribution reparameterised by mean
   `mu`, size `size` and zero-probability `zeroprob`
 
+- [`hbetabinom(size, shape1, shape2, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md):
+  Hurdle (zero-altered) beta-binomial distribution
+
 - [`hbinom(size, prob, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hbinom.md):
   Hurdle (zero-altered) binomial distribution parameterised by `size`,
   `prob` and the probability of a zero `zeroprob`
@@ -229,13 +232,36 @@ distributions listed
   by the untruncated mean `mu`, `size` and the probability of a zero
   `zeroprob`
 
+- [`hgeom(prob, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hgeom.md):
+  Hurdle (zero-altered) geometric distribution
+
 - [`hpois(lambda, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/hpois.md):
   Hurdle (zero-altered) Poisson distribution parameterised by the
   Poisson mean `lambda` and the probability of a zero `zeroprob`
 
+- [`zibetabinom(size, shape1, shape2, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md):
+  Zero-inflated beta-binomial distribution
+
+- [`geom.ad(prob)`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md):
+  AD-compatible geometric density and distribution function
+  ([`dgeom.ad()`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md),
+  [`pgeom.ad()`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md));
+  `stats`’ own
+  [`dgeom()`](https://rdrr.io/r/stats/Geometric.html)/[`pgeom()`](https://rdrr.io/r/stats/Geometric.html)
+  are left untouched
+
+- [`zigeom(prob, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/zigeom.md):
+  Zero-inflated geometric distribution
+
 - [`zipois(lambda, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/zipois.md):
   Zero-inflated Poisson distribution parameterised by rate `lambda` and
   zero-probability `zeroprob`
+
+- [`ztbetabinom(size, shape1, shape2)`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md):
+  Zero-truncated beta-binomial distribution
+
+- [`ztgeom(prob)`](https://janolefi.github.io/RTMBdist/reference/ztgeom.md):
+  Zero-truncated geometric distribution
 
 - [`ztbinom(size, prob)`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md):
   Zero-truncated binomial distribution parameterised by size `size` and

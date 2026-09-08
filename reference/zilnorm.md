@@ -13,7 +13,7 @@ pzilnorm(q, meanlog = 0, sdlog = 1, zeroprob = 0,
 
 rzilnorm(n, meanlog = 0, sdlog = 1, zeroprob = 0)
 
-plnorm(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE)
+plnorm.ad(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE)
 ```
 
 ## Arguments
@@ -49,6 +49,12 @@ plnorm(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE)
 
 `dzilnorm` gives the density, `pzilnorm` gives the distribution
 function, and `rzilnorm` generates random deviates.
+
+`plnorm.ad` is an AD-compatible replacement for
+[`stats::plnorm`](https://rdrr.io/r/stats/Lognormal.html). It is used
+internally and is reached automatically whenever an argument is an AD
+variable, so [`stats::plnorm`](https://rdrr.io/r/stats/Lognormal.html)
+is left untouched for ordinary use.
 
 ## Details
 

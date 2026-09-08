@@ -263,6 +263,8 @@ zero-probability <code>zeroprob</code></p></li>
 Zero-inflated negative binomial distribution reparameterised by mean
 <code>mu</code>, size <code>size</code> and zero-probability
 <code>zeroprob</code></p></li>
+<li><p><a href="../reference/hbetabinom.html"><code>hbetabinom(size, shape1, shape2, zeroprob)</code></a>:
+Hurdle (zero-altered) beta-binomial distribution</p></li>
 <li><p><a href="../reference/hbinom.html"><code>hbinom(size, prob, zeroprob)</code></a>:
 Hurdle (zero-altered) binomial distribution parameterised by
 <code>size</code>, <code>prob</code> and the probability of a zero
@@ -275,13 +277,28 @@ Hurdle (zero-altered) negative binomial distribution parameterised by
 Hurdle (zero-altered) negative binomial distribution reparameterised by
 the untruncated mean <code>mu</code>, <code>size</code> and the
 probability of a zero <code>zeroprob</code></p></li>
+<li><p><a href="../reference/hgeom.html"><code>hgeom(prob, zeroprob)</code></a>:
+Hurdle (zero-altered) geometric distribution</p></li>
 <li><p><a href="../reference/hpois.html"><code>hpois(lambda, zeroprob)</code></a>:
 Hurdle (zero-altered) Poisson distribution parameterised by the Poisson
 mean <code>lambda</code> and the probability of a zero
 <code>zeroprob</code></p></li>
+<li><p><a href="../reference/zibetabinom.html"><code>zibetabinom(size, shape1, shape2, zeroprob)</code></a>:
+Zero-inflated beta-binomial distribution</p></li>
+<li><p><a href="../reference/geom.ad.html"><code>geom.ad(prob)</code></a>:
+AD-compatible geometric density and distribution function
+(<code><a href="../reference/geom.ad.html">dgeom.ad()</a></code>, <code><a href="../reference/geom.ad.html">pgeom.ad()</a></code>); <code>stats</code>’
+own <code><a href="https://rdrr.io/r/stats/Geometric.html" class="external-link">dgeom()</a></code>/<code><a href="https://rdrr.io/r/stats/Geometric.html" class="external-link">pgeom()</a></code> are left
+untouched</p></li>
+<li><p><a href="../reference/zigeom.html"><code>zigeom(prob, zeroprob)</code></a>:
+Zero-inflated geometric distribution</p></li>
 <li><p><a href="../reference/zipois.html"><code>zipois(lambda, zeroprob)</code></a>:
 Zero-inflated Poisson distribution parameterised by rate
 <code>lambda</code> and zero-probability <code>zeroprob</code></p></li>
+<li><p><a href="../reference/ztbetabinom.html"><code>ztbetabinom(size, shape1, shape2)</code></a>:
+Zero-truncated beta-binomial distribution</p></li>
+<li><p><a href="../reference/ztgeom.html"><code>ztgeom(prob)</code></a>:
+Zero-truncated geometric distribution</p></li>
 <li><p><a href="../reference/ztbinom.html"><code>ztbinom(size, prob)</code></a>:
 Zero-truncated binomial distribution parameterised by size
 <code>size</code> and success probability <code>prob</code></p></li>

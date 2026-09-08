@@ -57,13 +57,14 @@ A hurdle distribution models the zeros and the positive counts as two
 separate processes: the probability of a zero is a free parameter, and
 the positive counts follow the corresponding zero-truncated
 distribution. Writing \\p_0\\ for `zeroprob`, \$\$P(X = 0) = p_0, \qquad
-P(X = x) = (1 - p_0)\\\frac{P\_{\mathrm{NB}}(x;\\r,\pi)}{1 - \pi^{r}},
-\quad x = 1, 2, \ldots\$\$
+P(X = x) = (1 - p_0)\\\frac{P\_{\mathrm{NB}}(x;\\r,\pi)}{1 - \pi_0},
+\quad x = 1, 2, \ldots\$\$ where \\\pi_0 = P\_{\mathrm{NB}}(0;\\r,\pi)\\
+is the probability of a zero under the ordinary negative binomial.
 
 Unlike zero-inflation, which can only add zeros to those the negative
 binomial already produces, `zeroprob` here is exactly the probability of
-a zero and may be larger *or* smaller than \\\pi^{r}\\. The two coincide
-with the ordinary negative binomial when `zeroprob` equals \\\pi^{r}\\.
+a zero and may be larger *or* smaller than \\\pi_0\\. The two coincide
+with the ordinary negative binomial when `zeroprob` equals \\\pi_0\\.
 
 ## References
 

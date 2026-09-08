@@ -2,6 +2,53 @@
 
 ## RTMBdist 1.1.0
 
+- `RTMBdist` no longer masks anything in `stats`. The AD-compatible
+  replacements for [`stats::pt()`](https://rdrr.io/r/stats/TDist.html),
+  [`stats::plnorm()`](https://rdrr.io/r/stats/Lognormal.html),
+  [`stats::dgeom()`](https://rdrr.io/r/stats/Geometric.html) and
+  [`stats::pgeom()`](https://rdrr.io/r/stats/Geometric.html) are
+  exported as
+  [`pt.ad()`](https://janolefi.github.io/RTMBdist/reference/t2.md),
+  [`plnorm.ad()`](https://janolefi.github.io/RTMBdist/reference/zilnorm.md),
+  [`dgeom.ad()`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md)
+  and
+  [`pgeom.ad()`](https://janolefi.github.io/RTMBdist/reference/geom.ad.md),
+  and are reached through internal S4 generics that dispatch on the
+  argument classes: plain numeric input goes to the `stats` versions, AD
+  variables to the `.ad` versions. Previously
+  [`pt()`](https://rdrr.io/r/stats/TDist.html) was exported with a
+  reduced argument list, so `pt(q, df, lower.tail = FALSE)` failed for
+  anyone who had loaded the package. As a side effect `lower.tail` and
+  `log.p` now also work for [`pt()`](https://rdrr.io/r/stats/TDist.html)
+  under automatic differentiation.
+
+- Added the zero-inflated
+  ([`dzigeom()`](https://janolefi.github.io/RTMBdist/reference/zigeom.md)),
+  zero-truncated
+  ([`dztgeom()`](https://janolefi.github.io/RTMBdist/reference/ztgeom.md))
+  and hurdle
+  ([`dhgeom()`](https://janolefi.github.io/RTMBdist/reference/hgeom.md))
+  geometric distributions. These build on `RTMB`‘s AD-compatible
+  negative binomial with `size = 1`, so `stats`’ own
+  [`dgeom()`](https://rdrr.io/r/stats/Geometric.html) and friends are
+  left untouched.
+
+- Added the zero-inflated, zero-truncated and hurdle beta-binomial
+  distributions
+  ([`dzibetabinom()`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md),
+  [`dztbetabinom()`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md),
+  [`dhbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)).
+  Like
+  [`dbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
+  itself these have no distribution function, since the beta-binomial
+  cdf has no closed form.
+
+- The documentation of the continuous zero-inflated distributions now
+  explains that, because the continuous part places no mass at zero,
+  `zeroprob` is exactly the probability of a zero and zero-inflation
+  coincides with a hurdle model; GAMLSS calls these zero-adjusted rather
+  than zero-inflated.
+
 - Added the hurdle (zero-altered) count distributions: Poisson
   ([`dhpois()`](https://janolefi.github.io/RTMBdist/reference/hpois.md)),
   binomial
