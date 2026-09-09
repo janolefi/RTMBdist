@@ -68,8 +68,8 @@ pzinbinom <- function(q, size, prob, zeroprob = 0, lower.tail = TRUE, log.p = FA
     q <- floor(q)  # make sure it's integer-valued
   }
 
-  # pnbinom gives 0 for q < 0, so no handling of that case necessary
-  p <- zeroprob + (1 - zeroprob) * RTMB::pnbinom(q, size = size, prob = prob)
+  # clamp q: RTMB::pnbinom returns NaN below the support, which would poison the 0 factor
+  p <- greater(q, -1) * (zeroprob + (1 - zeroprob) * RTMB::pnbinom(pmax.ad(q, 0), size = size, prob = prob))
 
   if (!lower.tail) p <- 1 - p
   if (log.p) p <- log(p)
