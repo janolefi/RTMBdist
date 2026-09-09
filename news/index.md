@@ -140,6 +140,8 @@
 
 ## RTMBdist 1.1.0
 
+CRAN release: 2026-09-06
+
 - Added the Johnson SU distribution in both the original
   parameterisation
   ([`djsu()`](https://janolefi.github.io/RTMBdist/reference/jsu.md),
