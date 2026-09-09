@@ -290,6 +290,32 @@ reggamma <- function(s, x) {
   pgamma(x, shape = s, scale = 1, lower.tail = FALSE)
 }
 
+# CDF evaluated at a truncation bound, for the truncated families. The bound may
+# be infinite, and then the value of the CDF is the constant 0 or 1 -- but the
+# chain rule does not know that: differentiating F((b - mu) / sigma) at
+# b = Inf multiplies a density that is zero by a derivative that is infinite,
+# so the value comes out right while the gradient comes out NaN. Infinite
+# bounds are therefore replaced by their limit, which carries no derivative at
+# all. `cdf` is the CDF as a function of the bound alone, with the parameters
+# already closed over.
+cdf_at_bound <- function(bound, cdf) {
+  if (inherits(bound, "advector")) return(cdf(bound))
+
+  b <- as.numeric(bound)
+  finite <- is.finite(b)
+  if (all(finite)) return(cdf(bound))
+
+  limit <- as.numeric(b > 0) # 1 at +Inf, 0 at -Inf
+  if (!any(finite)) return(limit)
+
+  # mixed bounds: the infinite entries are evaluated at a dummy value and then
+  # weighted out, so that no infinity ever enters the tape
+  keep <- as.numeric(finite)
+  b[!finite] <- 0
+
+  keep * cdf(b) + (1 - keep) * limit
+}
+
 # Generate helpful error message if user wrote likeliood in wrong order to simulate
 simulation_check <- function(args, exclude = c("x", "log")) {
   args <- args[setdiff(names(args), exclude)]

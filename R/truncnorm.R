@@ -50,7 +50,9 @@ dtruncnorm <- function(x, mean = 0, sd = 1, min = -Inf, max = Inf, log = FALSE) 
   }
 
   # normalisation constant: probability of being within [min, max]
-  denom <- RTMB::pnorm(max, mean, sd) - RTMB::pnorm(min, mean, sd)
+  # (cdf_at_bound keeps the gradient finite when a bound is infinite)
+  cdf <- function(b) RTMB::pnorm(b, mean, sd)
+  denom <- cdf_at_bound(max, cdf) - cdf_at_bound(min, cdf)
 
   # logical vector for values inside the truncation bounds
   # inside <- (x >= min) & (x <= max)
@@ -83,11 +85,13 @@ ptruncnorm <- function(q, mean = 0, sd = 1, min = -Inf, max = Inf, lower.tail = 
   }
 
   # normalisation constant: probability of being within [min, max]
-  denom <- RTMB::pnorm(max, mean, sd) - RTMB::pnorm(min, mean, sd)
+  cdf <- function(b) RTMB::pnorm(b, mean, sd)
+  plower <- cdf_at_bound(min, cdf)
+  denom <- cdf_at_bound(max, cdf) - plower
 
   # Compute standardized CDF
   s1 <- sign(q - min) # for constructing AD-compatible "indicator"
-  val <- (RTMB::pnorm(q, mean, sd) - RTMB::pnorm(min, mean, sd)) / denom
+  val <- (RTMB::pnorm(q, mean, sd) - plower) / denom
   s2 <- sign(1 - val) # for constructing AD-compatible "indicator"
 
   p <- 0.5 * (1 + s1 * s2) * val + 0.5 * (1 - s2)
@@ -121,10 +125,12 @@ qtruncnorm <- function(p, mean = 0, sd = 1, min = -Inf, max = Inf, lower.tail = 
   }
 
   # normalisation constant
-  denom <- RTMB::pnorm(max, mean, sd) - RTMB::pnorm(min, mean, sd)
+  cdf <- function(b) RTMB::pnorm(b, mean, sd)
+  plower <- cdf_at_bound(min, cdf)
+  denom <- cdf_at_bound(max, cdf) - plower
 
   # Transform p into quantiles of untruncated normal
-  p_untrunc <- p * denom + RTMB::pnorm(min, mean, sd)
+  p_untrunc <- p * denom + plower
 
   # Invert the untruncated normal CDF
   q <- stats::qnorm(p_untrunc, mean, sd)

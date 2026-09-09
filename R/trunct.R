@@ -50,7 +50,9 @@ dtrunct <- function(x, df, min = -Inf, max = Inf, log = FALSE) {
   }
 
   # normalisation constant
-  denom <- pt(max, df = df) - pt(min, df = df)
+  # (cdf_at_bound keeps the gradient finite when a bound is infinite)
+  cdf <- function(b) pt(b, df = df)
+  denom <- cdf_at_bound(max, cdf) - cdf_at_bound(min, cdf)
 
   # inside indicator
   inside <- 0.5 * (1 + sign(x - min) * sign(max - x))
@@ -73,10 +75,12 @@ ptrunct <- function(q, df, min = -Inf, max = Inf, lower.tail = TRUE, log.p = FAL
     if (min >= max) stop("min must be less than max.")
   }
 
-  denom <- pt(max, df = df) - pt(min, df = df)
+  cdf <- function(b) pt(b, df = df)
+  plower <- cdf_at_bound(min, cdf)
+  denom <- cdf_at_bound(max, cdf) - plower
 
   s1 <- sign(q - min)
-  val <- (pt(q, df = df) - pt(min, df = df)) / denom
+  val <- (pt(q, df = df) - plower) / denom
   s2 <- sign(1 - val)
 
   p <- 0.5 * (1 + s1 * s2) * val + 0.5 * (1 - s2)

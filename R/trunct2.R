@@ -52,7 +52,9 @@ dtrunct2 <- function(x, df, mu = 0, sigma = 1, min = -Inf, max = Inf, log = FALS
                        min = min, max = max, log = log))
   }
 
-  denom <- pt((max - mu) / sigma, df = df) - pt((min - mu) / sigma, df = df)
+  # (cdf_at_bound keeps the gradient finite when a bound is infinite)
+  cdf <- function(b) pt((b - mu) / sigma, df = df)
+  denom <- cdf_at_bound(max, cdf) - cdf_at_bound(min, cdf)
 
   inside <- 0.5 * (1 + sign(x - min) * sign(max - x))
 
@@ -75,10 +77,12 @@ ptrunct2 <- function(q, df, mu = 0, sigma = 1, min = -Inf, max = Inf, lower.tail
     if (min >= max) stop("min must be less than max.")
   }
 
-  denom <- pt((max - mu) / sigma, df = df) - pt((min - mu) / sigma, df = df)
+  cdf <- function(b) pt((b - mu) / sigma, df = df)
+  plower <- cdf_at_bound(min, cdf)
+  denom <- cdf_at_bound(max, cdf) - plower
 
   s1 <- sign(q - min)
-  val <- (pt((q - mu) / sigma, df = df) - pt((min - mu) / sigma, df = df)) / denom
+  val <- (pt((q - mu) / sigma, df = df) - plower) / denom
   s2 <- sign(1 - val)
 
   p <- 0.5 * (1 + s1 * s2) * val + 0.5 * (1 - s2)
@@ -107,8 +111,10 @@ qtrunct2 <- function(p, df, mu = 0, sigma = 1, min = -Inf, max = Inf, lower.tail
     if (min >= max) stop("min must be less than max.")
   }
 
-  denom <- pt((max - mu) / sigma, df = df) - pt((min - mu) / sigma, df = df)
-  p_untrunc <- p * denom + pt((min - mu) / sigma, df = df)
+  cdf <- function(b) pt((b - mu) / sigma, df = df)
+  plower <- cdf_at_bound(min, cdf)
+  denom <- cdf_at_bound(max, cdf) - plower
+  p_untrunc <- p * denom + plower
 
   mu + sigma * stats::qt(p_untrunc, df = df)
 }
