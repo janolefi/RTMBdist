@@ -202,7 +202,6 @@ We start by loading packages that are needed.
 ``` r
 
 library(gamlss.data)   # Data
-library(LaMa)          # Creating model matrices
 library(Matrix)        # Sparse matrices
 ```
 
@@ -215,12 +214,12 @@ ind <- sample(1:nrow(dbbmi), 2000)
 dbbmi <- dbbmi[ind, ]
 ```
 
-We use the function
-[`make_matrices()`](https://janolefi.github.io/LaMa/reference/make_matrices.html)
-from package `LaMa` (which uses `mgcv` internally) to conveniently
-create design and penalty matrices for the smooth functions. The penalty
-matrix is converted to a sparse matrix using the `Matrix` package, to
-work with `RTMB`’s
+We use the function `make_matrices()` from package `LaMa` (which uses
+`mgcv` internally, and which we call with `LaMa::` rather than attaching
+`LaMa`, as it also exports some distributions of the same names as
+`RTMBdist`) to conveniently create design and penalty matrices for the
+smooth functions. The penalty matrix is converted to a sparse matrix
+using the `Matrix` package, to work with `RTMB`’s
 [`dgmrf()`](https://rdrr.io/pkg/RTMB/man/MVgauss.html) function. For
 convenience, we also create a prediction design matrix for a sequence of
 age values, which we will use to get predictions and confidence
@@ -233,7 +232,7 @@ ignores computations that do not contribute to the final function value.
 
 k <- 10 # Basis dimension
 
-modmat <- make_matrices(~ s(age, bs="cs"), data = dbbmi)
+modmat <- LaMa::make_matrices(~ s(age, bs="cs"), data = dbbmi)
 X <- modmat$Z                              # Design matrix
 S <- Matrix(modmat$S[[1]], sparse = TRUE)  # Sparse penalty matrix
 
@@ -614,7 +613,168 @@ contour(xseq, yseq, (1-alpha) * f2, add = TRUE, nlevels = 8,
 
 ![](Examples_files/figure-html/copula%20results-1.png)
 
-## Example 6: Multivariate stochastic volatility
+## Example 6: Animal movement with a circular-linear copula
+
+Hidden Markov models (HMMs) for animal movement usually assume that step
+lengths and turning angles are independent given the behavioural state.
+Copulas let us drop this assumption. We use GPS tracks of four elk
+(Morales et al., 2004) from the `moveHMM` package and the forward
+algorithm from `LaMa` for the HMM likelihood.
+
+``` r
+
+elk <- moveHMM::prepData(moveHMM::elk_data, type = "UTM",
+                         coordNames = c("Easting", "Northing"))
+elk$step <- elk$step / 1000 # step lengths in km
+```
+
+In each state, step lengths follow a gamma and turning angles a wrapped
+Cauchy distribution. Many of the elk’s turning angles are close to \pm
+\pi, so we fix the mean turning angle at \pi in state 1 (turning back,
+as when foraging in a patch) and at 0 in state 2 (travelling).
+
+As the turning angle is circular, standard copulas are not applicable.
+Angles of -\pi and \pi are the same, but would be opposite extremes for
+the copula.
+[`cfold()`](https://janolefi.github.io/RTMBdist/reference/cfold.md)
+solves this by measuring each angle by 1 - \|2u - 1\|, where u is the
+angle’s distribution function value. Since
+[`pwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+cuts the circle open opposite to the mean direction, this is 1 for
+angles at the mean direction and 0 for angles opposite to it, and it is
+uniformly distributed. It is then joined with the step length by a
+standard copula, here a Gaussian copula with state-dependent correlation
+\lambda_j, while left and right turns are treated alike.
+[`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md)
+expects the angle as the first margin.
+
+``` r
+
+nll_elk <- function(par) {
+  getAll(par, dat)
+  Gamma <- LaMa::tpm(eta); REPORT(Gamma)
+  delta <- LaMa::stationary(Gamma)
+  mu <- exp(log_mu); REPORT(mu)          # mean step lengths
+  sigma <- exp(log_sigma); REPORT(sigma) # step length sds
+  rho <- plogis(logit_rho); REPORT(rho)  # angle concentrations around angle_mean
+  lambda <- tanh(atanh_lambda); REPORT(lambda) # copula correlations
+  allprobs <- matrix(1, length(step), N)
+  ind <- which(!is.na(step) & !is.na(angle))
+  for(j in 1:N) {
+    allprobs[ind, j] <- dcopula(
+      dwrpcauchy(angle[ind], angle_mean[j], rho[j]), dgamma2(step[ind], mu[j], sigma[j]),
+      pwrpcauchy(angle[ind], angle_mean[j], rho[j]), pgamma2(step[ind], mu[j], sigma[j]),
+      copula = cfold(cgaussian(lambda[j]))
+    )
+  }
+  -LaMa::forward(delta, Gamma, allprobs, trackID = ID)
+}
+```
+
+Fixing \lambda_j = 0 via `map` gives the usual model with conditional
+independence, which we fit for comparison.
+
+``` r
+
+N <- 2
+par <- list(eta = rep(-2, 2), log_mu = log(c(0.3, 3)), log_sigma = log(c(0.3, 3)),
+            logit_rho = qlogis(c(0.3, 0.3)), atanh_lambda = c(0, 0))
+dat <- list(step = elk$step, angle = elk$angle, ID = elk$ID, N = N,
+            angle_mean = c(pi, 0))
+
+obj_ind <- MakeADFun(nll_elk, par, map = list(atanh_lambda = factor(c(NA, NA))), silent = TRUE)
+opt_ind <- nlminb(obj_ind$par, obj_ind$fn, obj_ind$gr)
+obj_elk <- MakeADFun(nll_elk, par, silent = TRUE)
+opt_elk <- nlminb(obj_elk$par, obj_elk$fn, obj_elk$gr)
+
+mod_ind <- LaMa::report(obj_ind)
+mod_elk <- LaMa::report(obj_elk)
+c(AIC(mod_ind), AIC(mod_elk)) # independence vs. copula
+#> [1] 3760.768 3750.817
+round(mod_elk$lambda, 2)
+#> [1] 0.19 0.12
+```
+
+The copula model has a clearly lower AIC. As fixing \lambda_1 =
+\lambda_2 = 0 gives the independence model, the models are nested and we
+can also use a likelihood ratio test:
+
+``` r
+
+pchisq(2 * (mod_elk$ll - mod_ind$ll), df = 2, lower.tail = FALSE)
+#> [1] 0.000934723
+```
+
+Both favour the copula model.
+
+To check the fit, we decode the states with the Viterbi algorithm and
+plot state-dependent histograms. To see the dependence, we split the
+observations of each state into two halves: the turning angles for steps
+shorter and longer than the state’s median step length, and the step
+lengths for turning angles closer to and farther from the state’s mean
+direction than its median. The lines are the corresponding densities
+implied by the model, which average the copula density over the half
+conditioned on.
+
+``` r
+
+states <- LaMa::viterbi(mod = mod_elk)
+ok <- !is.na(elk$step) & !is.na(elk$angle)
+cols <- c("orange", "deepskyblue")
+v_grid <- seq(0.005, 0.995, by = 0.01)          # grid on (0, 1) to average the copula over
+halves <- list(v_grid[v_grid < 0.5], v_grid[v_grid > 0.5])
+angle_grid <- seq(-pi, pi, length.out = 200)
+
+oldpar <- par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+for(j in 1:N) { # turning angles in state j, for steps below and above the state's median
+  cop <- cfold(cgaussian(mod_elk$lambda[j]))
+  u <- pwrpcauchy(angle_grid, dat$angle_mean[j], mod_elk$rho[j])
+  sel <- ok & states == j
+  long <- pgamma2(elk$step[sel], mod_elk$mu[j], mod_elk$sigma[j]) > 0.5
+  hist(elk$angle[sel][!long], breaks = seq(-pi, pi, length.out = 13), prob = TRUE, border = "white",
+       col = adjustcolor(cols[1], 0.4), ylim = c(0, 0.5), xlab = "turning angle", main = paste("state", j))
+  hist(elk$angle[sel][long], breaks = seq(-pi, pi, length.out = 13), prob = TRUE, border = "white",
+       col = adjustcolor(cols[2], 0.4), add = TRUE)
+  for(g in 1:2) { # density of the angle given the step is short / long
+    c_avg <- rowMeans(sapply(halves[[g]], function(v) exp(cop(u, rep(v, length(u))))))
+    lines(angle_grid, c_avg * dwrpcauchy(angle_grid, dat$angle_mean[j], mod_elk$rho[j]), col = cols[g], lwd = 2)
+  }
+  legend("top", c("short steps", "long steps"), col = cols, lwd = 2, bty = "n")
+}
+for(j in 1:N) { # step lengths in state j, for angles far from / close to the state's mean direction
+  cop <- cgaussian(mod_elk$lambda[j]) # after folding, the angle enters as w = 1 - |2u - 1|
+  step_grid <- seq(0, qgamma2(0.95, mod_elk$mu[j], mod_elk$sigma[j]), length.out = 201)[-1]
+  v <- pgamma2(step_grid, mod_elk$mu[j], mod_elk$sigma[j])
+  sel <- ok & states == j
+  w <- 1 - abs(2 * pwrpcauchy(elk$angle[sel], dat$angle_mean[j], mod_elk$rho[j]) - 1)
+  close <- w > 0.5
+  br <- seq(0, max(elk$step[sel]), length.out = 30)
+  hist(elk$step[sel][!close], breaks = br, prob = TRUE, border = "white", col = adjustcolor(cols[1], 0.4),
+       xlim = range(step_grid), xlab = "step length (km)", main = paste("state", j))
+  hist(elk$step[sel][close], breaks = br, prob = TRUE, border = "white", col = adjustcolor(cols[2], 0.4), add = TRUE)
+  for(g in 1:2) {
+    c_avg <- rowMeans(sapply(halves[[g]], function(w) exp(cop(rep(w, length(v)), v))))
+    lines(step_grid, c_avg * dgamma2(step_grid, mod_elk$mu[j], mod_elk$sigma[j]), col = cols[g], lwd = 2)
+  }
+  legend("topright", c("far from mean angle", "close to mean angle"), col = cols, lwd = 2, bty = "n")
+}
+```
+
+![](Examples_files/figure-html/elk%20histograms-1.png)
+
+``` r
+
+par(oldpar)
+```
+
+Both correlations are positive: the longer the step, the more the
+turning angle concentrates around the state’s mean direction. Travelling
+elk go straighter on long steps, and elk in state 1 turn back more
+clearly on long steps, i.e. move back and forth. The cusps at 0 and \pm
+\pi are a feature of the Gaussian copula, whose density is unbounded in
+the corners of the unit square.
+
+## Example 7: Multivariate stochastic volatility
 
 This example reproduces one of the `TMB` examples. It fits a
 multivariate stochastic volatility model to financial returns data. In
@@ -696,7 +856,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  13.992   0.019  14.013
+#>  13.700   0.051  13.754
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate  Std. Error
