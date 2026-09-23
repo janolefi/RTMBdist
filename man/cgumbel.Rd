@@ -24,9 +24,11 @@ of the bivariate Gumbel copula, intended for use with \code{\link{dcopula}}.
 The Gumbel copula density
 
 \deqn{
-c(u,v;\theta) = \exp\Big[-\big((-\log u)^\theta + (-\log v)^\theta\big)^{1/\theta}\Big] \cdot h(u,v;\theta),
+c(u,v;\theta) = \frac{e^{-A}}{uv} \, (\tilde u \tilde v)^{\theta - 1} S^{1/\theta - 2} (A + \theta - 1),
 }
-where \eqn{h(u,v;\theta)} contains the derivative terms ensuring the function is a density.
+where \eqn{\tilde u = -\log u}, \eqn{\tilde v = -\log v},
+\eqn{S = \tilde u^\theta + \tilde v^\theta} and \eqn{A = S^{1/\theta}}, so that
+\eqn{e^{-A}} is the copula CDF.
 }
 \examples{
 x <- c(0.5, 1); y <- c(0.2, 0.4)

@@ -240,9 +240,11 @@ Cclayton <- function(theta) {
 #' The Gumbel copula density
 #'
 #' \deqn{
-#' c(u,v;\theta) = \exp\Big[-\big((-\log u)^\theta + (-\log v)^\theta\big)^{1/\theta}\Big] \cdot h(u,v;\theta),
+#' c(u,v;\theta) = \frac{e^{-A}}{uv} \, (\tilde u \tilde v)^{\theta - 1} S^{1/\theta - 2} (A + \theta - 1),
 #' }
-#' where \eqn{h(u,v;\theta)} contains the derivative terms ensuring the function is a density.
+#' where \eqn{\tilde u = -\log u}, \eqn{\tilde v = -\log v},
+#' \eqn{S = \tilde u^\theta + \tilde v^\theta} and \eqn{A = S^{1/\theta}}, so that
+#' \eqn{e^{-A}} is the copula CDF.
 #'
 #' @seealso [cgaussian()], [cclayton()], [cfrank()]
 #'
@@ -269,14 +271,11 @@ NULL
 cgumbel <- function(theta) {
   function(u, v) {
     lu <- -log(u); lv <- -log(v)
-    A <- (lu^theta + lv^theta)^(1/theta)
+    S <- lu^theta + lv^theta
+    A <- S^(1/theta)
 
-    logC <- -A + (theta - 1) * (log(lu) + log(lv)) +
-      (-2 + 2/theta) * log(lu^theta + lv^theta) -
-      log(u) - log(v)
-
-    term <- 1 + (theta - 1) * (lu * lv)^theta / (lu^theta + lv^theta)^2
-    logC + log(term)
+    -A - log(u) - log(v) + (theta - 1) * (log(lu) + log(lv)) +
+      (-2 + 1/theta) * log(S) + log(A + theta - 1)
   }
 }
 
@@ -296,7 +295,7 @@ Cgumbel <- function(theta) {
 #' The Frank copula density is
 #' \deqn{
 #' c(u,v;\theta) = \frac{\theta (1-e^{-\theta}) e^{-\theta(u+v)}}
-#' {\left[(e^{-\theta u}-1)(e^{-\theta v}-1) + (1 - e^{-\theta}) \right]^2}, \quad \theta \ne 0.
+#' {\left[(1 - e^{-\theta}) - (1 - e^{-\theta u})(1 - e^{-\theta v}) \right]^2}, \quad \theta \ne 0.
 #' }
 #'
 #' @seealso [cgaussian()], [cclayton()], [cgumbel()]
@@ -326,7 +325,8 @@ cfrank <- function(theta) {
     et  <- exp(-theta)
 
     log_num <- log(theta * (1 - et)) - theta * (u + v)
-    den <- (1 - et) + (eu - 1) * (ev - 1)
+    # expanded form of (1 - et) - (1 - eu) * (1 - ev), which cancels for large theta
+    den <- eu + ev - eu * ev - et
     den <- den * den
     log_den <- log(den)
 

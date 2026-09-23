@@ -61,7 +61,7 @@ test_that("cjw rejects q other than 1 and -1", {
 test_that("cfold is a copula and symmetric in the sign of the angle", {
   # at u = 1/2 the folded value is 1, where the linear copula is degenerate in
   # v, so the margins are checked away from it
-  for (cop in list(cgaussian(0.6), cgaussian(-0.4), cclayton(2))) {
+  for (cop in list(cgaussian(0.6), cgaussian(-0.4), cclayton(2), cgumbel(1.5), cfrank(-3))) {
     folded <- cfold(cop)
     expect_equal(copula_margins(folded, at = c(0.05, 0.3, 0.43, 0.77, 0.95)),
                  rep(1, 10), tolerance = 1e-6)

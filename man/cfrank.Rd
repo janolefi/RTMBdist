@@ -24,7 +24,7 @@ intended to be used with \code{\link{dcopula}}.
 The Frank copula density is
 \deqn{
 c(u,v;\theta) = \frac{\theta (1-e^{-\theta}) e^{-\theta(u+v)}}
-{\left[(e^{-\theta u}-1)(e^{-\theta v}-1) + (1 - e^{-\theta}) \right]^2}, \quad \theta \ne 0.
+{\left[(1 - e^{-\theta}) - (1 - e^{-\theta u})(1 - e^{-\theta v}) \right]^2}, \quad \theta \ne 0.
 }
 }
 \examples{
