@@ -70,7 +70,7 @@ the log copula density (<code>cfrank</code>) or the copula CDF (<code>Cfrank</co
     <p>The Frank copula density is
 $$
 c(u,v;\theta) = \frac{\theta (1-e^{-\theta}) e^{-\theta(u+v)}}
-{\left[(e^{-\theta u}-1)(e^{-\theta v}-1) + (1 - e^{-\theta}) \right]^2}, \quad \theta \ne 0.
+{\left[(1 - e^{-\theta}) - (1 - e^{-\theta u})(1 - e^{-\theta v}) \right]^2}, \quad \theta \ne 0.
 $$</p>
     </div>
     <div class="section level2">
@@ -84,7 +84,7 @@ $$</p>
 <span class="r-in"><span><span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>; <span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">dexp</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">2</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">)</span>; <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">pexp</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="dcopula.html">dcopula</a></span><span class="op">(</span><span class="va">d1</span>, <span class="va">d2</span>, <span class="va">p1</span>, <span class="va">p2</span>, copula <span class="op">=</span> <span class="fu">cfrank</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -4.585248 -7.325831</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -2.705857 -4.370568</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

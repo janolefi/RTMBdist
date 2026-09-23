@@ -97,12 +97,12 @@ x <- c(0.5, 1); y <- c(0.2, 0.4)
 d1 <- dnorm(x, 1, log = TRUE); d2 <- dbeta(y, 2, 1, log = TRUE)
 p1 <- pnorm(x, 1); p2 <- pbeta(y, 2, 1)
 dcopula(d1, d2, p1, p2, copula = cgumbel(1.5), log = TRUE)
-#> [1] -1.807264 -1.274899
+#> [1] -1.751222 -1.135706
 
 # Normal + Exponential margins with Frank copula
 x <- c(0.5, 1); y <- c(1, 2)
 d1 <- dnorm(x, 1, log = TRUE); d2 <- dexp(y, 2, log = TRUE)
 p1 <- pnorm(x, 1); p2 <- pexp(y, 2)
 dcopula(d1, d2, p1, p2, copula = cfrank(2), log = TRUE)
-#> [1] -4.585248 -7.325831
+#> [1] -2.705857 -4.370568
 ```

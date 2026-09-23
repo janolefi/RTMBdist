@@ -69,9 +69,11 @@ the log copula density (<code>cgumbel</code>) or the copula CDF (<code>Cgumbel</
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The Gumbel copula density</p>
 <p>$$
-c(u,v;\theta) = \exp\Big[-\big((-\log u)^\theta + (-\log v)^\theta\big)^{1/\theta}\Big] \cdot h(u,v;\theta),
+c(u,v;\theta) = \frac{e^{-A}}{uv} \, (\tilde u \tilde v)^{\theta - 1} S^{1/\theta - 2} (A + \theta - 1),
 $$
-where \(h(u,v;\theta)\) contains the derivative terms ensuring the function is a density.</p>
+where \(\tilde u = -\log u\), \(\tilde v = -\log v\),
+\(S = \tilde u^\theta + \tilde v^\theta\) and \(A = S^{1/\theta}\), so that
+\(e^{-A}\) is the copula CDF.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -84,7 +86,7 @@ where \(h(u,v;\theta)\) contains the derivative terms ensuring the function is a
 <span class="r-in"><span><span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">dnorm</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>; <span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="beta2.html">dbeta</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">2</span>, <span class="fl">1</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">)</span>; <span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">pbeta</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="dcopula.html">dcopula</a></span><span class="op">(</span><span class="va">d1</span>, <span class="va">d2</span>, <span class="va">p1</span>, <span class="va">p2</span>, copula <span class="op">=</span> <span class="fu">cgumbel</span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>, log <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.807264 -1.274899</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.751222 -1.135706</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># CDF version (for discrete copulas)</span></span></span>
 <span class="r-in"><span><span class="fu">Cgumbel</span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.4</span><span class="op">)</span></span></span>

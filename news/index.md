@@ -2,6 +2,24 @@
 
 ## RTMBdist 1.2.0
 
+- Fixed the copula densities
+  [`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
+  and
+  [`cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md),
+  which were wrong: the last factor of the Gumbel density and the sign
+  in the denominator of the Frank density were incorrect, so neither
+  integrated to one and likelihoods built with them through
+  [`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md)
+  were wrong. Both now agree with the `copula` package. The Frank
+  density is also evaluated in a form that stays accurate for strong
+  dependence. The copula distribution functions
+  [`Cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
+  and
+  [`Cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md),
+  used with
+  [`ddcopula()`](https://janolefi.github.io/RTMBdist/reference/ddcopula.md),
+  were correct and are unchanged.
+
 - Added two circular-linear copula constructors for use with
   [`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md),
   joining a circular and a linear margin such as the turning angles and

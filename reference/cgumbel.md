@@ -27,10 +27,10 @@ density (`cgumbel`) or the copula CDF (`Cgumbel`).
 
 The Gumbel copula density
 
-\$\$ c(u,v;\theta) = \exp\Big\[-\big((-\log u)^\theta + (-\log
-v)^\theta\big)^{1/\theta}\Big\] \cdot h(u,v;\theta), \$\$ where
-\\h(u,v;\theta)\\ contains the derivative terms ensuring the function is
-a density.
+\$\$ c(u,v;\theta) = \frac{e^{-A}}{uv} \\ (\tilde u \tilde v)^{\theta -
+1} S^{1/\theta - 2} (A + \theta - 1), \$\$ where \\\tilde u = -\log u\\,
+\\\tilde v = -\log v\\, \\S = \tilde u^\theta + \tilde v^\theta\\ and
+\\A = S^{1/\theta}\\, so that \\e^{-A}\\ is the copula CDF.
 
 ## See also
 
@@ -45,7 +45,7 @@ x <- c(0.5, 1); y <- c(0.2, 0.4)
 d1 <- dnorm(x, 1, log = TRUE); d2 <- dbeta(y, 2, 1, log = TRUE)
 p1 <- pnorm(x, 1); p2 <- pbeta(y, 2, 1)
 dcopula(d1, d2, p1, p2, copula = cgumbel(1.5), log = TRUE)
-#> [1] -1.807264 -1.274899
+#> [1] -1.751222 -1.135706
 
 # CDF version (for discrete copulas)
 Cgumbel(1.5)(0.5, 0.4)
