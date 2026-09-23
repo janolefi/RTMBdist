@@ -22,6 +22,8 @@
 #'
 #' @return \code{dvm} gives the density, \code{pvm} gives the distribution function, and \code{rvm} generates random deviates.
 #'
+#' @seealso [wrpcauchy]; [cjw()] and [cfold()] for circular-linear copulas joining turning angles and step lengths.
+#'
 #' @examples
 #' set.seed(1)
 #' x <- rvm(10, 0, 1)

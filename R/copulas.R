@@ -29,6 +29,11 @@
 #' - \code{\link{cgumbel}} (Gumbel copula)
 #' - \code{\link{cfrank}} (Frank copula)
 #'
+#' Circular-linear copulas, e.g. for turning angles and step lengths, with the
+#' circular margin as the first one:
+#' - \code{\link{cjw}} (Johnson-Wehrly copula with a circular binding density such as \code{\link{dvm}} or \code{\link{dwrpcauchy}})
+#' - \code{\link{cfold}} (folds any of the copulas above into one that is symmetric in the sign of the angle)
+#'
 #' @seealso [ddcopula()], [dmvcopula()]
 #'
 #' @export

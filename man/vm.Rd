@@ -61,3 +61,6 @@ x <- rvm(10, 0, 1)
 d <- dvm(x, 0, 1)
 p <- pvm(x, 0, 1)
 }
+\seealso{
+\link{wrpcauchy}; \code{\link[=cjw]{cjw()}} and \code{\link[=cfold]{cfold()}} for circular-linear copulas joining turning angles and step lengths.
+}

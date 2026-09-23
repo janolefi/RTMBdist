@@ -83,5 +83,5 @@ p <- pwrpcauchy(x, 0, 0.5)
 q <- qwrpcauchy(p, 0, 0.5)
 }
 \seealso{
-\link{vm}
+\link{vm}; \code{\link[=cjw]{cjw()}} and \code{\link[=cfold]{cfold()}} for circular-linear copulas joining turning angles and step lengths.
 }

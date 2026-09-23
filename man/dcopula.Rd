@@ -42,6 +42,13 @@ Available copula constructors are:
 \item \code{\link{cgumbel}} (Gumbel copula)
 \item \code{\link{cfrank}} (Frank copula)
 }
+
+Circular-linear copulas, e.g. for turning angles and step lengths, with the
+circular margin as the first one:
+\itemize{
+\item \code{\link{cjw}} (Johnson-Wehrly copula with a circular binding density such as \code{\link{dvm}} or \code{\link{dwrpcauchy}})
+\item \code{\link{cfold}} (folds any of the copulas above into one that is symmetric in the sign of the angle)
+}
 }
 \examples{
 # Normal + Exponential margins with Gaussian copula

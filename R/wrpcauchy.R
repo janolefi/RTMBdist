@@ -36,7 +36,7 @@
 #' \eqn{[\mu - \pi, \mu + \pi]}, not wrapped to \eqn{[-\pi, \pi]}. The latter
 #' also holds for \code{rwrpcauchy} with \code{wrap = FALSE}.
 #'
-#' @seealso [vm]
+#' @seealso [vm]; [cjw()] and [cfold()] for circular-linear copulas joining turning angles and step lengths.
 #'
 #' @param x,q vector of angles measured in radians at which to evaluate the density or distribution function.
 #' @param p vector of probabilities.
