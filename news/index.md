@@ -2,6 +2,34 @@
 
 ## RTMBdist 1.2.0
 
+- Added the distribution function
+  ([`pwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md))
+  and quantile function
+  ([`qwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md))
+  of the wrapped Cauchy distribution, both in closed form. By default
+  the circle is cut open at the antipode of the mean direction,
+  `mu - pi`, the same origin as the default of
+  [`pvm()`](https://janolefi.github.io/RTMBdist/reference/vm.md), so
+  `pwrpcauchy(mu)` is one half and angles outside `(mu - pi, mu + pi]`
+  are wrapped onto that interval. A fixed origin can be set with `from`;
+  this is needed whenever the distribution function is averaged over
+  different values of `mu`, for example over hidden states or a random
+  effect, because the average of distribution functions with different
+  cuts is not a distribution function.
+  [`pwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+  is differentiable, which makes the wrapped Cauchy usable as the
+  turning-angle margin in copula models for step lengths and turning
+  angles.
+
+- [`rwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+  now generates by inversion of
+  [`pwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+  instead of calling
+  [`circular::rwrappedcauchy()`](https://rdrr.io/pkg/circular/man/wrappedcauchy.html),
+  so it recycles vector parameters. Random streams for a given seed
+  differ from earlier versions, and with `wrap = FALSE` the angles now
+  lie in `[mu - pi, mu + pi]` rather than `[0, 2 * pi)`.
+
 - Added the half-t
   ([`dhalft()`](https://janolefi.github.io/RTMBdist/reference/halft.md))
   and half-Cauchy

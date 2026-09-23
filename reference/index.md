@@ -317,6 +317,8 @@
   [`rwishart()`](https://janolefi.github.io/RTMBdist/reference/wishart.md)
   : Wishart distribution
 - [`dwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+  [`pwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+  [`qwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
   [`rwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
   : wrapped Cauchy distribution
 - [`dyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md)
