@@ -52,6 +52,8 @@
 - [`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   [`Cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   : Clayton copula constructors
+- [`cfold()`](https://janolefi.github.io/RTMBdist/reference/cfold.md) :
+  Folded circular-linear copula constructor
 - [`cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
   [`Cfrank()`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
   : Frank copula constructor
@@ -63,6 +65,8 @@
 - [`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
   [`Cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
   : Gumbel copula constructors
+- [`cjw()`](https://janolefi.github.io/RTMBdist/reference/cjw.md) :
+  Johnson-Wehrly circular-linear copula constructor
 - [`cmvgauss()`](https://janolefi.github.io/RTMBdist/reference/cmvgauss.md)
   : Multivariate Gaussian copula constructor
 - [`dcombinom()`](https://janolefi.github.io/RTMBdist/reference/combinom.md)

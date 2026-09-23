@@ -357,6 +357,18 @@ copula constructors are:
 - [`cfrank(theta)`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
   (Frank copula)
 
+For a circular and a linear margin, such as turning angles and step
+lengths, there are two circular-linear copula constructors. The circular
+margin has to be the first one in `dcopula`.
+
+- [`cjw(g, ...)`](https://janolefi.github.io/RTMBdist/reference/cjw.md)
+  (Johnson-Wehrly copula with circular binding density `g`,
+  e.g. [`dvm`](https://janolefi.github.io/RTMBdist/reference/vm.md) or
+  [`dwrpcauchy`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md))
+- [`cfold(copula)`](https://janolefi.github.io/RTMBdist/reference/cfold.md)
+  (folds one of the copulas above into a circular-linear copula that is
+  symmetric in the sign of the angle)
+
 For bivariate copulas with *discrete* margins, use the
 [`ddcopula`](https://janolefi.github.io/RTMBdist/reference/ddcopula.md)
 function instead. In this case, instead of copula *densities*, copula

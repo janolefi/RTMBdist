@@ -2,6 +2,21 @@
 
 ## RTMBdist 1.2.0
 
+- Added two circular-linear copula constructors for use with
+  [`dcopula()`](https://janolefi.github.io/RTMBdist/reference/dcopula.md),
+  joining a circular and a linear margin such as the turning angles and
+  step lengths of an animal track.
+  [`cjw()`](https://janolefi.github.io/RTMBdist/reference/cjw.md) is the
+  Johnson-Wehrly copula with any circular binding density,
+  e.g. `cjw(dvm, mu = 0, kappa = 2)` or
+  `cjw(dwrpcauchy, mu = 0, rho = 0.5)`. Its dependence is a helix, so it
+  is not symmetric in the sign of the angle.
+  [`cfold()`](https://janolefi.github.io/RTMBdist/reference/cfold.md)
+  folds any of the linear copulas into a circular-linear copula that is
+  symmetric, e.g. `cfold(cgaussian(0.5))`, and so links the straightness
+  of a step to its length; this is the rectangular patchwork copula of
+  Hodel and Fieberg (2022). Both allow for automatic differentiation.
+
 - Added the distribution function
   ([`pwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md))
   and quantile function

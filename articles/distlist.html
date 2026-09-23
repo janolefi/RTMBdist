@@ -391,6 +391,19 @@ constructors are:</p>
 <a href="../reference/cfrank.html"><code>cfrank(theta)</code></a>
 (Frank copula)</li>
 </ul>
+<p>For a circular and a linear margin, such as turning angles and step
+lengths, there are two circular-linear copula constructors. The circular
+margin has to be the first one in <code>dcopula</code>.</p>
+<ul>
+<li>
+<a href="../reference/cjw.html"><code>cjw(g, ...)</code></a>
+(Johnson-Wehrly copula with circular binding density <code>g</code>,
+e.g. <a href="../reference/vm.html"><code>dvm</code></a> or <a href="../reference/wrpcauchy.html"><code>dwrpcauchy</code></a>)</li>
+<li>
+<a href="../reference/cfold.html"><code>cfold(copula)</code></a>
+(folds one of the copulas above into a circular-linear copula that is
+symmetric in the sign of the angle)</li>
+</ul>
 <p>For bivariate copulas with <em>discrete</em> margins, use the <a href="../reference/ddcopula.html"><code>ddcopula</code></a> function
 instead. In this case, instead of copula <em>densities</em>, copula
 <em>CDFs</em> are needed. The available constructors for this are:</p>

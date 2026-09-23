@@ -83,6 +83,13 @@ functions from `circular`.
 I_0(\kappa)},\$\$ where \\I_0\\ is the modified Bessel function of the
 first kind of order 0.
 
+## See also
+
+[wrpcauchy](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md);
+[`cjw()`](https://janolefi.github.io/RTMBdist/reference/cjw.md) and
+[`cfold()`](https://janolefi.github.io/RTMBdist/reference/cfold.md) for
+circular-linear copulas joining turning angles and step lengths.
+
 ## Examples
 
 ``` r

@@ -107,7 +107,10 @@ for `rwrpcauchy` with `wrap = FALSE`.
 
 ## See also
 
-[vm](https://janolefi.github.io/RTMBdist/reference/vm.md)
+[vm](https://janolefi.github.io/RTMBdist/reference/vm.md);
+[`cjw()`](https://janolefi.github.io/RTMBdist/reference/cjw.md) and
+[`cfold()`](https://janolefi.github.io/RTMBdist/reference/cfold.md) for
+circular-linear copulas joining turning angles and step lengths.
 
 ## Examples
 

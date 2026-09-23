@@ -58,6 +58,18 @@ Available copula constructors are:
 - [`cfrank`](https://janolefi.github.io/RTMBdist/reference/cfrank.md)
   (Frank copula)
 
+Circular-linear copulas, e.g. for turning angles and step lengths, with
+the circular margin as the first one:
+
+- [`cjw`](https://janolefi.github.io/RTMBdist/reference/cjw.md)
+  (Johnson-Wehrly copula with a circular binding density such as
+  [`dvm`](https://janolefi.github.io/RTMBdist/reference/vm.md) or
+  [`dwrpcauchy`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md))
+
+- [`cfold`](https://janolefi.github.io/RTMBdist/reference/cfold.md)
+  (folds any of the copulas above into one that is symmetric in the sign
+  of the angle)
+
 ## See also
 
 [`ddcopula()`](https://janolefi.github.io/RTMBdist/reference/ddcopula.md),
