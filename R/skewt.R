@@ -6,6 +6,7 @@
 #' @details
 #' This corresponds to the skew t type 2 distribution in GAMLSS (\code{ST2}), see pp. 411-412 of Rigby et al. (2019) and the version implemented in the \code{sn} package.
 #' This implementation of \code{dskewt} allows for automatic differentiation with \code{RTMB} while the other functions are imported from the \code{sn} package.
+#' When called during AD taping, \code{pskewt} instead integrates the density numerically with the AD-compatible \code{\link[RTMB:ADintegrate]{integrate}} of \code{RTMB}, which makes it AD-compatible as well. The \code{method} argument is then ignored.
 #' See \code{sn::\link[sn]{dst}} for more details.
 #'
 #' \strong{Caution:} In a numerial optimisation, the \code{skew} parameter should NEVER be initialised with exactly zero.
@@ -56,8 +57,7 @@ dskewt <- function(x, mu = 0, sigma = 1, skew = 0, df = 1e2, log = FALSE) {
     return(dGenericSim("dskewt", x=x, mu=mu, sigma=sigma, skew=skew, df=df, log=log))
   }
   if(inherits(x, "osa")) {
-    # return(dGenericOSA("dskewt", x=x, mu=mu, sigma=sigma, skew=skew, df=df, log=log))
-    stop("Currently, skew t does not support OSA residuals.")
+    return(dGenericOSA("dskewt", x=x, mu=mu, sigma=sigma, skew=skew, df=df, log=log))
   }
 
   z <- (x - mu) / sigma
@@ -84,6 +84,18 @@ pskewt <- function(q, mu = 0, sigma = 1, skew = 0, df = 1e2, method = 0,
   # ensure sigma, df > 0
   # if (sigma <= 0) stop("sigma must be strictly positive.")
   # if (df <= 0) stop("df must be strictly positive.")
+
+  if (ad_context()) {
+    # sn::pst is not AD-compatible, hence integrate the density numerically
+    # centre is the mean if it exists (df > 1) and mu otherwise, written to allow skew = +/- Inf
+    a <- value_of(skew)
+    nu <- value_of(df)
+    b_nu <- ifelse(nu > 1, exp(0.5 * log(nu / pi) + lgamma((nu - 1) / 2) - lgamma(nu / 2)), 0)
+    centre <- value_of(mu) + value_of(sigma) * sign(a) / sqrt(1 + 1 / a^2) * b_nu
+    return(numerical_cdf(dskewt, q, list(mu = mu, sigma = sigma, skew = skew, df = df),
+                         centre = centre, scale = sigma,
+                         lower.tail = lower.tail, log.p = log.p))
+  }
 
   p <- pst(q, xi=mu, omega=sigma, alpha=skew, nu=df, method=method)
   if (!lower.tail) p <- 1 - p

@@ -32,7 +32,7 @@ rvm(n, mu = 0, kappa = 1, wrap = TRUE)
 
 \item{from}{value from which the integration for CDF starts. If \code{NULL}, is set to \code{mu - pi}.}
 
-\item{tol}{the precision in evaluating the distribution function}
+\item{tol}{the precision in evaluating the distribution function, ignored in AD context.}
 
 \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le x]}, otherwise \eqn{P[X > x]}.}
 
@@ -51,9 +51,37 @@ Density, distribution function, and random generation for the von Mises distribu
 \details{
 This implementation of \code{dvm} allows for automatic differentiation with \code{RTMB}.
 \code{rvm} and \code{pvm} are simply wrappers of the corresponding functions from \code{circular}.
+When called during AD taping, \code{pvm} instead integrates the density numerically with the AD-compatible \code{\link[RTMB:ADintegrate]{integrate}} of \code{RTMB}, which makes it AD-compatible in \code{q}, \code{mu}, \code{kappa} and \code{from}. The \code{tol} argument is then ignored.
 
 \deqn{f(x;\,\mu,\kappa) = \frac{\exp(\kappa\cos(x-\mu))}{2\pi\, I_0(\kappa)},}
 where \eqn{I_0} is the modified Bessel function of the first kind of order 0.
+
+A circular distribution has no smallest angle, so its distribution function
+depends on where the circle is cut open. By default, \code{pvm} cuts it at the
+antipode of the mean direction, \eqn{\mu - \pi}, so that \eqn{F(\mu) = 1/2}.
+A different origin is set with \code{from}. A fixed \code{from} is needed
+whenever the distribution function is averaged over different values of
+\code{mu}, for example over the states of a hidden Markov model or over a
+random effect: with the default, each value of \code{mu} cuts the circle at a
+different place, and the average of these distribution functions is not the
+distribution function of the mixture.
+
+\strong{OSA residuals:} \code{dvm} supports one-step-ahead (OSA) quantile
+residuals via \code{RTMB::\link[RTMB]{oneStepPredict}}. For the methods based
+on the distribution function, such as \code{method = "cdf"}, the circle is cut
+at the fixed origin \eqn{-\pi}, i.e. the residuals are based on
+\code{pvm(x, mu, kappa, from = -pi)} rather than the default origin
+\eqn{\mu - \pi}. OSA residuals are computed from the predictive distribution
+function, which averages the distribution function over hidden states or
+random effects, and this is only valid with an origin that does not depend on
+\code{mu} (see above). Hence the residuals are valid for all models, but their
+interpretation depends on the data: for turning angles, with \code{mu} close
+to 0, the cut at \eqn{\pm\pi} corresponds to a reversal and the residuals
+increase with the turning angle. For directions with \code{mu} far from 0,
+angles close to \eqn{\pm\pi} can give large residuals of either sign, even
+when they are close to the mean direction. For
+\code{method = "oneStepGeneric"}, set \code{range = c(-pi, pi)} in
+\code{oneStepPredict()}, so that the density is integrated from the same origin.
 }
 \examples{
 set.seed(1)

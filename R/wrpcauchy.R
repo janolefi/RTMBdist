@@ -31,6 +31,24 @@
 #' different place, and the average of these distribution functions is not the
 #' distribution function of the mixture.
 #'
+#' \strong{OSA residuals:} \code{dwrpcauchy} supports one-step-ahead (OSA)
+#' quantile residuals via \code{RTMB::\link[RTMB]{oneStepPredict}}. For the
+#' methods based on the distribution function, such as \code{method = "cdf"},
+#' the circle is cut at the fixed origin \eqn{-\pi}, i.e. the residuals are
+#' based on \code{pwrpcauchy(x, mu, rho, from = -pi)} rather than the default
+#' origin \eqn{\mu - \pi}. OSA residuals are computed from the predictive
+#' distribution function, which averages the distribution function over hidden
+#' states or random effects, and this is only valid with an origin that does not
+#' depend on \code{mu} (see above). Hence the residuals are valid for all
+#' models, but their interpretation depends on the data: for turning angles,
+#' with \code{mu} close to 0, the cut at \eqn{\pm\pi} corresponds to a
+#' reversal and the residuals increase with the turning angle. For directions
+#' with \code{mu} far from 0, angles close to \eqn{\pm\pi} can give
+#' large residuals of either sign, even when they are close to the mean
+#' direction. For \code{method = "oneStepGeneric"}, set
+#' \code{range = c(-pi, pi)} in \code{oneStepPredict()}, so that the density is
+#' integrated from the same origin.
+#'
 #' \code{qwrpcauchy} is the inverse of \code{pwrpcauchy} and returns angles in
 #' \eqn{[\mathrm{from}, \mathrm{from} + 2\pi]}, by default
 #' \eqn{[\mu - \pi, \mu + \pi]}, not wrapped to \eqn{[-\pi, \pi]}. The latter
@@ -75,7 +93,8 @@ dwrpcauchy <- function(x, mu = 0, rho, log = FALSE) {
     return(dGenericSim("dwrpcauchy", x = x, mu = mu, rho = rho, log=log))
   }
   if(inherits(x, "osa")) {
-    stop("Wrapped cauchy does not support OSA residuals.")
+    # the circle is cut at the fixed origin -pi, see the OSA section of the documentation
+    return(dGenericOSA("dwrpcauchy_osa", x = x, mu = mu, rho = rho, log = log))
   }
   rho_sq <- rho * rho
 
@@ -89,6 +108,11 @@ dwrpcauchy <- function(x, mu = 0, rho, log = FALSE) {
     return(exp(logdens))
   }
 }
+
+# density and distribution function behind the OSA residuals of dwrpcauchy, with the
+# circle cut at -pi, found by RTMB's dGenericOSA via their names
+dwrpcauchy_osa <- function(x, mu, rho, log = FALSE) dwrpcauchy(x, mu, rho, log = log)
+pwrpcauchy_osa <- function(q, mu, rho) pwrpcauchy(q, mu, rho, from = -pi)
 
 #' @rdname wrpcauchy
 #' @export
@@ -111,9 +135,10 @@ pwrpcauchy <- function(q, mu = 0, rho, from = NULL, lower.tail = TRUE, log.p = F
       p <- 0.5 - z
     }
   } else {
-    # probability from `from` to q counterclockwise; %% has derivative 1
+    # probability from `from` to q counterclockwise, (z - zf) mod 1; written with floor(),
+    # because %% on advectors keeps the integer part it had when the tape was built
     zf <- atan((1 + rho) / (1 - rho) * tan((from - mu) / 2)) / pi
-    p <- (z - zf) %% 1
+    p <- (z - zf) - floor(z - zf)
     if (!lower.tail) p <- 1 - p
   }
   if (log.p) p <- log(p)

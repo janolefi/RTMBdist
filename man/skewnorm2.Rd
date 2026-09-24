@@ -42,6 +42,7 @@ the skew normal distribution reparameterised in terms of mean, standard deviatio
 }
 \details{
 This implementation of \code{dskewnorm2} allows for automatic differentiation with \code{RTMB} while the other functions are imported from the \code{sn} package.
+When called during AD taping, \code{pskewnorm2} instead integrates the density numerically with the AD-compatible \code{\link[RTMB:ADintegrate]{integrate}} of \code{RTMB}, which makes it AD-compatible as well.
 
 Uses the same density as \code{skewnorm} with location \eqn{\xi}, scale \eqn{\omega}, and shape \eqn{\alpha}
 reparameterised from the mean \eqn{m}, standard deviation \eqn{s}, and skewness parameter \eqn{\alpha}:

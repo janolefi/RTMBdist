@@ -5,6 +5,10 @@ dGenericSim <- get("dGenericSim", envir = asNamespace("RTMB"), inherits = FALSE)
 # getting ad_context from RTMB (not exported)
 ad_context <- get("ad_context", envir = asNamespace("RTMB"), inherits = FALSE)
 
+# getting the values of advectors at tape time from RTMB (not exported)
+getValues <- get("getValues", envir = asNamespace("RTMB"), inherits = FALSE)
+value_of <- function(x) if (inherits(x, "advector")) getValues(x) else x
+
 #' AD-compatible error function and complementary error function
 #'
 #' @param x vector of evaluation points

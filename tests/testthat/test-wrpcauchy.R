@@ -199,3 +199,32 @@ test_that("pwrpcauchy with from has correct AD derivatives", {
                       c(0.3, 0.6))
   expect_false(any(is.nan(H$jacobian(c(0.3, 0.6)))))
 })
+
+test_that("pwrpcauchy with a fixed origin stays correct when the tape is re-evaluated", {
+  q <- c(-2, 0, 2)
+  F <- RTMB::MakeTape(function(m) pwrpcauchy(q, m, 0.5, from = -pi), 0)
+  expect_equal(F(2.5), pwrpcauchy(q, 2.5, 0.5, from = -pi), tolerance = 1e-10)
+  expect_equal(F(-2.5), pwrpcauchy(q, -2.5, 0.5, from = -pi), tolerance = 1e-10)
+})
+
+test_that("wrpcauchy supports OSA residuals, with the circle cut at -pi", {
+  set.seed(1)
+  check_osa_cdf(dwrpcauchy, function(q, mu, rho) pwrpcauchy(q, mu, rho, from = -pi),
+                rwrpcauchy(30, 1, 0.6), mu = 1, rho = 0.6)
+})
+
+test_that("wrpcauchy OSA residuals are valid for mixtures over different mean directions", {
+  set.seed(1)
+  y <- c(rwrpcauchy(20, -2, 0.7), rwrpcauchy(20, 2, 0.4))
+  fn <- function(par) {
+    RTMB::getAll(par)
+    y <- RTMB::OBS(y)
+    -sum(log(0.3 * exp(dwrpcauchy(y, mu1, rho1, log = TRUE)) +
+             0.7 * exp(dwrpcauchy(y, mu2, rho2, log = TRUE))))
+  }
+  par <- list(mu1 = -2, rho1 = 0.7, mu2 = 2, rho2 = 0.4)
+  obj <- RTMB::MakeADFun(fn, par, silent = TRUE)
+  res <- RTMB::oneStepPredict(obj, method = "cdf", trace = FALSE)
+  Fmix <- 0.3 * pwrpcauchy(y, -2, 0.7, from = -pi) + 0.7 * pwrpcauchy(y, 2, 0.4, from = -pi)
+  expect_equal(res$residual, qnorm(Fmix), tolerance = 1e-6)
+})

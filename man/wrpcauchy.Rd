@@ -70,6 +70,24 @@ random effect: with the default, each value of \code{mu} cuts the circle at a
 different place, and the average of these distribution functions is not the
 distribution function of the mixture.
 
+\strong{OSA residuals:} \code{dwrpcauchy} supports one-step-ahead (OSA)
+quantile residuals via \code{RTMB::\link[RTMB]{oneStepPredict}}. For the
+methods based on the distribution function, such as \code{method = "cdf"},
+the circle is cut at the fixed origin \eqn{-\pi}, i.e. the residuals are
+based on \code{pwrpcauchy(x, mu, rho, from = -pi)} rather than the default
+origin \eqn{\mu - \pi}. OSA residuals are computed from the predictive
+distribution function, which averages the distribution function over hidden
+states or random effects, and this is only valid with an origin that does not
+depend on \code{mu} (see above). Hence the residuals are valid for all
+models, but their interpretation depends on the data: for turning angles,
+with \code{mu} close to 0, the cut at \eqn{\pm\pi} corresponds to a
+reversal and the residuals increase with the turning angle. For directions
+with \code{mu} far from 0, angles close to \eqn{\pm\pi} can give
+large residuals of either sign, even when they are close to the mean
+direction. For \code{method = "oneStepGeneric"}, set
+\code{range = c(-pi, pi)} in \code{oneStepPredict()}, so that the density is
+integrated from the same origin.
+
 \code{qwrpcauchy} is the inverse of \code{pwrpcauchy} and returns angles in
 \eqn{[\mathrm{from}, \mathrm{from} + 2\pi]}, by default
 \eqn{[\mu - \pi, \mu + \pi]}, not wrapped to \eqn{[-\pi, \pi]}. The latter

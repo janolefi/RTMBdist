@@ -8,6 +8,8 @@
 #   3. lower.tail  — p(x, lower.tail=FALSE) == 1 - p(x)
 #   4. normalised  — integral of pdf == 1  /  sum of pmf == 1
 #   5. AD gradient — MakeTape(nll) Jacobian contains no NaN
+#   6. AD CDF      — taped p(x) matches p(x) outside AD in value and gradient
+#   7. OSA         — oneStepPredict(method = "cdf") residuals equal qnorm(p(x))
 
 
 #' Check that the AD gradient of a distribution's NLL is free of NaN (test 5)
@@ -55,6 +57,76 @@ check_ad_gradient <- function(.dfun, .rfun, ..., .n = 20, .seed = 42) {
       label = "no NaN in AD gradient"
     )
   }
+}
+
+
+#' Check an AD-compatible distribution function against its non-AD evaluation (test 6)
+#'
+#' Tapes .pfun with respect to the distribution parameters and with respect to
+#' the quantiles, and compares the taped values to .pfun evaluated outside AD,
+#' the parameter Jacobian to central finite differences of .pfun outside AD,
+#' and the derivative with respect to the quantiles to the density .dfun.
+#'
+#' @param .pfun distribution function, e.g. pskewt
+#' @param .dfun density function, e.g. dskewt
+#' @param .q    numeric vector of quantiles
+#' @param ...   named numeric distribution parameters, each of length 1, that are taped
+#' @param .fixed parameters for .pfun and .dfun that are not taped, e.g. list(df = 5)
+#' @param .args further arguments for .pfun only, e.g. list(log.p = TRUE); the derivative
+#'   with respect to .q is only checked when this is empty
+#' @param .tol  tolerance for values and the derivative with respect to .q
+#' @param .grad_tol tolerance for the finite-difference comparison
+#'
+#' @return the parameter tape, invisibly, for further checks at other parameters
+check_ad_cdf <- function(.pfun, .dfun, .q, ..., .fixed = list(), .args = list(),
+                         .tol = 1e-8, .grad_tol = 1e-6) {
+  par <- unlist(list(...))
+  as_args <- function(p) stats::setNames(lapply(seq_along(par), function(j) p[j]), names(par))
+  call_p <- function(p, x = .q) do.call(.pfun, c(list(x), as_args(p), .fixed, .args))
+
+  F <- RTMB::MakeTape(function(p) call_p(p), par)
+  expect_equal(F(par), call_p(par), tolerance = .tol, label = "taped CDF value")
+
+  h <- 1e-5
+  J_fd <- sapply(seq_along(par), function(j) {
+    e <- replace(numeric(length(par)), j, h)
+    (call_p(par + e) - call_p(par - e)) / (2 * h)
+  })
+  expect_equal(F$jacobian(par), matrix(J_fd, ncol = length(par)),
+               tolerance = .grad_tol, ignore_attr = TRUE, label = "taped CDF gradient")
+
+  if (length(.args) == 0) {
+    G <- RTMB::MakeTape(function(x) call_p(par, x), .q)
+    expect_equal(diag(G$jacobian(.q)), do.call(.dfun, c(list(.q), list(...), .fixed)),
+                 tolerance = .tol, label = "taped CDF derivative in q")
+  }
+
+  invisible(F)
+}
+
+
+#' Check OSA residuals of a continuous distribution via its CDF (test 7)
+#'
+#' Builds the negative log-likelihood of .y with .y marked as observations by
+#' RTMB::OBS(), and checks that the residuals of oneStepPredict(method = "cdf")
+#' equal qnorm(.pfun(.y, ...)). No fitting is needed, as the residuals are
+#' computed at the parameter values supplied.
+#'
+#' @param .dfun density function, e.g. dskewt
+#' @param .pfun distribution function, e.g. pskewt
+#' @param .y    numeric vector of observations
+#' @param ...   named numeric distribution parameters, each of length 1
+check_osa_cdf <- function(.dfun, .pfun, .y, ...) {
+  dat <- list(y = .y)
+  fn <- function(par) {
+    RTMB::getAll(par, dat)
+    y <- RTMB::OBS(y)
+    -sum(do.call(.dfun, c(list(y), par, list(log = TRUE))))
+  }
+  obj <- RTMB::MakeADFun(fn, list(...), silent = TRUE)
+  res <- RTMB::oneStepPredict(obj, method = "cdf", trace = FALSE)
+  expect_equal(res$residual, stats::qnorm(do.call(.pfun, c(list(.y), list(...)))),
+               tolerance = 1e-6, label = "OSA residuals")
 }
 
 

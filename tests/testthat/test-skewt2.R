@@ -23,3 +23,12 @@ test_that("skewt2 passes standard distribution checks (mean=1, sd=2, skew=2, df=
 test_that("skewt2 AD gradient has no NaN", {
   check_ad_gradient(dskewt2,    rskewt2,    mean = 0, sd = 1, skew = 2, df = 5)
 })
+
+test_that("pskewt2 under AD matches pskewt2 outside AD", {
+  check_ad_cdf(pskewt2, dskewt2, c(-1.5, -0.3, 0.7, 1.9, 4.5), mean = 1, sd = 2, skew = 2, df = 5)
+})
+
+test_that("skewt2 supports OSA residuals", {
+  set.seed(1)
+  check_osa_cdf(dskewt2, pskewt2, rskewt2(30, 1, 2, 3, 5), mean = 1, sd = 2, skew = 3, df = 5)
+})

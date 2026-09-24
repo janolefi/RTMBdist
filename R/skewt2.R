@@ -8,7 +8,8 @@
 #'
 #' This corresponds to the skew t type 2 distribution in GAMLSS (\code{ST2}), see pp. 411-412 of Rigby et al. (2019) and the version implemented in the \code{sn} package.
 #' However, it is reparameterised in terms of a standard deviation parameter \code{sd} rather than just a scale parameter \code{sigma}. Details of this reparameterisation are given below.
-#' This implementation of \code{dskewt} allows for automatic differentiation with \code{RTMB} while the other functions are imported from the \code{sn} package.
+#' This implementation of \code{dskewt2} allows for automatic differentiation with \code{RTMB} while the other functions are imported from the \code{sn} package.
+#' When called during AD taping, \code{pskewt2} instead integrates the density numerically with the AD-compatible \code{\link[RTMB:ADintegrate]{integrate}} of \code{RTMB}, which makes it AD-compatible as well. The \code{method} argument is then ignored.
 #' See \code{sn::\link[sn]{dst}} for more details.
 #'
 #' \strong{Caution:} In a numerial optimisation, the \code{skew} parameter should NEVER be initialised with exactly zero.
