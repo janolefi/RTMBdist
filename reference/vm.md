@@ -48,7 +48,8 @@ rvm(n, mu = 0, kappa = 1, wrap = TRUE)
 
 - tol:
 
-  the precision in evaluating the distribution function
+  the precision in evaluating the distribution function, ignored in AD
+  context.
 
 - lower.tail:
 
@@ -77,11 +78,45 @@ rvm(n, mu = 0, kappa = 1, wrap = TRUE)
 
 This implementation of `dvm` allows for automatic differentiation with
 `RTMB`. `rvm` and `pvm` are simply wrappers of the corresponding
-functions from `circular`.
+functions from `circular`. When called during AD taping, `pvm` instead
+integrates the density numerically with the AD-compatible
+[`integrate`](https://rdrr.io/pkg/RTMB/man/ADintegrate.html) of `RTMB`,
+which makes it AD-compatible in `q`, `mu`, `kappa` and `from`. The `tol`
+argument is then ignored.
 
 \$\$f(x;\\\mu,\kappa) = \frac{\exp(\kappa\cos(x-\mu))}{2\pi\\
 I_0(\kappa)},\$\$ where \\I_0\\ is the modified Bessel function of the
 first kind of order 0.
+
+A circular distribution has no smallest angle, so its distribution
+function depends on where the circle is cut open. By default, `pvm` cuts
+it at the antipode of the mean direction, \\\mu - \pi\\, so that
+\\F(\mu) = 1/2\\. A different origin is set with `from`. A fixed `from`
+is needed whenever the distribution function is averaged over different
+values of `mu`, for example over the states of a hidden Markov model or
+over a random effect: with the default, each value of `mu` cuts the
+circle at a different place, and the average of these distribution
+functions is not the distribution function of the mixture.
+
+**OSA residuals:** `dvm` supports one-step-ahead (OSA) quantile
+residuals via
+`RTMB::`[`oneStepPredict`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html).
+For the methods based on the distribution function, such as
+`method = "cdf"`, the circle is cut at the fixed origin \\-\pi\\, i.e.
+the residuals are based on `pvm(x, mu, kappa, from = -pi)` rather than
+the default origin \\\mu - \pi\\. OSA residuals are computed from the
+predictive distribution function, which averages the distribution
+function over hidden states or random effects, and this is only valid
+with an origin that does not depend on `mu` (see above). Hence the
+residuals are valid for all models, but their interpretation depends on
+the data: for turning angles, with `mu` close to 0, the cut at
+\\\pm\pi\\ corresponds to a reversal and the residuals increase with the
+turning angle. For directions with `mu` far from 0, angles close to
+\\\pm\pi\\ can give large residuals of either sign, even when they are
+close to the mean direction. For `method = "oneStepGeneric"`, set
+`range = c(-pi, pi)` in
+[`oneStepPredict()`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html),
+so that the density is integrated from the same origin.
 
 ## See also
 

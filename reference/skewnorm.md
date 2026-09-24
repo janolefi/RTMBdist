@@ -61,8 +61,11 @@ generates random deviates.
 
 This implementation of `dskewnorm` allows for automatic differentiation
 with `RTMB` while the other functions are imported from the `sn`
-package. See `sn::`[`dsn`](https://rdrr.io/pkg/sn/man/dsn.html) for more
-details.
+package. When called during AD taping, `pskewnorm` instead integrates
+the density numerically with the AD-compatible
+[`integrate`](https://rdrr.io/pkg/RTMB/man/ADintegrate.html) of `RTMB`,
+which makes it AD-compatible as well. See
+`sn::`[`dsn`](https://rdrr.io/pkg/sn/man/dsn.html) for more details.
 
 \$\$f(x;\\\xi,\omega,\alpha) =
 \frac{2}{\omega}\\\phi\\\left(\frac{x-\xi}{\omega}\right)\Phi\\\left(\alpha\frac{x-\xi}{\omega}\right),\$\$

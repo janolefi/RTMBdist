@@ -100,6 +100,26 @@ effect: with the default, each value of `mu` cuts the circle at a
 different place, and the average of these distribution functions is not
 the distribution function of the mixture.
 
+**OSA residuals:** `dwrpcauchy` supports one-step-ahead (OSA) quantile
+residuals via
+`RTMB::`[`oneStepPredict`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html).
+For the methods based on the distribution function, such as
+`method = "cdf"`, the circle is cut at the fixed origin \\-\pi\\, i.e.
+the residuals are based on `pwrpcauchy(x, mu, rho, from = -pi)` rather
+than the default origin \\\mu - \pi\\. OSA residuals are computed from
+the predictive distribution function, which averages the distribution
+function over hidden states or random effects, and this is only valid
+with an origin that does not depend on `mu` (see above). Hence the
+residuals are valid for all models, but their interpretation depends on
+the data: for turning angles, with `mu` close to 0, the cut at
+\\\pm\pi\\ corresponds to a reversal and the residuals increase with the
+turning angle. For directions with `mu` far from 0, angles close to
+\\\pm\pi\\ can give large residuals of either sign, even when they are
+close to the mean direction. For `method = "oneStepGeneric"`, set
+`range = c(-pi, pi)` in
+[`oneStepPredict()`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html),
+so that the density is integrated from the same origin.
+
 `qwrpcauchy` is the inverse of `pwrpcauchy` and returns angles in
 \\\[\mathrm{from}, \mathrm{from} + 2\pi\]\\, by default \\\[\mu - \pi,
 \mu + \pi\]\\, not wrapped to \\\[-\pi, \pi\]\\. The latter also holds

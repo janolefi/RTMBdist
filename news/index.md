@@ -2,6 +2,9 @@
 
 ## RTMBdist 1.2.0
 
+- Added missing ADable CDFs via numerical integration since RTMB now has
+  `ADintegrate()`
+
 - Fixed the copula densities
   [`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
   and

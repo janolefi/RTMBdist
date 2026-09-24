@@ -124,6 +124,23 @@ of <code>mu</code>, for example over the states of a hidden Markov model or over
 random effect: with the default, each value of <code>mu</code> cuts the circle at a
 different place, and the average of these distribution functions is not the
 distribution function of the mixture.</p>
+<p><strong>OSA residuals:</strong> <code>dwrpcauchy</code> supports one-step-ahead (OSA)
+quantile residuals via <code>RTMB::<a href="https://rdrr.io/pkg/RTMB/man/OSA-residuals.html" class="external-link">oneStepPredict</a></code>. For the
+methods based on the distribution function, such as <code>method = "cdf"</code>,
+the circle is cut at the fixed origin \(-\pi\), i.e. the residuals are
+based on <code>pwrpcauchy(x, mu, rho, from = -pi)</code> rather than the default
+origin \(\mu - \pi\). OSA residuals are computed from the predictive
+distribution function, which averages the distribution function over hidden
+states or random effects, and this is only valid with an origin that does not
+depend on <code>mu</code> (see above). Hence the residuals are valid for all
+models, but their interpretation depends on the data: for turning angles,
+with <code>mu</code> close to 0, the cut at \(\pm\pi\) corresponds to a
+reversal and the residuals increase with the turning angle. For directions
+with <code>mu</code> far from 0, angles close to \(\pm\pi\) can give
+large residuals of either sign, even when they are close to the mean
+direction. For <code>method = "oneStepGeneric"</code>, set
+<code>range = c(-pi, pi)</code> in <code><a href="https://rdrr.io/pkg/RTMB/man/OSA-residuals.html" class="external-link">oneStepPredict()</a></code>, so that the density is
+integrated from the same origin.</p>
 <p><code>qwrpcauchy</code> is the inverse of <code>pwrpcauchy</code> and returns angles in
 \([\mathrm{from}, \mathrm{from} + 2\pi]\), by default
 \([\mu - \pi, \mu + \pi]\), not wrapped to \([-\pi, \pi]\). The latter

@@ -126,7 +126,8 @@ correspond to the <em>true</em> mean and standard deviation.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This corresponds to the skew t type 2 distribution in GAMLSS (<code>ST2</code>), see pp. 411-412 of Rigby et al. (2019) and the version implemented in the <code>sn</code> package.
 However, it is reparameterised in terms of a standard deviation parameter <code>sd</code> rather than just a scale parameter <code>sigma</code>. Details of this reparameterisation are given below.
-This implementation of <code>dskewt</code> allows for automatic differentiation with <code>RTMB</code> while the other functions are imported from the <code>sn</code> package.
+This implementation of <code>dskewt2</code> allows for automatic differentiation with <code>RTMB</code> while the other functions are imported from the <code>sn</code> package.
+When called during AD taping, <code>pskewt2</code> instead integrates the density numerically with the AD-compatible <code><a href="https://rdrr.io/pkg/RTMB/man/ADintegrate.html" class="external-link">integrate</a></code> of <code>RTMB</code>, which makes it AD-compatible as well. The <code>method</code> argument is then ignored.
 See <code>sn::<a href="https://rdrr.io/pkg/sn/man/dst.html" class="external-link">dst</a></code> for more details.</p>
 <p><strong>Caution:</strong> In a numerial optimisation, the <code>skew</code> parameter should NEVER be initialised with exactly zero.
 This will cause the initial and all subsequent derivatives to be exactly zero and hence the parameter will remain at its initial value.</p>

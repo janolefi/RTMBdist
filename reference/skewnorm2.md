@@ -62,7 +62,10 @@ generates random deviates.
 
 This implementation of `dskewnorm2` allows for automatic differentiation
 with `RTMB` while the other functions are imported from the `sn`
-package.
+package. When called during AD taping, `pskewnorm2` instead integrates
+the density numerically with the AD-compatible
+[`integrate`](https://rdrr.io/pkg/RTMB/man/ADintegrate.html) of `RTMB`,
+which makes it AD-compatible as well.
 
 Uses the same density as `skewnorm` with location \\\xi\\, scale
 \\\omega\\, and shape \\\alpha\\ reparameterised from the mean \\m\\,
