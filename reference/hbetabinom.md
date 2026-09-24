@@ -1,12 +1,22 @@
 # Hurdle beta-binomial distribution
 
-Probability mass function and random generation for the hurdle
-(zero-altered) beta-binomial distribution.
+Probability mass function, distribution function and random generation
+for the hurdle (zero-altered) beta-binomial distribution.
 
 ## Usage
 
 ``` r
 dhbetabinom(x, size, shape1, shape2, zeroprob = 0.5, log = FALSE)
+
+phbetabinom(
+  q,
+  size,
+  shape1,
+  shape2,
+  zeroprob = 0.5,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
 rhbetabinom(n, size, shape1, shape2, zeroprob = 0.5)
 ```
@@ -33,14 +43,27 @@ rhbetabinom(n, size, shape1, shape2, zeroprob = 0.5)
 
   logical; return log-density if TRUE
 
+- q:
+
+  vector of quantiles.
+
+- lower.tail:
+
+  logical; if `TRUE` (default), probabilities are \\P\[X \le q\]\\,
+  otherwise \\P\[X \> q\]\\.
+
+- log.p:
+
+  logical; if `TRUE`, probabilities are returned on the log scale.
+
 - n:
 
   number of random values to return.
 
 ## Value
 
-`dhbetabinom` gives the probability mass function and `rhbetabinom`
-generates random deviates.
+`dhbetabinom` gives the probability mass function, `phbetabinom` gives
+the distribution function, and `rhbetabinom` generates random deviates.
 
 ## Details
 
@@ -59,11 +82,13 @@ Unlike zero-inflation, which can only add zeros, `zeroprob` here is
 exactly the probability of observing a zero and may be larger *or*
 smaller than the beta-binomial would give on its own.
 
-Like
-[`betabinom`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
-itself, this distribution provides no distribution function: the
-beta-binomial cdf has no closed form and would have to be summed over
-the support, which cannot be taped for automatic differentiation.
+The distribution function has no closed form and is computed by summing
+the probability mass function over \\0, \ldots, q\\. It is AD-compatible
+in the parameters, while `q` and `size` must be numeric data. This is
+also what one-step-ahead (OSA) residuals via
+`RTMB::`[`oneStepPredict`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html)
+need, so these are supported, e.g. with `method = "cdf"` and
+`discrete = TRUE`.
 
 ## See also
 
@@ -78,4 +103,5 @@ the support, which cannot be taped for automatic differentiation.
 set.seed(123)
 x <- rhbetabinom(5, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.4)
 d <- dhbetabinom(x, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.4)
+p <- phbetabinom(x, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.4)
 ```

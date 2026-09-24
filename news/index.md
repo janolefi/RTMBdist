@@ -2,8 +2,36 @@
 
 ## RTMBdist 1.2.0
 
-- Added missing ADable CDFs via numerical integration since RTMB now has
-  `ADintegrate()`
+- One-step-ahead (OSA) residuals via `method = "cdf"` are now available
+  for many more distributions. During taping,
+  [`pskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md),
+  [`pskewnorm2()`](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md),
+  [`pskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md),
+  [`pskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
+  and [`pvm()`](https://janolefi.github.io/RTMBdist/reference/vm.md)
+  integrate the density numerically with the AD-compatible
+  [`integrate()`](https://rdrr.io/r/stats/integrate.html) of `RTMB`,
+  which is therefore now required in version 2.0 or later. Added
+  distribution functions for the beta-binomial
+  ([`pbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md),
+  [`pztbetabinom()`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md),
+  [`pzibetabinom()`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md),
+  [`phbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md))
+  and the beta-negative binomial
+  ([`pbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md),
+  [`pbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)),
+  which sum the probability mass function. OSA residuals are supported
+  for all of these and for the wrapped Cauchy. For the two circular
+  distributions, the circle is cut at the fixed origin `-pi`, which
+  keeps the residuals valid for hidden Markov and random effects models.
+  Also fixed OSA residuals and simulation for
+  [`dztbinom()`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md),
+  [`dztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md)
+  and
+  [`dztnbinom2()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom2.md),
+  and `NaN` OSA residuals for
+  [`dcombinom()`](https://janolefi.github.io/RTMBdist/reference/combinom.md)
+  when an observation equals `size`.
 
 - Fixed the copula densities
   [`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
@@ -91,8 +119,8 @@
   matching `p` and `r` functions. Both are beta-geometric special cases
   of the beta-negative binomial, with `size` fixed at one, and that
   restriction is what gives them a closed-form distribution function
-  where the general beta-negative binomial has none; one-step-ahead
-  residuals via `method = "cdf"` are therefore available for these two.
+  where the general beta-negative binomial has none. One-step-ahead
+  residuals via `method = "cdf"` are available.
   [`dyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md)
   follows `VGAM` and is supported on the positive integers, while
   [`dwaring()`](https://janolefi.github.io/RTMBdist/reference/waring.md)
@@ -111,8 +139,8 @@
   which follows the `BNB` family of `gamlss.dist`, `mu` is exactly the
   mean; this is the more stable parameterisation to estimate in, because
   the original one has a long likelihood ridge along which `size` and
-  `shape2` trade off. Like the beta-binomial, neither has a distribution
-  function, so one-step-ahead residuals are not available.
+  `shape2` trade off. The distribution function has no closed form and
+  is summed from the probability mass function, see above.
 
 - Added the extreme value distributions: the generalised extreme value
   distribution
@@ -168,10 +196,8 @@
   ([`dzibetabinom()`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md),
   [`dztbetabinom()`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md),
   [`dhbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)).
-  Like
-  [`dbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
-  itself these have no distribution function, since the beta-binomial
-  cdf has no closed form.
+  Their distribution functions are summed from the probability mass
+  function, see above.
 
 - The documentation of the continuous zero-inflated distributions now
   explains that, because the continuous part places no mass at zero,

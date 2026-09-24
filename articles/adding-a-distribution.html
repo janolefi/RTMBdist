@@ -266,6 +266,16 @@ gradient check is the minimum.</p>
 <td>inflated at 0 and/or 1</td>
 <td><code>check_inflated_dist</code></td>
 </tr>
+<tr class="odd">
+<td>AD-compatible cdf</td>
+<td>also <code>check_ad_cdf(pfun, dfun, q, ...)</code>, with
+<code>.dq = FALSE</code> if discrete</td>
+</tr>
+<tr class="even">
+<td>OSA residuals</td>
+<td>also <code>check_osa_cdf(dfun, pfun, y, ...)</code>, with
+<code>.discrete = TRUE</code> if discrete</td>
+</tr>
 </tbody>
 </table>
 <p>Choose <code>xs</code> so <code>pfoo(xs)</code> stays away from 0 and
@@ -566,6 +576,31 @@ helper changed behaviour.</li>
 beyond your own exports, something imported more than you meant it
 to.</li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="when-the-cdf-has-no-closed-form">When the cdf has no closed form<a class="anchor" aria-label="anchor" href="#when-the-cdf-has-no-closed-form"></a>
+</h2>
+<p>A distribution function is needed for OSA residuals, so avoid
+shipping without one. Two internal helpers build it from the
+density.</p>
+<p><code>numerical_cdf(dfun, q, pars, centre, scale, lower, upper, ...)</code>
+integrates a continuous density with <code>RTMB</code>’s AD-compatible
+<code><a href="https://rdrr.io/r/stats/integrate.html" class="external-link">integrate()</a></code>. Call it only in AD context and keep a faster
+non-AD cdf, e.g. from another package, for ordinary use, as
+<code>pskewnorm</code> does. Pass <code>centre</code> close to the mode
+and <code>scale</code> of the order of the spread; the comments in
+<code>R/numerical_cdf.R</code> explain why.</p>
+<p><code>discrete_cdf(dfun, q, pars, upper, ...)</code> sums a
+probability mass function over . It is AD-compatible in the parameters,
+while <code>q</code> must be numeric, which is how <code>RTMB</code>’s
+CDF-based OSA residuals use it. Pass <code>upper</code>
+(e.g. <code>size</code>) for a bounded support, so that the cdf is
+exactly 1 at the upper end. Otherwise rounding can push it above 1, and
+the OSA residuals become <code>NaN</code>. <code>pbetabinom</code> is a
+short example.</p>
+<p>Both take the parameters as a named list rather than
+<code>...</code>, so that a parameter called <code>df</code> cannot
+partially match the argument <code>dfun</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="when-rtmb-has-no-ad-version">When <code>RTMB</code> has no AD version<a class="anchor" aria-label="anchor" href="#when-rtmb-has-no-ad-version"></a>

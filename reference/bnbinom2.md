@@ -1,12 +1,15 @@
 # Reparameterised beta-negative binomial distribution
 
-Probability mass function and random generation for the beta-negative
-binomial distribution reparameterised in terms of its mean.
+Probability mass function, distribution function and random generation
+for the beta-negative binomial distribution reparameterised in terms of
+its mean.
 
 ## Usage
 
 ``` r
 dbnbinom2(x, mu, sigma, nu, log = FALSE)
+
+pbnbinom2(q, mu, sigma, nu, lower.tail = TRUE, log.p = FALSE)
 
 rbnbinom2(n, mu, sigma, nu)
 ```
@@ -34,14 +37,27 @@ rbnbinom2(n, mu, sigma, nu)
 
   logical; if `TRUE`, probabilities are returned on the log scale.
 
+- q:
+
+  vector of quantiles.
+
+- lower.tail:
+
+  logical; if `TRUE` (default), probabilities are \\P\[X \le q\]\\,
+  otherwise \\P\[X \> q\]\\.
+
+- log.p:
+
+  logical; if `TRUE`, probabilities are returned on the log scale.
+
 - n:
 
   number of random values to return (for `rbnbinom2`).
 
 ## Value
 
-`dbnbinom2` gives the probability mass function and `rbnbinom2`
-generates random deviates.
+`dbnbinom2` gives the probability mass function, `pbnbinom2` gives the
+distribution function, and `rbnbinom2` generates random deviates.
 
 ## Details
 
@@ -69,9 +85,14 @@ is the more stable of the two to estimate in; see
 [`bnbinom`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
 for the identifiability problem it avoids.
 
-There is no distribution function, since the beta-negative binomial
-distribution function has no closed form and the support is unbounded.
-One-step-ahead residuals are therefore not available.
+The distribution function has no closed form and is computed by summing
+the probability mass function over \\0, \ldots, q\\, so its cost grows
+with the largest `q`. It is AD-compatible in the parameters, while `q`
+must be numeric data. This is also what one-step-ahead (OSA) residuals
+via
+`RTMB::`[`oneStepPredict`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html)
+need, so these are supported, e.g. with `method = "cdf"` and
+`discrete = TRUE`.
 
 ## References
 
@@ -92,4 +113,5 @@ version can be found in https://www.gamlss.com/.
 set.seed(123)
 x <- rbnbinom2(5, mu = 4, sigma = 0.4, nu = 0.5)
 d <- dbnbinom2(x, mu = 4, sigma = 0.4, nu = 0.5)
+p <- pbnbinom2(x, mu = 4, sigma = 0.4, nu = 0.5)
 ```

@@ -1,12 +1,14 @@
 # Beta-negative binomial distribution
 
-Probability mass function and random generation for the beta-negative
-binomial distribution.
+Probability mass function, distribution function and random generation
+for the beta-negative binomial distribution.
 
 ## Usage
 
 ``` r
 dbnbinom(x, size, shape1, shape2, log = FALSE)
+
+pbnbinom(q, size, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
 
 rbnbinom(n, size, shape1, shape2)
 ```
@@ -33,14 +35,27 @@ rbnbinom(n, size, shape1, shape2)
 
   logical; if `TRUE`, probabilities are returned on the log scale.
 
+- q:
+
+  vector of quantiles.
+
+- lower.tail:
+
+  logical; if `TRUE` (default), probabilities are \\P\[X \le q\]\\,
+  otherwise \\P\[X \> q\]\\.
+
+- log.p:
+
+  logical; if `TRUE`, probabilities are returned on the log scale.
+
 - n:
 
   number of random values to return (for `rbnbinom`).
 
 ## Value
 
-`dbnbinom` gives the probability mass function and `rbnbinom` generates
-random deviates.
+`dbnbinom` gives the probability mass function, `pbnbinom` gives the
+distribution function, and `rbnbinom` generates random deviates.
 
 ## Details
 
@@ -66,9 +81,14 @@ data or a restriction. The [mean
 parameterisation](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)
 is usually the more stable one to estimate in.
 
-There is no distribution function, since the beta-negative binomial
-distribution function has no closed form and the support is unbounded.
-One-step-ahead residuals are therefore not available.
+The distribution function has no closed form and is computed by summing
+the probability mass function over \\0, \ldots, q\\, so its cost grows
+with the largest `q`. It is AD-compatible in the parameters, while `q`
+must be numeric data. This is also what one-step-ahead (OSA) residuals
+via
+`RTMB::`[`oneStepPredict`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html)
+need, so these are supported, e.g. with `method = "cdf"` and
+`discrete = TRUE`.
 
 ## References
 
@@ -87,4 +107,5 @@ Distributions, 3rd edition, Wiley, doi:10.1002/0471715816.
 set.seed(123)
 x <- rbnbinom(5, size = 3, shape1 = 4, shape2 = 2)
 d <- dbnbinom(x, size = 3, shape1 = 4, shape2 = 2)
+p <- pbnbinom(x, size = 3, shape1 = 4, shape2 = 2)
 ```

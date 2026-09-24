@@ -36,6 +36,7 @@
   [`rbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md) :
   Reparameterised beta distribution
 - [`dbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
+  [`pbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
   [`rbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
   : Beta-binomial distribution
 - [`dbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
@@ -44,9 +45,11 @@
   [`rbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
   : Beta prime distribution
 - [`dbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
+  [`pbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
   [`rbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
   : Beta-negative binomial distribution
 - [`dbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)
+  [`pbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)
   [`rbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)
   : Reparameterised beta-negative binomial distribution
 - [`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
@@ -152,6 +155,7 @@
   [`rhalft()`](https://janolefi.github.io/RTMBdist/reference/halft.md) :
   Half-t distribution
 - [`dhbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)
+  [`phbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)
   [`rhbetabinom()`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)
   : Hurdle beta-binomial distribution
 - [`dhbinom()`](https://janolefi.github.io/RTMBdist/reference/hbinom.md)
@@ -340,6 +344,7 @@
   [`rzibeta2()`](https://janolefi.github.io/RTMBdist/reference/zibeta2.md)
   : Reparameterised zero-inflated beta distribution
 - [`dzibetabinom()`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md)
+  [`pzibetabinom()`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md)
   [`rzibetabinom()`](https://janolefi.github.io/RTMBdist/reference/zibetabinom.md)
   : Zero-inflated beta-binomial distribution
 - [`dzibinom()`](https://janolefi.github.io/RTMBdist/reference/zibinom.md)
@@ -392,6 +397,7 @@
   [`rzoibeta2()`](https://janolefi.github.io/RTMBdist/reference/zoibeta2.md)
   : Reparameterised zero- and one-inflated beta distribution
 - [`dztbetabinom()`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md)
+  [`pztbetabinom()`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md)
   [`rztbetabinom()`](https://janolefi.github.io/RTMBdist/reference/ztbetabinom.md)
   : Zero-truncated beta-binomial distribution
 - [`dztbinom()`](https://janolefi.github.io/RTMBdist/reference/ztbinom.md)

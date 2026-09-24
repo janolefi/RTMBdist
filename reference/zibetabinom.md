@@ -1,12 +1,22 @@
 # Zero-inflated beta-binomial distribution
 
-Probability mass function and random generation for the zero-inflated
-beta-binomial distribution.
+Probability mass function, distribution function and random generation
+for the zero-inflated beta-binomial distribution.
 
 ## Usage
 
 ``` r
 dzibetabinom(x, size, shape1, shape2, zeroprob = 0, log = FALSE)
+
+pzibetabinom(
+  q,
+  size,
+  shape1,
+  shape2,
+  zeroprob = 0,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
 rzibetabinom(n, size, shape1, shape2, zeroprob = 0)
 ```
@@ -33,14 +43,27 @@ rzibetabinom(n, size, shape1, shape2, zeroprob = 0)
 
   logical; return log-density if TRUE
 
+- q:
+
+  vector of quantiles.
+
+- lower.tail:
+
+  logical; if `TRUE` (default), probabilities are \\P\[X \le q\]\\,
+  otherwise \\P\[X \> q\]\\.
+
+- log.p:
+
+  logical; if `TRUE`, probabilities are returned on the log scale.
+
 - n:
 
   number of random values to return.
 
 ## Value
 
-`dzibetabinom` gives the probability mass function and `rzibetabinom`
-generates random deviates.
+`dzibetabinom` gives the probability mass function, `pzibetabinom` gives
+the distribution function, and `rzibetabinom` generates random deviates.
 
 ## Details
 
@@ -54,11 +77,13 @@ a zero; see
 [`hbetabinom`](https://janolefi.github.io/RTMBdist/reference/hbetabinom.md)
 for the hurdle version, where it is.
 
-Like
-[`betabinom`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)
-itself, this distribution provides no distribution function: the
-beta-binomial cdf has no closed form and would have to be summed over
-the support, which cannot be taped for automatic differentiation.
+The distribution function has no closed form and is computed by summing
+the probability mass function over \\0, \ldots, q\\. It is AD-compatible
+in the parameters, while `q` and `size` must be numeric data. This is
+also what one-step-ahead (OSA) residuals via
+`RTMB::`[`oneStepPredict`](https://rdrr.io/pkg/RTMB/man/OSA-residuals.html)
+need, so these are supported, e.g. with `method = "cdf"` and
+`discrete = TRUE`.
 
 ## See also
 
@@ -73,4 +98,5 @@ the support, which cannot be taped for automatic differentiation.
 set.seed(123)
 x <- rzibetabinom(5, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.3)
 d <- dzibetabinom(x, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.3)
+p <- pzibetabinom(x, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.3)
 ```
