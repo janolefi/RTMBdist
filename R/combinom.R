@@ -184,16 +184,20 @@ pcombinom <- function(q, size, prob, nu = 1, lower.tail = TRUE, log.p = FALSE) {
   # indicator 1{k <= q}. Writing it this way (rather than indexing a cumulative
   # sum) keeps it evaluable when q is an advector, as required for OSA.
   # The half-integer shift avoids the ambiguity of ispos() at exactly zero.
+  # The sum is divided by the same sum without the indicator, so that p is exactly 1
+  # for q >= size; rounding could otherwise put it above 1, and log(1 - p) in the OSA
+  # residuals would then be NaN.
   p <- 0 * q + 0 * psi + 0 * nu
   for (s in unique(size)) {
     idx <- which(size == s)
     lZ <- lZ_combinom(psi[idx], nu[idx], s)
-    ps <- 0 * lZ
+    ps <- total <- 0 * lZ
     for (k in 0:s) {
-      ps <- ps + exp(nu[idx] * lchoose(s, k) + k * psi[idx] - lZ) *
-        ispos(q[idx] - k + 0.5)
+      pk <- exp(nu[idx] * lchoose(s, k) + k * psi[idx] - lZ)
+      ps <- ps + pk * ispos(q[idx] - k + 0.5)
+      total <- total + pk
     }
-    p[idx] <- ps
+    p[idx] <- ps / total
   }
 
   if (!lower.tail) p <- 1 - p

@@ -1,6 +1,6 @@
 #' Zero-truncated beta-binomial distribution
 #'
-#' Probability mass function and random generation for the zero-truncated beta-binomial
+#' Probability mass function, distribution function and random generation for the zero-truncated beta-binomial
 #' distribution.
 #'
 #' @details
@@ -12,13 +12,18 @@
 #' where \eqn{P(X=x)} is the probability mass function of the corresponding
 #' untruncated distribution.
 #'
-#' Like \code{\link{betabinom}} itself, this distribution provides no distribution
-#' function: the beta-binomial cdf has no closed form and would have to be summed
-#' over the support, which cannot be taped for automatic differentiation.
+#' The distribution function has no closed form and is computed by summing the
+#' probability mass function over \eqn{0, \ldots, q}. It is AD-compatible in the
+#' parameters, while \code{q} and \code{size} must be numeric data. This is also what
+#' one-step-ahead (OSA) residuals via \code{RTMB::\link[RTMB]{oneStepPredict}} need,
+#' so these are supported, e.g. with \code{method = "cdf"} and \code{discrete = TRUE}.
 #'
 #' @seealso [betabinom], [zibetabinom], [hbetabinom], [ztbinom]
 #'
 #' @param x integer vector of counts
+#' @param q vector of quantiles.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.
+#' @param log.p logical; if \code{TRUE}, probabilities are returned on the log scale.
 #' @param n number of random values to return.
 #' @param size number of trials (zero or more)
 #' @param shape1,shape2 positive shape parameters of the mixing beta distribution
@@ -26,12 +31,13 @@
 #' @param log logical; return log-density if TRUE
 #'
 #' @return
-#' \code{dztbetabinom} gives the probability mass function and \code{rztbetabinom} generates random deviates.
+#' \code{dztbetabinom} gives the probability mass function, \code{pztbetabinom} gives the distribution function, and \code{rztbetabinom} generates random deviates.
 #'
 #' @examples
 #' set.seed(123)
 #' x <- rztbetabinom(5, size = 10, shape1 = 2, shape2 = 3)
 #' d <- dztbetabinom(x, size = 10, shape1 = 2, shape2 = 3)
+#' p <- pztbetabinom(x, size = 10, shape1 = 2, shape2 = 3)
 #' @name ztbetabinom
 NULL
 #' @rdname ztbetabinom
@@ -50,7 +56,8 @@ dztbetabinom <- function(x, size, shape1, shape2, log = FALSE) {
                        shape2 = shape2, log = log))
   }
   if (inherits(x, "osa")) {
-    stop("Zero-truncated beta-binomial does not support OSA residuals.")
+    return(dGenericOSA("dztbetabinom", x = x, size = size, shape1 = shape1,
+                       shape2 = shape2, log = log))
   }
 
   log_1m_zprob <- log1p(-dbetabinom(0, size, shape1, shape2))  # log(1 - P(X=0))
@@ -62,6 +69,18 @@ dztbetabinom <- function(x, size, shape1, shape2, log = FALSE) {
 
   if (log) return(logdens)
   return(exp(logdens))
+}
+#' @rdname ztbetabinom
+#' @export
+pztbetabinom <- function(q, size, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
+
+  if (!ad_context()) {
+    if (any(size < 0) || any(size != floor(size))) stop("size must be non-negative integers.")
+    if (any(shape1 <= 0) || any(shape2 <= 0)) stop("shape1 and shape2 must be positive.")
+  }
+
+  discrete_cdf(dztbetabinom, q, list(size = size, shape1 = shape1, shape2 = shape2),
+               upper = size, lower.tail = lower.tail, log.p = log.p)
 }
 #' @rdname ztbetabinom
 #' @export

@@ -3,14 +3,14 @@
 test_that("bnbinom2 passes standard discrete checks", {
   check_discrete_dist(
     dfun        = dbnbinom2,
-    pfun        = NULL, # no closed-form distribution function
+    pfun        = pbnbinom2,
     xs_int      = c(0, 1, 4, 10, 30),
     sum_support = 0:20000,
     mu = 4, sigma = 0.4, nu = 0.5
   )
   check_discrete_dist(
     dfun        = dbnbinom2,
-    pfun        = NULL,
+    pfun        = pbnbinom2,
     xs_int      = c(0, 3, 9, 20, 60),
     sum_support = 0:2000,
     mu = 10, sigma = 0.2, nu = 0.4
@@ -72,17 +72,21 @@ test_that("bnbinom2 recovers its parameters where bnbinom stalls on the ridge", 
   expect_equal(exp(o$par), c(4, 0.4, 0.5), tolerance = 0.15)
 })
 
-test_that("bnbinom2 refuses OSA residuals and recycles its arguments", {
+test_that("bnbinom2 recycles its arguments", {
   expect_length(dbnbinom2(0:5, c(1, 2), 0.5, 0.5), 6)
+  expect_length(pbnbinom2(0:5, c(1, 2), 0.5, 0.5), 6)
   expect_length(rbnbinom2(5, c(2, 4), 0.5, 0.5), 5)
-  expect_error(
-    dbnbinom2(structure(1, class = "osa"), 4, 0.4, 0.5),
-    "does not support OSA"
-  )
 })
 
 test_that("dbnbinom2 rejects non-positive parameters", {
   expect_error(dbnbinom2(1, 0, 0.4, 0.5), "mu")
   expect_error(dbnbinom2(1, 4, -1, 0.5), "sigma")
   expect_error(dbnbinom2(1, 4, 0.4, 0), "nu")
+})
+
+test_that("pbnbinom2 is the pbnbinom reparameterisation, also under AD and for OSA", {
+  q <- c(0, 1, 4, 10, 30)
+  expect_equal(pbnbinom2(q, 4, 0.4, 0.5), pbnbinom(q, 1 / 0.5, 1 / 0.4 + 1, 4 * 0.5 / 0.4))
+  check_ad_cdf(pbnbinom2, dbnbinom2, q, mu = 4, sigma = 0.4, nu = 0.5, .dq = FALSE)
+  check_osa_cdf(dbnbinom2, pbnbinom2, q, mu = 4, sigma = 0.4, nu = 0.5, .discrete = TRUE)
 })

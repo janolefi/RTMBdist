@@ -185,6 +185,8 @@ test_that("foo AD gradient has no NaN", {
 | discrete, no cdf | same, with `pfun = NULL` |
 | zero-inflated continuous | `check_zeroinfl_dist` |
 | inflated at 0 and/or 1 | `check_inflated_dist` |
+| AD-compatible cdf | also `check_ad_cdf(pfun, dfun, q, ...)`, with `.dq = FALSE` if discrete |
+| OSA residuals | also `check_osa_cdf(dfun, pfun, y, ...)`, with `.discrete = TRUE` if discrete |
 
 Choose `xs` so `pfoo(xs)` stays away from 0 and 1 — the `q(p(x))` round-trip
 cannot recover `x` once the cdf saturates in double precision.
@@ -340,6 +342,27 @@ the same problem.
   which catches a `@seealso` pointing at a topic that does not exist.
 - Check the `NAMESPACE` diff. If it contains anything beyond your own exports,
   something imported more than you meant it to.
+
+## When the cdf has no closed form
+
+A distribution function is needed for OSA residuals, so avoid shipping without
+one. Two internal helpers build it from the density.
+
+`numerical_cdf(dfun, q, pars, centre, scale, lower, upper, ...)` integrates a
+continuous density with `RTMB`'s AD-compatible `integrate()`. Call it only in AD
+context and keep a faster non-AD cdf, e.g. from another package, for ordinary
+use, as `pskewnorm` does. Pass `centre` close to the mode and `scale` of the
+order of the spread; the comments in `R/numerical_cdf.R` explain why.
+
+`discrete_cdf(dfun, q, pars, upper, ...)` sums a probability mass function over
+\eqn{0, \ldots, q}. It is AD-compatible in the parameters, while `q` must be
+numeric, which is how `RTMB`'s CDF-based OSA residuals use it. Pass `upper`
+(e.g. `size`) for a bounded support, so that the cdf is exactly 1 at the upper
+end. Otherwise rounding can push it above 1, and the OSA residuals become `NaN`.
+`pbetabinom` is a short example.
+
+Both take the parameters as a named list rather than `...`, so that a parameter
+called `df` cannot partially match the argument `dfun`.
 
 ## When `RTMB` has no AD version {#when-rtmb-has-no-ad-version}
 

@@ -41,6 +41,14 @@ dztbinom <- function(x, size, prob, log = FALSE) {
     if (any(prob < 0 | prob > 1)) stop("prob must be in [0,1]")
   }
 
+  # potentially escape to RNG or CDF
+  if(inherits(x, "simref")) {
+    return(dGenericSim("dztbinom", x=x, size=size, prob=prob, log=log))
+  }
+  if(inherits(x, "osa")) {
+    return(dGenericOSA("dztbinom", x=x, size=size, prob=prob, log=log))
+  }
+
   log_1m_zprob <- log1p(-dbinom(0, size, prob))  # log(1 - P(X=0))
   logdens <- dbinom(x, size, prob, log = TRUE)
 

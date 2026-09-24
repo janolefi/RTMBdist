@@ -3,10 +3,21 @@
 \name{hbetabinom}
 \alias{hbetabinom}
 \alias{dhbetabinom}
+\alias{phbetabinom}
 \alias{rhbetabinom}
 \title{Hurdle beta-binomial distribution}
 \usage{
 dhbetabinom(x, size, shape1, shape2, zeroprob = 0.5, log = FALSE)
+
+phbetabinom(
+  q,
+  size,
+  shape1,
+  shape2,
+  zeroprob = 0.5,
+  lower.tail = TRUE,
+  log.p = FALSE
+)
 
 rhbetabinom(n, size, shape1, shape2, zeroprob = 0.5)
 }
@@ -21,13 +32,19 @@ rhbetabinom(n, size, shape1, shape2, zeroprob = 0.5)
 
 \item{log}{logical; return log-density if TRUE}
 
+\item{q}{vector of quantiles.}
+
+\item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.}
+
+\item{log.p}{logical; if \code{TRUE}, probabilities are returned on the log scale.}
+
 \item{n}{number of random values to return.}
 }
 \value{
-\code{dhbetabinom} gives the probability mass function and \code{rhbetabinom} generates random deviates.
+\code{dhbetabinom} gives the probability mass function, \code{phbetabinom} gives the distribution function, and \code{rhbetabinom} generates random deviates.
 }
 \description{
-Probability mass function and random generation for the hurdle (zero-altered) beta-binomial
+Probability mass function, distribution function and random generation for the hurdle (zero-altered) beta-binomial
 distribution.
 }
 \details{
@@ -47,14 +64,17 @@ Unlike zero-inflation, which can only add zeros, \code{zeroprob} here is exactly
 the probability of observing a zero and may be larger \emph{or} smaller than the
 beta-binomial would give on its own.
 
-Like \code{\link{betabinom}} itself, this distribution provides no distribution
-function: the beta-binomial cdf has no closed form and would have to be summed
-over the support, which cannot be taped for automatic differentiation.
+The distribution function has no closed form and is computed by summing the
+probability mass function over \eqn{0, \ldots, q}. It is AD-compatible in the
+parameters, while \code{q} and \code{size} must be numeric data. This is also what
+one-step-ahead (OSA) residuals via \code{RTMB::\link[RTMB]{oneStepPredict}} need,
+so these are supported, e.g. with \code{method = "cdf"} and \code{discrete = TRUE}.
 }
 \examples{
 set.seed(123)
 x <- rhbetabinom(5, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.4)
 d <- dhbetabinom(x, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.4)
+p <- phbetabinom(x, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.4)
 }
 \seealso{
 \link{betabinom}, \link{zibetabinom}, \link{ztbetabinom}, \link{hbinom}

@@ -221,3 +221,11 @@ test_that("combinom supports simulation and OSA residuals", {
     expect_lt(abs(sd(res$residual) - 1), 0.4)
   }
 })
+
+test_that("pcombinom is exactly 1 at size, and OSA works for observations at size", {
+  expect_identical(pcombinom(12, 12, 0.35, 1.7), 1)
+  F <- RTMB::MakeTape(function(x) pcombinom(x, 12, 0.35, 1.7), 5)
+  expect_identical(F(12), 1)
+  check_osa_cdf(dcombinom, pcombinom, c(0, 2, 5, 8, 12), prob = 0.35, nu = 1.7,
+                .fixed = list(size = 12), .discrete = TRUE)
+})

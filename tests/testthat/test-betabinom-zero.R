@@ -1,12 +1,12 @@
 # Tests for the zero-modified beta-binomial distributions.
-# betabinom itself has no cdf, so neither do these; pfun = NULL throughout.
+# Their distribution functions sum the probability mass function over the support.
 
 test_that("zi/zt/h beta-binomial pass discrete distribution checks", {
-  check_discrete_dist(dfun = dzibetabinom, pfun = NULL, xs_int = 0:10,
+  check_discrete_dist(dfun = dzibetabinom, pfun = pzibetabinom, xs_int = 0:10,
                       sum_support = 0:10, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.3)
-  check_discrete_dist(dfun = dztbetabinom, pfun = NULL, xs_int = 1:10,
+  check_discrete_dist(dfun = dztbetabinom, pfun = pztbetabinom, xs_int = 1:10,
                       sum_support = 0:10, size = 10, shape1 = 2, shape2 = 3)
-  check_discrete_dist(dfun = dhbetabinom, pfun = NULL, xs_int = 0:10,
+  check_discrete_dist(dfun = dhbetabinom, pfun = phbetabinom, xs_int = 0:10,
                       sum_support = 0:10, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.4)
 })
 
@@ -53,4 +53,33 @@ test_that("beta-binomial variant RNGs have the right zero behaviour", {
   y <- rhbetabinom(1e5, 10, 2, 3, 0.4)
   expect_equal(mean(y == 0), 0.4, tolerance = 0.02)
   expect_equal(mean(y[y > 0]), sum((1:10) * dztbetabinom(1:10, 10, 2, 3)), tolerance = 0.05)
+})
+
+test_that("zi/zt/h beta-binomial distribution functions satisfy their defining identities", {
+  sz <- 10; a <- 2; b <- 3; zp <- 0.35; q <- 0:10
+  F <- pbetabinom(q, sz, a, b); p0 <- dbetabinom(0, sz, a, b)
+  expect_equal(pzibetabinom(q, sz, a, b, zp), zp + (1 - zp) * F, tolerance = 1e-12)
+  expect_equal(pztbetabinom(q, sz, a, b), pmax(F - p0, 0) / (1 - p0), tolerance = 1e-12)
+  expect_equal(phbetabinom(q, sz, a, b, zp), zp + (1 - zp) * pmax(F - p0, 0) / (1 - p0),
+               tolerance = 1e-12)
+  expect_identical(c(pzibetabinom(10, sz, a, b, zp), pztbetabinom(10, sz, a, b),
+                     phbetabinom(10, sz, a, b, zp)), c(1, 1, 1))
+})
+
+test_that("zi/zt/h beta-binomial distribution functions under AD match outside AD", {
+  check_ad_cdf(pzibetabinom, dzibetabinom, c(0, 3, 7), shape1 = 2, shape2 = 3, zeroprob = 0.3,
+               .fixed = list(size = 10), .dq = FALSE)
+  check_ad_cdf(pztbetabinom, dztbetabinom, c(1, 3, 7), shape1 = 2, shape2 = 3,
+               .fixed = list(size = 10), .dq = FALSE)
+  check_ad_cdf(phbetabinom, dhbetabinom, c(0, 3, 7), shape1 = 2, shape2 = 3, zeroprob = 0.4,
+               .fixed = list(size = 10), .dq = FALSE)
+})
+
+test_that("zi/zt/h beta-binomial support OSA residuals", {
+  check_osa_cdf(dzibetabinom, pzibetabinom, c(0, 0, 3, 7, 10), shape1 = 2, shape2 = 3,
+                zeroprob = 0.3, .fixed = list(size = 10), .discrete = TRUE)
+  check_osa_cdf(dztbetabinom, pztbetabinom, c(1, 3, 7, 10), shape1 = 2, shape2 = 3,
+                .fixed = list(size = 10), .discrete = TRUE)
+  check_osa_cdf(dhbetabinom, phbetabinom, c(0, 0, 3, 7, 10), shape1 = 2, shape2 = 3,
+                zeroprob = 0.4, .fixed = list(size = 10), .discrete = TRUE)
 })

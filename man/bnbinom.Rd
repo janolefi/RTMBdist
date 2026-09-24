@@ -3,10 +3,13 @@
 \name{bnbinom}
 \alias{bnbinom}
 \alias{dbnbinom}
+\alias{pbnbinom}
 \alias{rbnbinom}
 \title{Beta-negative binomial distribution}
 \usage{
 dbnbinom(x, size, shape1, shape2, log = FALSE)
+
+pbnbinom(q, size, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
 
 rbnbinom(n, size, shape1, shape2)
 }
@@ -21,14 +24,20 @@ rbnbinom(n, size, shape1, shape2)
 
 \item{log}{logical; if \code{TRUE}, probabilities are returned on the log scale.}
 
+\item{q}{vector of quantiles.}
+
+\item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.}
+
+\item{log.p}{logical; if \code{TRUE}, probabilities are returned on the log scale.}
+
 \item{n}{number of random values to return (for \code{rbnbinom}).}
 }
 \value{
-\code{dbnbinom} gives the probability mass function and \code{rbnbinom} generates random deviates.
+\code{dbnbinom} gives the probability mass function, \code{pbnbinom} gives the distribution function, and \code{rbnbinom} generates random deviates.
 }
 \description{
-Probability mass function and random generation for the beta-negative
-binomial distribution.
+Probability mass function, distribution function and random generation for the
+beta-negative binomial distribution.
 }
 \details{
 \code{dbnbinom} allows for automatic differentiation with \code{RTMB}.
@@ -50,14 +59,18 @@ other, so fitting all three at once needs either a lot of data or a
 restriction. The \link[=bnbinom2]{mean parameterisation} is usually the more
 stable one to estimate in.
 
-There is no distribution function, since the beta-negative binomial
-distribution function has no closed form and the support is unbounded.
-One-step-ahead residuals are therefore not available.
+The distribution function has no closed form and is computed by summing the
+probability mass function over \eqn{0, \ldots, q}, so its cost grows with the
+largest \code{q}. It is AD-compatible in the parameters, while \code{q} must be
+numeric data. This is also what one-step-ahead (OSA) residuals via
+\code{RTMB::\link[RTMB]{oneStepPredict}} need, so these are supported, e.g. with
+\code{method = "cdf"} and \code{discrete = TRUE}.
 }
 \examples{
 set.seed(123)
 x <- rbnbinom(5, size = 3, shape1 = 4, shape2 = 2)
 d <- dbnbinom(x, size = 3, shape1 = 4, shape2 = 2)
+p <- pbnbinom(x, size = 3, shape1 = 4, shape2 = 2)
 }
 \references{
 Johnson, N. L., Kemp, A. W. and Kotz, S. (2005) Univariate Discrete

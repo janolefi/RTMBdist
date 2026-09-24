@@ -1,7 +1,7 @@
 #' Beta-negative binomial distribution
 #'
-#' Probability mass function and random generation for the beta-negative
-#' binomial distribution.
+#' Probability mass function, distribution function and random generation for the
+#' beta-negative binomial distribution.
 #'
 #' @details
 #' \code{dbnbinom} allows for automatic differentiation with \code{RTMB}.
@@ -23,9 +23,12 @@
 #' restriction. The \link[=bnbinom2]{mean parameterisation} is usually the more
 #' stable one to estimate in.
 #'
-#' There is no distribution function, since the beta-negative binomial
-#' distribution function has no closed form and the support is unbounded.
-#' One-step-ahead residuals are therefore not available.
+#' The distribution function has no closed form and is computed by summing the
+#' probability mass function over \eqn{0, \ldots, q}, so its cost grows with the
+#' largest \code{q}. It is AD-compatible in the parameters, while \code{q} must be
+#' numeric data. This is also what one-step-ahead (OSA) residuals via
+#' \code{RTMB::\link[RTMB]{oneStepPredict}} need, so these are supported, e.g. with
+#' \code{method = "cdf"} and \code{discrete = TRUE}.
 #'
 #' @references
 #' Johnson, N. L., Kemp, A. W. and Kotz, S. (2005) Univariate Discrete
@@ -34,6 +37,9 @@
 #' @seealso [bnbinom2], [betabinom], [nbinom2]
 #'
 #' @param x vector of non-negative counts.
+#' @param q vector of quantiles.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.
+#' @param log.p logical; if \code{TRUE}, probabilities are returned on the log scale.
 #' @param n number of random values to return (for \code{rbnbinom}).
 #' @param size positive number of successes (need not be an integer).
 #' @param shape1 positive shape parameter 1 of the beta prior.
@@ -41,12 +47,13 @@
 #' @param log logical; if \code{TRUE}, probabilities are returned on the log scale.
 #'
 #' @return
-#' \code{dbnbinom} gives the probability mass function and \code{rbnbinom} generates random deviates.
+#' \code{dbnbinom} gives the probability mass function, \code{pbnbinom} gives the distribution function, and \code{rbnbinom} generates random deviates.
 #'
 #' @examples
 #' set.seed(123)
 #' x <- rbnbinom(5, size = 3, shape1 = 4, shape2 = 2)
 #' d <- dbnbinom(x, size = 3, shape1 = 4, shape2 = 2)
+#' p <- pbnbinom(x, size = 3, shape1 = 4, shape2 = 2)
 #' @name bnbinom
 NULL
 
@@ -62,12 +69,12 @@ dbnbinom <- function(x, size, shape1, shape2, log = FALSE) {
     if (any(shape1 <= 0) || any(shape2 <= 0)) stop("shape1 and shape2 must be positive.")
   }
 
-  # potentially escape to RNG; there is no CDF, so OSA is not available
+  # potentially escape to RNG or CDF
   if (inherits(x, "simref")) {
     return(dGenericSim("dbnbinom", x = x, size = size, shape1 = shape1, shape2 = shape2, log = log))
   }
   if (inherits(x, "osa")) {
-    stop("Beta-negative binomial does not support OSA residuals.")
+    return(dGenericOSA("dbnbinom", x = x, size = size, shape1 = shape1, shape2 = shape2, log = log))
   }
 
   # clamped below zero so that lgamma stays away from its poles; the density
@@ -80,6 +87,19 @@ dbnbinom <- function(x, size, shape1, shape2, log = FALSE) {
 
   if (log) return(logdens)
   return(exp(logdens))
+}
+
+#' @rdname bnbinom
+#' @export
+pbnbinom <- function(q, size, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
+
+  if (!ad_context()) {
+    if (any(size <= 0)) stop("size must be positive.")
+    if (any(shape1 <= 0) || any(shape2 <= 0)) stop("shape1 and shape2 must be positive.")
+  }
+
+  discrete_cdf(dbnbinom, q, list(size = size, shape1 = shape1, shape2 = shape2),
+               lower.tail = lower.tail, log.p = log.p)
 }
 
 #' @rdname bnbinom

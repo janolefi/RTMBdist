@@ -1,6 +1,6 @@
 #' Zero-inflated beta-binomial distribution
 #'
-#' Probability mass function and random generation for the zero-inflated beta-binomial
+#' Probability mass function, distribution function and random generation for the zero-inflated beta-binomial
 #' distribution.
 #'
 #' @details
@@ -12,13 +12,18 @@
 #' probability of observing a zero; see \code{\link{hbetabinom}} for the hurdle
 #' version, where it is.
 #'
-#' Like \code{\link{betabinom}} itself, this distribution provides no distribution
-#' function: the beta-binomial cdf has no closed form and would have to be summed
-#' over the support, which cannot be taped for automatic differentiation.
+#' The distribution function has no closed form and is computed by summing the
+#' probability mass function over \eqn{0, \ldots, q}. It is AD-compatible in the
+#' parameters, while \code{q} and \code{size} must be numeric data. This is also what
+#' one-step-ahead (OSA) residuals via \code{RTMB::\link[RTMB]{oneStepPredict}} need,
+#' so these are supported, e.g. with \code{method = "cdf"} and \code{discrete = TRUE}.
 #'
 #' @seealso [betabinom], [ztbetabinom], [hbetabinom], [zibinom]
 #'
 #' @param x integer vector of counts
+#' @param q vector of quantiles.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.
+#' @param log.p logical; if \code{TRUE}, probabilities are returned on the log scale.
 #' @param n number of random values to return.
 #' @param size number of trials (zero or more)
 #' @param shape1,shape2 positive shape parameters of the mixing beta distribution
@@ -26,12 +31,13 @@
 #' @param log logical; return log-density if TRUE
 #'
 #' @return
-#' \code{dzibetabinom} gives the probability mass function and \code{rzibetabinom} generates random deviates.
+#' \code{dzibetabinom} gives the probability mass function, \code{pzibetabinom} gives the distribution function, and \code{rzibetabinom} generates random deviates.
 #'
 #' @examples
 #' set.seed(123)
 #' x <- rzibetabinom(5, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.3)
 #' d <- dzibetabinom(x, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.3)
+#' p <- pzibetabinom(x, size = 10, shape1 = 2, shape2 = 3, zeroprob = 0.3)
 #' @name zibetabinom
 NULL
 #' @rdname zibetabinom
@@ -51,7 +57,8 @@ dzibetabinom <- function(x, size, shape1, shape2, zeroprob = 0, log = FALSE) {
                        shape2 = shape2, zeroprob = zeroprob, log = log))
   }
   if (inherits(x, "osa")) {
-    stop("Zero-inflated beta-binomial does not support OSA residuals.")
+    return(dGenericOSA("dzibetabinom", x = x, size = size, shape1 = shape1,
+                       shape2 = shape2, zeroprob = zeroprob, log = log))
   }
 
   # x is clamped because dbetabinom() hits the lgamma pole at negative integers;
@@ -61,6 +68,19 @@ dzibetabinom <- function(x, size, shape1, shape2, zeroprob = 0, log = FALSE) {
 
   if (log) return(logdens)
   return(exp(logdens))
+}
+#' @rdname zibetabinom
+#' @export
+pzibetabinom <- function(q, size, shape1, shape2, zeroprob = 0, lower.tail = TRUE, log.p = FALSE) {
+
+  if (!ad_context()) {
+    if (any(size < 0) || any(size != floor(size))) stop("size must be non-negative integers.")
+    if (any(shape1 <= 0) || any(shape2 <= 0)) stop("shape1 and shape2 must be positive.")
+    if (any(zeroprob < 0 | zeroprob > 1)) stop("zeroprob must be in [0,1]")
+  }
+
+  discrete_cdf(dzibetabinom, q, list(size = size, shape1 = shape1, shape2 = shape2, zeroprob = zeroprob),
+               upper = size, lower.tail = lower.tail, log.p = log.p)
 }
 #' @rdname zibetabinom
 #' @export

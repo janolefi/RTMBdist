@@ -3,14 +3,14 @@
 test_that("bnbinom passes standard discrete checks", {
   check_discrete_dist(
     dfun        = dbnbinom,
-    pfun        = NULL, # no closed-form distribution function
+    pfun        = pbnbinom,
     xs_int      = c(0, 1, 3, 8, 25),
     sum_support = 0:2000,
     size = 3, shape1 = 4.5, shape2 = 2
   )
   check_discrete_dist(
     dfun        = dbnbinom,
-    pfun        = NULL,
+    pfun        = pbnbinom,
     xs_int      = c(0, 2, 6, 15, 40),
     sum_support = 0:20000, # heavier tail, so a wider support is needed
     size = 0.5, shape1 = 2.5, shape2 = 1.5
@@ -55,13 +55,29 @@ test_that("rbnbinom draws follow the mass function", {
   expect_gt(suppressWarnings(stats::chisq.test(o, p = e)$p.value), 0.01)
 })
 
-test_that("bnbinom refuses OSA residuals and recycles its arguments", {
+test_that("bnbinom recycles its arguments", {
   expect_length(dbnbinom(0:5, 3, c(2, 4, 6), 2), 6)
+  expect_length(pbnbinom(0:5, 3, c(2, 4, 6), 2), 6)
   expect_length(rbnbinom(5, 3, c(2, 4), 2), 5)
-  expect_error(
-    dbnbinom(structure(1, class = "osa"), 3, 2, 2),
-    "does not support OSA"
-  )
+})
+
+test_that("pbnbinom matches the negative binomial distribution function mixed over the beta prior", {
+  ref <- function(q, r, a, b) sapply(q, function(x) stats::integrate(function(p)
+    stats::pnbinom(x, r, p) * stats::dbeta(p, a, b), 0, 1, rel.tol = 1e-12)$value)
+  q <- c(0, 1, 3, 8, 25)
+  expect_equal(pbnbinom(q, 3, 4.5, 2), ref(q, 3, 4.5, 2), tolerance = 1e-10)
+  expect_equal(pbnbinom(q[1:4], c(3, 0.5), 4.5, c(2, 1.5)),
+               mapply(ref, q[1:4], c(3, 0.5), 4.5, c(2, 1.5)), tolerance = 1e-10)
+  expect_equal(pbnbinom(c(-1, Inf, NA), 3, 4.5, 2), c(0, 1, NA))
+})
+
+test_that("pbnbinom under AD matches pbnbinom outside AD", {
+  check_ad_cdf(pbnbinom, dbnbinom, c(0, 1, 3, 8, 25), size = 3, shape1 = 4.5, shape2 = 2, .dq = FALSE)
+})
+
+test_that("bnbinom supports OSA residuals", {
+  check_osa_cdf(dbnbinom, pbnbinom, c(0, 1, 3, 8, 25), size = 3, shape1 = 4.5, shape2 = 2,
+                .discrete = TRUE)
 })
 
 test_that("dbnbinom rejects non-positive parameters", {

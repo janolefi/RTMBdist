@@ -3,10 +3,13 @@
 \name{bnbinom2}
 \alias{bnbinom2}
 \alias{dbnbinom2}
+\alias{pbnbinom2}
 \alias{rbnbinom2}
 \title{Reparameterised beta-negative binomial distribution}
 \usage{
 dbnbinom2(x, mu, sigma, nu, log = FALSE)
+
+pbnbinom2(q, mu, sigma, nu, lower.tail = TRUE, log.p = FALSE)
 
 rbnbinom2(n, mu, sigma, nu)
 }
@@ -21,14 +24,20 @@ rbnbinom2(n, mu, sigma, nu)
 
 \item{log}{logical; if \code{TRUE}, probabilities are returned on the log scale.}
 
+\item{q}{vector of quantiles.}
+
+\item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.}
+
+\item{log.p}{logical; if \code{TRUE}, probabilities are returned on the log scale.}
+
 \item{n}{number of random values to return (for \code{rbnbinom2}).}
 }
 \value{
-\code{dbnbinom2} gives the probability mass function and \code{rbnbinom2} generates random deviates.
+\code{dbnbinom2} gives the probability mass function, \code{pbnbinom2} gives the distribution function, and \code{rbnbinom2} generates random deviates.
 }
 \description{
-Probability mass function and random generation for the beta-negative
-binomial distribution reparameterised in terms of its mean.
+Probability mass function, distribution function and random generation for the
+beta-negative binomial distribution reparameterised in terms of its mean.
 }
 \details{
 \code{dbnbinom2} allows for automatic differentiation with \code{RTMB}.
@@ -52,14 +61,18 @@ Because the mean is pinned to a single parameter, this parameterisation is
 the more stable of the two to estimate in; see \code{\link{bnbinom}} for the
 identifiability problem it avoids.
 
-There is no distribution function, since the beta-negative binomial
-distribution function has no closed form and the support is unbounded.
-One-step-ahead residuals are therefore not available.
+The distribution function has no closed form and is computed by summing the
+probability mass function over \eqn{0, \ldots, q}, so its cost grows with the
+largest \code{q}. It is AD-compatible in the parameters, while \code{q} must be
+numeric data. This is also what one-step-ahead (OSA) residuals via
+\code{RTMB::\link[RTMB]{oneStepPredict}} need, so these are supported, e.g. with
+\code{method = "cdf"} and \code{discrete = TRUE}.
 }
 \examples{
 set.seed(123)
 x <- rbnbinom2(5, mu = 4, sigma = 0.4, nu = 0.5)
 d <- dbnbinom2(x, mu = 4, sigma = 0.4, nu = 0.5)
+p <- pbnbinom2(x, mu = 4, sigma = 0.4, nu = 0.5)
 }
 \references{
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,

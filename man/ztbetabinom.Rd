@@ -3,10 +3,13 @@
 \name{ztbetabinom}
 \alias{ztbetabinom}
 \alias{dztbetabinom}
+\alias{pztbetabinom}
 \alias{rztbetabinom}
 \title{Zero-truncated beta-binomial distribution}
 \usage{
 dztbetabinom(x, size, shape1, shape2, log = FALSE)
+
+pztbetabinom(q, size, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
 
 rztbetabinom(n, size, shape1, shape2)
 }
@@ -19,13 +22,19 @@ rztbetabinom(n, size, shape1, shape2)
 
 \item{log}{logical; return log-density if TRUE}
 
+\item{q}{vector of quantiles.}
+
+\item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.}
+
+\item{log.p}{logical; if \code{TRUE}, probabilities are returned on the log scale.}
+
 \item{n}{number of random values to return.}
 }
 \value{
-\code{dztbetabinom} gives the probability mass function and \code{rztbetabinom} generates random deviates.
+\code{dztbetabinom} gives the probability mass function, \code{pztbetabinom} gives the distribution function, and \code{rztbetabinom} generates random deviates.
 }
 \description{
-Probability mass function and random generation for the zero-truncated beta-binomial
+Probability mass function, distribution function and random generation for the zero-truncated beta-binomial
 distribution.
 }
 \details{
@@ -37,14 +46,17 @@ Any zero-truncated distribution is defined as
 where \eqn{P(X=x)} is the probability mass function of the corresponding
 untruncated distribution.
 
-Like \code{\link{betabinom}} itself, this distribution provides no distribution
-function: the beta-binomial cdf has no closed form and would have to be summed
-over the support, which cannot be taped for automatic differentiation.
+The distribution function has no closed form and is computed by summing the
+probability mass function over \eqn{0, \ldots, q}. It is AD-compatible in the
+parameters, while \code{q} and \code{size} must be numeric data. This is also what
+one-step-ahead (OSA) residuals via \code{RTMB::\link[RTMB]{oneStepPredict}} need,
+so these are supported, e.g. with \code{method = "cdf"} and \code{discrete = TRUE}.
 }
 \examples{
 set.seed(123)
 x <- rztbetabinom(5, size = 10, shape1 = 2, shape2 = 3)
 d <- dztbetabinom(x, size = 10, shape1 = 2, shape2 = 3)
+p <- pztbetabinom(x, size = 10, shape1 = 2, shape2 = 3)
 }
 \seealso{
 \link{betabinom}, \link{zibetabinom}, \link{hbetabinom}, \link{ztbinom}

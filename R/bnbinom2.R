@@ -1,7 +1,7 @@
 #' Reparameterised beta-negative binomial distribution
 #'
-#' Probability mass function and random generation for the beta-negative
-#' binomial distribution reparameterised in terms of its mean.
+#' Probability mass function, distribution function and random generation for the
+#' beta-negative binomial distribution reparameterised in terms of its mean.
 #'
 #' @details
 #' \code{dbnbinom2} allows for automatic differentiation with \code{RTMB}.
@@ -25,9 +25,12 @@
 #' the more stable of the two to estimate in; see \code{\link{bnbinom}} for the
 #' identifiability problem it avoids.
 #'
-#' There is no distribution function, since the beta-negative binomial
-#' distribution function has no closed form and the support is unbounded.
-#' One-step-ahead residuals are therefore not available.
+#' The distribution function has no closed form and is computed by summing the
+#' probability mass function over \eqn{0, \ldots, q}, so its cost grows with the
+#' largest \code{q}. It is AD-compatible in the parameters, while \code{q} must be
+#' numeric data. This is also what one-step-ahead (OSA) residuals via
+#' \code{RTMB::\link[RTMB]{oneStepPredict}} need, so these are supported, e.g. with
+#' \code{method = "cdf"} and \code{discrete = TRUE}.
 #'
 #' @references
 #' Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
@@ -36,6 +39,9 @@
 #' @seealso [bnbinom], [nbinom2], [betabinom]
 #'
 #' @param x vector of non-negative counts.
+#' @param q vector of quantiles.
+#' @param lower.tail logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.
+#' @param log.p logical; if \code{TRUE}, probabilities are returned on the log scale.
 #' @param n number of random values to return (for \code{rbnbinom2}).
 #' @param mu mean parameter, must be positive.
 #' @param sigma dispersion parameter, must be positive. The variance is finite only for \code{sigma < 1}.
@@ -43,12 +49,13 @@
 #' @param log logical; if \code{TRUE}, probabilities are returned on the log scale.
 #'
 #' @return
-#' \code{dbnbinom2} gives the probability mass function and \code{rbnbinom2} generates random deviates.
+#' \code{dbnbinom2} gives the probability mass function, \code{pbnbinom2} gives the distribution function, and \code{rbnbinom2} generates random deviates.
 #'
 #' @examples
 #' set.seed(123)
 #' x <- rbnbinom2(5, mu = 4, sigma = 0.4, nu = 0.5)
 #' d <- dbnbinom2(x, mu = 4, sigma = 0.4, nu = 0.5)
+#' p <- pbnbinom2(x, mu = 4, sigma = 0.4, nu = 0.5)
 #' @name bnbinom2
 NULL
 
@@ -64,15 +71,29 @@ dbnbinom2 <- function(x, mu, sigma, nu, log = FALSE) {
     if (any(nu <= 0)) stop("nu must be positive.")
   }
 
-  # potentially escape to RNG; there is no CDF, so OSA is not available
+  # potentially escape to RNG or CDF
   if (inherits(x, "simref")) {
     return(dGenericSim("dbnbinom2", x = x, mu = mu, sigma = sigma, nu = nu, log = log))
   }
   if (inherits(x, "osa")) {
-    stop("Beta-negative binomial does not support OSA residuals.")
+    return(dGenericOSA("dbnbinom2", x = x, mu = mu, sigma = sigma, nu = nu, log = log))
   }
 
   dbnbinom(x, size = 1 / nu, shape1 = 1 / sigma + 1, shape2 = mu * nu / sigma, log = log)
+}
+
+#' @rdname bnbinom2
+#' @export
+pbnbinom2 <- function(q, mu, sigma, nu, lower.tail = TRUE, log.p = FALSE) {
+
+  if (!ad_context()) {
+    if (any(mu <= 0)) stop("mu must be positive.")
+    if (any(sigma <= 0)) stop("sigma must be positive.")
+    if (any(nu <= 0)) stop("nu must be positive.")
+  }
+
+  pbnbinom(q, size = 1 / nu, shape1 = 1 / sigma + 1, shape2 = mu * nu / sigma,
+           lower.tail = lower.tail, log.p = log.p)
 }
 
 #' @rdname bnbinom2

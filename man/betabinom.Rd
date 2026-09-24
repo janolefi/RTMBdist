@@ -3,10 +3,13 @@
 \name{betabinom}
 \alias{betabinom}
 \alias{dbetabinom}
+\alias{pbetabinom}
 \alias{rbetabinom}
 \title{Beta-binomial distribution}
 \usage{
 dbetabinom(x, size, shape1, shape2, log = FALSE)
+
+pbetabinom(q, size, shape1, shape2, lower.tail = TRUE, log.p = FALSE)
 
 rbetabinom(n, size, shape1, shape2)
 }
@@ -21,21 +24,34 @@ rbetabinom(n, size, shape1, shape2)
 
 \item{log}{logical; if \code{TRUE}, densities are returned on the log scale.}
 
+\item{q}{vector of quantiles.}
+
+\item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.}
+
+\item{log.p}{logical; if \code{TRUE}, probabilities are returned on the log scale.}
+
 \item{n}{number of random values to return (for \code{rbetabinom}).}
 }
 \value{
-\code{dbetabinom} gives the density and \code{rbetabinom} generates random samples.
+\code{dbetabinom} gives the density, \code{pbetabinom} gives the distribution function, and \code{rbetabinom} generates random samples.
 }
 \description{
-Density and random generation for the beta-binomial distribution.
+Density, distribution function and random generation for the beta-binomial distribution.
 }
 \details{
 This implementation of \code{dbetabinom} allows for automatic differentiation with \code{RTMB}.
 
 \deqn{P(X = k;\, n, a, b) = \binom{n}{k} \frac{B(k+a,\, n-k+b)}{B(a,\, b)}, \quad k = 0, 1, \ldots, n.}
+
+The distribution function has no closed form and is computed by summing the
+probability mass function over \eqn{0, \ldots, q}. It is AD-compatible in the
+parameters, while \code{q} and \code{size} must be numeric data. This is also what
+one-step-ahead (OSA) residuals via \code{RTMB::\link[RTMB]{oneStepPredict}} need,
+so these are supported, e.g. with \code{method = "cdf"} and \code{discrete = TRUE}.
 }
 \examples{
 set.seed(123)
 x <- rbetabinom(1, 10, 2, 5)
 d <- dbetabinom(x, 10, 2, 5)
+p <- pbetabinom(x, 10, 2, 5)
 }
