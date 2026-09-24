@@ -1,5 +1,7 @@
 # RTMBdist 1.2.0
 
+- Added missing ADable CDFs via numerical integration since RTMB now has `ADintegrate()`
+
 - Fixed the copula densities `cgumbel()` and `cfrank()`, which were wrong: the last factor of the Gumbel density and the sign in the denominator of the Frank density were incorrect, so neither integrated to one and likelihoods built with them through `dcopula()` were wrong. Both now agree with the `copula` package. The Frank density is also evaluated in a form that stays accurate for strong dependence. The copula distribution functions `Cgumbel()` and `Cfrank()`, used with `ddcopula()`, were correct and are unchanged.
 
 - Added two circular-linear copula constructors for use with `dcopula()`, joining a circular and a linear margin such as the turning angles and step lengths of an animal track. `cjw()` is the Johnson-Wehrly copula with any circular binding density, e.g. `cjw(dvm, mu = 0, kappa = 2)` or `cjw(dwrpcauchy, mu = 0, rho = 0.5)`. Its dependence is a helix, so it is not symmetric in the sign of the angle. `cfold()` folds any of the linear copulas into a circular-linear copula that is symmetric, e.g. `cfold(cgaussian(0.5))`, and so links the straightness of a step to its length; this is the rectangular patchwork copula of Hodel and Fieberg (2022). Both allow for automatic differentiation.
