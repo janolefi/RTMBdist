@@ -108,7 +108,7 @@ chk
 #>   Importance sampling:       -2446.99   (unbiased; should match Laplace)
 #>   Bias (IS - Laplace):       0.0000   (log scale; 0 = exact)
 #>     likelihood ratio:        1.000   (exp(bias); 1 = no error)
-#>     relative to log-lik:     3.7e-16   (0 = exact)
+#>     relative to log-lik:     1.9e-16   (0 = exact)
 #> 
 #> Diagnostics
 #>   SD of log-weights:         0.0000   (0 = exact; grows with non-Gaussianity and dimension)
