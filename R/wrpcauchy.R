@@ -122,10 +122,16 @@ pwrpcauchy <- function(q, mu = 0, rho, from = NULL, lower.tail = TRUE, log.p = F
     if (any(rho < 0) || any(rho >= 1)) stop("rho must be in the interval [0, 1).")
   }
 
-  # tan() has period pi in (q - mu) / 2, which wraps q onto (mu - pi, mu + pi].
-  # At the cut itself, tan(pi/2) is merely large in double precision, so the
-  # value stays finite and so does its derivative.
-  z <- atan((1 + rho) / (1 - rho) * tan((q - mu) / 2)) / pi
+  # z = atan((1 + rho) / (1 - rho) * tan(u)) / pi with u = (q - mu) / 2, written with
+  # atan2() instead. This is pi-periodic in u like tan(), which wraps q onto
+  # (mu - pi, mu + pi], but avoids evaluating tan() at its pole at the cut: there
+  # the derivative is a ratio of two huge numbers, which lost accuracy on Windows.
+  z_cdf <- function(a) {
+    u <- (a - mu) / 2
+    cu <- cos(u)
+    atan2((1 + rho) * sin(u) * sign(cu), (1 - rho) * abs(cu)) / pi
+  }
+  z <- z_cdf(q)
 
   if (is.null(from)) {
     # the upper tail is computed directly rather than as 1 - p
@@ -137,7 +143,7 @@ pwrpcauchy <- function(q, mu = 0, rho, from = NULL, lower.tail = TRUE, log.p = F
   } else {
     # probability from `from` to q counterclockwise, (z - zf) mod 1; written with floor(),
     # because %% on advectors keeps the integer part it had when the tape was built
-    zf <- atan((1 + rho) / (1 - rho) * tan((from - mu) / 2)) / pi
+    zf <- z_cdf(from)
     p <- (z - zf) - floor(z - zf)
     if (!lower.tail) p <- 1 - p
   }
