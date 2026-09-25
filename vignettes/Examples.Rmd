@@ -507,9 +507,9 @@ elk <- moveHMM::prepData(moveHMM::elk_data, type = "UTM",
 elk$step <- elk$step / 1000 # step lengths in km
 ```
 
-In each state, step lengths follow a gamma and turning angles a wrapped Cauchy distribution. Many of the elk's turning angles are close to $\pm \pi$, so we fix the mean turning angle at $\pi$ in state 1 (turning back, as when foraging in a patch) and at $0$ in state 2 (travelling).
+In each state, step lengths follow a gamma and turning angles a von Mises distribution. Many of the elk's turning angles are close to $\pm \pi$, so we fix the mean turning angle at $\pi$ in state 1 (turning back, as when foraging in a patch) and at $0$ in state 2 (travelling).
 
-As the turning angle is circular, standard copulas are not applicable. Angles of $-\pi$ and $\pi$ are the same, but would be opposite extremes for the copula. `cfold()` solves this by measuring each angle by $1 - |2u - 1|$, where $u$ is the angle's distribution function value. Since `pwrpcauchy()` cuts the circle open opposite to the mean direction, this is 1 for angles at the mean direction and 0 for angles opposite to it, and it is uniformly distributed. It is then joined with the step length by a standard copula, here a Gaussian copula with state-dependent correlation $\lambda_j$, while left and right turns are treated alike. `dcopula()` expects the angle as the first margin.
+As the turning angle is circular, standard copulas are not applicable. Angles of $-\pi$ and $\pi$ are the same, but would be opposite extremes for the copula. `cfold()` solves this by measuring each angle by $1 - |2u - 1|$, where $u$ is the angle's distribution function value. Since `pvm()` cuts the circle open opposite to the mean direction, this is 1 for angles at the mean direction and 0 for angles opposite to it, and it is uniformly distributed. It is then joined with the step length by a standard copula, here a Frank copula with state-dependent dependence parameter $\theta_j$, while left and right turns are treated alike. Unlike a Gaussian copula, the Frank copula's density stays bounded everywhere on the unit square, which avoids artificial spikes in the conditional densities below. `dcopula()` expects the angle as the first margin.
 
 ```{r elk likelihood}
 nll_elk <- function(par) {
@@ -518,42 +518,43 @@ nll_elk <- function(par) {
   delta <- LaMa::stationary(Gamma)
   mu <- exp(log_mu); REPORT(mu)          # mean step lengths
   sigma <- exp(log_sigma); REPORT(sigma) # step length sds
-  rho <- plogis(logit_rho); REPORT(rho)  # angle concentrations around angle_mean
-  lambda <- tanh(atanh_lambda); REPORT(lambda) # copula correlations
+  kappa <- exp(log_kappa); REPORT(kappa) # angle concentrations around angle_mean
+  REPORT(theta) # copula dependence parameters
   allprobs <- matrix(1, length(step), N)
   ind <- which(!is.na(step) & !is.na(angle))
   for(j in 1:N) {
     allprobs[ind, j] <- dcopula(
-      dwrpcauchy(angle[ind], angle_mean[j], rho[j]), dgamma2(step[ind], mu[j], sigma[j]),
-      pwrpcauchy(angle[ind], angle_mean[j], rho[j]), pgamma2(step[ind], mu[j], sigma[j]),
-      copula = cfold(cgaussian(lambda[j]))
+      dvm(angle[ind], angle_mean[j], kappa[j]), dgamma2(step[ind], mu[j], sigma[j]),
+      pvm(angle[ind], angle_mean[j], kappa[j]), pgamma2(step[ind], mu[j], sigma[j]),
+      copula = cfold(cfrank(theta[j]))
     )
   }
   -LaMa::forward(delta, Gamma, allprobs, trackID = ID)
 }
 ```
 
-Fixing $\lambda_j = 0$ via `map` gives the usual model with conditional independence, which we fit for comparison.
+Fixing $\theta_j = 0$ via `map` gives the usual model with conditional independence, which we fit for comparison. The Frank copula density has a removable singularity exactly at $\theta = 0$, so we fix it at a value close to, but not exactly, zero.
 
 ```{r elk fit}
 N <- 2
 par <- list(eta = rep(-2, 2), log_mu = log(c(0.3, 3)), log_sigma = log(c(0.3, 3)),
-            logit_rho = qlogis(c(0.3, 0.3)), atanh_lambda = c(0, 0))
-dat <- list(step = elk$step, angle = elk$angle, ID = elk$ID, N = N,
-            angle_mean = c(pi, 0))
+            angle_mean = c(pi, 0), log_kappa = log(c(0.3, 1)), theta = c(1e-6, 1e-6))
+dat <- list(step = elk$step, angle = elk$angle, ID = elk$ID, N = N)
+map <- list(angle_mean = factor(c(NA,NA)))
 
-obj_ind <- MakeADFun(nll_elk, par, map = list(atanh_lambda = factor(c(NA, NA))), silent = TRUE)
+obj_ind <- MakeADFun(nll_elk, par, silent = TRUE,
+                     map = c(map, list(theta = factor(c(NA, NA)))))
 opt_ind <- nlminb(obj_ind$par, obj_ind$fn, obj_ind$gr)
-obj_elk <- MakeADFun(nll_elk, par, silent = TRUE)
+obj_elk <- MakeADFun(nll_elk, par, map = map, silent = TRUE)
 opt_elk <- nlminb(obj_elk$par, obj_elk$fn, obj_elk$gr)
 
 mod_ind <- LaMa::report(obj_ind)
 mod_elk <- LaMa::report(obj_elk)
 c(AIC(mod_ind), AIC(mod_elk)) # independence vs. copula
-round(mod_elk$lambda, 2)
+round(mod_elk$theta, 2)
 ```
 
-The copula model has a clearly lower AIC. As fixing $\lambda_1 = \lambda_2 = 0$ gives the independence model, the models are nested and we can also use a likelihood ratio test:
+The copula model has a clearly lower AIC. As fixing $\theta_1 = \theta_2 = 0$ gives the independence model, the models are nested and we can also use a likelihood ratio test:
 
 ```{r elk lrt}
 pchisq(2 * (mod_elk$ll - mod_ind$ll), df = 2, lower.tail = FALSE)
@@ -573,8 +574,8 @@ angle_grid <- seq(-pi, pi, length.out = 200)
 
 oldpar <- par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 for(j in 1:N) { # turning angles in state j, for steps below and above the state's median
-  cop <- cfold(cgaussian(mod_elk$lambda[j]))
-  u <- pwrpcauchy(angle_grid, dat$angle_mean[j], mod_elk$rho[j])
+  cop <- cfold(cfrank(mod_elk$theta[j]))
+  u <- pvm(angle_grid, par$angle_mean[j], mod_elk$kappa[j])
   sel <- ok & states == j
   long <- pgamma2(elk$step[sel], mod_elk$mu[j], mod_elk$sigma[j]) > 0.5
   hist(elk$angle[sel][!long], breaks = seq(-pi, pi, length.out = 13), prob = TRUE, border = "white",
@@ -583,16 +584,16 @@ for(j in 1:N) { # turning angles in state j, for steps below and above the state
        col = adjustcolor(cols[2], 0.4), add = TRUE)
   for(g in 1:2) { # density of the angle given the step is short / long
     c_avg <- rowMeans(sapply(halves[[g]], function(v) exp(cop(u, rep(v, length(u))))))
-    lines(angle_grid, c_avg * dwrpcauchy(angle_grid, dat$angle_mean[j], mod_elk$rho[j]), col = cols[g], lwd = 2)
+    lines(angle_grid, c_avg * dvm(angle_grid, par$angle_mean[j], mod_elk$kappa[j]), col = cols[g], lwd = 2)
   }
   legend("top", c("short steps", "long steps"), col = cols, lwd = 2, bty = "n")
 }
 for(j in 1:N) { # step lengths in state j, for angles far from / close to the state's mean direction
-  cop <- cgaussian(mod_elk$lambda[j]) # after folding, the angle enters as w = 1 - |2u - 1|
+  cop <- cfrank(mod_elk$theta[j]) # after folding, the angle enters as w = 1 - |2u - 1|
   step_grid <- seq(0, qgamma2(0.95, mod_elk$mu[j], mod_elk$sigma[j]), length.out = 201)[-1]
   v <- pgamma2(step_grid, mod_elk$mu[j], mod_elk$sigma[j])
   sel <- ok & states == j
-  w <- 1 - abs(2 * pwrpcauchy(elk$angle[sel], dat$angle_mean[j], mod_elk$rho[j]) - 1)
+  w <- 1 - abs(2 * pvm(elk$angle[sel], par$angle_mean[j], mod_elk$kappa[j]) - 1)
   close <- w > 0.5
   br <- seq(0, max(elk$step[sel]), length.out = 30)
   hist(elk$step[sel][!close], breaks = br, prob = TRUE, border = "white", col = adjustcolor(cols[1], 0.4),
@@ -607,7 +608,7 @@ for(j in 1:N) { # step lengths in state j, for angles far from / close to the st
 par(oldpar)
 ```
 
-Both correlations are positive: the longer the step, the more the turning angle concentrates around the state's mean direction. Travelling elk go straighter on long steps, and elk in state 1 turn back more clearly on long steps, i.e. move back and forth. The cusps at $0$ and $\pm \pi$ are a feature of the Gaussian copula, whose density is unbounded in the corners of the unit square.
+Both dependence parameters are positive: the longer the step, the more the turning angle concentrates around the state's mean direction. Travelling elk go straighter on long steps, and elk in state 1 turn back more clearly on long steps, i.e. move back and forth.
 ```{r cleanup6, include=FALSE}
 TMB::FreeADFun(obj_ind)
 TMB::FreeADFun(obj_elk)
