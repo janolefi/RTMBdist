@@ -102,11 +102,6 @@ which makes it AD-compatible as well. The `method` argument is then
 ignored. See `sn::`[`dst`](https://rdrr.io/pkg/sn/man/dst.html) for more
 details.
 
-**Caution:** In a numerial optimisation, the `skew` parameter should
-NEVER be initialised with exactly zero. This will cause the initial and
-all subsequent derivatives to be exactly zero and hence the parameter
-will remain at its initial value.
-
 For given `skew` \\= \alpha\\ and `df` = \\\nu\\, define \$\$ \delta =
 \alpha / \sqrt{1 + \alpha^2}, \qquad b\_\nu = \sqrt{\nu / \pi}\\
 \Gamma((\nu-1)/2)/\Gamma(\nu/2), \$\$ then \$\$ E(X) = \mu + \sigma
