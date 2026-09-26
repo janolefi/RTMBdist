@@ -26,3 +26,31 @@ test_that("invgamma passes standard distribution checks (shape=3, rate=2)", {
 test_that("invgamma AD gradient has no NaN", {
   check_ad_gradient(dinvgamma,  rinvgamma,  shape = 3, rate = 2)
 })
+
+test_that("invgamma functions accept scale instead of rate", {
+  x <- c(0.3, 1, 2)
+  expect_equal(dinvgamma(x, 3, scale = 0.5), dinvgamma(x, 3, rate = 2))
+  expect_equal(pinvgamma(x, 3, scale = 0.5), pinvgamma(x, 3, rate = 2))
+  expect_equal(qinvgamma(c(0.1, 0.5, 0.9), 3, scale = 0.5), qinvgamma(c(0.1, 0.5, 0.9), 3, rate = 2))
+  set.seed(1); a <- rinvgamma(5, 3, scale = 0.5)
+  set.seed(1); b <- rinvgamma(5, 3, rate = 2)
+  expect_equal(a, b)
+  expect_error(pinvgamma(1, 3, rate = 2, scale = 0.5), "not both")
+  expect_error(dinvgamma(1, 3), "must be given")
+})
+
+test_that("invgamma works with scale as an AD parameter, for simulation and OSA as well", {
+  check_ad_cdf(pinvgamma, dinvgamma, c(0.3, 0.8, 2), shape = 3, scale = 0.5)
+  set.seed(1)
+  y <- rinvgamma(30, 3, scale = 0.5)
+  fn <- function(par) {
+    RTMB::getAll(par)
+    y <- RTMB::OBS(y)
+    -sum(dinvgamma(y, exp(lshape), scale = exp(lscale), log = TRUE))
+  }
+  obj <- RTMB::MakeADFun(fn, list(lshape = log(3), lscale = log(0.5)), silent = TRUE)
+  set.seed(2)
+  expect_true(all(obj$simulate()$y > 0))
+  res <- RTMB::oneStepPredict(obj, method = "cdf", trace = FALSE)
+  expect_equal(res$residual, qnorm(pinvgamma(y, 3, scale = 0.5)), tolerance = 1e-6)
+})

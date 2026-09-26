@@ -14,7 +14,7 @@
 #' @param x,q vector of quantiles, must be positive.
 #' @param p vector of probabilities
 #' @param n number of random values to return
-#' @param shape,rate,scale positive parameters of corresponding gamma distribution
+#' @param shape,rate,scale positive parameters of corresponding gamma distribution. Give either \code{rate} or \code{scale}, not both.
 #' @param log,log.p logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.
 #' @param lower.tail logical; if \code{TRUE}, probabilities are \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.
 #'
@@ -29,10 +29,20 @@
 #' @name invgamma
 NULL
 
+# rate from either rate or scale, as in stats::dgamma(); scale = 1 / rate then follows from
+# its default. Missing arguments are only passed on, not evaluated, so either may be missing.
+invgamma_rate <- function(rate, scale, has_rate, has_scale) {
+  if (has_rate && has_scale) stop("specify 'rate' or 'scale' but not both")
+  if (!has_rate && !has_scale) stop("either 'rate' or 'scale' must be given")
+  if (has_rate) rate else 1 / scale
+}
+
 #' @rdname invgamma
 #' @export
 #' @import RTMB
 dinvgamma <- function(x, shape, rate, scale = 1/rate, log = FALSE) {
+
+  rate <- invgamma_rate(rate, scale, !missing(rate), !missing(scale))
 
   if(!ad_context()) {
     args <- as.list(environment())
@@ -63,6 +73,8 @@ dinvgamma <- function(x, shape, rate, scale = 1/rate, log = FALSE) {
 #' @import RTMB
 pinvgamma <- function(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE) {
 
+  rate <- invgamma_rate(rate, scale, !missing(rate), !missing(scale))
+
   if(!ad_context()) {
     args <- as.list(environment())
     simulation_check(args) # informative error message if likelihood in wrong order
@@ -84,6 +96,8 @@ pinvgamma <- function(q, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p =
 #' @import RTMB
 qinvgamma <- function(p, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p = FALSE) {
 
+  rate <- invgamma_rate(rate, scale, !missing(rate), !missing(scale))
+
   if(!ad_context()) {
     args <- as.list(environment())
     simulation_check(args) # informative error message if likelihood in wrong order
@@ -104,6 +118,8 @@ qinvgamma <- function(p, shape, rate, scale = 1/rate, lower.tail = TRUE, log.p =
 #' @export
 #' @importFrom stats rgamma
 rinvgamma <- function(n, shape, rate, scale = 1/rate) {
+
+  rate <- invgamma_rate(rate, scale, !missing(rate), !missing(scale))
 
   # ensure shape, rate, scale > 0
   if (any(shape <= 0)) stop("shape must be strictly positive.")

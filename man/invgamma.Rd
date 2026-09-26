@@ -19,7 +19,7 @@ rinvgamma(n, shape, rate, scale = 1/rate)
 \arguments{
 \item{x, q}{vector of quantiles, must be positive.}
 
-\item{shape, rate, scale}{positive parameters of corresponding gamma distribution}
+\item{shape, rate, scale}{positive parameters of corresponding gamma distribution. Give either \code{rate} or \code{scale}, not both.}
 
 \item{log, log.p}{logical; if \code{TRUE}, probabilities/ densities \eqn{p} are returned as \eqn{\log(p)}.}
 
