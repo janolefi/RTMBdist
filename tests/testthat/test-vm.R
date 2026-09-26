@@ -76,3 +76,7 @@ test_that("vm OSA residuals are valid for mixtures over different mean direction
   Fmix <- 0.3 * pvm(y, -2, 3, from = -pi) + 0.7 * pvm(y, 2, 1, from = -pi)
   expect_equal(res$residual, qnorm(Fmix), tolerance = 1e-6)
 })
+
+test_that("pvm under AD has correct second derivatives", {
+  check_ad_cdf_hessian(pvm, c(-2, 0.5, 1.2, 2.5), mu = 1, kappa = 3)
+})

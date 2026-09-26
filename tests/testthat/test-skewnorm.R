@@ -85,3 +85,7 @@ test_that("skewnorm supports OSA residuals", {
   set.seed(1)
   check_osa_cdf(dskewnorm, pskewnorm, rskewnorm(30, 1, 2, 3), xi = 1, omega = 2, alpha = 3)
 })
+
+test_that("pskewnorm under AD has correct second derivatives", {
+  check_ad_cdf_hessian(pskewnorm, c(-1, 0.2, 0.5, 2, 4), xi = 0.3, omega = 1.5, alpha = 3)
+})

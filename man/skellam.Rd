@@ -3,10 +3,13 @@
 \name{skellam}
 \alias{skellam}
 \alias{dskellam}
+\alias{pskellam}
 \alias{rskellam}
 \title{Skellam distribution}
 \usage{
 dskellam(x, mu1, mu2, log = FALSE)
+
+pskellam(q, mu1, mu2, lower.tail = TRUE, log.p = FALSE)
 
 rskellam(n, mu1, mu2)
 }
@@ -17,10 +20,16 @@ rskellam(n, mu1, mu2)
 
 \item{log}{logical; return log-density if TRUE}
 
+\item{q}{vector of quantiles}
+
+\item{lower.tail}{logical; if \code{TRUE} (default), probabilities are \eqn{P[X \le q]}, otherwise \eqn{P[X > q]}.}
+
+\item{log.p}{logical; if \code{TRUE}, probabilities are returned on the log scale.}
+
 \item{n}{number of random values to return.}
 }
 \value{
-\code{dskellam} gives the probability mass function and \code{rskellam} generates random deviates.
+\code{dskellam} gives the probability mass function, \code{pskellam} gives the distribution function, and \code{rskellam} generates random deviates.
 }
 \description{
 Probability mass function, distribution function, and random generation for
@@ -30,8 +39,23 @@ the Skellam distribution.
 The Skellam distribution is the distribution of the difference of two Poisson random variables. Specifically, if \eqn{X_1 \sim \text{Pois}(\mu_1)} and \eqn{X_2 \sim \text{Pois}(\mu_2)}, then \eqn{X_1 - X_2 \sim \text{Skellam}(\mu_1, \mu_2)}.
 
 This implementation of \code{dskellam} allows for automatic differentiation with \code{RTMB}.
+
+The distribution function has no closed form, and as the support is unbounded in both
+directions, summing the probability mass function would need a range that depends on
+the parameters. Instead, \code{pskellam} uses the identity
+\deqn{P(X \le q;\, \mu_1, \mu_2) = \int_{\mu_1}^\infty P(X = q;\, t, \mu_2)\, dt,}
+which follows from the relation between the Poisson and gamma distribution functions,
+and integrates it numerically with the AD-compatible
+\code{\link[RTMB:ADintegrate]{integrate}} of \code{RTMB}. By symmetry, the upper tail
+is \eqn{P(X > q;\, \mu_1, \mu_2) = P(X \le -q - 1;\, \mu_2, \mu_1)}, and whichever
+tail is smaller is integrated directly, which keeps small tail probabilities accurate.
+\code{pskellam} is AD-compatible in \code{mu1} and \code{mu2}, while \code{q} must be
+numeric data. This is also what one-step-ahead (OSA) residuals via
+\code{RTMB::\link[RTMB]{oneStepPredict}} need, so these are supported, e.g. with
+\code{method = "cdf"} and \code{discrete = TRUE}.
 }
 \examples{
 x <- rskellam(1, 2, 3)
 d <- dskellam(x, 2, 3)
+p <- pskellam(x, 2, 3)
 }

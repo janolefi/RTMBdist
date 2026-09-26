@@ -59,3 +59,8 @@ test_that("the skew derivative of dskewt and pskewt is not zero at skew = 0", {
     expect_equal(as.vector(F$jacobian(0)), (g(h) - g(-h)) / (2 * h), tolerance = 1e-6)
   }
 })
+
+test_that("pskewt under AD has correct second derivatives", {
+  check_ad_cdf_hessian(pskewt, c(-1, 0.2, 0.5, 2, 4), mu = 0.3, sigma = 1.5, skew = 2,
+                       .fixed = list(df = 5))
+})

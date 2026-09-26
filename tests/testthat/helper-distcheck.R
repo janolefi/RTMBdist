@@ -9,6 +9,7 @@
 #   4. normalised  — integral of pdf == 1  /  sum of pmf == 1
 #   5. AD gradient — MakeTape(nll) Jacobian contains no NaN
 #   6. AD CDF      — taped p(x) matches p(x) outside AD in value and gradient
+#   6b. AD Hessian — second derivatives of the taped p(x) match finite differences
 #   5b. cdf vs pdf — p(x) matches the integrated density / summed pmf
 #   7. OSA         — oneStepPredict(method = "cdf") residuals equal qnorm(p(x)),
 #                    for discrete distributions its Fx and px equal p(x) and d(x)
@@ -106,6 +107,33 @@ check_ad_cdf <- function(.pfun, .dfun, .q, ..., .fixed = list(), .args = list(),
   }
 
   invisible(F)
+}
+
+
+#' Check second derivatives of a distribution function in its parameters (test 6b)
+#'
+#' Compares the Hessian of sum(log(.pfun(.q, ...))) from the AD tape with central
+#' finite differences of its values. Second and third derivatives are needed by
+#' sdreport() and the Laplace approximation, and can be wrong even where the
+#' gradient is right.
+#'
+#' @param .pfun distribution function
+#' @param .q    numeric vector of quantiles, ideally in both tails
+#' @param ...   named numeric distribution parameters, each of length 1
+#' @param .fixed arguments of .pfun that are data rather than parameters
+#' @param .h    step of the finite differences
+#' @param .tol  tolerance of the comparison
+check_ad_cdf_hessian <- function(.pfun, .q, ..., .fixed = list(), .h = 1e-4, .tol = 1e-5) {
+  par <- unlist(list(...))
+  as_args <- function(p) stats::setNames(lapply(seq_along(par), function(j) p[j]), names(par))
+  f <- function(p) sum(log(do.call(.pfun, c(list(.q), as_args(p), .fixed))))
+  H <- RTMB::MakeTape(f, par)$jacfun()$jacobian(par)
+  d <- length(par)
+  H_fd <- outer(seq_len(d), seq_len(d), Vectorize(function(i, j) {
+    ei <- replace(numeric(d), i, .h); ej <- replace(numeric(d), j, .h)
+    (f(par + ei + ej) - f(par + ei - ej) - f(par - ei + ej) + f(par - ei - ej)) / (4 * .h^2)
+  }))
+  expect_equal(H, H_fd, tolerance = .tol, ignore_attr = TRUE, label = "taped CDF Hessian")
 }
 
 

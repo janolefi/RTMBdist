@@ -30,46 +30,38 @@ numerical_cdf <- function(dfun, q, pars, centre, scale = 1, lower = -Inf, upper 
   left[is.na(left)] <- TRUE # NA in q, filled in at the end
   h <- rec(value_of(scale))
 
-  # Log of the integral over one tail for scalar q, scale and parameters. RTMB's Vectorize()
-  # tapes this once and maps the tape over all elements, which makes tape construction much
-  # faster. This also fixes all branching to that of the first element, hence one call per tail.
-  # RTMB's AD integrate() can give a zero derivative with respect to a finite integration
-  # limit, so the limits are kept fixed and q is moved into the integrand instead.
-  arg_names <- c(".q", ".h", names(pars))
-  log_tail <- function(from_lower) {
-    fun <- function() {
-      args <- mget(arg_names)
-      q <- args[[1]]
-      h <- args[[2]]
-      logf <- function(x) do.call(dfun, c(list(x), args[-(1:2)], list(log = TRUE)))
-      logf_q <- logf(q)
-      r <- function(x) exp(logf(x) - logf_q)
-      # abs.tol = 0 so that the relative tolerance decides
-      I <- function(g, b) integrate(g, 0, b, rel.tol = rel.tol, abs.tol = 0)$value
-      logf_q + log(
-        if (from_lower) {
-          if (is.infinite(lower)) h * I(function(v) r(q - h * v), Inf)
-          else (q - lower) * I(function(u) r(lower + u * (q - lower)), 1)
-        } else {
-          if (is.infinite(upper)) h * I(function(v) r(q + h * v), Inf)
-          else (upper - q) * I(function(u) r(q + u * (upper - q)), 1)
-        }
-      )
-    }
-    formals(fun) <- stats::setNames(rep(alist(x = ), length(arg_names)), arg_names)
-    Vectorize(fun)
+  # Log of the integral over the chosen tail for element i. RTMB's AD integrate() can give a
+  # zero derivative with respect to a finite integration limit, so the limits are kept fixed
+  # and q is moved into the integrand instead.
+  # Each element gets its own integrate() call. RTMB's Vectorize() would tape much faster,
+  # but its second derivatives are wrong (or R crashes) when the vectorised function contains
+  # integrate() and is mapped over more than one element (RTMB 2.0), and second and third
+  # derivatives are needed for sdreport() and the Laplace approximation.
+  log_tail <- function(i) {
+    qi <- q[i]
+    hi <- h[i]
+    pars_i <- lapply(pars, `[`, i)
+    logf <- function(x) do.call(dfun, c(list(x), pars_i, list(log = TRUE)))
+    logf_q <- logf(qi)
+    r <- function(x) exp(logf(x) - logf_q)
+    # abs.tol = 0 so that the relative tolerance decides
+    I <- function(g, b) integrate(g, 0, b, rel.tol = rel.tol, abs.tol = 0)$value
+    logf_q + log(
+      if (left[i]) {
+        if (is.infinite(lower)) hi * I(function(v) r(qi - hi * v), Inf)
+        else (qi - lower) * I(function(u) r(lower + u * (qi - lower)), 1)
+      } else {
+        if (is.infinite(upper)) hi * I(function(v) r(qi + hi * v), Inf)
+        else (upper - qi) * I(function(u) r(qi + u * (upper - qi)), 1)
+      }
+    )
   }
 
-  # infinite q is left out of the integration (it would be a taped variable inside
-  # Vectorize), its directly integrated tail is empty
+  # infinite q is left out of the integration, its directly integrated tail is empty
   ls <- rep(-Inf, n)
   if (ad_context()) ls <- advector(ls)
-  for (from_lower in c(TRUE, FALSE)) {
-    i <- which(left == from_lower & is.finite(qv))
-    if (length(i)) {
-      ls[i] <- do.call(log_tail(from_lower), c(list(q[i], h[i]), lapply(pars, `[`, i)))
-    }
-  }
+  i <- which(is.finite(qv))
+  if (length(i)) ls[i] <- do.call(c, lapply(i, log_tail))
 
   flip <- left != lower.tail
   p <- if (log.p) ls else exp(ls)
