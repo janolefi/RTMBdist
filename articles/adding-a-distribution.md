@@ -183,13 +183,14 @@ precision.
 
 ## Numerical stability
 
-| Instead of             | Write                |
-|------------------------|----------------------|
-| `exp(x) - 1`           | `expm1(x)`           |
-| `log(1 + x)`           | `log1p(x)`           |
-| `1 - exp(-x)`          | `-expm1(-x)`         |
-| `x^2`, `x^3`           | `x * x`, `x * x * x` |
-| `x^a`, non-integer `a` | `exp(a * log(x))`    |
+| Instead of | Write |
+|----|----|
+| `exp(x) - 1` | `expm1(x)` |
+| `log(1 + x)` | `log1p(x)` |
+| `1 - exp(-x)` | `-expm1(-x)` |
+| `x^2`, `x^3` | `x * x`, `x * x * x` |
+| `x^a`, non-integer `a` | `exp(a * log(x))` |
+| `log(pnorm(x))` | `pnorm(x, log.p = TRUE)`, accurate where `pnorm(x)` underflows |
 
 The one to watch for is `0 * (-Inf)`. That is `NaN`, and it takes out
 the whole gradient rather than the single element you were multiplying.

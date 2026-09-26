@@ -81,6 +81,14 @@
   [`pgamma()`](https://rdrr.io/r/stats/GammaDist.html), which is now
   worked around.
 
+- [`dskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md),
+  [`dskewnorm2()`](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md)
+  and
+  [`dexgauss()`](https://janolefi.github.io/RTMBdist/reference/exgauss.md)
+  are now accurate far in the tails. They used
+  `log(1e-300 + pnorm(...))`, which cut the log density off there and
+  made its gradient zero, and now use `pnorm(..., log.p = TRUE)`.
+
 - [`dinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md),
   [`pinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md),
   [`qinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md)

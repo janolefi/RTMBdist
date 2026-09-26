@@ -286,6 +286,10 @@ once the cdf saturates in double precision.</p>
 <h2 id="numerical-stability">Numerical stability<a class="anchor" aria-label="anchor" href="#numerical-stability"></a>
 </h2>
 <table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
 <thead><tr class="header">
 <th>Instead of</th>
 <th>Write</th>
@@ -316,6 +320,12 @@ once the cdf saturates in double precision.</p>
 <code>x^a</code>, non-integer <code>a</code>
 </td>
 <td><code>exp(a * log(x))</code></td>
+</tr>
+<tr class="even">
+<td><code>log(pnorm(x))</code></td>
+<td>
+<code>pnorm(x, log.p = TRUE)</code>, accurate where
+<code>pnorm(x)</code> underflows</td>
 </tr>
 </tbody>
 </table>
