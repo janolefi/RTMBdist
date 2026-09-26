@@ -18,7 +18,7 @@ test_that("vm passes standard distribution checks (mu=1, kappa=3)", {
     pfun  = pvm,
     qfun  = NULL,
     xs    = c(-1, 0, 1, 2, 2.5),
-    lower = -pi, upper = pi,
+    lower = 1 - pi, upper = 1 + pi, # pvm cuts the circle at mu - pi
     mu = 1, kappa = 3
   )
 })

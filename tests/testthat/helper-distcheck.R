@@ -9,6 +9,7 @@
 #   4. normalised  — integral of pdf == 1  /  sum of pmf == 1
 #   5. AD gradient — MakeTape(nll) Jacobian contains no NaN
 #   6. AD CDF      — taped p(x) matches p(x) outside AD in value and gradient
+#   5b. cdf vs pdf — p(x) matches the integrated density / summed pmf
 #   7. OSA         — oneStepPredict(method = "cdf") residuals equal qnorm(p(x)),
 #                    for discrete distributions its Fx and px equal p(x) and d(x)
 
@@ -144,6 +145,36 @@ check_osa_cdf <- function(.dfun, .pfun, .y, ..., .fixed = list(), .discrete = FA
 }
 
 
+#' Check that a distribution function matches its density (test 5b)
+#'
+#' Compares p(b) - p(a) with the integral of the density over [a, b] for the
+#' sorted test points, starting at `.from`, where the distribution function has
+#' to equal `.p_from`. Differences are used rather than p(x) itself, so that the
+#' check also applies with a point mass at `.from`, where p(.from) = d(.from).
+#'
+#' @param .dfun,.pfun density and distribution function
+#' @param .xs         test points inside the continuous support
+#' @param .from       start of the continuous support
+#' @param .p_from     value of the distribution function at `.from`
+#' @param ...         named distribution parameters
+#'
+#' @note Arguments use a leading dot so that parameter names such as df cannot
+#'   partially match them (df would otherwise match dfun).
+check_cdf_matches_density <- function(.dfun, .pfun, .xs, .from, .p_from, ...) {
+  pars <- list(...)
+  x <- c(.from, sort(unique(.xs)))
+  f <- function(t) do.call(.dfun, c(list(t), pars))
+  integrals <- vapply(seq_along(x)[-1], function(i)
+    stats::integrate(f, x[i - 1], x[i], rel.tol = 1e-10)$value, numeric(1))
+  expect_equal(
+    do.call(.pfun, c(list(x[-1]), pars)),
+    .p_from + cumsum(integrals),
+    tolerance = 1e-7,
+    label = "cdf matches the integrated density"
+  )
+}
+
+
 #' Run tests 1-4 for a continuous distribution
 #'
 #' @param dfun  density function, e.g. dbeta2
@@ -198,6 +229,9 @@ check_continuous_dist <- function(dfun, pfun, qfun = NULL,
     tolerance = 1e-4,
     label = "density integrates to 1"
   )
+
+  # 5b. cdf matches the integrated density ------------------------------------
+  check_cdf_matches_density(dfun, pfun, xs, lower, 0, ...)
 }
 
 
@@ -243,6 +277,10 @@ check_zeroinfl_dist <- function(dfun, pfun, xs, upper = Inf, ...) {
     tolerance = 1e-4,
     label = "point mass d(0) + continuous integral = 1"
   )
+
+  # 5b. cdf is the point mass at 0 plus the integrated density ----------------
+  expect_equal(pfun(0, ...), dfun(0, ...), tolerance = 1e-10, label = "p(0) = d(0)")
+  check_cdf_matches_density(dfun, pfun, xs, 0, dfun(0, ...), ...)
 }
 
 
@@ -293,6 +331,13 @@ check_inflated_dist <- function(dfun, pfun, xs,
     tolerance = 1e-4,
     label = "sum of point masses + continuous integral = 1"
   )
+
+  # 5b. cdf is the mass at the lower end plus the integrated density ----------
+  p_lower <- if (lower %in% point_masses) dfun(lower, ...) else 0
+  if (lower %in% point_masses) {
+    expect_equal(pfun(lower, ...), p_lower, tolerance = 1e-10, label = "p(lower) = d(lower)")
+  }
+  check_cdf_matches_density(dfun, pfun, xs, lower, p_lower, ...)
 }
 
 
@@ -338,4 +383,16 @@ check_discrete_dist <- function(dfun, pfun = NULL,
     tolerance = 1e-5,
     label = "PMF sums to 1 over support"
   )
+
+  # 5b. cdf matches the summed pmf ------------------------------------------------
+  if (!is.null(pfun)) {
+    k <- sort(unique(xs_int))
+    support <- sum_support[sum_support >= min(0, sum_support)]
+    expect_equal(
+      pfun(k, ...),
+      vapply(k, function(kk) sum(dfun(support[support <= kk], ...)), numeric(1)),
+      tolerance = 1e-8,
+      label = "cdf matches the summed pmf"
+    )
+  }
 }
