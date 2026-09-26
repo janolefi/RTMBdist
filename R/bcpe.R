@@ -13,10 +13,7 @@ f.T <- function(t, tau, log = FALSE){
 F.T <- function(t, tau){
   log.c <- 0.5 * (-(2/tau) * log(2) + lgamma(1/tau) - lgamma(3/tau))
   c <- exp(log.c)
-  s <- 0.5 * ((abs(t/c))^tau)
-  F.s <- RTMB::pgamma(s, shape = 1/tau, scale = 1)
-  cdf <- 0.5*(1 + F.s * sign(t))
-  cdf
+  pe_cdf(t / c, tau, 0.5)
 }
 # quantile function of the standardised power exponential; inverse of F.T
 q.T <- function(p, tau){

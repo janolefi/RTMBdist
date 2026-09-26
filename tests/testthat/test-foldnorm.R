@@ -26,3 +26,9 @@ test_that("foldnorm passes standard distribution checks (mu=1, sigma=2)", {
 test_that("foldnorm AD gradient has no NaN", {
   check_ad_gradient(dfoldnorm,  rfoldnorm,  mu = 1, sigma = 2)
 })
+
+test_that("pfoldnorm can be taped in q", {
+  check_ad_cdf(pfoldnorm, dfoldnorm, c(0.2, 1, 2.5, 4), mu = 1, sigma = 2)
+  F <- RTMB::MakeTape(function(x) pfoldnorm(x, 1, 2), c(-1, 1))
+  expect_equal(F(c(-2, 3)), pfoldnorm(c(-2, 3), 1, 2))
+})

@@ -1,3 +1,39 @@
+# 1/2 (1 + sign(u) P(1/nu, k |u|^nu)), with P the regularised lower incomplete gamma
+# function: the distribution function behind the power exponential distributions
+# (ppowerexp(), ppowerexp2() and, via F.T(), pbcpe()).
+# At u = 0, pgamma() has infinite slope in s = k |u|^nu while s has slope 0 in u (or the
+# other way round for nu < 1), so AD gives NaN there. For small s, the series
+# P(a, s) = s^a e^(-s) sum_j s^j / ((a + 1) ... (a + j)) / Gamma(a + 1), a = 1 / nu, is used
+# instead: as s^a = k^a |u|, sign(u) |u| = u enters linearly and the derivative is finite.
+# With s < 0.05, ten terms give a truncation error below 1e-19.
+pe_cdf <- function(u, nu, k) {
+  a <- 1 / nu
+  s0 <- 0.05
+  # s < s0 is decided as |u| < u0 rather than on s itself, as the derivative of |u|^nu at
+  # u = 0 is NaN in nu (0 * log(0)), which would reach all derivatives through smaller()
+  u0 <- (s0 / k)^a
+  near <- smaller(abs(u), u0) # 1 if s < s0, re-evaluated with the tape
+
+  # away from 0: the incomplete gamma representation. Where it is not used, u is shifted
+  # beyond the threshold, so that its derivative stays finite (0 * NaN would still be NaN).
+  uf <- u + near * 2 * u0
+  far <- 0.5 * (1 + RTMB::pgamma(k * abs(uf)^nu, shape = a, scale = 1) * sign(uf))
+
+  # close to 0: the series. as.finite() keeps near * u finite for u = +-Inf, and the tiny
+  # shift keeps the derivative of |u|^nu finite at u = 0 for nu < 1
+  un <- near * as.finite(u)
+  sn <- k * (abs(un) + 1e-300)^nu
+  term <- 1
+  M <- 1
+  for (j in 1:10) {
+    term <- term * sn / (a + j)
+    M <- M + term
+  }
+  series <- 0.5 + 0.5 * un * exp(a * log(k) - sn - lgamma(a + 1)) * M
+
+  near * series + (1 - near) * far
+}
+
 #' Power Exponential distribution (PE and PE2)
 #'
 #' Density, distribution function, quantile function, and random generation for
@@ -103,8 +139,7 @@ ppowerexp <- function(q, mu = 0, sigma = 1, nu = 2, lower.tail = TRUE, log.p = F
   log.c <- 0.5 * (-(2/nu) * log(2) + lgamma(1/nu) - lgamma(3/nu))
   c <- exp(log.c)
   z <- (q - mu) / sigma
-  s <- 0.5 * ((abs(z/c))^nu)
-  cdf <- 0.5 * (1 + RTMB::pgamma(s, shape=1/nu, scale=1) * sign(z))
+  cdf <- pe_cdf(z / c, nu, 0.5)
 
   large_nu <- greater(nu, 1e4)
 
@@ -205,8 +240,7 @@ ppowerexp2 <- function(q, mu = 0, sigma = 1, nu = 2, lower.tail = TRUE, log.p = 
   }
 
   z <- (q - mu) / sigma
-  s <- abs(z)^nu
-  cdf <- 0.5 *(1 + RTMB::pgamma(s, shape=1/nu, scale=1) * sign(z))
+  cdf <- pe_cdf(z, nu, 1)
 
   large_nu <- greater(nu, 1e4)
 
