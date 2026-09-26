@@ -49,6 +49,8 @@ the Skellam distribution.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dskellam</span><span class="op">(</span><span class="va">x</span>, <span class="va">mu1</span>, <span class="va">mu2</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">pskellam</span><span class="op">(</span><span class="va">q</span>, <span class="va">mu1</span>, <span class="va">mu2</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">rskellam</span><span class="op">(</span><span class="va">n</span>, <span class="va">mu1</span>, <span class="va">mu2</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -68,24 +70,50 @@ the Skellam distribution.</p>
 <dd><p>logical; return log-density if TRUE</p></dd>
 
 
+<dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
+<dd><p>vector of quantiles</p></dd>
+
+
+<dt id="arg-lower-tail">lower.tail<a class="anchor" aria-label="anchor" href="#arg-lower-tail"></a></dt>
+<dd><p>logical; if <code>TRUE</code> (default), probabilities are \(P[X \le q]\), otherwise \(P[X &gt; q]\).</p></dd>
+
+
+<dt id="arg-log-p">log.p<a class="anchor" aria-label="anchor" href="#arg-log-p"></a></dt>
+<dd><p>logical; if <code>TRUE</code>, probabilities are returned on the log scale.</p></dd>
+
+
 <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
 <dd><p>number of random values to return.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>dskellam</code> gives the probability mass function and <code>rskellam</code> generates random deviates.</p>
+    <p><code>dskellam</code> gives the probability mass function, <code>pskellam</code> gives the distribution function, and <code>rskellam</code> generates random deviates.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The Skellam distribution is the distribution of the difference of two Poisson random variables. Specifically, if \(X_1 \sim \text{Pois}(\mu_1)\) and \(X_2 \sim \text{Pois}(\mu_2)\), then \(X_1 - X_2 \sim \text{Skellam}(\mu_1, \mu_2)\).</p>
 <p>This implementation of <code>dskellam</code> allows for automatic differentiation with <code>RTMB</code>.</p>
+<p>The distribution function has no closed form, and as the support is unbounded in both
+directions, summing the probability mass function would need a range that depends on
+the parameters. Instead, <code>pskellam</code> uses the identity
+$$P(X \le q;\, \mu_1, \mu_2) = \int_{\mu_1}^\infty P(X = q;\, t, \mu_2)\, dt,$$
+which follows from the relation between the Poisson and gamma distribution functions,
+and integrates it numerically with the AD-compatible
+<code><a href="https://rdrr.io/pkg/RTMB/man/ADintegrate.html" class="external-link">integrate</a></code> of <code>RTMB</code>. By symmetry, the upper tail
+is \(P(X &gt; q;\, \mu_1, \mu_2) = P(X \le -q - 1;\, \mu_2, \mu_1)\), and whichever
+tail is smaller is integrated directly, which keeps small tail probabilities accurate.
+<code>pskellam</code> is AD-compatible in <code>mu1</code> and <code>mu2</code>, while <code>q</code> must be
+numeric data. This is also what one-step-ahead (OSA) residuals via
+<code>RTMB::<a href="https://rdrr.io/pkg/RTMB/man/OSA-residuals.html" class="external-link">oneStepPredict</a></code> need, so these are supported, e.g. with
+<code>method = "cdf"</code> and <code>discrete = TRUE</code>.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">rskellam</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">dskellam</span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">pskellam</span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

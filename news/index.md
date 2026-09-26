@@ -20,7 +20,10 @@
   and the beta-negative binomial
   ([`pbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md),
   [`pbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)),
-  which sum the probability mass function. OSA residuals are supported
+  which sum the probability mass function, and for the Skellam
+  distribution
+  ([`pskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)),
+  which integrates it over the first mean. OSA residuals are supported
   for all of these and for the wrapped Cauchy. For the two circular
   distributions, the circle is cut at the fixed origin `-pi`, which
   keeps the residuals valid for hidden Markov and random effects models.

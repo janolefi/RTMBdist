@@ -264,6 +264,7 @@
 - [`rgmrf()`](https://janolefi.github.io/RTMBdist/reference/rgmrf.md) :
   Sample from a multivariate Gaussian with a sparse precision matrix
 - [`dskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
+  [`pskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
   [`rskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
   : Skellam distribution
 - [`dskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md)
