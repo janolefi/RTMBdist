@@ -2,13 +2,16 @@
 # function: the distribution function behind the power exponential distributions
 # (ppowerexp(), ppowerexp2() and, via F.T(), pbcpe()).
 # At u = 0, pgamma() has infinite slope in s = k |u|^nu while s has slope 0 in u (or the
-# other way round for nu < 1), so AD gives NaN there. For small s, the series
+# other way round for nu < 1), so AD gives NaN there. For s < 5, the series
 # P(a, s) = s^a e^(-s) sum_j s^j / ((a + 1) ... (a + j)) / Gamma(a + 1), a = 1 / nu, is used
 # instead: as s^a = k^a |u|, sign(u) |u| = u enters linearly and the derivative is finite.
-# With s < 0.05, ten terms give a truncation error below 1e-19.
+# Its terms are positive, and 40 of them give a truncation error below 1e-19 for s < 5.
+# The threshold is that high because RTMB's pgamma() has non-finite second or third
+# derivatives in its first argument for s below about 2 (RTMB 2.0), which the Laplace
+# approximation and sdreport() need.
 pe_cdf <- function(u, nu, k) {
   a <- 1 / nu
-  s0 <- 0.05
+  s0 <- 5
   # s < s0 is decided as |u| < u0 rather than on s itself, as the derivative of |u|^nu at
   # u = 0 is NaN in nu (0 * log(0)), which would reach all derivatives through smaller()
   u0 <- (s0 / k)^a
@@ -19,13 +22,15 @@ pe_cdf <- function(u, nu, k) {
   uf <- u + near * 2 * u0
   far <- 0.5 * (1 + RTMB::pgamma(k * abs(uf)^nu, shape = a, scale = 1) * sign(uf))
 
-  # close to 0: the series. as.finite() keeps near * u finite for u = +-Inf, and the tiny
-  # shift keeps the derivative of |u|^nu finite at u = 0 for nu < 1
-  un <- near * as.finite(u)
+  # close to 0: the series. Where it is not used, it is evaluated at u0 instead of 0, as
+  # higher derivatives of |u|^nu (needed by the Laplace approximation) are infinite at 0,
+  # and 0 * Inf would still be NaN. as.finite() keeps near * u finite for u = +-Inf, and the
+  # tiny shift keeps the first derivative of |u|^nu finite at u = 0 for nu < 1.
+  un <- near * as.finite(u) + (1 - near) * u0
   sn <- k * (abs(un) + 1e-300)^nu
   term <- 1
   M <- 1
-  for (j in 1:10) {
+  for (j in 1:40) {
     term <- term * sn / (a + j)
     M <- M + term
   }

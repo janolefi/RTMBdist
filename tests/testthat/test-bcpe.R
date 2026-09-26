@@ -41,3 +41,17 @@ test_that("pbcpe has the right gradient at and around q = mu", {
     expect_equal(J[2:4], J_fd, tolerance = 1e-6)
   }
 })
+
+test_that("dbcpe and pbcpe have finite third derivatives, as the Laplace approximation needs", {
+  # dbcpe normalises with the power exponential cdf far from 0; the unused series branch
+  # of that cdf used to make third derivatives NaN, and with them the Laplace gradient
+  set.seed(1)
+  y <- rbcpe(50, 18, 0.15, -1, 2)
+  par <- c(18, 0.15, -1, 2)
+  for (f in list(function(p) sum(dbcpe(y, p[1], p[2], p[3], p[4], log = TRUE)),
+                 function(p) sum(log(pbcpe(y, p[1], p[2], p[3], p[4]))))) {
+    F3 <- RTMB::MakeTape(f, par)$jacfun()$jacfun()
+    expect_true(all(is.finite(F3$jacobian(par))))
+  }
+  check_ad_cdf_hessian(pbcpe, c(12, 16, 18, 21, 26), mu = 18, sigma = 0.15, nu = -1, tau = 2)
+})

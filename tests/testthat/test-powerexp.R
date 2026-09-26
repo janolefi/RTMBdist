@@ -61,3 +61,15 @@ test_that("ppowerexp and ppowerexp2 have the right gradients at and around q = m
     }
   }
 })
+
+test_that("ppowerexp has finite third derivatives and correct Hessians away from mu", {
+  q <- c(-3, -1.5, 0.5, 2, 4)
+  for (nu in c(0.8, 2, 4)) {
+    f <- function(p) sum(log(ppowerexp(q, p[1], p[2], p[3])))
+    par <- c(0.3, 1.2, nu)
+    F3 <- RTMB::MakeTape(f, par)$jacfun()$jacfun()
+    expect_true(all(is.finite(F3$jacobian(par))))
+    check_ad_cdf_hessian(ppowerexp, q, mu = 0.3, sigma = 1.2, nu = nu)
+    check_ad_cdf_hessian(ppowerexp2, q, mu = 0.3, sigma = 1.2, nu = nu)
+  }
+})
