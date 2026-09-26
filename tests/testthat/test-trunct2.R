@@ -45,3 +45,8 @@ test_that("trunct2 AD gradient is finite when a bound is infinite", {
   expect_equal(grad(-1, Inf), grad(-1, 1e8))
   expect_equal(grad(-Inf, Inf), grad(-1e8, 1e8))
 })
+
+test_that("ptrunct2 has the right gradient at q = mu", {
+  check_ad_cdf(ptrunct2, dtrunct2, c(-1, 0, 0.5, 1.5), mu = 0, sigma = 1, df = 5,
+               .fixed = list(min = -2, max = 2))
+})

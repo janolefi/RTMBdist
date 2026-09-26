@@ -48,3 +48,14 @@ test_that("skewt supports OSA residuals", {
   set.seed(1)
   check_osa_cdf(dskewt, pskewt, rskewt(30, 1, 2, 3, 5), mu = 1, sigma = 2, skew = 3, df = 5)
 })
+
+test_that("the skew derivative of dskewt and pskewt is not zero at skew = 0", {
+  # this used to be exactly zero, so that skew could not move away from a start at zero
+  x <- c(-1, 0.5, 2)
+  h <- 1e-5
+  for (f in list(dskewt, pskewt)) {
+    g <- function(a) f(x, 0, 1, a, 5)
+    F <- RTMB::MakeTape(g, 0)
+    expect_equal(as.vector(F$jacobian(0)), (g(h) - g(-h)) / (2 * h), tolerance = 1e-6)
+  }
+})

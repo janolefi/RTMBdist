@@ -12,9 +12,6 @@
 #' When called during AD taping, \code{pskewt2} instead integrates the density numerically with the AD-compatible \code{\link[RTMB:ADintegrate]{integrate}} of \code{RTMB}, which makes it AD-compatible as well. The \code{method} argument is then ignored.
 #' See \code{sn::\link[sn]{dst}} for more details.
 #'
-#' \strong{Caution:} In a numerial optimisation, the \code{skew} parameter should NEVER be initialised with exactly zero.
-#' This will cause the initial and all subsequent derivatives to be exactly zero and hence the parameter will remain at its initial value.
-#'
 #' For given \code{skew} \eqn{= \alpha} and \code{df} = \eqn{\nu}, define
 #' \deqn{
 #' \delta = \alpha / \sqrt{1 + \alpha^2}, \qquad

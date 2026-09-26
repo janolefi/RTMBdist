@@ -54,9 +54,6 @@ This implementation of \code{dskewt} allows for automatic differentiation with \
 When called during AD taping, \code{pskewt} instead integrates the density numerically with the AD-compatible \code{\link[RTMB:ADintegrate]{integrate}} of \code{RTMB}, which makes it AD-compatible as well. The \code{method} argument is then ignored.
 See \code{sn::\link[sn]{dst}} for more details.
 
-\strong{Caution:} In a numerial optimisation, the \code{skew} parameter should NEVER be initialised with exactly zero.
-This will cause the initial and all subsequent derivatives to be exactly zero and hence the parameter will remain at its initial value.
-
 \deqn{f(x;\,\mu,\sigma,\lambda,\nu) = \frac{2}{\sigma}\, f_t\!\left(\frac{x-\mu}{\sigma};\,\nu\right) F_t\!\left(\lambda\sqrt{\frac{\nu+1}{\nu + z^2}}\cdot z;\,\nu+1\right),}
 where \eqn{z=(x-\mu)/\sigma}, \eqn{f_t(\cdot;\nu)} is the Student-\eqn{t} PDF, and \eqn{F_t(\cdot;\nu+1)} is its CDF.
 }

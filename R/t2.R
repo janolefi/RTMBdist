@@ -95,11 +95,29 @@ pt.ad <- function(q, df) {
   # It is reached through the internal S4 generic in R/ad-dispatch.R whenever an
   # argument is an advector; plain numeric input goes to stats::pt instead.
 
-  x <- df / (df + q^2)
-  q <- q + 1e-8 # avoid numerical issues with q = 0
-  # if skew is exactly zero, q will be zero and the gradient will be exactly zero
+  # At q = 0, x = df / (df + q^2) has slope 0 while pbeta(x, df / 2, 0.5) has infinite
+  # slope at x = 1, so AD returns a derivative of 0 instead of dt(0, df). Close to 0, the
+  # odd Taylor series of the distribution function is used instead, whose truncation error
+  # is below 1e-15 for |q| < delta, and whose derivatives at 0 are exact up to high order.
+  # (A representation without branches, pbeta(x, df / 2, df / 2) with
+  # x = 1/2 + q / (2 sqrt(df + q^2)), would need the derivative of pbeta in its second
+  # shape, which RTMB currently gets wrong.)
+  delta <- 1e-3
+  near <- smaller(abs(q), delta) # 1 if |q| < delta, re-evaluated with the tape
 
+  # away from 0: the incomplete beta representation. Where it is not used, q is shifted
+  # away from 0, so that its derivative stays finite (0 * NaN would still be NaN).
+  qf <- q + near * 2 * delta
+  x <- df / (df + qf^2)
   val <- RTMB::pbeta(x, df / 2, 0.5) / 2
-  test <- 0.5 * (sign(q) + 1)  # test if q > 0
-  test * (1 - val) + (1 - test) * val
+  pos <- 0.5 * (sign(qf) + 1) # 1 if qf > 0
+  far <- pos * (1 - val) + (1 - pos) * val
+
+  # close to 0: F(q) = 1/2 + f(0) (q - (df + 1) / (6 df) q^3 + (df + 1)(df + 3) / (40 df^2) q^5)
+  qn <- q * near
+  logf0 <- lgamma((df + 1) / 2) - lgamma(df / 2) - 0.5 * log(df * pi)
+  series <- 0.5 + exp(logf0) *
+    (qn - (df + 1) / (6 * df) * qn^3 + (df + 1) * (df + 3) / (40 * df^2) * qn^5)
+
+  near * series + (1 - near) * far
 }
