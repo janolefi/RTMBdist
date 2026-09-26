@@ -36,6 +36,61 @@
   [`dcombinom()`](https://janolefi.github.io/RTMBdist/reference/combinom.md)
   when an observation equals `size`.
 
+- Fixed two distribution functions that gave wrong values, and with them
+  wrong OSA residuals:
+  [`pzigamma()`](https://janolefi.github.io/RTMBdist/reference/zigamma.md)
+  and
+  [`pzigamma2()`](https://janolefi.github.io/RTMBdist/reference/zigamma2.md)
+  used the scale as a rate, so they were wrong whenever `scale` was not
+  1, and
+  [`pzibinom()`](https://janolefi.github.io/RTMBdist/reference/zibinom.md)
+  left out the binomial zeros at `q = 0`.
+
+- Fixed derivatives of several distribution functions, which matter for
+  gradients, `sdreport()` and the Laplace approximation.
+  [`pt.ad()`](https://janolefi.github.io/RTMBdist/reference/t2.md) had a
+  zero derivative at 0, which gave wrong gradients in
+  [`pt2()`](https://janolefi.github.io/RTMBdist/reference/t2.md),
+  [`pbct()`](https://janolefi.github.io/RTMBdist/reference/bct.md),
+  [`ptrunct()`](https://janolefi.github.io/RTMBdist/reference/trunct.md)
+  and
+  [`ptrunct2()`](https://janolefi.github.io/RTMBdist/reference/trunct2.md)
+  at `q = mu`, and made the derivative of
+  [`dskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md)
+  and
+  [`pskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md)
+  with respect to `skew` zero at `skew = 0`; the caution against
+  starting `skew` at zero is therefore gone.
+  [`ppowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md),
+  [`ppowerexp2()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
+  and [`pbcpe()`](https://janolefi.github.io/RTMBdist/reference/bcpe.md)
+  had `NaN` gradients at `q = mu`,
+  [`pfoldnorm()`](https://janolefi.github.io/RTMBdist/reference/foldnorm.md)
+  could not be differentiated with respect to `q`, and
+  [`pgenpois()`](https://janolefi.github.io/RTMBdist/reference/genpois.md)
+  not with respect to its parameters, so its OSA residuals failed with
+  estimated parameters. The gamma-based distribution functions
+  ([`pgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md),
+  [`pzigamma()`](https://janolefi.github.io/RTMBdist/reference/zigamma.md),
+  [`pzigamma2()`](https://janolefi.github.io/RTMBdist/reference/zigamma2.md),
+  [`pgengamma()`](https://janolefi.github.io/RTMBdist/reference/gengamma.md),
+  [`pinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md),
+  [`pinvchisq()`](https://janolefi.github.io/RTMBdist/reference/invchisq.md))
+  had non-finite second or third derivatives for small arguments,
+  inherited from `RTMB`’s
+  [`pgamma()`](https://rdrr.io/r/stats/GammaDist.html), which is now
+  worked around.
+
+- [`dinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md),
+  [`pinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md),
+  [`qinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md)
+  and
+  [`rinvgamma()`](https://janolefi.github.io/RTMBdist/reference/invgamma.md)
+  can now be called with `scale` instead of `rate`, which previously
+  failed. As in
+  [`stats::dgamma()`](https://rdrr.io/r/stats/GammaDist.html), giving
+  both is an error.
+
 - Fixed the copula densities
   [`cgumbel()`](https://janolefi.github.io/RTMBdist/reference/cgumbel.md)
   and
