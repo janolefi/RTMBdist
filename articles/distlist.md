@@ -72,8 +72,8 @@ distributions listed
   `df` and optional `scale`
 
 - [`invgamma(shape, rate, scale)`](https://janolefi.github.io/RTMBdist/reference/invgamma.md):
-  Inverse gamma distribution parameterised by `shape`, `rate`, and
-  `scale` of the corresponding gamma distribution
+  Inverse gamma distribution parameterised by `shape` and either `rate`
+  or `scale` of the corresponding gamma distribution
 
 - [`invgauss(mean, shape)`](https://janolefi.github.io/RTMBdist/reference/invgauss.md):
   Inverse Gaussian distribution parameterised by mean and shape

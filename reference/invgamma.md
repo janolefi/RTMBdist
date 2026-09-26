@@ -23,7 +23,8 @@ rinvgamma(n, shape, rate, scale = 1/rate)
 
 - shape, rate, scale:
 
-  positive parameters of corresponding gamma distribution
+  positive parameters of corresponding gamma distribution. Give either
+  `rate` or `scale`, not both.
 
 - log, log.p:
 
