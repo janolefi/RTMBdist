@@ -23,3 +23,11 @@ test_that("zibinom passes discrete distribution checks (size=20, prob=0.6, zerop
 test_that("zibinom AD gradient has no NaN", {
   check_ad_gradient(dzibinom,   rzibinom,   size = 10, prob = 0.4, zeroprob = 0.2)
 })
+
+test_that("pzibinom includes the binomial zeros at q = 0 and matches the mass function", {
+  expect_equal(pzibinom(0, 10, 0.4, 0.2), 0.2 + 0.8 * stats::dbinom(0, 10, 0.4))
+  expect_equal(pzibinom(0:10, 10, 0.4, 0.2), cumsum(dzibinom(0:10, 10, 0.4, 0.2)))
+  expect_equal(pzibinom(c(-2, -1), 10, 0.4, 0.2), c(0, 0))
+  check_osa_cdf(dzibinom, pzibinom, c(0, 0, 2, 5, 10), prob = 0.4, zeroprob = 0.2,
+                .fixed = list(size = 10), .discrete = TRUE)
+})

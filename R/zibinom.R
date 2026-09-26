@@ -68,8 +68,7 @@ pzibinom <- function(q, size, prob, zeroprob = 0, lower.tail = TRUE, log.p = FAL
     q <- floor(q)  # make sure it's integer-valued
   }
 
-  p <- iszero(q) * zeroprob +
-    ispos(q) * (zeroprob + (1 - zeroprob) * RTMB::pbinom(q, size=size, prob=prob))
+  p <- greater(q, -1) * (zeroprob + (1 - zeroprob) * RTMB::pbinom(q, size=size, prob=prob))
 
   if (!lower.tail) p <- 1 - p
   if (log.p) p <- log(p)

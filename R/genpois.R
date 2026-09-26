@@ -88,32 +88,11 @@ pgenpois <- function(q, lambda = 1, phi = 1, lower.tail = TRUE, log.p = FALSE) {
     }
   }
 
-  # summing the pmf over 0:q is exactly what gamlss.dist::pGPO does
-  pgenpois.ad(q=q, lambda=lambda, phi=phi, lower.tail=lower.tail, log.p=log.p)
-}
-pgenpois.ad <- function(q, lambda = 1, phi = 1, lower.tail = TRUE, log.p = FALSE){
-
   # summing the pmf over 0:q is the same approach taken by
-  # https://github.com/gamlss-dev/gamlss.dist/blob/main/R/GPO.R (pGPO),
-  # written here so that it also works under automatic differentiation
-
-  # a single q with vectorised parameters must still give one value per parameter
-  n <- max(length(q), length(lambda), length(phi))
-  if(length(q) != n) q <- rep(q, length.out = n)
-  if(length(lambda) != n) lambda <- rep(lambda, length.out = n)
-  if(length(phi) != n) phi <- rep(phi, length.out = n)
-
-  p <- rep(0, n)
-
-  for(i in seq_len(n)) {
-    x <- 0:q[i]
-    p[i] <- sum(dgenpois(x, lambda[i], phi[i]))
-  }
-
-  if (!lower.tail) p <- 1 - p
-  if (log.p) p <- log(p)
-
-  return(p)
+  # https://github.com/gamlss-dev/gamlss.dist/blob/main/R/GPO.R (pGPO); discrete_cdf()
+  # does so in a way that is AD-compatible in lambda and phi
+  discrete_cdf(dgenpois, q, list(lambda = lambda, phi = phi),
+               lower.tail = lower.tail, log.p = log.p)
 }
 #' @rdname genpois
 #' @export

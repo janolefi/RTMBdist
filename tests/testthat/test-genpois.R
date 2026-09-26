@@ -37,3 +37,18 @@ test_that("pgenpois recycles lambda and phi like gamlss.dist did", {
   expect_equal(pgenpois(0:5, rep(3, 6), rep(0.2, 6)), target)
   expect_equal(pgenpois(0:5, c(3, 3), c(0.2, 0.2)), target)
 })
+
+test_that("pgenpois is AD-compatible in its parameters, so OSA works with estimated parameters", {
+  q <- c(0, 1, 3, 6)
+  check_ad_cdf(pgenpois, dgenpois, q, lambda = 3, phi = 0.2, .dq = FALSE)
+  set.seed(1)
+  y <- rgenpois(40, 3, 0.2)
+  fn <- function(par) {
+    RTMB::getAll(par)
+    y <- RTMB::OBS(y)
+    -sum(dgenpois(y, exp(llambda), phi, log = TRUE))
+  }
+  obj <- RTMB::MakeADFun(fn, list(llambda = log(3), phi = 0.2), silent = TRUE)
+  res <- RTMB::oneStepPredict(obj, method = "cdf", discrete = TRUE, trace = FALSE)
+  expect_equal(res$Fx, pgenpois(y, 3, 0.2), tolerance = 1e-8)
+})
