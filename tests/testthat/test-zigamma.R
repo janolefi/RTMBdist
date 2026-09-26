@@ -30,3 +30,10 @@ test_that("pzigamma uses scale, not rate, and matches the density", {
                integrate(dzigamma, 1, 3, shape = 4, scale = 0.5, zeroprob = 0.2)$value,
                tolerance = 1e-8)
 })
+
+test_that("pzigamma has correct Hessians and finite third derivatives, also with zeros", {
+  q <- c(0, 0.2, 1, 1.5, 4)
+  check_ad_cdf_hessian(pzigamma, q, shape = 2, scale = 1, zeroprob = 0.2)
+  F3 <- RTMB::MakeTape(function(p) sum(log(pzigamma(q, p[1], p[2], p[3]))), c(2, 1, 0.2))$jacfun()$jacfun()
+  expect_true(all(is.finite(F3$jacobian(c(2, 1, 0.2)))))
+})

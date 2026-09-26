@@ -82,7 +82,7 @@ pzigamma <- function(q, shape, scale, zeroprob = 0, lower.tail = TRUE, log.p = F
   # cdf <- cdf * s2 # set negative values to 0
 
   p <- iszero(q) * zeroprob +
-    ispos_strict(q) * (zeroprob + (1 - zeroprob) * pgamma(q, shape = shape, scale = scale))
+    ispos_strict(q) * (zeroprob + (1 - zeroprob) * pgamma_ad(q / scale, shape))
 
   if(!lower.tail) p <- 1 - p
   if(log.p) p <- log(p)

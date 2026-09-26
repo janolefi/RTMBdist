@@ -288,7 +288,7 @@ reggamma <- function(s, x) {
     # RTMB's pgamma errors when lower.tail is passed inside an AD context, so
     # the upper tail is formed by complement there; outside AD the direct
     # upper-tail evaluation is kept because it is accurate far into the tail
-    return(1 - pgamma(x, shape = s, scale = 1))
+    return(1 - pgamma_ad(x, s))
   }
 
   pgamma(x, shape = s, scale = 1, lower.tail = FALSE)

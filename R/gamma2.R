@@ -69,7 +69,7 @@ pgamma2 = function(q, mean = 1, sd = 1, lower.tail = TRUE, log.p = FALSE) {
   # parameter transformation
   shape <- mean^2 / sd^2
   scale <- sd^2 / mean
-  p <- pgamma(q = q, shape = shape, scale = scale)
+  p <- pgamma_ad(q / scale, shape)
 
   if(!lower.tail) p <- 1 - p
   if(log.p) p <- log(p)

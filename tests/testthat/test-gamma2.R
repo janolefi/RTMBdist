@@ -41,3 +41,11 @@ test_that("gamma2 matches dgamma with converted shape and scale", {
     tolerance = 1e-10
   )
 })
+
+test_that("pgamma2 has correct Hessians and finite third derivatives, also at q = scale", {
+  # mean 2 and sd 1 give scale 0.5, so q = 0.5 is where RTMB's pgamma has a NaN Hessian
+  q <- c(0.1, 0.5, 0.8, 2, 4)
+  check_ad_cdf_hessian(pgamma2, q, mean = 2, sd = 1)
+  F3 <- RTMB::MakeTape(function(p) sum(log(pgamma2(q, p[1], p[2]))), c(2, 1))$jacfun()$jacfun()
+  expect_true(all(is.finite(F3$jacobian(c(2, 1)))))
+})

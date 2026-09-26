@@ -27,3 +27,10 @@ test_that("invchisq passes standard distribution checks (df=10, scale=0.5)", {
 test_that("invchisq AD gradient has no NaN", {
   check_ad_gradient(dinvchisq,  rinvchisq,  df = 10, scale = 0.5)
 })
+
+test_that("pinvchisq has correct Hessians and finite third derivatives", {
+  q <- c(0.05, 0.2, 1, 3, 8)
+  check_ad_cdf_hessian(pinvchisq, q, df = 5, scale = 0.5)
+  F3 <- RTMB::MakeTape(function(p) sum(log(pinvchisq(q, p[1], p[2]))), c(5, 0.5))$jacfun()$jacfun()
+  expect_true(all(is.finite(F3$jacobian(c(5, 0.5)))))
+})

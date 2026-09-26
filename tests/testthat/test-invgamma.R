@@ -54,3 +54,10 @@ test_that("invgamma works with scale as an AD parameter, for simulation and OSA 
   res <- RTMB::oneStepPredict(obj, method = "cdf", trace = FALSE)
   expect_equal(res$residual, qnorm(pinvgamma(y, 3, scale = 0.5)), tolerance = 1e-6)
 })
+
+test_that("pinvgamma has correct Hessians and finite third derivatives, also at q = scale", {
+  q <- c(0.2, 0.8, 2, 5, 10)
+  check_ad_cdf_hessian(pinvgamma, q, shape = 3, scale = 2)
+  F3 <- RTMB::MakeTape(function(p) sum(log(pinvgamma(q, p[1], scale = p[2]))), c(3, 2))$jacfun()$jacfun()
+  expect_true(all(is.finite(F3$jacobian(c(3, 2)))))
+})

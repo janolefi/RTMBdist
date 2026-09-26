@@ -1,17 +1,27 @@
 # 1/2 (1 + sign(u) P(1/nu, k |u|^nu)), with P the regularised lower incomplete gamma
 # function: the distribution function behind the power exponential distributions
-# (ppowerexp(), ppowerexp2() and, via F.T(), pbcpe()).
+# (ppowerexp(), ppowerexp2() and, via F.T(), pbcpe()). Outside AD this uses stats::pgamma();
+# in AD context the atomic tape of pe_cdf_body(), one call per element (see R/atomic.R).
+pe_cdf <- function(u, nu, k) {
+  if (!ad_context()) {
+    return(0.5 * (1 + stats::pgamma(k * abs(u)^nu, shape = 1 / nu) * sign(u)))
+  }
+  map_atomic(get_atomic("pe_cdf", pe_cdf_body, c(0.5, 2, 0.5)), u, nu, k)
+}
+
 # At u = 0, pgamma() has infinite slope in s = k |u|^nu while s has slope 0 in u (or the
-# other way round for nu < 1), so AD gives NaN there. For s < 5, the series
+# other way round for nu < 1), so AD gives NaN there. For s < 2, the series
 # P(a, s) = s^a e^(-s) sum_j s^j / ((a + 1) ... (a + j)) / Gamma(a + 1), a = 1 / nu, is used
 # instead: as s^a = k^a |u|, sign(u) |u| = u enters linearly and the derivative is finite.
-# Its terms are positive, and 40 of them give a truncation error below 1e-19 for s < 5.
-# The threshold is that high because RTMB's pgamma() has non-finite second or third
-# derivatives in its first argument for s below about 2 (RTMB 2.0), which the Laplace
-# approximation and sdreport() need.
-pe_cdf <- function(u, nu, k) {
+# Its terms are positive, and 24 of them give a relative truncation error below 1e-16. The
+# series also avoids RTMB's pgamma() for small s, where its higher derivatives are not finite
+# (see pgamma_ad()).
+pe_cdf_body <- function(p) {
+  u <- p[1]
+  nu <- p[2]
+  k <- p[3]
   a <- 1 / nu
-  s0 <- 5
+  s0 <- 2
   # s < s0 is decided as |u| < u0 rather than on s itself, as the derivative of |u|^nu at
   # u = 0 is NaN in nu (0 * log(0)), which would reach all derivatives through smaller()
   u0 <- (s0 / k)^a
@@ -30,7 +40,7 @@ pe_cdf <- function(u, nu, k) {
   sn <- k * (abs(un) + 1e-300)^nu
   term <- 1
   M <- 1
-  for (j in 1:40) {
+  for (j in 1:24) {
     term <- term * sn / (a + j)
     M <- M + term
   }
