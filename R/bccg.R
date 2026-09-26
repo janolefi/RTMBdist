@@ -81,7 +81,7 @@ dbccg <- function(x, mu = 1, sigma = 0.1, nu = 1, log = FALSE) {
     iz * (log(x / mu) / sigma)
 
   logdens <- nu * log(x / mu) - log(sigma) - (z * z) / 2 - log(x) -(log(2*pi)) / 2
-  logdens <- logdens - log(1e-300 + RTMB::pnorm(1 / (sigma * abs(nu))))
+  logdens <- logdens - RTMB::pnorm(1 / (sigma * abs(nu)), log.p = TRUE)
 
   logdens <- log(greater(x, 0)) + logdens
 

@@ -200,6 +200,7 @@ cannot recover `x` once the cdf saturates in double precision.
 | `1 - exp(-x)` | `-expm1(-x)` |
 | `x^2`, `x^3` | `x * x`, `x * x * x` |
 | `x^a`, non-integer `a` | `exp(a * log(x))` |
+| `log(pnorm(x))` | `pnorm(x, log.p = TRUE)`, accurate where `pnorm(x)` underflows |
 
 The one to watch for is `0 * (-Inf)`. That is `NaN`, and it takes out the whole
 gradient rather than the single element you were multiplying. It shows up when

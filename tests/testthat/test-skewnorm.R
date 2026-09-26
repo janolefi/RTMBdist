@@ -89,3 +89,23 @@ test_that("skewnorm supports OSA residuals", {
 test_that("pskewnorm under AD has correct second derivatives", {
   check_ad_cdf_hessian(pskewnorm, c(-1, 0.2, 0.5, 2, 4), xi = 0.3, omega = 1.5, alpha = 3)
 })
+
+test_that("dskewnorm is accurate far in the tail, where it used to be floored", {
+  x <- c(-40, -100, -300)
+  for (alpha in c(1, 3)) {
+    expect_equal(dskewnorm(x, 0, 1, alpha, log = TRUE), sn::dsn(x, 0, 1, alpha, log = TRUE),
+                 tolerance = 1e-12)
+  }
+  # for alpha = 1 the distribution function is Phi(x)^2
+  F <- RTMB::MakeTape(function(a) pskewnorm(-40, 0, 1, a, log.p = TRUE), 1)
+  expect_equal(F(1), 2 * stats::pnorm(-40, log.p = TRUE), tolerance = 1e-10)
+  # the gradient in the tail is finite and correct, rather than 0 as with the floor
+  f <- function(p) sum(dskewnorm(c(-40, -8, 0.5), p[1], p[2], p[3], log = TRUE))
+  par <- c(0.3, 1.5, 3)
+  J <- RTMB::MakeTape(f, par)$jacobian(par)
+  h <- 1e-6
+  J_fd <- sapply(1:3, function(j) { e <- replace(numeric(3), j, h); (f(par + e) - f(par - e)) / (2 * h) })
+  expect_equal(as.vector(J), J_fd, tolerance = 1e-6)
+  H <- RTMB::MakeTape(f, par)$jacfun()$jacfun()$jacobian(par)
+  expect_true(all(is.finite(H)))
+})
