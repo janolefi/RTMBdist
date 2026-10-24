@@ -16,8 +16,10 @@
 <url><loc>https://janolefi.github.io/RTMBdist/reference/beta2.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/betabinom.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/betaprime.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/bisa.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/bnbinom.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/bnbinom2.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/card.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/cclayton.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/cfold.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/cfrank.html</loc></url>
@@ -37,6 +39,7 @@
 <url><loc>https://janolefi.github.io/RTMBdist/reference/foldnorm.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/frechet.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/gamma2.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/gb2.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/gengamma.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/genpois.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/geom.ad.html</loc></url>
@@ -69,8 +72,10 @@
 <url><loc>https://janolefi.github.io/RTMBdist/reference/oibeta2.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/pareto.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/pgweibull.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/pig.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/powerexp.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/rgmrf.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/sichel.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/skellam.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/skewnorm.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/skewnorm2.html</loc></url>
@@ -86,6 +91,7 @@
 <url><loc>https://janolefi.github.io/RTMBdist/reference/waring.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/wishart.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/wrpcauchy.html</loc></url>
+<url><loc>https://janolefi.github.io/RTMBdist/reference/wrpnorm.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/yules.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/zero_inflate.html</loc></url>
 <url><loc>https://janolefi.github.io/RTMBdist/reference/zibeta.html</loc></url>

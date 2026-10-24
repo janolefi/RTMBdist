@@ -92,6 +92,13 @@ and <code>shape2</code> of the corresponding Beta distribution</p></li>
 <li><p><a href="../reference/beta2.html"><code>beta2(mu, phi)</code></a>: Beta
 distribution reparameterised by mean <code>mu</code> and precision
 <code>phi</code></p></li>
+<li><p><a href="../reference/bisa.html"><code>bisa(scale, shape)</code></a>:
+Birnbaum-Saunders (fatigue life) distribution parameterised by scale
+<code>scale</code> (equal to the median) and shape
+<code>shape</code></p></li>
+<li><p><a href="../reference/card.html"><code>card(mu, rho)</code></a>:
+Cardioid distribution parameterised by mean direction <code>mu</code>
+and concentration <code>rho</code></p></li>
 <li><p><a href="../reference/exgauss.html"><code>exgauss(mu, sigma, lambda)</code></a>:
 Exponentially modified Gaussian distribution parameterised by location
 <code>mu</code>, scale <code>sigma</code>, and rate
@@ -104,6 +111,18 @@ Frechet distribution parameterised by location <code>mu</code>, scale
 <code>sigma</code>, and shape <code>alpha</code></p></li>
 <li><p><a href="../reference/gamma2.html"><code>gamma2(mean, sd)</code></a>: Gamma
 distribution reparameterised by mean and standard deviation</p></li>
+<li><p><a href="../reference/gb2.html"><code>gb2(scale, shape1, shape2, shape3)</code></a>:
+Generalised beta distribution of the second kind parameterised by scale
+<code>scale</code> and shapes <code>shape1</code>, <code>shape2</code>
+and <code>shape3</code></p></li>
+<li><p><a href="../reference/gb2.html"><code>dagum(scale, shape1, shape2)</code></a>:
+Dagum distribution, the GB2 with <code>shape3 = 1</code></p></li>
+<li><p><a href="../reference/gb2.html"><code>sinmad(scale, shape1, shape3)</code></a>:
+Singh-Maddala (Burr XII) distribution, the GB2 with
+<code>shape2 = 1</code></p></li>
+<li><p><a href="../reference/gb2.html"><code>lomax(scale, shape3)</code></a>:
+Lomax (Pareto II) distribution, the GB2 with
+<code>shape1 = shape2 = 1</code></p></li>
 <li><p><a href="../reference/gengamma.html"><code>gengamma(mu, sigma, nu)</code></a>:
 Generalised gamma distribution parameterised by location
 <code>mu</code>, scale <code>sigma</code>, and skewness
@@ -211,6 +230,10 @@ and concentration <code>kappa</code></p></li>
 <li><p><a href="../reference/wrpcauchy.html"><code>wrpcauchy(mu, rho)</code></a>:
 Wrapped Cauchy distribution parameterised by mean direction
 <code>mu</code> and concentration <code>rho</code></p></li>
+<li><p><a href="../reference/wrpnorm.html"><code>wrpnorm(mu, sigma)</code></a>:
+Wrapped normal distribution parameterised by mean direction
+<code>mu</code> and standard deviation <code>sigma</code> of the
+unwrapped normal</p></li>
 <li><p><a href="../reference/zibeta.html"><code>zibeta(shape1, shape2, zeroprob)</code></a>:
 Zero-inflated beta distribution parameterised by shape parameters
 <code>shape1</code>, <code>shape2</code> and zero-probability
@@ -280,6 +303,12 @@ Generalised Poisson distribution parameterised by mean
 <li><p><a href="../reference/nbinom2.html"><code>nbinom2(mu, size)</code></a>:
 Negative binomial distribution reparameterised by mean <code>mu</code>
 and size <code>size</code></p></li>
+<li><p><a href="../reference/pig.html"><code>pig(mu, sigma)</code></a>:
+Poisson-inverse Gaussian distribution parameterised by mean
+<code>mu</code> and dispersion <code>sigma</code></p></li>
+<li><p><a href="../reference/sichel.html"><code>sichel(mu, sigma, nu)</code></a>:
+Sichel distribution parameterised by mean <code>mu</code>, dispersion
+<code>sigma</code> and shape <code>nu</code></p></li>
 <li><p><a href="../reference/skellam.html"><code>skellam(mu1, mu2)</code></a>:
 Skellam distribution parameterised by Poisson means <code>mu1</code> and
 <code>mu2</code></p></li>
@@ -398,7 +427,7 @@ margin has to be the first one in <code>dcopula</code>.</p>
 <li>
 <a href="../reference/cjw.html"><code>cjw(g, ...)</code></a>
 (Johnson-Wehrly copula with circular binding density <code>g</code>,
-e.g. <a href="../reference/vm.html"><code>dvm</code></a> or <a href="../reference/wrpcauchy.html"><code>dwrpcauchy</code></a>)</li>
+e.g. <a href="../reference/vm.html"><code>dvm</code></a>, <a href="../reference/wrpcauchy.html"><code>dwrpcauchy</code></a> or <a href="../reference/wrpnorm.html"><code>dwrpnorm</code></a>)</li>
 <li>
 <a href="../reference/cfold.html"><code>cfold(copula)</code></a>
 (folds one of the copulas above into a circular-linear copula that is

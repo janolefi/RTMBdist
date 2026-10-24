@@ -2,6 +2,76 @@
 
 ## RTMBdist 1.2.0
 
+- Added the Poisson-inverse Gaussian
+  ([`dpig()`](https://janolefi.github.io/RTMBdist/reference/pig.md)) and
+  Sichel
+  ([`dsichel()`](https://janolefi.github.io/RTMBdist/reference/sichel.md))
+  distributions, each with matching `p` and `r` functions. The
+  Poisson-inverse Gaussian is the standard alternative to the negative
+  binomial for overdispersed counts: a Poisson whose mean follows an
+  inverse Gaussian, parameterised as the `PIG` family of `gamlss.dist`,
+  so that `mu` is the mean and the variance is `mu + sigma * mu^2`, the
+  same as for
+  [`dnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
+  with `size = 1 / sigma`. Compared with the negative binomial it has a
+  heavier right tail and more zeros. The Sichel distribution, the
+  `SICHEL` family of `gamlss.dist`, mixes the Poisson over a generalised
+  inverse Gaussian instead and adds a shape parameter `nu`; the
+  Poisson-inverse Gaussian is its special case `nu = -1/2`. Both mass
+  functions involve Bessel functions whose order grows with the count,
+  which [`besselK()`](https://rdrr.io/r/base/Bessel.html) cannot
+  evaluate for large counts and strong overdispersion because it
+  overflows; for orders above 50, the uniform asymptotic expansion of
+  the Bessel function is used instead, so the mass functions and their
+  derivatives stay finite and accurate for any count. `nu` can be
+  estimated, as the derivative with respect to the order is available.
+  The distribution functions are summed from the mass functions, so
+  one-step-ahead residuals via `method = "cdf"` are supported.
+
+- Added the wrapped normal
+  ([`dwrpnorm()`](https://janolefi.github.io/RTMBdist/reference/wrpnorm.md))
+  and cardioid
+  ([`dcard()`](https://janolefi.github.io/RTMBdist/reference/card.md))
+  distributions, each with matching `p` and `r` functions, joining the
+  von Mises and wrapped Cauchy as turning-angle distributions for
+  movement models and as binding densities for
+  [`cjw()`](https://janolefi.github.io/RTMBdist/reference/cjw.md). The
+  wrapped normal density is a sum over the windings of the normal
+  density for `sigma < 2` and its Fourier series otherwise, each
+  truncated where the remaining terms are below `1e-20`. The
+  distribution functions are in closed form and cut the circle open
+  where
+  [`pwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+  does, at `mu - pi` or at `from`, and one-step-ahead residuals via
+  `method = "cdf"` cut it at `-pi`, as for the other circular
+  distributions.
+
+- Added the generalised beta distribution of the second kind
+  ([`dgb2()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)) and
+  its special cases, the Dagum
+  ([`ddagum()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)),
+  Singh-Maddala or Burr XII
+  ([`dsinmad()`](https://janolefi.github.io/RTMBdist/reference/gb2.md))
+  and Lomax or Pareto II
+  ([`dlomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md))
+  distributions, each with matching `p`, `q` and `r` functions. These
+  are the standard models for income, wealth and claim sizes. The
+  distribution functions are incomplete beta functions, computed with
+  the upper tail directly rather than as `1 - p`, and all of them are
+  differentiable, so one-step-ahead residuals via `method = "cdf"` are
+  supported. The log-logistic distribution
+  [`dllogis()`](https://janolefi.github.io/RTMBdist/reference/llogis.md)
+  is the GB2 with `shape2 = shape3 = 1`.
+
+- Added the Birnbaum-Saunders or fatigue life distribution
+  ([`dbisa()`](https://janolefi.github.io/RTMBdist/reference/bisa.md)),
+  with matching `p`, `q` and `r` functions, the standard model for time
+  to failure under cumulative damage. Density, distribution and quantile
+  function are in closed form and differentiable, and both tails of the
+  distribution function are accurate; the quantile function is written
+  as `scale * exp(2 * asinh(shape * z / 2))`, which avoids the
+  cancellation of the textbook formula for small probabilities.
+
 - One-step-ahead (OSA) residuals via `method = "cdf"` are now available
   for many more distributions. During taping,
   [`pskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md),
@@ -35,6 +105,29 @@
   and `NaN` OSA residuals for
   [`dcombinom()`](https://janolefi.github.io/RTMBdist/reference/combinom.md)
   when an observation equals `size`.
+
+- Fixed wrong gradients and Hessians of the distribution functions built
+  on the incomplete beta function:
+  [`pbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md),
+  [`qbeta2()`](https://janolefi.github.io/RTMBdist/reference/beta2.md),
+  [`pbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md),
+  [`qbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md),
+  [`pzibeta()`](https://janolefi.github.io/RTMBdist/reference/zibeta.md),
+  [`pzoibeta()`](https://janolefi.github.io/RTMBdist/reference/zoibeta.md),
+  [`poibeta()`](https://janolefi.github.io/RTMBdist/reference/oibeta.md),
+  [`pnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md),
+  [`pztnbinom()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom.md),
+  the new GB2 family and the families built on these. `RTMB`’s
+  [`pbeta()`](https://rdrr.io/r/stats/Beta.html) and
+  [`qbeta()`](https://rdrr.io/r/stats/Beta.html) (version 2.0) have
+  wrong, often zero, derivatives in the shape parameters when a shape is
+  an integer or half-integer, as for integer counts in
+  [`pnbinom2()`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md)
+  or integer starting values, and inaccurate second derivatives close to
+  such values. This is fixed in the development version of `TMB`; until
+  it reaches CRAN, the shapes are moved slightly off these values and
+  the results extrapolated back, which keeps values accurate to about
+  `1e-11`.
 
 - Fixed two distribution functions that gave wrong values, and with them
   wrong OSA residuals:

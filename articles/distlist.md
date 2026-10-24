@@ -26,6 +26,14 @@ distributions listed
 - [`beta2(mu, phi)`](https://janolefi.github.io/RTMBdist/reference/beta2.md):
   Beta distribution reparameterised by mean `mu` and precision `phi`
 
+- [`bisa(scale, shape)`](https://janolefi.github.io/RTMBdist/reference/bisa.md):
+  Birnbaum-Saunders (fatigue life) distribution parameterised by scale
+  `scale` (equal to the median) and shape `shape`
+
+- [`card(mu, rho)`](https://janolefi.github.io/RTMBdist/reference/card.md):
+  Cardioid distribution parameterised by mean direction `mu` and
+  concentration `rho`
+
 - [`exgauss(mu, sigma, lambda)`](https://janolefi.github.io/RTMBdist/reference/exgauss.md):
   Exponentially modified Gaussian distribution parameterised by location
   `mu`, scale `sigma`, and rate `lambda`
@@ -40,6 +48,19 @@ distributions listed
 
 - [`gamma2(mean, sd)`](https://janolefi.github.io/RTMBdist/reference/gamma2.md):
   Gamma distribution reparameterised by mean and standard deviation
+
+- [`gb2(scale, shape1, shape2, shape3)`](https://janolefi.github.io/RTMBdist/reference/gb2.md):
+  Generalised beta distribution of the second kind parameterised by
+  scale `scale` and shapes `shape1`, `shape2` and `shape3`
+
+- [`dagum(scale, shape1, shape2)`](https://janolefi.github.io/RTMBdist/reference/gb2.md):
+  Dagum distribution, the GB2 with `shape3 = 1`
+
+- [`sinmad(scale, shape1, shape3)`](https://janolefi.github.io/RTMBdist/reference/gb2.md):
+  Singh-Maddala (Burr XII) distribution, the GB2 with `shape2 = 1`
+
+- [`lomax(scale, shape3)`](https://janolefi.github.io/RTMBdist/reference/gb2.md):
+  Lomax (Pareto II) distribution, the GB2 with `shape1 = shape2 = 1`
 
 - [`gengamma(mu, sigma, nu)`](https://janolefi.github.io/RTMBdist/reference/gengamma.md):
   Generalised gamma distribution parameterised by location `mu`, scale
@@ -159,6 +180,10 @@ distributions listed
   Wrapped Cauchy distribution parameterised by mean direction `mu` and
   concentration `rho`
 
+- [`wrpnorm(mu, sigma)`](https://janolefi.github.io/RTMBdist/reference/wrpnorm.md):
+  Wrapped normal distribution parameterised by mean direction `mu` and
+  standard deviation `sigma` of the unwrapped normal
+
 - [`zibeta(shape1, shape2, zeroprob)`](https://janolefi.github.io/RTMBdist/reference/zibeta.md):
   Zero-inflated beta distribution parameterised by shape parameters
   `shape1`, `shape2` and zero-probability `zeroprob`
@@ -236,6 +261,14 @@ distributions listed
 - [`nbinom2(mu, size)`](https://janolefi.github.io/RTMBdist/reference/nbinom2.md):
   Negative binomial distribution reparameterised by mean `mu` and size
   `size`
+
+- [`pig(mu, sigma)`](https://janolefi.github.io/RTMBdist/reference/pig.md):
+  Poisson-inverse Gaussian distribution parameterised by mean `mu` and
+  dispersion `sigma`
+
+- [`sichel(mu, sigma, nu)`](https://janolefi.github.io/RTMBdist/reference/sichel.md):
+  Sichel distribution parameterised by mean `mu`, dispersion `sigma` and
+  shape `nu`
 
 - [`skellam(mu1, mu2)`](https://janolefi.github.io/RTMBdist/reference/skellam.md):
   Skellam distribution parameterised by Poisson means `mu1` and `mu2`
@@ -363,8 +396,10 @@ margin has to be the first one in `dcopula`.
 
 - [`cjw(g, ...)`](https://janolefi.github.io/RTMBdist/reference/cjw.md)
   (Johnson-Wehrly copula with circular binding density `g`,
-  e.g. [`dvm`](https://janolefi.github.io/RTMBdist/reference/vm.md) or
-  [`dwrpcauchy`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md))
+  e.g. [`dvm`](https://janolefi.github.io/RTMBdist/reference/vm.md),
+  [`dwrpcauchy`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
+  or
+  [`dwrpnorm`](https://janolefi.github.io/RTMBdist/reference/wrpnorm.md))
 - [`cfold(copula)`](https://janolefi.github.io/RTMBdist/reference/cfold.md)
   (folds one of the copulas above into a circular-linear copula that is
   symmetric in the sign of the angle)

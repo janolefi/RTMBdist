@@ -44,6 +44,11 @@
   [`qbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
   [`rbetaprime()`](https://janolefi.github.io/RTMBdist/reference/betaprime.md)
   : Beta prime distribution
+- [`dbisa()`](https://janolefi.github.io/RTMBdist/reference/bisa.md)
+  [`pbisa()`](https://janolefi.github.io/RTMBdist/reference/bisa.md)
+  [`qbisa()`](https://janolefi.github.io/RTMBdist/reference/bisa.md)
+  [`rbisa()`](https://janolefi.github.io/RTMBdist/reference/bisa.md) :
+  Birnbaum-Saunders distribution
 - [`dbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
   [`pbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
   [`rbnbinom()`](https://janolefi.github.io/RTMBdist/reference/bnbinom.md)
@@ -52,6 +57,10 @@
   [`pbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)
   [`rbnbinom2()`](https://janolefi.github.io/RTMBdist/reference/bnbinom2.md)
   : Reparameterised beta-negative binomial distribution
+- [`dcard()`](https://janolefi.github.io/RTMBdist/reference/card.md)
+  [`pcard()`](https://janolefi.github.io/RTMBdist/reference/card.md)
+  [`rcard()`](https://janolefi.github.io/RTMBdist/reference/card.md) :
+  Cardioid distribution
 - [`cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   [`Cclayton()`](https://janolefi.github.io/RTMBdist/reference/cclayton.md)
   : Clayton copula constructors
@@ -111,6 +120,23 @@
   [`qgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
   [`rgamma2()`](https://janolefi.github.io/RTMBdist/reference/gamma2.md)
   : Reparameterised gamma distribution
+- [`dgb2()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`pgb2()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`qgb2()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`rgb2()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`ddagum()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`pdagum()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`qdagum()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`rdagum()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`dsinmad()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`psinmad()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`qsinmad()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`rsinmad()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`dlomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`plomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`qlomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md)
+  [`rlomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md) :
+  Generalised beta distribution of the second kind and its special cases
 - [`dgengamma()`](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
   [`pgengamma()`](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
   [`qgengamma()`](https://janolefi.github.io/RTMBdist/reference/gengamma.md)
@@ -252,6 +278,10 @@
   [`qpgweibull()`](https://janolefi.github.io/RTMBdist/reference/pgweibull.md)
   [`rpgweibull()`](https://janolefi.github.io/RTMBdist/reference/pgweibull.md)
   : Power generalized Weibull distribution
+- [`dpig()`](https://janolefi.github.io/RTMBdist/reference/pig.md)
+  [`ppig()`](https://janolefi.github.io/RTMBdist/reference/pig.md)
+  [`rpig()`](https://janolefi.github.io/RTMBdist/reference/pig.md) :
+  Poisson-inverse Gaussian distribution
 - [`dpowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
   [`ppowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
   [`qpowerexp()`](https://janolefi.github.io/RTMBdist/reference/powerexp.md)
@@ -263,6 +293,10 @@
   : Power Exponential distribution (PE and PE2)
 - [`rgmrf()`](https://janolefi.github.io/RTMBdist/reference/rgmrf.md) :
   Sample from a multivariate Gaussian with a sparse precision matrix
+- [`dsichel()`](https://janolefi.github.io/RTMBdist/reference/sichel.md)
+  [`psichel()`](https://janolefi.github.io/RTMBdist/reference/sichel.md)
+  [`rsichel()`](https://janolefi.github.io/RTMBdist/reference/sichel.md)
+  : Sichel distribution
 - [`dskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
   [`pskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
   [`rskellam()`](https://janolefi.github.io/RTMBdist/reference/skellam.md)
@@ -330,6 +364,10 @@
   [`qwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
   [`rwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
   : wrapped Cauchy distribution
+- [`dwrpnorm()`](https://janolefi.github.io/RTMBdist/reference/wrpnorm.md)
+  [`pwrpnorm()`](https://janolefi.github.io/RTMBdist/reference/wrpnorm.md)
+  [`rwrpnorm()`](https://janolefi.github.io/RTMBdist/reference/wrpnorm.md)
+  : Wrapped normal distribution
 - [`dyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md)
   [`pyules()`](https://janolefi.github.io/RTMBdist/reference/yules.md)
   [`ryules()`](https://janolefi.github.io/RTMBdist/reference/yules.md) :
