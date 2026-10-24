@@ -32,7 +32,10 @@ Suggests:
     gamlss.data,
     mvtnorm,
     LaMa (>= 2.1.2),
-    moveHMM
+    moveHMM,
+    evd,
+    ETAS,
+    pscl
 Config/testthat/edition: 3
 URL: https://janolefi.github.io/RTMBdist/
 VignetteBuilder: knitr

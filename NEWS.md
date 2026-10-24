@@ -48,6 +48,8 @@
 
 - Fixed `pztnbinom()` and `pztnbinom2()`, which returned `NaN` instead of 0 for quantiles below their support.
 
+- Added three examples to the *Worked Examples* vignette: the five largest annual sea levels at Venice with a latent random-walk trend (`dgev()`, `pgev()`), the ETAS model for earthquake aftershocks (`dlomax()`, `plomax()`, `dgpd()`), and pooling opinion polls with house effects (`dbetabinom()`).
+
 # RTMBdist 1.1.0
 
 - Added the Johnson SU distribution in both the original parameterisation (`djsu()`, `pjsu()`, `qjsu()`, `rjsu()`) and the moment parameterisation (`djsu2()`, `pjsu2()`, `qjsu2()`, `rjsu2()`), a four-parameter distribution on the real line covering a wide range of skewness and kurtosis. In `djsu2()` the location and scale arguments are exactly the mean and standard deviation. The density and distribution function are both differentiable, so simulation and one-step-ahead residuals are supported. Unlike `gamlss.dist`, the reparameterisation stays finite for very large `tau`, where the distribution approaches the normal.
