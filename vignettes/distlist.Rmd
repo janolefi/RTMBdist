@@ -139,6 +139,8 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 * [`nbinom2(mu, size)`](../reference/nbinom2.html): Negative binomial distribution reparameterised by mean `mu` and size `size`
 
+* [`pig(mu, sigma)`](../reference/pig.html): Poisson-inverse Gaussian distribution parameterised by mean `mu` and dispersion `sigma`
+
 * [`skellam(mu1, mu2)`](../reference/skellam.html): Skellam distribution parameterised by Poisson means `mu1` and `mu2`
 
 * [`zibinom(size, prob, zeroprob)`](../reference/zibinom.html): Zero-inflated binomial distribution parameterised by size `size`, success probability `prob` and zero-probability `zeroprob`
