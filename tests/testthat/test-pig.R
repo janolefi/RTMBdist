@@ -1,4 +1,6 @@
 # Tests for the Poisson-inverse Gaussian distribution
+# dpig is dsichel with nu = -1/2, so large counts, gradients, recycling and parameter
+# recovery are tested there
 
 test_that("pig passes standard discrete checks", {
   check_discrete_dist(
@@ -76,42 +78,6 @@ test_that("pig collapses to the Poisson as sigma goes to zero", {
   expect_equal(dpig(k, 6, 1e-9), stats::dpois(k, 6), tolerance = 1e-7)
 })
 
-test_that("dpig stays finite and accurate for large counts", {
-  # besselK() overflows here for small alpha, so these use the large-order expansion.
-  # The three-term recursion of the Bessel function carries over to the mass function,
-  # P(x) = sigma mu (2x - 3) / (rho x) P(x - 1) + mu^2 / (rho x (x - 1)) P(x - 2)
-  # with rho = 1 + 2 mu sigma, which also checks the switch between the two branches
-  # at x = 30
-  for (p in list(c(5, 2), c(2, 20), c(40, 0.1))) {
-    mu <- p[1]; sigma <- p[2]
-    x <- 0:400
-    ld <- dpig(x, mu, sigma, log = TRUE)
-    expect_true(all(is.finite(ld)))
-    rho <- 1 + 2 * mu * sigma
-    i <- 3:length(x)
-    xi <- x[i]
-    rec <- log(sigma * mu * (2 * xi - 3) / (rho * xi) * exp(ld[i - 1]) +
-                 mu^2 / (rho * xi * (xi - 1)) * exp(ld[i - 2]))
-    ok <- ld[i] > -700 # where the recursion itself does not underflow
-    expect_equal(ld[i][ok], rec[ok], tolerance = 1e-9)
-  }
-})
-
-test_that("dpig gradients match finite differences, also in the tail", {
-  x <- c(0, 3, 12, 29, 30, 31, 150)
-  par <- c(mu = 5, sigma = 2)
-  f <- function(p) sum(dpig(x, p[1], p[2], log = TRUE))
-  F <- RTMB::MakeTape(f, par)
-  h <- 1e-5
-  fd <- sapply(1:2, function(j) {
-    e <- replace(numeric(2), j, h)
-    (f(par + e) - f(par - e)) / (2 * h)
-  })
-  expect_equal(as.vector(F$jacobian(par)), fd, tolerance = 1e-6)
-  H <- F$jacfun()$jacobian(par)
-  expect_true(all(is.finite(H)))
-})
-
 test_that("rpig draws follow the mass function", {
   set.seed(3)
   x <- rpig(2e4, 4, 0.5)
@@ -119,25 +85,6 @@ test_that("rpig draws follow the mass function", {
   e <- c(dpig(0:14, 4, 0.5), 1 - sum(dpig(0:14, 4, 0.5)))
   o <- as.vector(table(factor(pmin(x, 15), levels = 0:15)))
   expect_gt(suppressWarnings(stats::chisq.test(o, p = e)$p.value), 0.01)
-})
-
-test_that("pig recovers its parameters", {
-  set.seed(11)
-  x <- rpig(20000, 6, 0.8)
-  f <- function(p) -sum(dpig(x, exp(p[1]), exp(p[2]), log = TRUE))
-  F <- RTMB::MakeTape(f, log(c(6, 0.8)))
-  o <- nlminb(log(c(1, 1)), F, function(p) as.vector(F$jacobian(p)))
-  expect_equal(o$convergence, 0)
-  expect_equal(exp(o$par), c(6, 0.8), tolerance = 0.1)
-})
-
-test_that("pig recycles its arguments", {
-  expect_length(dpig(0:5, c(1, 2), 0.5), 6)
-  expect_length(ppig(0:5, c(1, 2), 0.5), 6)
-  expect_length(rpig(5, c(2, 4), 0.5), 5)
-  expect_equal(dpig(0:5, c(1, 2), 0.5),
-               c(dpig(0, 1, 0.5), dpig(1, 2, 0.5), dpig(2, 1, 0.5),
-                 dpig(3, 2, 0.5), dpig(4, 1, 0.5), dpig(5, 2, 0.5)))
 })
 
 test_that("dpig is zero below the support", {

@@ -14,6 +14,8 @@ test_that("cjw has uniform margins for von Mises and wrapped Cauchy binding dens
   for (q in c(1, -1)) {
     expect_equal(copula_margins(cjw(dvm, mu = 0.5, kappa = 3, q = q)), rep(1, 10), tolerance = 1e-8)
     expect_equal(copula_margins(cjw(dwrpcauchy, mu = -1, rho = 0.6, q = q)), rep(1, 10), tolerance = 1e-8)
+    expect_equal(copula_margins(cjw(dwrpnorm, mu = 0.5, sigma = 0.8, q = q)), rep(1, 10), tolerance = 1e-8)
+    expect_equal(copula_margins(cjw(dcard, mu = 2, rho = 0.4, q = q)), rep(1, 10), tolerance = 1e-8)
   }
 })
 

@@ -28,6 +28,10 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 * [`beta2(mu, phi)`](../reference/beta2.html): Beta distribution reparameterised by mean `mu` and precision `phi`
 
+* [`bisa(scale, shape)`](../reference/bisa.html): Birnbaum-Saunders (fatigue life) distribution parameterised by scale `scale` (equal to the median) and shape `shape`
+
+* [`card(mu, rho)`](../reference/card.html): Cardioid distribution parameterised by mean direction `mu` and concentration `rho`
+
 * [`exgauss(mu, sigma, lambda)`](../reference/exgauss.html): Exponentially modified Gaussian distribution parameterised by location `mu`, scale `sigma`, and rate `lambda`
 
 * [`foldnorm(mu, sigma)`](../reference/foldnorm.html): Folded normal distribution parameterised by location `mu` and scale `sigma`
@@ -35,6 +39,14 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 * [`frechet(mu, sigma, alpha)`](../reference/frechet.html): Frechet distribution parameterised by location `mu`, scale `sigma`, and shape `alpha`
 
 * [`gamma2(mean, sd)`](../reference/gamma2.html): Gamma distribution reparameterised by mean and standard deviation
+
+* [`gb2(scale, shape1, shape2, shape3)`](../reference/gb2.html): Generalised beta distribution of the second kind parameterised by scale `scale` and shapes `shape1`, `shape2` and `shape3`
+
+* [`dagum(scale, shape1, shape2)`](../reference/gb2.html): Dagum distribution, the GB2 with `shape3 = 1`
+
+* [`sinmad(scale, shape1, shape3)`](../reference/gb2.html): Singh-Maddala (Burr XII) distribution, the GB2 with `shape2 = 1`
+
+* [`lomax(scale, shape3)`](../reference/gb2.html): Lomax (Pareto II) distribution, the GB2 with `shape1 = shape2 = 1`
 
 * [`gengamma(mu, sigma, nu)`](../reference/gengamma.html): Generalised gamma distribution parameterised by location `mu`, scale `sigma`, and skewness `nu`
 
@@ -98,6 +110,8 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 
 * [`wrpcauchy(mu, rho)`](../reference/wrpcauchy.html): Wrapped Cauchy distribution parameterised by mean direction `mu` and concentration `rho`
 
+* [`wrpnorm(mu, sigma)`](../reference/wrpnorm.html): Wrapped normal distribution parameterised by mean direction `mu` and standard deviation `sigma` of the unwrapped normal
+
 * [`zibeta(shape1, shape2, zeroprob)`](../reference/zibeta.html): Zero-inflated beta distribution parameterised by shape parameters `shape1`, `shape2` and zero-probability `zeroprob`
 
 * [`zibeta2(mu, phi, zeroprob)`](../reference/zibeta2.html): Zero-inflated beta distribution reparameterised by mean `mu`, precision `phi`, and zero-probability `zeroprob`
@@ -140,6 +154,8 @@ Note that some famous non-standard distributions (Tweedie, SHASHo, COM-Pois, Cau
 * [`nbinom2(mu, size)`](../reference/nbinom2.html): Negative binomial distribution reparameterised by mean `mu` and size `size`
 
 * [`pig(mu, sigma)`](../reference/pig.html): Poisson-inverse Gaussian distribution parameterised by mean `mu` and dispersion `sigma`
+
+* [`sichel(mu, sigma, nu)`](../reference/sichel.html): Sichel distribution parameterised by mean `mu`, dispersion `sigma` and shape `nu`
 
 * [`skellam(mu1, mu2)`](../reference/skellam.html): Skellam distribution parameterised by Poisson means `mu1` and `mu2`
 
@@ -208,7 +224,7 @@ Bivariate copulas can be implemented in a modular way using the [`dcopula`](../r
 
 For a circular and a linear margin, such as turning angles and step lengths, there are two circular-linear copula constructors. The circular margin has to be the first one in `dcopula`.
 
-* [`cjw(g, ...)`](../reference/cjw.html) (Johnson-Wehrly copula with circular binding density `g`, e.g. [`dvm`](../reference/vm.html) or [`dwrpcauchy`](../reference/wrpcauchy.html))
+* [`cjw(g, ...)`](../reference/cjw.html) (Johnson-Wehrly copula with circular binding density `g`, e.g. [`dvm`](../reference/vm.html), [`dwrpcauchy`](../reference/wrpcauchy.html) or [`dwrpnorm`](../reference/wrpnorm.html))
 * [`cfold(copula)`](../reference/cfold.html) (folds one of the copulas above into a circular-linear copula that is symmetric in the sign of the angle)
 
 For bivariate copulas with *discrete* margins, use the [`ddcopula`](../reference/ddcopula.html) function instead. In this case, instead of copula *densities*, copula *CDFs* are needed. The available constructors for this are:

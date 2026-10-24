@@ -52,24 +52,16 @@ parameterisation follows the \code{PIG} family of the \code{gamlss.dist}
 package, with
 \deqn{E(X) = \mu, \qquad \mathrm{Var}(X) = \mu + \sigma \mu^2.}
 This is the same mean-variance relationship as the
-\link[=nbinom2]{negative binomial} with \code{phi = 1 / sigma}, but the
+\link[=nbinom2]{negative binomial} with \code{size = 1 / sigma}, but the
 Poisson-inverse Gaussian has a heavier right tail and puts more mass at zero
 for the same mean and variance. It approaches the Poisson as
 \eqn{\sigma \to 0}.
 
-The order of the Bessel function depends only on the data, so no derivative
-with respect to it is needed. For counts below 30 it is evaluated with
-\code{RTMB}'s \code{besselK}. Above that, \code{besselK} overflows when
-\eqn{\alpha} is small, so its uniform asymptotic expansion for large orders
-is used instead, which is accurate to about \eqn{10^{-11}} on the log scale
-there.
-
-The distribution function has no closed form and is computed by summing the
-probability mass function over \eqn{0, \ldots, q}, so its cost grows with the
-largest \code{q}. It is AD-compatible in the parameters, while \code{q} must be
-numeric data. This is also what one-step-ahead (OSA) residuals via
-\code{RTMB::\link[RTMB]{oneStepPredict}} need, so these are supported, e.g. with
-\code{method = "cdf"} and \code{discrete = TRUE}.
+It is the \link[=sichel]{Sichel} distribution with \eqn{\nu = -1/2}, and is
+computed as such; see there for how the Bessel functions are evaluated. The
+distribution function is summed from the probability mass function, so
+one-step-ahead (OSA) residuals via \code{RTMB::\link[RTMB]{oneStepPredict}}
+are supported, e.g. with \code{method = "cdf"} and \code{discrete = TRUE}.
 }
 \examples{
 set.seed(123)
@@ -83,10 +75,7 @@ regression model. Canadian Journal of Statistics, 17, 171-181.
 
 Rigby, R. A., Stasinopoulos, D. M., Heller, G. Z., and De Bastiani, F. (2019) Distributions for modeling location, scale, and shape: Using GAMLSS in R, Chapman and Hall/CRC,
 doi:10.1201/9780429298547. An older version can be found in https://www.gamlss.com/.
-
-Olver, F. W. J. et al. (eds.) NIST Digital Library of Mathematical Functions,
-equation 10.41.4, https://dlmf.nist.gov/10.41.
 }
 \seealso{
-\link{nbinom2}, \link{invgauss}, \link{bnbinom2}
+\link{sichel}, \link{nbinom2}, \link{invgauss}
 }

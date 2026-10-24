@@ -329,3 +329,22 @@ simulation_check <- function(args, exclude = c("x", "log")) {
     )
   }
 }
+
+# Angle a wrapped onto [-pi, pi). floor() is re-evaluated with the tape, unlike %%
+wrap_angle <- function(a) a - 2 * pi * floor((a + pi) / (2 * pi))
+
+# Distribution function of a circular distribution that is symmetric about mu, given
+# F0(u), the probability of an angle in [mu - pi, mu + u) for u in [-pi, pi). As in
+# pwrpcauchy, the circle is cut at mu - pi, or at `from` if that is given.
+pcircular <- function(F0, q, mu, from, lower.tail, log.p) {
+  if (is.null(from)) {
+    if (!lower.tail) q <- 2 * mu - q # by symmetry, P(X > q) = P(X < 2 mu - q)
+    p <- F0(wrap_angle(q - mu))
+  } else {
+    p <- F0(wrap_angle(q - mu)) - F0(wrap_angle(from - mu))
+    p <- p - floor(p) # (F(q) - F(from)) mod 1
+    if (!lower.tail) p <- 1 - p
+  }
+  if (log.p) p <- log(p)
+  p
+}
