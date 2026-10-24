@@ -860,7 +860,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  11.511  12.134   9.983
+#>  13.520  12.409  12.131
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate  Std. Error
@@ -875,3 +875,302 @@ summary(sdr_svt, "report")
 #> mu_y  -1.09383519 0.118761923
 #> mu_y  -1.56301208 0.312999105
 ```
+
+## Example 8: Venice sea levels with a latent trend
+
+Annual maxima use only one observation per year. Smith (1986) instead
+used the r largest sea levels in each year at Venice, a data set that is
+also discussed in Coles (2001, Section 3.5). If the annual maximum
+follows a generalised extreme value (GEV) distribution with distribution
+function G and density g, the joint density of the r largest values z_1
+\geq \dots \geq z_r in a year is f(z_1, \dots, z_r) = G(z_r)
+\prod\_{k=1}^r \frac{g(z_k)}{G(z_k)}. This is easy to write with
+[`dgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md) and
+[`pgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md). Coles
+(2001) lets the location parameter increase linearly over time. We
+instead let the location \mu_t in year t follow a random walk, \mu_t
+\sim N(\mu\_{t-1}, \tau^2), and integrate it out with the Laplace
+approximation.
+
+``` r
+
+data(venice, package = "evd")
+r <- 5
+z <- as.matrix(venice[, 1:r]) # 5 largest sea levels (cm) in each year, 1931-1981
+year <- as.numeric(rownames(venice))
+```
+
+``` r
+
+nll_venice <- function(par) {
+  getAll(par)
+  sigma <- exp(log_sigma); ADREPORT(sigma)
+  # random walk for the location
+  nll <- -sum(dnorm(mu[-1], mu[-length(mu)], exp(log_tau), log = TRUE))
+  # joint density of the r largest values in each year
+  M <- mu[row(z)]
+  nll <- nll - sum(dgev(z, M, sigma, xi, log = TRUE) - pgev(z, M, sigma, xi, log.p = TRUE))
+  nll - sum(pgev(z[, r], mu, sigma, xi, log.p = TRUE))
+}
+```
+
+``` r
+
+par <- list(mu = rep(mean(z[, r]), nrow(z)), log_sigma = log(10), xi = 0, log_tau = log(2))
+obj_venice <- MakeADFun(nll_venice, par, random = "mu", silent = TRUE)
+opt_venice <- nlminb(obj_venice$par, obj_venice$fn, obj_venice$gr)
+sdr_venice <- sdreport(obj_venice)
+summary(sdr_venice, "fixed")
+#>             Estimate Std. Error
+#> log_sigma 2.41669891 0.08017962
+#> xi        0.02164634 0.05943698
+#> log_tau   1.55895637 0.31535526
+```
+
+The shape parameter \xi is close to zero, i.e. the Gumbel case. As the r
+values in a year are not independent GEV draws,
+[`checkConsistency()`](https://rdrr.io/pkg/RTMB/man/TMB-interface.html)
+cannot be used here, but
+[`laplace_check()`](https://janolefi.github.io/RTMBdist/reference/laplace_check.md)
+can:
+
+``` r
+
+set.seed(1)
+laplace_check(obj_venice)
+#> Laplace approximation check (importance sampling)
+#> =================================================
+#> Monte Carlo samples:         1000
+#> 
+#> Log marginal likelihood
+#>   Laplace:                   -700.78
+#>   Importance sampling:       -700.67   (unbiased; should match Laplace)
+#>   Bias (IS - Laplace):       0.1159   (log scale; 0 = exact)
+#>     likelihood ratio:        1.123   (exp(bias); 1 = no error)
+#>     relative to log-lik:     1.7e-04   (0 = exact)
+#> 
+#> Diagnostics
+#>   SD of log-weights:         0.9359   (0 = exact; grows with non-Gaussianity and dimension)
+#>   Effective sample size:     43.7%   (100% = ideal; low may reflect high dimension)
+#> 
+#> Plausible, but the check is only moderately reliable; interpret with caution.
+```
+
+The importance sampling estimate of the marginal log-likelihood differs
+from the Laplace approximation by only about 0.1.
+
+``` r
+
+mu_hat <- summary(sdr_venice, "random")
+matplot(year, z, pch = 16, col = adjustcolor("grey40", 0.4), xlab = "year", ylab = "sea level (cm)")
+polygon(c(year, rev(year)), c(mu_hat[, 1] - 2 * mu_hat[, 2], rev(mu_hat[, 1] + 2 * mu_hat[, 2])),
+        col = adjustcolor("orange", 0.3), border = NA)
+lines(year, mu_hat[, 1], col = "orange", lwd = 2)
+```
+
+![](Examples_files/figure-html/venice%20plot-1.png)
+
+The estimated location rises by about 25 cm over the 50 years, but not
+linearly: mainly around 1960 and again at the end of the 1970s.
+
+## Example 9: Earthquake aftershocks with the ETAS model
+
+Earthquakes trigger aftershocks, which trigger further aftershocks. The
+epidemic-type aftershock sequence (ETAS) model of Ogata (1988) describes
+this as a self-exciting point process with conditional intensity
+\lambda(t) = \mu + \sum\_{t_i \< t} K e^{\alpha (m_i - m_0)} g(t - t_i),
+where \mu is the background rate, each earlier event with magnitude m_i
+above the threshold m_0 triggers on average K e^{\alpha (m_i - m_0)}
+direct aftershocks, and g is the Omori-Utsu law g(t) = (p - 1) c^{p - 1}
+(t + c)^{-p} for the decay of aftershock rates. This g is the density of
+a Lomax distribution with scale c and shape p - 1. The log-likelihood of
+a point process observed on \[0, T\] is \sum_j \log \lambda(t_j) -
+\int_0^T \lambda(t) \\ dt, and the integral is \mu T + \sum_i K
+e^{\alpha (m_i - m_0)} G(T - t_i), where G is the Lomax distribution
+function. Hence
+[`dlomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md) and
+[`plomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md) give
+the whole likelihood. For the magnitudes above m_0, the
+Gutenberg-Richter law is an exponential distribution, which we
+generalise to a generalised Pareto distribution
+([`dgpd()`](https://janolefi.github.io/RTMBdist/reference/gpd.md)).
+
+We use the Italian earthquake catalogue from the `ETAS` package, which
+covers 2005 to 2013 and contains the L’Aquila (2009) and Emilia (2012)
+sequences. We keep shallow events with magnitude at least 3.5. The sum
+over earlier events is computed for all pairs of events at once and
+summed up with a sparse matrix.
+
+``` r
+
+data(italy.quakes, package = "ETAS")
+```
+
+``` r
+
+library(Matrix)
+m0 <- 3.5
+eq <- subset(italy.quakes, mag >= m0 & depth < 40)
+time <- as.POSIXct(paste(eq$date, eq$time), tz = "UTC")
+t <- as.numeric(difftime(time, min(time), units = "days"))
+n <- length(t)
+
+pairs <- which(outer(t, t, "<"), arr.ind = TRUE) # row: earlier event, col: later event
+dat <- list(t = t, m = eq$mag - m0, Tend = max(t) + 1, parent = pairs[, 1],
+            dt = t[pairs[, 2]] - t[pairs[, 1]],
+            S = sparseMatrix(pairs[, 2], seq_len(nrow(pairs)), x = 1, dims = c(n, nrow(pairs))))
+```
+
+``` r
+
+nll_etas <- function(par) {
+  getAll(par, dat)
+  mu <- exp(log_mu); c <- exp(log_c); p <- 1 + exp(log_pm1)
+  ADREPORT(p); ADREPORT(c)
+  prod <- exp(log_K + alpha * m) # expected number of direct aftershocks of each event
+  branching <- mean(prod); ADREPORT(branching)
+  # intensity at each event: background + aftershocks of all earlier events
+  lambda <- mu + drop(S %*% (prod[parent] * dlomax(dt, c, p - 1))); REPORT(lambda)
+  # integral of the intensity over [0, Tend]
+  Lambda <- mu * Tend + sum(prod * plomax(Tend - t, c, p - 1))
+  -sum(log(lambda)) + Lambda - sum(dgpd(m, 0, exp(log_sigma), xi, log = TRUE))
+}
+```
+
+``` r
+
+par <- list(log_mu = log(0.1), log_K = log(0.2), alpha = 1, log_c = log(0.01),
+            log_pm1 = log(0.1), log_sigma = log(0.4), xi = 0)
+obj_etas <- MakeADFun(nll_etas, par, silent = TRUE)
+opt_etas <- nlminb(obj_etas$par, obj_etas$fn, obj_etas$gr)
+summary(sdreport(obj_etas), "report")
+#>              Estimate  Std. Error
+#> p         1.072850297 0.044592819
+#> c         0.007284232 0.003298058
+#> branching 0.828331568 0.351130575
+```
+
+Aftershock rates decay with p \approx 1.07, and the branching ratio, the
+average number of direct aftershocks per event, is about 0.8. Fixing K
+to (practically) zero gives a homogeneous Poisson process, which fits
+much worse:
+
+``` r
+
+obj_pois <- MakeADFun(nll_etas, modifyList(par, list(log_K = -30)), silent = TRUE,
+                      map = list(log_K = factor(NA), alpha = factor(NA), log_c = factor(NA), log_pm1 = factor(NA)))
+opt_pois <- nlminb(obj_pois$par, obj_pois$fn, obj_pois$gr)
+c(Poisson = 2 * opt_pois$objective + 2 * 3, ETAS = 2 * opt_etas$objective + 2 * 7) # AIC
+#>  Poisson     ETAS 
+#> 3167.540 2084.784
+```
+
+``` r
+
+oldpar <- par(mfrow = c(2, 1), mar = c(2, 4, 1, 1))
+plot(time, eq$mag, type = "h", col = "grey40", xlab = "", ylab = "magnitude")
+plot(time, obj_etas$report()$lambda, type = "l", log = "y", xlab = "", ylab = "events per day")
+```
+
+![](Examples_files/figure-html/etas%20plot-1.png)
+
+``` r
+
+par(oldpar)
+```
+
+## Example 10: Pooling the polls
+
+Opinion polls are noisy, and polling houses differ systematically (house
+effects). Jackman (2005) pooled the polls between the 2004 and 2007
+Australian federal elections with a latent daily voting intention
+following a random walk. We do the same for Labor’s (ALP) share of the
+vote for the two major parties, \pi_t: \text{logit}(\pi_t) follows a
+random walk that starts at the 2004 election result, and the number of
+ALP voters among the major-party voters in a poll by house h on day t is
+beta-binomial with mean \text{logit}^{-1}(\text{logit}(\pi_t) +
+\delta_h). The beta-binomial
+([`dbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md))
+allows for more variation than sampling error alone. Because the walk
+starts at an actual election result, the house effects \delta_h measure
+the bias of each house, and the 2007 result is left as an out-of-sample
+check.
+
+``` r
+
+data(AustralianElectionPolling, package = "pscl")
+data(AustralianElections, package = "pscl")
+```
+
+``` r
+
+polls <- AustralianElectionPolling
+res <- subset(AustralianElections, date %in% as.Date(c("2004-10-09", "2007-11-24")))
+alp_share <- with(res, ALP / (ALP + LP + NP)) # ALP share of the major-party vote
+day0 <- as.Date("2004-10-09")
+ndays <- as.numeric(as.Date("2007-11-24") - day0) + 1
+dat <- with(polls, list(
+  alp = round(ALP / 100 * sampleSize), major = round((ALP + Lib + Nat) / 100 * sampleSize),
+  day = as.numeric(startDate + (endDate - startDate) / 2 - day0) + 1,
+  house = as.integer(org), start = qlogis(alp_share[1])
+))
+```
+
+``` r
+
+nll_polls <- function(par) {
+  getAll(par, dat)
+  alp <- OBS(alp)
+  # random walk of the logit ALP share, starting at the 2004 result
+  nll <- -sum(dnorm(eta, c(start, eta[-ndays]), exp(log_tau), log = TRUE))
+  p <- plogis(eta[day] + delta[house])
+  phi <- exp(log_phi)
+  alp_2007 <- plogis(eta[ndays]); ADREPORT(alp_2007)
+  nll - sum(dbetabinom(alp, major, phi * p, phi * (1 - p), log = TRUE))
+}
+```
+
+``` r
+
+par <- list(eta = rep(dat$start, ndays), log_tau = log(0.01), delta = rep(0, 5), log_phi = log(500))
+obj_polls <- MakeADFun(nll_polls, par, random = "eta", silent = TRUE)
+opt_polls <- nlminb(obj_polls$par, obj_polls$fn, obj_polls$gr)
+sdr_polls <- sdreport(obj_polls)
+summary(sdr_polls, "report")
+#>           Estimate Std. Error
+#> alp_2007 0.5273302 0.02124246
+alp_share[2] # actual 2007 result
+#> [1] 0.5075465
+```
+
+The model predicts 52.7% for the 2007 election with a standard error of
+about two percentage points. The actual result was 50.8%. In percentage
+points around 50%, the house effects are
+
+``` r
+
+setNames(round(100 * (plogis(opt_polls$par[names(opt_polls$par) == "delta"]) - 0.5), 1), levels(polls$org))
+#>        Galaxy   Morgan, F2F      Newspoll       Nielsen Morgan, Phone 
+#>          -2.5           1.6          -0.3          -0.2           0.1
+```
+
+so Galaxy leaned towards the Coalition and Morgan’s face-to-face polls
+towards Labor.
+
+``` r
+
+eta_hat <- summary(sdr_polls, "random")
+dates <- day0 + seq_len(ndays) - 1
+plot(day0 + dat$day - 1, 100 * dat$alp / dat$major, pch = 16, cex = 0.7, col = adjustcolor(dat$house, 0.6),
+     ylim = c(35, 65), xlab = "", ylab = "ALP share of major-party vote (%)")
+polygon(c(dates, rev(dates)), 100 * plogis(c(eta_hat[, 1] - 2 * eta_hat[, 2], rev(eta_hat[, 1] + 2 * eta_hat[, 2]))),
+        col = adjustcolor("orange", 0.3), border = NA)
+lines(dates, 100 * plogis(eta_hat[, 1]), col = "orange", lwd = 2)
+points(as.Date(c("2004-10-09", "2007-11-24")), 100 * alp_share, pch = 4, cex = 2, lwd = 3)
+legend("bottomright", levels(polls$org), col = 1:5, pch = 16, bty = "n")
+```
+
+![](Examples_files/figure-html/polls%20plot-1.png)
+
+The jump at the end of 2006 coincides with Kevin Rudd becoming leader of
+the Labor party.

@@ -387,6 +387,17 @@
   [`pztnbinom2()`](https://janolefi.github.io/RTMBdist/reference/ztnbinom2.md),
   which returned `NaN` instead of 0 for quantiles below their support.
 
+- Added three examples to the *Worked Examples* vignette: the five
+  largest annual sea levels at Venice with a latent random-walk trend
+  ([`dgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md),
+  [`pgev()`](https://janolefi.github.io/RTMBdist/reference/gev.md)), the
+  ETAS model for earthquake aftershocks
+  ([`dlomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md),
+  [`plomax()`](https://janolefi.github.io/RTMBdist/reference/gb2.md),
+  [`dgpd()`](https://janolefi.github.io/RTMBdist/reference/gpd.md)), and
+  pooling opinion polls with house effects
+  ([`dbetabinom()`](https://janolefi.github.io/RTMBdist/reference/betabinom.md)).
+
 ## RTMBdist 1.1.0
 
 CRAN release: 2026-09-06
