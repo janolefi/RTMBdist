@@ -101,7 +101,7 @@ pzoibeta <- function(q, shape1, shape2, zeroprob = 0, oneprob = 0, lower.tail = 
   }
 
   p <- iszero(q) * zeroprob +
-    ispos_strict(q) * (zeroprob + (1 - zeroprob - oneprob) * RTMB::pbeta(q, shape1, shape2)) +
+    ispos_strict(q) * (zeroprob + (1 - zeroprob - oneprob) * beta_ad(pbeta, q, shape1, shape2)) +
     (1-isneg(q-1)) * oneprob
 
   if(!lower.tail) p <- 1 - p

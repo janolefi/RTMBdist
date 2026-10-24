@@ -72,7 +72,7 @@ pbetaprime <- function(q, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
   if (ad_context()) {
     # RTMB's pbeta errors when lower.tail / log.p are passed inside an AD
     # context, so they are applied to the plain CDF there
-    p <- pbeta(q / (1+q), shape1, shape2)
+    p <- beta_ad(pbeta, q / (1+q), shape1, shape2)
     if (!lower.tail) p <- 1 - p
     if (log.p) p <- log(p)
     return(p)
@@ -97,7 +97,7 @@ qbetaprime <- function(p, shape1, shape2, lower.tail = TRUE, log.p = FALSE) {
   if (log.p) p <- exp(p)
   if (!lower.tail) p <- 1 - p
 
-  q <- qbeta(p, shape1, shape2)
+  q <- beta_ad(qbeta, p, shape1, shape2)
   return(q / (1-q))
 }
 

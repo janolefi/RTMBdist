@@ -107,9 +107,9 @@ pgb2 <- function(q, scale = 1, shape1, shape2, shape3, lower.tail = TRUE, log.p 
 
   # the upper tail as I_{1 - z}(q, p) rather than 1 - p, which keeps it accurate
   if (lower.tail) {
-    p <- pbeta(plogis(t), shape2, shape3)
+    p <- beta_ad(pbeta, plogis(t), shape2, shape3)
   } else {
-    p <- pbeta(plogis(-t), shape3, shape2)
+    p <- beta_ad(pbeta, plogis(-t), shape3, shape2)
   }
 
   if (log.p) p <- log(p)
@@ -129,7 +129,7 @@ qgb2 <- function(p, scale = 1, shape1, shape2, shape3, lower.tail = TRUE, log.p 
     if (any(p < 0 | p > 1)) stop("p must be in [0, 1]")
   }
 
-  scale * exp(qlogis(qbeta(p, shape2, shape3)) / shape1)
+  scale * exp(qlogis(beta_ad(qbeta, p, shape2, shape3)) / shape1)
 }
 
 #' @rdname gb2

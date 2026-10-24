@@ -99,7 +99,7 @@ pzibeta <- function(q, shape1, shape2, zeroprob = 0, lower.tail = TRUE, log.p = 
   # ispos <- 0.5 * (1+s1) * s2
 
   p <- iszero(q) * zeroprob +
-    ispos_strict(q) * (zeroprob + (1 - zeroprob) * RTMB::pbeta(q, shape1, shape2))
+    ispos_strict(q) * (zeroprob + (1 - zeroprob) * beta_ad(pbeta, q, shape1, shape2))
 
   if(!lower.tail) p <- 1 - p
   if(log.p) p <- log(p)

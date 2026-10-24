@@ -67,7 +67,7 @@ pnbinom2 <- function(q, mu, size, lower.tail = TRUE, log.p = FALSE) {
   }
 
   prob <- size / (size + mu)
-  p <- RTMB::pbeta(prob, size, q+1) # doesn't look correct but is
+  p <- beta_ad(pbeta, prob, size, q+1) # doesn't look correct but is
   # RTMB doesn't have AD version of pbinom
 
   if(!lower.tail) p <- 1 - p

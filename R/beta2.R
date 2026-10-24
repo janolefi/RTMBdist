@@ -104,7 +104,7 @@ pbeta2 <- function(q, mu, phi, lower.tail = TRUE, log.p = FALSE) {
 
   shape1 <- mu * phi
   shape2 <- (1 - mu) * phi
-  p <- RTMB::pbeta(q, shape1 = shape1, shape2 = shape2)
+  p <- beta_ad(pbeta, q, shape1, shape2)
 
   if(!lower.tail) p <- 1 - p
   if(log.p) p <- log(p)
@@ -127,7 +127,7 @@ qbeta2 <- function(p, mu, phi, lower.tail = TRUE, log.p = FALSE) {
 
   shape1 <- mu * phi
   shape2 <- (1 - mu) * phi
-  RTMB::qbeta(p, shape1 = shape1, shape2 = shape2)
+  beta_ad(qbeta, p, shape1, shape2)
 }
 #' @rdname beta2
 #' @export

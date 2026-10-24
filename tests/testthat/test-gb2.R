@@ -1,6 +1,4 @@
 # Tests for the GB2 distribution and its special cases Dagum, Singh-Maddala and Lomax.
-# Shapes are not integers of 3 or more in the AD tests, because RTMB's pbeta() has a zero
-# derivative in its second shape there (RTMB 2.0).
 
 test_that("gb2 and its special cases pass standard distribution checks", {
   check_continuous_dist(dgb2, pgb2, qgb2, xs = c(0.3, 1, 2, 5), lower = 0,
