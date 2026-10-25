@@ -354,7 +354,9 @@ without one. Two internal helpers build it from the density.
 integrates a continuous density with `RTMB`’s AD-compatible
 [`integrate()`](https://rdrr.io/r/stats/integrate.html). Call it only in
 AD context and keep a faster non-AD cdf, e.g. from another package, for
-ordinary use, as `pskewnorm` does. Pass `centre` close to the mode and
+ordinary use, as `pskewnorm` does. If that cdf is inaccurate in the
+tails, pass its values through `refine_tails()`, which integrates only
+where the requested tail is small. Pass `centre` close to the mode and
 `scale` of the order of the spread; the comments in `R/numerical_cdf.R`
 explain why.
 

@@ -860,7 +860,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  13.520  12.409  12.131
+#>  13.393   0.007  13.403
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate  Std. Error
@@ -870,10 +870,10 @@ summary(sdr_svt, "report")
 #> phi    0.97409443 0.012470016
 #> phi    0.95807405 0.015360711
 #> phi    0.99122411 0.007026834
-#> df     7.12265195 0.976921821
-#> mu_y  -1.13887764 0.186641878
+#> df     7.12265197 0.976921824
+#> mu_y  -1.13887764 0.186641877
 #> mu_y  -1.09383519 0.118761923
-#> mu_y  -1.56301208 0.312999105
+#> mu_y  -1.56301208 0.312999106
 ```
 
 ## Example 8: Venice sea levels with a latent trend
@@ -1047,7 +1047,7 @@ summary(sdreport(obj_etas), "report")
 #>              Estimate  Std. Error
 #> p         1.072850297 0.044592819
 #> c         0.007284232 0.003298058
-#> branching 0.828331568 0.351130575
+#> branching 0.828331568 0.351130574
 ```
 
 Aftershock rates decay with p \approx 1.07, and the branching ratio, the

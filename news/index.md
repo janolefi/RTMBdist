@@ -244,6 +244,51 @@
   turning-angle margin in copula models for step lengths and turning
   angles.
 
+- [`rskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md)
+  and
+  [`rskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
+  now recycle vector parameters. They called
+  [`sn::rst()`](https://rdrr.io/pkg/sn/man/dst.html), which is not
+  vectorised over its parameters, and failed for example when simulating
+  from a hidden Markov model with state-dependent parameters. The same
+  held for
+  [`pskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md),
+  [`qskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md),
+  [`pskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
+  and
+  [`qskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
+  with vector `skew` or `df`, which now call
+  [`sn::pst()`](https://rdrr.io/pkg/sn/man/dst.html) and
+  [`sn::qst()`](https://rdrr.io/pkg/sn/man/dst.html) once for each
+  distinct pair of `skew` and `df`.
+  [`rskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md)
+  and
+  [`rskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md)
+  (and with them
+  [`rskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md)
+  and
+  [`rskewnorm2()`](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md))
+  now draw from the stochastic representation of the skew normal and
+  skew t distributions instead of calling the `sn` package, which is
+  also much faster for vector parameters. Random streams for a given
+  seed differ from earlier versions.
+
+- [`pskewt()`](https://janolefi.github.io/RTMBdist/reference/skewt.md),
+  [`pskewt2()`](https://janolefi.github.io/RTMBdist/reference/skewt2.md),
+  [`pskewnorm()`](https://janolefi.github.io/RTMBdist/reference/skewnorm.md)
+  and
+  [`pskewnorm2()`](https://janolefi.github.io/RTMBdist/reference/skewnorm2.md)
+  are now accurate in both tails. Outside of AD they used the `sn`
+  package throughout, whose values are inaccurate in the tails: the
+  upper tail was computed as `1 - p`, which loses all precision there,
+  [`sn::psn()`](https://rdrr.io/pkg/sn/man/dsn.html) is far off in the
+  light tail (e.g. `7e-22` instead of `9e-31` at `z = -5`, `alpha = 2`),
+  and [`sn::pst()`](https://rdrr.io/pkg/sn/man/dst.html) is off by over
+  1% beyond 30 scale units for non-integer `df`. Where the requested
+  tail probability is below `1e-5` or `q` is that far out, the tail is
+  now integrated numerically, as is already done during taping, which
+  also makes `log.p = TRUE` accurate where the probability underflows.
+
 - [`rwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)
   now generates by inversion of
   [`pwrpcauchy()`](https://janolefi.github.io/RTMBdist/reference/wrpcauchy.md)

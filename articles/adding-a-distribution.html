@@ -597,9 +597,11 @@ density.</p>
 integrates a continuous density with <code>RTMB</code>’s AD-compatible
 <code><a href="https://rdrr.io/r/stats/integrate.html" class="external-link">integrate()</a></code>. Call it only in AD context and keep a faster
 non-AD cdf, e.g. from another package, for ordinary use, as
-<code>pskewnorm</code> does. Pass <code>centre</code> close to the mode
-and <code>scale</code> of the order of the spread; the comments in
-<code>R/numerical_cdf.R</code> explain why.</p>
+<code>pskewnorm</code> does. If that cdf is inaccurate in the tails,
+pass its values through <code>refine_tails()</code>, which integrates
+only where the requested tail is small. Pass <code>centre</code> close
+to the mode and <code>scale</code> of the order of the spread; the
+comments in <code>R/numerical_cdf.R</code> explain why.</p>
 <p><code>discrete_cdf(dfun, q, pars, upper, ...)</code> sums a
 probability mass function over . It is AD-compatible in the parameters,
 while <code>q</code> must be numeric, which is how <code>RTMB</code>’s
