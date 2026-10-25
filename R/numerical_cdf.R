@@ -1,6 +1,7 @@
 # Numerical distribution function by integrating a density with RTMB's integrate(),
 # which is AD-compatible from RTMB 2.0 on. Used by p-functions in AD context whose
-# closed-form or package CDF is not AD-compatible.
+# closed-form or package CDF is not AD-compatible, and in the tails outside AD where that
+# CDF is inaccurate (see refine_tails() below).
 #
 # dfun must be AD-compatible, vectorised in its first argument, have a `log` argument and
 # be positive at q. Its parameters are passed as a named list `pars` (a list rather than
@@ -68,4 +69,36 @@ numerical_cdf <- function(dfun, q, pars, centre, scale = 1, lower = -Inf, upper 
   if (any(flip)) p[flip] <- if (log.p) log1p(-exp(ls[flip])) else 1 - exp(ls[flip])
   if (anyNA(qv)) p[is.na(qv)] <- NA
   p
+}
+
+# Outside AD, the p-functions use the sn package, which is accurate in the bulk but not in the
+# tails: taking 1 - p cancels in the upper tail, psn is inaccurate in the light tail
+# (relative error 3e-6 at 1e-13, far worse beyond) and pst's far tail approximation for
+# non-integer df (|z| > 30) is off by over 1%. sn's own lower.tail is no help, as it is
+# mostly 1 - p as well and returns the lower tail in some cases. So wherever the requested
+# tail is small or q is far out, the tail is integrated numerically instead, which also gives
+# log.p where the probability underflows.
+# p is sn's lower tail probability, `use` marks elements whose density can be integrated.
+# Extremely far out (around 1e5 scale units and beyond) the integration can fail, and sn's
+# value is kept there.
+refine_tails <- function(p, dfun, q, pars, centre, scale, lower.tail, log.p, use = TRUE) {
+  n <- length(p)
+  rec <- function(x) rep_len(x, n)
+  q <- rec(q)
+  centre <- rec(centre)
+  scale <- rec(scale)
+
+  p <- pmin(pmax(p, 0), 1) # sn can return values just outside [0, 1]
+  out <- if (lower.tail) p else 1 - p
+  if (log.p) out <- log(out)
+
+  pars <- lapply(pars, rec)
+  for (i in which(rec(use) & !is.na(p) & (pmin(p, 1 - p) < 1e-5 | abs(q - centre) / scale > 25))) {
+    v <- tryCatch(numerical_cdf(dfun, q[i], lapply(pars, `[`, i),
+                                centre = centre[i], scale = scale[i],
+                                lower.tail = lower.tail, log.p = log.p),
+                  error = function(e) NA)
+    if (!is.na(v)) out[i] <- v
+  }
+  out
 }

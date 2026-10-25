@@ -352,8 +352,10 @@ one. Two internal helpers build it from the density.
 `numerical_cdf(dfun, q, pars, centre, scale, lower, upper, ...)` integrates a
 continuous density with `RTMB`'s AD-compatible `integrate()`. Call it only in AD
 context and keep a faster non-AD cdf, e.g. from another package, for ordinary
-use, as `pskewnorm` does. Pass `centre` close to the mode and `scale` of the
-order of the spread; the comments in `R/numerical_cdf.R` explain why.
+use, as `pskewnorm` does. If that cdf is inaccurate in the tails, pass its
+values through `refine_tails()`, which integrates only where the requested tail
+is small. Pass `centre` close to the mode and `scale` of the order of the
+spread; the comments in `R/numerical_cdf.R` explain why.
 
 `discrete_cdf(dfun, q, pars, upper, ...)` sums a probability mass function over
 \eqn{0, \ldots, q}. It is AD-compatible in the parameters, while `q` must be

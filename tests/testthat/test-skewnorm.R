@@ -109,3 +109,28 @@ test_that("dskewnorm is accurate far in the tail, where it used to be floored", 
   H <- RTMB::MakeTape(f, par)$jacfun()$jacfun()$jacobian(par)
   expect_true(all(is.finite(H)))
 })
+
+test_that("rskewnorm recycles vector parameters and matches pskewnorm", {
+  set.seed(1)
+  s <- rep(1:2, 5000)
+  x <- rskewnorm(length(s), c(-3, 3)[s], c(1, 2)[s], c(-2, 4)[s])
+  expect_length(x, 10000)
+  expect_gt(ks.test(x[s == 1], function(q) sn::psn(q, -3, 1, -2))$p.value, 1e-3)
+  expect_gt(ks.test(x[s == 2], function(q) sn::psn(q, 3, 2, 4))$p.value, 1e-3)
+  expect_length(rskewnorm(3, alpha = 1:2), 3)
+})
+
+test_that("pskewnorm is accurate in both tails", {
+  # sn::psn was inaccurate in the light tail, e.g. 7e-22 instead of 9e-31 at z = -5, alpha = 2
+  tail_int <- function(a, b, alpha) {
+    integrate(function(x) sn::dsn(x, 0, 1, alpha), a, b, rel.tol = 1e-13)$value
+  }
+  expect_equal(pskewnorm(-5, 0, 1, 2), tail_int(-Inf, -5, 2), tolerance = 1e-8)
+  expect_equal(pskewnorm(6, 0, 1, 2, lower.tail = FALSE), tail_int(6, Inf, 2), tolerance = 1e-8)
+  expect_equal(pskewnorm(4, 0, 1, -2, lower.tail = FALSE, log.p = TRUE), log(tail_int(4, Inf, -2)),
+               tolerance = 1e-8)
+  # log.p where the probability underflows: lower tail of the normal-like side is
+  # log(2) + log(Phi(z)) to leading order
+  expect_equal(pskewnorm(-1000, 0, 1, -2, log.p = TRUE), log(2) + pnorm(-1000, log.p = TRUE),
+               tolerance = 1e-6)
+})
