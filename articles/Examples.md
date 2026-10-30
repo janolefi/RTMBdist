@@ -694,7 +694,13 @@ obj_elk <- MakeADFun(nll_elk, par, map = map, silent = TRUE)
 opt_elk <- nlminb(obj_elk$par, obj_elk$fn, obj_elk$gr)
 
 mod_ind <- LaMa::report(obj_ind)
+#> Warning in LaMa::report(obj_ind): 'LaMa::report' is deprecated.
+#> Use 'lama' instead.
+#> See help("Deprecated")
 mod_elk <- LaMa::report(obj_elk)
+#> Warning in LaMa::report(obj_elk): 'LaMa::report' is deprecated.
+#> Use 'lama' instead.
+#> See help("Deprecated")
 c(AIC(mod_ind), AIC(mod_elk)) # independence vs. copula
 #> [1] 3769.963 3762.090
 round(mod_elk$theta, 2)
@@ -860,7 +866,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  13.393   0.007  13.403
+#>  11.138  12.213   9.694
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate  Std. Error
@@ -870,10 +876,10 @@ summary(sdr_svt, "report")
 #> phi    0.97409443 0.012470016
 #> phi    0.95807405 0.015360711
 #> phi    0.99122411 0.007026834
-#> df     7.12265197 0.976921824
-#> mu_y  -1.13887764 0.186641877
+#> df     7.12265195 0.976921821
+#> mu_y  -1.13887764 0.186641878
 #> mu_y  -1.09383519 0.118761923
-#> mu_y  -1.56301208 0.312999106
+#> mu_y  -1.56301208 0.312999105
 ```
 
 ## Example 8: Venice sea levels with a latent trend
@@ -1047,7 +1053,7 @@ summary(sdreport(obj_etas), "report")
 #>              Estimate  Std. Error
 #> p         1.072850297 0.044592819
 #> c         0.007284232 0.003298058
-#> branching 0.828331568 0.351130574
+#> branching 0.828331568 0.351130575
 ```
 
 Aftershock rates decay with p \approx 1.07, and the branching ratio, the
