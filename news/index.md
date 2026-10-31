@@ -1,5 +1,7 @@
 # Changelog
 
+## RTMBdist (development version)
+
 ## RTMBdist 1.2.0
 
 - Added the Poisson-inverse Gaussian

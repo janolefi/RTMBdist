@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RTMBdist</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,9 @@
 
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="rtmbdist-development-version">RTMBdist (development version)<a class="anchor" aria-label="anchor" href="#rtmbdist-development-version"></a></h2>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="rtmbdist-120">RTMBdist 1.2.0<a class="anchor" aria-label="anchor" href="#rtmbdist-120"></a></h2>
 <ul><li><p>Added the Poisson-inverse Gaussian (<code><a href="../reference/pig.html">dpig()</a></code>) and Sichel (<code><a href="../reference/sichel.html">dsichel()</a></code>) distributions, each with matching <code>p</code> and <code>r</code> functions. The Poisson-inverse Gaussian is the standard alternative to the negative binomial for overdispersed counts: a Poisson whose mean follows an inverse Gaussian, parameterised as the <code>PIG</code> family of <code>gamlss.dist</code>, so that <code>mu</code> is the mean and the variance is <code>mu + sigma * mu^2</code>, the same as for <code><a href="../reference/nbinom2.html">dnbinom2()</a></code> with <code>size = 1 / sigma</code>. Compared with the negative binomial it has a heavier right tail and more zeros. The Sichel distribution, the <code>SICHEL</code> family of <code>gamlss.dist</code>, mixes the Poisson over a generalised inverse Gaussian instead and adds a shape parameter <code>nu</code>; the Poisson-inverse Gaussian is its special case <code>nu = -1/2</code>. Both mass functions involve Bessel functions whose order grows with the count, which <code><a href="https://rdrr.io/r/base/Bessel.html" class="external-link">besselK()</a></code> cannot evaluate for large counts and strong overdispersion because it overflows; for orders above 50, the uniform asymptotic expansion of the Bessel function is used instead, so the mass functions and their derivatives stay finite and accurate for any count. <code>nu</code> can be estimated, as the derivative with respect to the order is available. The distribution functions are summed from the mass functions, so one-step-ahead residuals via <code>method = "cdf"</code> are supported.</p></li>
