@@ -80,6 +80,7 @@ test_that("waring is the beta-negative binomial with nu = 1", {
 })
 
 test_that("mu is exactly the mean and the variance matches the closed form", {
+  skip_on_cran() # large grid for the heavy tail, slow
   k <- 0:3000000
   for (p in list(c(2, 0.5), c(6, 0.25))) {
     mu <- p[1]; sigma <- p[2]

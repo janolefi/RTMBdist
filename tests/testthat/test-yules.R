@@ -69,6 +69,7 @@ test_that("yules is the beta-negative binomial special case it claims to be", {
 })
 
 test_that("yules moments match the closed forms", {
+  skip_on_cran() # large grid for the heavy tail, slow
   k <- 1:3000000
   for (rho in c(3, 5)) {
     d <- dyules(k, rho); m <- sum(k * d)

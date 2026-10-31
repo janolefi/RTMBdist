@@ -33,6 +33,7 @@ test_that("bnbinom2 is the bnbinom reparameterisation it claims to be", {
 })
 
 test_that("mu is exactly the mean and the variance matches the closed form", {
+  skip_on_cran() # large grid for the heavy tail, slow
   k <- 0:2000000
   for (p in list(c(4, 0.4, 0.5), c(10, 0.3, 1.5))) {
     mu <- p[1]; sigma <- p[2]; nu <- p[3]

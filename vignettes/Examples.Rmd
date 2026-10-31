@@ -91,6 +91,7 @@ We see that this model is still not a great fit but a bit better than the Gaussi
 
 ```{r cleanup1, include=FALSE}
 TMB::FreeADFun(obj_chick)
+gc(verbose = FALSE)
 ```
 
 
@@ -151,6 +152,7 @@ qqnorm(osa_insect$res); abline(0,1)
 
 ```{r cleanup2, include=FALSE}
 TMB::FreeADFun(obj_insect)
+gc(verbose = FALSE)
 ```
 
 
@@ -167,9 +169,9 @@ library(Matrix)        # Sparse matrices
 
 ```{r data_boys}
 data(dbbmi)
-# Subset (just for speed here)
+# Subset for speed
 set.seed(1)
-ind <- sample(1:nrow(dbbmi), 2000)
+ind <- sample(1:nrow(dbbmi), 500)
 dbbmi <- dbbmi[ind, ]
 ```
 
@@ -224,7 +226,7 @@ par <- list(
   beta0_nu = -1, beta_age_mu = rep(0, k-1),
   beta_age_sigma = rep(0, k-1), beta_age_nu = rep(0, k-1),
   log_tau = log(2),
-  log_lambda = log(rep(1e4, 3))
+  log_lambda = c(7, 9, 2) # choosing good starting values for a fast fit
 )
 dat <- list(
   bmi = dbbmi$bmi,
@@ -289,6 +291,7 @@ legend("topleft", lwd = c(3, 1), col = "deepskyblue", legend = c("Mean", "Quanti
 
 ```{r cleanup3, include=FALSE}
 TMB::FreeADFun(obj_dbbmi)
+gc(verbose = FALSE)
 ```
 
 
@@ -392,6 +395,7 @@ round(beta3, 3)
 TMB::FreeADFun(obj_aep1)
 TMB::FreeADFun(obj_aep2)
 TMB::FreeADFun(obj_aep3)
+gc(verbose = FALSE)
 ```
 
 
@@ -494,6 +498,7 @@ contour(xseq, yseq, (1-alpha) * f2, add = TRUE, nlevels = 8,
 ```
 ```{r cleanup5, include=FALSE}
 TMB::FreeADFun(obj_copula)
+gc(verbose = FALSE)
 ```
 
 
@@ -537,8 +542,8 @@ Fixing $\theta_j = 0$ via `map` gives the usual model with conditional independe
 
 ```{r elk fit}
 N <- 2
-par <- list(eta = rep(-2, 2), log_mu = log(c(0.3, 3)), log_sigma = log(c(0.3, 3)),
-            angle_mean = c(pi, 0), log_kappa = log(c(0.3, 1)), theta = c(1e-6, 1e-6))
+par <- list(eta = rep(-2, 2), log_mu = log(c(0.35, 3.5)), log_sigma = log(c(0.4, 4.5)),
+            angle_mean = c(pi, 0), log_kappa = log(c(0.6, 0.2)), theta = c(1e-6, 1e-6))
 dat <- list(step = elk$step, angle = elk$angle, ID = elk$ID, N = N)
 map <- list(angle_mean = factor(c(NA,NA)))
 
@@ -612,6 +617,7 @@ Both dependence parameters are positive: the longer the step, the more the turni
 ```{r cleanup6, include=FALSE}
 TMB::FreeADFun(obj_ind)
 TMB::FreeADFun(obj_elk)
+gc(verbose = FALSE)
 ```
 
 
@@ -619,14 +625,10 @@ TMB::FreeADFun(obj_elk)
 
 This example reproduces one of the `TMB` examples. It fits a multivariate stochastic volatility model to financial returns data. In the example given [here](https://github.com/kaskr/RTMB/blob/master/tmb_examples/sdv_multi.R), the response distribution is a multivariate Gaussian, with the marginal variance for each of the three time series being time-varying and modelled based on a latent volatility process. We generalise the example to a multivariate t distribution, which typically results in a better fit to financial returns data, due to the heavier tails.
 
-```{r tape_config, include=FALSE}
-# generalised to multivariate t distributed responses
-TapeConfig(matmul="plain") ## Optional (speeds up this model)
-```
-
-We get the data from
+The data are the first 500 of the 945 observations of the original example's [data](https://github.com/kaskr/RTMB/blob/master/tmb_examples/sdv_multi_data.R), shipped with the package for speed.
 ```{r svt data}
-source("https://raw.githubusercontent.com/kaskr/RTMB/master/tmb_examples/sdv_multi_data.R")
+y <- readRDS(system.file("extdata", "sv_returns.rds", package = "RTMBdist"))
+n <- nrow(y); p <- ncol(y)
 ```
 
 The code below is basically the same as in the original example, but uses a multivariate t distribution (`dmvt()`) in the data likelihood. Note that the `Cov` matrix is now not actually the covariance matrix anymore, but only proportional to it.
@@ -748,6 +750,7 @@ The estimated location rises by about 25 cm over the 50 years, but not linearly:
 
 ```{r cleanup venice, include = FALSE}
 TMB::FreeADFun(obj_venice)
+gc(verbose = FALSE)
 ```
 
 
@@ -825,6 +828,7 @@ par(oldpar)
 ```{r cleanup etas, include = FALSE}
 TMB::FreeADFun(obj_etas)
 TMB::FreeADFun(obj_pois)
+gc(verbose = FALSE)
 ```
 
 
@@ -896,5 +900,6 @@ The jump at the end of 2006 coincides with Kevin Rudd becoming leader of the Lab
 
 ```{r cleanup polls, include = FALSE}
 TMB::FreeADFun(obj_polls)
+gc(verbose = FALSE)
 ```
 
