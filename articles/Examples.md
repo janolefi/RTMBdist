@@ -208,9 +208,9 @@ library(Matrix)        # Sparse matrices
 ``` r
 
 data(dbbmi)
-# Subset (just for speed here)
+# Subset for speed
 set.seed(1)
-ind <- sample(1:nrow(dbbmi), 2000)
+ind <- sample(1:nrow(dbbmi), 500)
 dbbmi <- dbbmi[ind, ]
 ```
 
@@ -287,7 +287,7 @@ par <- list(
   beta0_nu = -1, beta_age_mu = rep(0, k-1),
   beta_age_sigma = rep(0, k-1), beta_age_nu = rep(0, k-1),
   log_tau = log(2),
-  log_lambda = log(rep(1e4, 3))
+  log_lambda = c(7, 9, 2) # choosing good starting values for a fast fit
 )
 dat <- list(
   bmi = dbbmi$bmi,
@@ -682,8 +682,8 @@ close to, but not exactly, zero.
 ``` r
 
 N <- 2
-par <- list(eta = rep(-2, 2), log_mu = log(c(0.3, 3)), log_sigma = log(c(0.3, 3)),
-            angle_mean = c(pi, 0), log_kappa = log(c(0.3, 1)), theta = c(1e-6, 1e-6))
+par <- list(eta = rep(-2, 2), log_mu = log(c(0.35, 3.5)), log_sigma = log(c(0.4, 4.5)),
+            angle_mean = c(pi, 0), log_kappa = log(c(0.6, 0.2)), theta = c(1e-6, 1e-6))
 dat <- list(step = elk$step, angle = elk$angle, ID = elk$ID, N = N)
 map <- list(angle_mean = factor(c(NA,NA)))
 
@@ -796,11 +796,15 @@ modelled based on a latent volatility process. We generalise the example
 to a multivariate t distribution, which typically results in a better
 fit to financial returns data, due to the heavier tails.
 
-We get the data from
+The data are the first 500 of the 945 observations of the original
+example’s
+[data](https://github.com/kaskr/RTMB/blob/master/tmb_examples/sdv_multi_data.R),
+shipped with the package for speed.
 
 ``` r
 
-source("https://raw.githubusercontent.com/kaskr/RTMB/master/tmb_examples/sdv_multi_data.R")
+y <- readRDS(system.file("extdata", "sv_returns.rds", package = "RTMBdist"))
+n <- nrow(y); p <- ncol(y)
 ```
 
 The code below is basically the same as in the original example, but
@@ -866,20 +870,20 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>  15.152   0.030  15.184
+#>   5.523   9.424   4.435
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
-#>          Estimate  Std. Error
-#> sigma  0.14340470 0.031297755
-#> sigma  0.13468225 0.023135810
-#> sigma  0.09057673 0.031079410
-#> phi    0.97409443 0.012470016
-#> phi    0.95807405 0.015360711
-#> phi    0.99122411 0.007026834
-#> df     7.12265197 0.976921824
-#> mu_y  -1.13887764 0.186641877
-#> mu_y  -1.09383519 0.118761923
-#> mu_y  -1.56301208 0.312999106
+#>          Estimate Std. Error
+#> sigma  0.24472144 0.06401184
+#> sigma  0.15456408 0.03552650
+#> sigma  0.07634764 0.02432421
+#> phi    0.90602178 0.04387371
+#> phi    0.95399179 0.02399496
+#> phi    0.98631924 0.01066498
+#> df    12.00420497 3.86998332
+#> mu_y  -1.22180378 0.14038820
+#> mu_y  -1.12388150 0.16646042
+#> mu_y  -1.05032399 0.24353182
 ```
 
 ## Example 8: Venice sea levels with a latent trend
@@ -1053,7 +1057,7 @@ summary(sdreport(obj_etas), "report")
 #>              Estimate  Std. Error
 #> p         1.072850297 0.044592819
 #> c         0.007284232 0.003298058
-#> branching 0.828331568 0.351130574
+#> branching 0.828331568 0.351130575
 ```
 
 Aftershock rates decay with p \approx 1.07, and the branching ratio, the

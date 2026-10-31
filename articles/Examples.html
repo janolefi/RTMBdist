@@ -232,9 +232,9 @@ kept constant.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://codeberg.org/jaganmn/Matrix" class="external-link">Matrix</a></span><span class="op">)</span>        <span class="co"># Sparse matrices</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dbbmi</span><span class="op">)</span></span>
-<span><span class="co"># Subset (just for speed here)</span></span>
+<span><span class="co"># Subset for speed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dbbmi</span><span class="op">)</span>, <span class="fl">2000</span><span class="op">)</span></span>
+<span><span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dbbmi</span><span class="op">)</span>, <span class="fl">500</span><span class="op">)</span></span>
 <span><span class="va">dbbmi</span> <span class="op">&lt;-</span> <span class="va">dbbmi</span><span class="op">[</span><span class="va">ind</span>, <span class="op">]</span></span></code></pre></div>
 <p>We use the function <code>make_matrices()</code> from package
 <code>LaMa</code> (which uses <code>mgcv</code> internally, and which we
@@ -300,7 +300,7 @@ effects using the Laplace approximation.</p>
 <span>  beta0_nu <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, beta_age_mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">k</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>  beta_age_sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">k</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>, beta_age_nu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">k</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>  log_tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>,</span>
-<span>  log_lambda <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1e4</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span>  log_lambda <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">9</span>, <span class="fl">2</span><span class="op">)</span> <span class="co"># choosing good starting values for a fast fit</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  bmi <span class="op">=</span> <span class="va">dbbmi</span><span class="op">$</span><span class="va">bmi</span>,</span>
@@ -636,8 +636,8 @@ singularity exactly at <span class="math inline">\theta = 0</span>, so
 we fix it at a value close to, but not exactly, zero.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
-<span><span class="va">par</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, log_mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, log_sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>            angle_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pi</span>, <span class="fl">0</span><span class="op">)</span>, log_kappa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-6</span>, <span class="fl">1e-6</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">par</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>eta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, log_mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.35</span>, <span class="fl">3.5</span><span class="op">)</span><span class="op">)</span>, log_sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">4.5</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            angle_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pi</span>, <span class="fl">0</span><span class="op">)</span>, log_kappa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span>, theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-6</span>, <span class="fl">1e-6</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>step <span class="op">=</span> <span class="va">elk</span><span class="op">$</span><span class="va">step</span>, angle <span class="op">=</span> <span class="va">elk</span><span class="op">$</span><span class="va">angle</span>, ID <span class="op">=</span> <span class="va">elk</span><span class="op">$</span><span class="va">ID</span>, N <span class="op">=</span> <span class="va">N</span><span class="op">)</span></span>
 <span><span class="va">map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>angle_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -734,9 +734,12 @@ variance for each of the three time series being time-varying and
 modelled based on a latent volatility process. We generalise the example
 to a multivariate t distribution, which typically results in a better
 fit to financial returns data, due to the heavier tails.</p>
-<p>We get the data from</p>
+<p>The data are the first 500 of the 945 observations of the original
+example’s <a href="https://github.com/kaskr/RTMB/blob/master/tmb_examples/sdv_multi_data.R" class="external-link">data</a>,
+shipped with the package for speed.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/kaskr/RTMB/master/tmb_examples/sdv_multi_data.R"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"sv_returns.rds"</span>, package <span class="op">=</span> <span class="st">"RTMBdist"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>; <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code></pre></div>
 <p>The code below is basically the same as in the original example, but
 uses a multivariate t distribution (<code><a href="../reference/mvt.html">dmvt()</a></code>) in the data
 likelihood. Note that the <code>Cov</code> matrix is now not actually
@@ -797,20 +800,20 @@ the covariance matrix anymore, but only proportional to it.</p>
 <span>  <span class="va">opt_svt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/nlminb.html" class="external-link">nlminb</a></span><span class="op">(</span><span class="va">obj_svt</span><span class="op">$</span><span class="va">par</span>, <span class="va">obj_svt</span><span class="op">$</span><span class="va">fn</span>, <span class="va">obj_svt</span><span class="op">$</span><span class="va">gr</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;  15.152   0.030  15.184</span></span>
+<span><span class="co">#&gt;   5.523   9.424   4.435</span></span>
 <span><span class="va">sdr_svt</span> <span class="op">&lt;-</span> <span class="fu">sdreport</span><span class="op">(</span><span class="va">obj_svt</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sdr_svt</span>, <span class="st">"report"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          Estimate  Std. Error</span></span>
-<span><span class="co">#&gt; sigma  0.14340470 0.031297755</span></span>
-<span><span class="co">#&gt; sigma  0.13468225 0.023135810</span></span>
-<span><span class="co">#&gt; sigma  0.09057673 0.031079410</span></span>
-<span><span class="co">#&gt; phi    0.97409443 0.012470016</span></span>
-<span><span class="co">#&gt; phi    0.95807405 0.015360711</span></span>
-<span><span class="co">#&gt; phi    0.99122411 0.007026834</span></span>
-<span><span class="co">#&gt; df     7.12265197 0.976921824</span></span>
-<span><span class="co">#&gt; mu_y  -1.13887764 0.186641877</span></span>
-<span><span class="co">#&gt; mu_y  -1.09383519 0.118761923</span></span>
-<span><span class="co">#&gt; mu_y  -1.56301208 0.312999106</span></span></code></pre></div>
+<span><span class="co">#&gt;          Estimate Std. Error</span></span>
+<span><span class="co">#&gt; sigma  0.24472144 0.06401184</span></span>
+<span><span class="co">#&gt; sigma  0.15456408 0.03552650</span></span>
+<span><span class="co">#&gt; sigma  0.07634764 0.02432421</span></span>
+<span><span class="co">#&gt; phi    0.90602178 0.04387371</span></span>
+<span><span class="co">#&gt; phi    0.95399179 0.02399496</span></span>
+<span><span class="co">#&gt; phi    0.98631924 0.01066498</span></span>
+<span><span class="co">#&gt; df    12.00420497 3.86998332</span></span>
+<span><span class="co">#&gt; mu_y  -1.22180378 0.14038820</span></span>
+<span><span class="co">#&gt; mu_y  -1.12388150 0.16646042</span></span>
+<span><span class="co">#&gt; mu_y  -1.05032399 0.24353182</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example-8-venice-sea-levels-with-a-latent-trend">Example 8: Venice sea levels with a latent trend<a class="anchor" aria-label="anchor" href="#example-8-venice-sea-levels-with-a-latent-trend"></a>
@@ -950,7 +953,7 @@ once and summed up with a sparse matrix.</p>
 <span><span class="co">#&gt;              Estimate  Std. Error</span></span>
 <span><span class="co">#&gt; p         1.072850297 0.044592819</span></span>
 <span><span class="co">#&gt; c         0.007284232 0.003298058</span></span>
-<span><span class="co">#&gt; branching 0.828331568 0.351130574</span></span></code></pre></div>
+<span><span class="co">#&gt; branching 0.828331568 0.351130575</span></span></code></pre></div>
 <p>Aftershock rates decay with <span class="math inline">p \approx
 1.07</span>, and the branching ratio, the average number of direct
 aftershocks per event, is about 0.8. Fixing <span class="math inline">K</span> to (practically) zero gives a homogeneous
