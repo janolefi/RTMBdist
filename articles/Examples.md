@@ -870,7 +870,7 @@ system.time(
   opt_svt <- nlminb(obj_svt$par, obj_svt$fn, obj_svt$gr)
 )
 #>    user  system elapsed 
-#>   6.782   9.696   5.722
+#>  16.153   0.008   5.450
 sdr_svt <- sdreport(obj_svt)
 summary(sdr_svt, "report")
 #>          Estimate Std. Error
@@ -1057,7 +1057,7 @@ summary(sdreport(obj_etas), "report")
 #>              Estimate  Std. Error
 #> p         1.072850297 0.044592819
 #> c         0.007284232 0.003298058
-#> branching 0.828331568 0.351130575
+#> branching 0.828331568 0.351130574
 ```
 
 Aftershock rates decay with p \approx 1.07, and the branching ratio, the

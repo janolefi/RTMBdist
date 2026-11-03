@@ -14,6 +14,7 @@ mcreport(
   include_random_pars = TRUE,
   report = FALSE,
   Q = NULL,
+  par = NULL,
   ...
 )
 ```
@@ -39,10 +40,17 @@ mcreport(
 
 - Q:
 
-  Optional precalculated sparse precision matrix returned by
+  Optional precision matrix, dense or sparse. For models with random
+  effects, this is typically the sparse matrix returned by
   `sdreport(..., getJointPrecision = TRUE)$jointPrecision`. If not
-  provided, computed internally using `sdreport`. Only used for models
-  with random effects.
+  provided, it is computed internally, using `sdreport` for models with
+  random effects and the Hessian `obj$he()` otherwise. `Q` may have more
+  rows than there are model parameters, see Details.
+
+- par:
+
+  Optional mean of the samples. Defaults to `obj$env$last.par.best`.
+  Must have length `nrow(Q)` if `Q` is supplied.
 
 - ...:
 
@@ -70,6 +78,13 @@ marginal standard devitions like
 useful for multidimensional random effects (e.g. for locations \\x\\ and
 \\y\\) where pointwise confidence intervals (e.g. along a path) based on
 standard deviations are not possible.
+
+A user-supplied `Q` may be the joint precision of the model parameters
+and additional hyperparameters, such as log smoothing parameters, whose
+coordinates come after the model parameters. The mean `par` then needs
+to be given for all coordinates. Samples are drawn in the full space and
+the hyperparameters are dropped, so they are integrated out and the
+samples of the model parameters account for their uncertainty.
 
 ## Examples
 

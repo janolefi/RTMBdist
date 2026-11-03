@@ -2,7 +2,19 @@
 
 ## RTMBdist (development version)
 
+- [`mcreport()`](https://janolefi.github.io/RTMBdist/reference/mcreport.md)
+  gains a `par` argument for the mean of the samples, which defaults to
+  `obj$env$last.par.best` as before. A supplied precision matrix `Q`,
+  dense or sparse, is now used for models without random effects too
+  instead of being ignored with a warning. `Q` may also be the joint
+  precision of the model parameters and trailing hyperparameters, such
+  as log smoothing parameters, with `par` given for all coordinates; the
+  hyperparameters are then sampled and dropped, so the parameter samples
+  account for their uncertainty.
+
 ## RTMBdist 1.2.0
+
+CRAN release: 2026-10-31
 
 - Added the Poisson-inverse Gaussian
   ([`dpig()`](https://janolefi.github.io/RTMBdist/reference/pig.md)) and
