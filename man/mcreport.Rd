@@ -10,6 +10,7 @@ mcreport(
   include_random_pars = TRUE,
   report = FALSE,
   Q = NULL,
+  par = NULL,
   ...
 )
 }
@@ -23,8 +24,12 @@ mcreport(
 \item{report}{Logical; Should \code{REPORT}ed quantities be sampled as well?
 Defaults to \code{FALSE} because this may be slow depending on your model.}
 
-\item{Q}{Optional precalculated sparse precision matrix returned by \code{sdreport(..., getJointPrecision = TRUE)$jointPrecision}.
-If not provided, computed internally using \code{sdreport}. Only used for models with random effects.}
+\item{Q}{Optional precision matrix, dense or sparse. For models with random effects, this is typically the sparse matrix returned by \code{sdreport(..., getJointPrecision = TRUE)$jointPrecision}.
+If not provided, it is computed internally, using \code{sdreport} for models with random effects and the Hessian \code{obj$he()} otherwise.
+\code{Q} may have more rows than there are model parameters, see Details.}
+
+\item{par}{Optional mean of the samples. Defaults to \code{obj$env$last.par.best}.
+Must have length \code{nrow(Q)} if \code{Q} is supplied.}
 
 \item{...}{For internal use only}
 }
@@ -43,6 +48,10 @@ This is a common approach to get an approximate idea of parameter uncertainty ar
 
 Sampling random effects from their posterior as compared to calculating marginal standard devitions like \code{\link[TMB]{sdreport}} is particularly useful for multidimensional random effects (e.g. for locations \eqn{x} and \eqn{y})
 where pointwise confidence intervals (e.g. along a path) based on standard deviations are not possible.
+
+A user-supplied \code{Q} may be the joint precision of the model parameters and additional hyperparameters, such as log smoothing parameters, whose coordinates come after the model parameters.
+The mean \code{par} then needs to be given for all coordinates.
+Samples are drawn in the full space and the hyperparameters are dropped, so they are integrated out and the samples of the model parameters account for their uncertainty.
 }
 \examples{
 set.seed(123)
