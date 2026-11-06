@@ -1,4 +1,4 @@
-# RTMBdist (development version)
+# RTMBdist 1.2.1
 
 - `mcreport()` gains a `par` argument for the mean of the samples, which defaults to `obj$env$last.par.best` as before. A supplied precision matrix `Q`, dense or sparse, is now used for models without random effects too instead of being ignored with a warning. `Q` may also be the joint precision of the model parameters and trailing hyperparameters, such as log smoothing parameters, with `par` given for all coordinates; the hyperparameters are then sampled and dropped, so the parameter samples account for their uncertainty.
 
