@@ -31,7 +31,7 @@ Suggests:
     TMB,
     gamlss.data,
     mvtnorm,
-    LaMa (>= 2.1.2),
+    LaMa (>= 3.1.0),
     moveHMM,
     evd,
     ETAS,
