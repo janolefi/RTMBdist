@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RTMBdist</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="rtmbdist-development-version">RTMBdist (development version)<a class="anchor" aria-label="anchor" href="#rtmbdist-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.2.1" id="rtmbdist-121">RTMBdist 1.2.1<a class="anchor" aria-label="anchor" href="#rtmbdist-121"></a></h2>
 <ul><li>
 <code><a href="../reference/mcreport.html">mcreport()</a></code> gains a <code>par</code> argument for the mean of the samples, which defaults to <code>obj$env$last.par.best</code> as before. A supplied precision matrix <code>Q</code>, dense or sparse, is now used for models without random effects too instead of being ignored with a warning. <code>Q</code> may also be the joint precision of the model parameters and trailing hyperparameters, such as log smoothing parameters, with <code>par</code> given for all coordinates; the hyperparameters are then sampled and dropped, so the parameter samples account for their uncertainty.</li>
 </ul></div>

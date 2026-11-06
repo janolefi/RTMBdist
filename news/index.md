@@ -1,6 +1,6 @@
 # Changelog
 
-## RTMBdist (development version)
+## RTMBdist 1.2.1
 
 - [`mcreport()`](https://janolefi.github.io/RTMBdist/reference/mcreport.md)
   gains a `par` argument for the mean of the samples, which defaults to
