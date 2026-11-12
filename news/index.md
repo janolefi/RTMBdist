@@ -2,6 +2,8 @@
 
 ## RTMBdist 1.2.1
 
+CRAN release: 2026-11-06
+
 - [`mcreport()`](https://janolefi.github.io/RTMBdist/reference/mcreport.md)
   gains a `par` argument for the mean of the samples, which defaults to
   `obj$env$last.par.best` as before. A supplied precision matrix `Q`,
